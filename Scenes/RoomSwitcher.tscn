@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dtwpnedsbtj8t"]
+
+[ext_resource type="Script" uid="uid://cs3wfgxf0axj4" path="res://Scripts/RoomSwitcher.gd" id="1_rqm86"]
+
+[node name="ChunkSwitcher" type="Area2D"]
+script = ExtResource("1_rqm86")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

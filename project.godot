@@ -11,12 +11,16 @@ config_version=5
 [application]
 
 config/name="ProjetYdays"
-run/main_scene="uid://qh6y7m6ci4og"
+run/main_scene="uid://d3wesmde18u6b"
 config/features=PackedStringArray("4.5", "GL Compatibility")
+boot_splash/fullsize=false
+boot_splash/image="uid://com14so30bnna"
 config/icon="res://Textures/icon.svg"
+boot_splash/minimum_display_time=1000
 
 [autoload]
 
+Global="*res://Scripts/Global.gd"
 Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
 InteractionManager="*res://Scripts/interractions/InteractionManager.gd"
 
@@ -114,3 +118,4 @@ Interract={
 textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true
