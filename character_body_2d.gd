@@ -5,13 +5,16 @@ const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 
 
-func _physics_process(delta: float) -> void:
+func _ready() -> void:
+	$AnimatedSprite2D.play("new_animation")
 
+func _physics_process(delta: float) -> void:
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var axeX := Input.get_axis("Gauche", "Droite")
 	if axeX:
 		velocity.x = axeX * SPEED
+		$AnimatedSprite2D.play("walk")
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 	
