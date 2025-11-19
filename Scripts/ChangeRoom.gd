@@ -6,7 +6,7 @@ signal unloadFinished
 @onready var joueur : Node = $"../Joueur" 
 
 func _ready() -> void:
-	roomLoad("res://Scenes/RoomTest1.tscn", "InitialSpawn")
+	roomLoad("res://Scenes/Rooms/Test1.tscn", "InitialSpawn")
 
 func roomChange(newRoom: String) -> void:
 	var previousRoomName : String = rooms.get_child(0).name
