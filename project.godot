@@ -13,7 +13,10 @@ config_version=5
 config/name="ProjetYdays"
 run/main_scene="uid://d3wesmde18u6b"
 config/features=PackedStringArray("4.5", "GL Compatibility")
+boot_splash/fullsize=false
+boot_splash/image="uid://com14so30bnna"
 config/icon="res://Textures/icon.svg"
+boot_splash/minimum_display_time=1000
 
 [autoload]
 
