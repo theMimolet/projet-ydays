@@ -1,6 +1,6 @@
 extends Node
 
-@export var currentChunk = "res://Scenes/ck-test-1.tscn"
+@export var currentRoom : String
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
