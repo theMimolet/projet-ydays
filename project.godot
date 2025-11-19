@@ -34,10 +34,13 @@ directories/dch_directory={}
 directories/dtl_directory={
 "timeline-test": "res://Dialog/timeline-test.dtl"
 }
-layout/style_directory={}
+layout/style_directory={
+"": "res://Style/Dialog.tres",
+"Dialog": "res://Style/Dialog.tres"
+}
 glossary/default_case_sensitive=true
-layout/style_list=[]
-layout/default_style="Default"
+layout/style_list=["res://Style/Dialog.tres"]
+layout/default_style="res://Style/Dialog.tres"
 extensions_folder="res://addons/dialogic_additions"
 text/letter_speed=0.01
 text/initial_text_reveal_skippable=true
