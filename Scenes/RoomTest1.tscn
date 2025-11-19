@@ -15,7 +15,7 @@ physics_layer_0/collision_layer = 1
 sources/1 = SubResource("TileSetAtlasSource_7wwei")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q8n12"]
-size = Vector2(96, 46)
+size = Vector2(96, 34)
 
 [node name="Test-1" type="Node2D"]
 
@@ -30,7 +30,6 @@ roomToLoad = "uid://brwifbbdn3ob3"
 playerSpawn = Vector2(40, -120)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ChunkSwitcher"]
-position = Vector2(0, -6)
 shape = SubResource("RectangleShape2D_q8n12")
 
 [node name="Node2D" type="Node2D" parent="."]

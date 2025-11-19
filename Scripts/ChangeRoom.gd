@@ -20,6 +20,7 @@ func roomUnload() -> void:
 func roomLoad(room: String, posJoueur: Vector2) -> void: 
 	$Animateur.play("RESET")
 	niveau.add_child(load(room).instantiate()) # Charge le chunk au jeu
+	Global.currentRoom = room
 	joueur.position = posJoueur
 	$Animateur.play("fade-in")
 
