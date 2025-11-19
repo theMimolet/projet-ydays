@@ -6,7 +6,8 @@ const JUMP_VELOCITY = -400.0
 
 
 func _ready() -> void:
-	$AnimatedSprite2D.play("new_animation")
+	#$AnimatedSprite2D.play("new_animation")
+	pass
 
 func _physics_process(delta: float) -> void:
 	# Get the input direction and handle the movement/deceleration.
@@ -14,7 +15,7 @@ func _physics_process(delta: float) -> void:
 	var axeX := Input.get_axis("Gauche", "Droite")
 	if axeX:
 		velocity.x = axeX * SPEED
-		$AnimatedSprite2D.play("walk")
+		#$AnimatedSprite2D.play("walk")
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 	
