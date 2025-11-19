@@ -3,7 +3,12 @@ extends Node
 const Vase = preload("res://Scripts/interractions/Vase.gd")
 
 func handle_interaction(player_position: Vector2) -> void:
-	var tilemap = get_tree().current_scene.get_node("TileMapLayer")
+	var niveau = get_tree().current_scene.get_node_or_null("Niveau")
+	if niveau == null:
+		print("Erreur : node Niveau introuvable !")
+		return
+	
+	var tilemap = niveau.find_child("TileMapLayer", true, false)
 	if tilemap == null:
 		print("Erreur : node TileMapLayer introuvable !")
 		return

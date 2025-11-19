@@ -10,8 +10,12 @@ func _ready() -> void:
 	#$AnimatedSprite2D.play("new_animation")
 	canMove = true
 	
+	if Dialogic.timeline_ended.connect(_on_timeline_ended) != OK:
+		print("Erreur : impossible de se connecter au signal timeline_ended de Dialogic")
+	
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("Interract"):
+		canMove = false
 		InteractionManager.handle_interaction(global_position)
 
 func _physics_process(_delta: float) -> void:
@@ -38,3 +42,6 @@ func _physics_process(_delta: float) -> void:
 			velocity.y = move_toward(velocity.y, 0, SPEED)
 
 		move_and_slide()
+
+func _on_timeline_ended() -> void:
+	canMove = true
