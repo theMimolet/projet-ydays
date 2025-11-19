@@ -58,7 +58,7 @@ _data = {
 
 [node name="Jeu" type="Node"]
 
-[node name="Niveau" type="Node" parent="."]
+[node name="Room" type="Node" parent="."]
 
 [node name="Joueur" parent="." instance=ExtResource("1_ctcok")]
 

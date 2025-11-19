@@ -76,7 +76,7 @@ animations = [{
 "speed": 7.0
 }]
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
+[node name="Joueur" type="CharacterBody2D"]
 motion_mode = 1
 script = ExtResource("1_b0ct8")
 
@@ -86,7 +86,6 @@ shape = SubResource("RectangleShape2D_ksi5g")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_3derw")
-animation = &"marche-derriere"
-frame_progress = 0.99887127
+animation = &"marche-devant"
 
 [node name="Camera2D" type="Camera2D" parent="."]

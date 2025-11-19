@@ -2,35 +2,48 @@ extends CanvasLayer
 
 signal unloadFinished
 
-@onready var niveau : Node = $"../Niveau" 
+@onready var rooms : Node = $"../Room" 
 @onready var joueur : Node = $"../Joueur" 
 
 func _ready() -> void:
-	roomLoad("res://Scenes/RoomTest1.tscn", Vector2(320, -90))
+	roomLoad("res://Scenes/RoomTest1.tscn", "InitialSpawn")
 
-func roomChange(room: String, posJoueur: Vector2) -> void:
+func roomChange(newRoom: String) -> void:
+	var previousRoomName : String = rooms.get_child(0).name
+	print(previousRoomName)
 	roomUnload()
 	await unloadFinished
-	roomLoad(room, posJoueur)
+	roomLoad(newRoom, previousRoomName)
 
 func roomUnload() -> void:
 	$Animateur.play("fade-out")
 	joueur.canMove = false
 
-func roomLoad(room: String, posJoueur: Vector2) -> void: 
-	$Animateur.play("RESET")
-	niveau.add_child(load(room).instantiate()) # Charge le chunk au jeu
+func roomLoad(room: String, spawnPoint: String) -> void: 
+	$Animateur.play("RESET") # Écran noir
+	
+	rooms.add_child(load(room).instantiate()) # Charge la nouvelle room et l'instantie en tant qu'enfant de "Rooms"
 	Global.currentRoom = room
-	joueur.position = posJoueur
+	
+	await get_tree().process_frame
+	
+	# Système qui détermine si le spawnpoint visé existe ou non - sinon le joueur spawne à 0,0
+	
+	var spawnNode : Node2D = null
+	spawnNode = rooms.find_child(spawnPoint, true, false) # Cherche récursivement si un node avec le nom recherché existe
+	if spawnNode != null : 
+		joueur.position = spawnNode.position
+	else :
+		push_warning("Spawn point '%s' non trouvé, utilisation d'un spawn par défaut" % spawnPoint)
+		joueur.position = Vector2(0,0)
+	
 	$Animateur.play("fade-in")
 
 func _on_animateur_animation_finished(anim_name: StringName) -> void:
 	match anim_name :
 		"fade-out" :
 			$Animateur.play("RESET")
-			print(niveau.get_children())
-			for child in niveau.get_children() :
-				print(child)
+			for child in rooms.get_children() :
 				child.queue_free()
 				child = null
 			emit_signal("unloadFinished")

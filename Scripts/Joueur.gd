@@ -12,7 +12,7 @@ func _ready() -> void:
 func Mouvement() -> void :
 	var input_direction : Vector2 = Input.get_vector("Gauche", "Droite", "Haut", "Bas")
 	velocity = input_direction * SPEED
-	Animate(input_direction)
+	Animate()
 	
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("Interract"):
@@ -31,8 +31,7 @@ func _physics_process(_delta: float) -> void:
 
 	move_and_slide()
 
-func Animate(direction : Vector2) -> void : 
-	print(direction)
+func Animate() -> void : 
 	if velocity.x > 0:
 		sprite.play("marche-droite")
 	elif  velocity.x < 0 :

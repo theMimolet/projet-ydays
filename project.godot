@@ -16,7 +16,6 @@ config/features=PackedStringArray("4.5", "GL Compatibility")
 boot_splash/fullsize=false
 boot_splash/image="uid://n4ar6xlgkstd"
 config/icon="res://Textures/icon.svg"
-boot_splash/minimum_display_time=5000
 
 [autoload]
 
@@ -35,12 +34,11 @@ directories/dtl_directory={
 "timeline-test": "res://Dialog/timeline-test.dtl"
 }
 layout/style_directory={
-"": "res://Style/Dialog.tres",
 "Dialog": "res://Style/Dialog.tres"
 }
 glossary/default_case_sensitive=true
 layout/style_list=["res://Style/Dialog.tres"]
-layout/default_style="res://Style/Dialog.tres"
+layout/default_style="Default"
 extensions_folder="res://addons/dialogic_additions"
 text/letter_speed=0.01
 text/initial_text_reveal_skippable=true
@@ -74,11 +72,13 @@ audio/channel_defaults={
 "volume": 0.0
 }
 }
+variables={}
 
 [display]
 
 window/size/viewport_width=320
 window/size/viewport_height=180
+window/size/mode=2
 window/stretch/mode="viewport"
 window/stretch/aspect="keep_width"
 
