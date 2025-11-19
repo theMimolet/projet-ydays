@@ -1,14 +1,17 @@
 extends CharacterBody2D
 
+const SPEED = 100.0
 
-const SPEED = 300.0
-const JUMP_VELOCITY = -400.0
-
-var canMove = true
+@onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
+var canMove : bool = true
 
 func _ready() -> void:
-	#$AnimatedSprite2D.play("new_animation")
-	canMove = true
+	pass
+
+func Mouvement() -> void :
+	var input_direction : Vector2 = Input.get_vector("Gauche", "Droite", "Haut", "Bas")
+	velocity = input_direction * SPEED
+	Animate(input_direction)
 	
 	if Dialogic.timeline_ended.connect(_on_timeline_ended) != OK:
 		print("Erreur : impossible de se connecter au signal timeline_ended de Dialogic")
@@ -23,25 +26,25 @@ func _physics_process(_delta: float) -> void:
 	# ============== MOUVEMENTS ==============
 	
 	if canMove :
-		
-		# Mouvement verticaux
+		Mouvement()
+	else :
+		velocity = Vector2(0, 0)
+		sprite.stop()
 
-		var axeX := Input.get_axis("Gauche", "Droite")
-		if axeX:
-			velocity.x = axeX * SPEED
-			#$AnimatedSprite2D.play("walk")
-		else:
-			velocity.x = move_toward(velocity.x, 0, SPEED)
-		
-		# Mouvement horizontaux
-		
-		var axeY := Input.get_axis("Haut", "Bas")
-		if axeY:
-			velocity.y = axeY * SPEED
-		else:
-			velocity.y = move_toward(velocity.y, 0, SPEED)
+	move_and_slide()
 
-		move_and_slide()
+func Animate(direction : Vector2) -> void : 
+	print(direction)
+	if velocity.x > 0:
+		sprite.play("marche-droite")
+	elif  velocity.x < 0 :
+		sprite.play("marche-gauche")
+	elif  velocity.y > 0:
+		sprite.play("marche-devant")
+	elif  velocity.y < 0:
+		sprite.play("marche-derriere")
+	else:
+		sprite.stop()
 
 func _on_timeline_ended() -> void:
 	canMove = true
