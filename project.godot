@@ -28,13 +28,6 @@ Global="*res://Scripts/Global.gd"
 
 gdscript/warnings/untyped_declaration=1
 
-[display]
-
-window/size/viewport_width=320
-window/size/viewport_height=180
-window/stretch/mode="viewport"
-window/stretch/aspect="keep_width"
-
 [dialogic]
 
 directories/dch_directory={}
@@ -78,6 +71,13 @@ audio/channel_defaults={
 "volume": 0.0
 }
 }
+
+[display]
+
+window/size/viewport_width=320
+window/size/viewport_height=180
+window/stretch/mode="viewport"
+window/stretch/aspect="keep_width"
 
 [editor_plugins]
 

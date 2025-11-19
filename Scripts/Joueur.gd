@@ -6,15 +6,13 @@ const SPEED = 100.0
 var canMove : bool = true
 
 func _ready() -> void:
-	pass
+	if Dialogic.timeline_ended.connect(_on_timeline_ended) != OK:
+		print("Erreur : impossible de se connecter au signal timeline_ended de Dialogic")
 
 func Mouvement() -> void :
 	var input_direction : Vector2 = Input.get_vector("Gauche", "Droite", "Haut", "Bas")
 	velocity = input_direction * SPEED
 	Animate(input_direction)
-	
-	if Dialogic.timeline_ended.connect(_on_timeline_ended) != OK:
-		print("Erreur : impossible de se connecter au signal timeline_ended de Dialogic")
 	
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("Interract"):
