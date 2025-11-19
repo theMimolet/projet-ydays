@@ -9,6 +9,10 @@ var canMove = true
 func _ready() -> void:
 	#$AnimatedSprite2D.play("new_animation")
 	canMove = true
+	
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("Interract"):
+		InteractionManager.handle_interaction(global_position)
 
 func _physics_process(_delta: float) -> void:
 

@@ -20,9 +20,9 @@ boot_splash/minimum_display_time=1000
 
 [autoload]
 
-Global="*res://Scripts/Global.gd"
 Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
 InteractionManager="*res://Scripts/interractions/InteractionManager.gd"
+Global="*res://Scripts/Global.gd"
 
 [dialogic]
 
