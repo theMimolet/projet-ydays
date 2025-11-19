@@ -3,22 +3,24 @@ extends CanvasLayer
 signal unloadFinished
 
 @onready var niveau : Node = $"../Niveau" 
+@onready var joueur : Node = $"../Joueur" 
 
 func _ready() -> void:
-	chunkLoad("res://Scenes/ck-test-1.tscn", Vector2(320, -90))
+	roomLoad("res://Scenes/RoomTest1.tscn", Vector2(320, -90))
 
-func chunkChange(chunk: String, posJoueur: Vector2) -> void:
-	chunkUnload()
+func roomChange(room: String, posJoueur: Vector2) -> void:
+	roomUnload()
 	await unloadFinished
-	chunkLoad(chunk, posJoueur)
+	roomLoad(room, posJoueur)
 
-func chunkUnload() -> void:
+func roomUnload() -> void:
 	$Animateur.play("fade-out")
+	joueur.canMove = false
 
-func chunkLoad(chunk: String, posJoueur: Vector2) -> void: 
+func roomLoad(room: String, posJoueur: Vector2) -> void: 
 	$Animateur.play("RESET")
-	niveau.add_child(load(chunk).instantiate()) # Charge le chunk au jeu
-	$"../Joueur".position = posJoueur
+	niveau.add_child(load(room).instantiate()) # Charge le chunk au jeu
+	joueur.position = posJoueur
 	$Animateur.play("fade-in")
 
 func _on_animateur_animation_finished(anim_name: StringName) -> void:
@@ -31,3 +33,5 @@ func _on_animateur_animation_finished(anim_name: StringName) -> void:
 				child.queue_free()
 				child = null
 			emit_signal("unloadFinished")
+		"fade-in" :
+			joueur.canMove = true

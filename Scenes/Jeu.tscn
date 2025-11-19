@@ -1,22 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://d3wesmde18u6b"]
 
-[ext_resource type="PackedScene" uid="uid://d1xvmuswrxu7v" path="res://Scenes/joueur.tscn" id="1_d1ciy"]
-[ext_resource type="Script" uid="uid://dhwd5kgfkv56y" path="res://Scripts/changeChunk.gd" id="3_3fugv"]
-
-[sub_resource type="Animation" id="Animation_3fugv"]
-resource_name = "fade-in"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ChunkManager/Transition:color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
-}
+[ext_resource type="PackedScene" uid="uid://d1xvmuswrxu7v" path="res://Scenes/Joueur.tscn" id="1_njc07"]
+[ext_resource type="Script" uid="uid://dhwd5kgfkv56y" path="res://Scripts/ChangeRoom.gd" id="2_35axe"]
 
 [sub_resource type="Animation" id="Animation_0thx2"]
 length = 0.001
@@ -24,7 +9,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("ChunkManager/Transition:color")
+tracks/0/path = NodePath("RoomManager/Transition:color")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -34,12 +19,27 @@ tracks/0/keys = {
 "values": [Color(0, 0, 0, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_3fugv"]
+resource_name = "fade-in"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RoomManager/Transition:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_hjv83"]
 resource_name = "fade-out"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("ChunkManager/Transition:color")
+tracks/0/path = NodePath("RoomManager/Transition:color")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -60,12 +60,12 @@ _data = {
 
 [node name="Niveau" type="Node" parent="."]
 
-[node name="Joueur" parent="." instance=ExtResource("1_d1ciy")]
+[node name="Joueur" parent="." instance=ExtResource("1_njc07")]
 
-[node name="ChunkManager" type="CanvasLayer" parent="."]
-script = ExtResource("3_3fugv")
+[node name="RoomManager" type="CanvasLayer" parent="."]
+script = ExtResource("2_35axe")
 
-[node name="Transition" type="ColorRect" parent="ChunkManager"]
+[node name="Transition" type="ColorRect" parent="RoomManager"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -75,10 +75,10 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color(0, 0, 0, 1)
 
-[node name="Animateur" type="AnimationPlayer" parent="ChunkManager"]
+[node name="Animateur" type="AnimationPlayer" parent="RoomManager"]
 root_node = NodePath("../..")
 libraries = {
 &"": SubResource("AnimationLibrary_elnyr")
 }
 
-[connection signal="animation_finished" from="ChunkManager/Animateur" to="ChunkManager" method="_on_animateur_animation_finished"]
+[connection signal="animation_finished" from="RoomManager/Animateur" to="RoomManager" method="_on_animateur_animation_finished"]
