@@ -10,8 +10,8 @@ config_version=5
 
 [application]
 
-config/name="ProjetYdays"
-run/main_scene="uid://d3wesmde18u6b"
+config/name="Unlost"
+run/main_scene="uid://dulehm44jbn4i"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 boot_splash/fullsize=false
 boot_splash/image="uid://n4ar6xlgkstd"
@@ -20,7 +20,7 @@ config/icon="res://Textures/icon.svg"
 [autoload]
 
 Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
-InteractionManager="*res://Scripts/interractions/InteractionManager.gd"
+InteractionManager="*res://Scripts/Interactions/InteractionManager.gd"
 Global="*res://Scripts/Global.gd"
 
 [debug]
@@ -78,13 +78,17 @@ variables={}
 
 window/size/viewport_width=320
 window/size/viewport_height=180
-window/size/mode=2
+window/size/mode=3
 window/stretch/mode="viewport"
 window/stretch/aspect="keep_width"
 
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/dialogic/plugin.cfg")
+
+[gui]
+
+theme/custom="uid://bugehytmyoyev"
 
 [input]
 

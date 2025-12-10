@@ -1,0 +1,69 @@
+[gd_scene load_steps=6 format=3 uid="uid://dulehm44jbn4i"]
+
+[ext_resource type="Script" uid="uid://b7bt07dxp5o5q" path="res://Scripts/Menu/MainMenu.gd" id="1_ghw46"]
+[ext_resource type="Theme" uid="uid://bugehytmyoyev" path="res://Style/MainUI.tres" id="3_8saeu"]
+[ext_resource type="Texture2D" uid="uid://com14so30bnna" path="res://Textures/LogoSimple.png" id="4_df05h"]
+[ext_resource type="Script" uid="uid://cnkgbvim5m2x6" path="res://Scripts/Menu/MainMenuBackground.gd" id="35_fipmv"]
+[ext_resource type="Texture2D" uid="uid://cak1j5gijhkid" path="res://Textures/MainMenuBackground/MenuBackground_00001.jpg" id="36_ydmd8"]
+
+[node name="MainMenu" type="CanvasLayer"]
+script = ExtResource("1_ghw46")
+
+[node name="Background" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("36_ydmd8")
+expand_mode = 2
+script = ExtResource("35_fipmv")
+fps = 5.0
+
+[node name="LogoMargin" type="MarginContainer" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -83.0
+offset_bottom = 103.0
+grow_horizontal = 0
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+
+[node name="TextureRect" type="TextureRect" parent="LogoMargin"]
+layout_mode = 2
+texture = ExtResource("4_df05h")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="Menu" type="MarginContainer" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -46.0
+offset_right = 72.0
+grow_vertical = 0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Main" type="VBoxContainer" parent="Menu"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Jouer" type="Button" parent="Menu/Main"]
+layout_mode = 2
+theme = ExtResource("3_8saeu")
+text = "Jouer"
+
+[node name="Paramètres" type="Button" parent="Menu/Main"]
+layout_mode = 2
+theme = ExtResource("3_8saeu")
+text = "Paramètres"
+
+[node name="Quitter" type="Button" parent="Menu/Main"]
+layout_mode = 2
+theme = ExtResource("3_8saeu")
+text = "Quitter le jeu"
+
+[connection signal="pressed" from="Menu/Main/Jouer" to="." method="_on_jouer_pressed"]
+[connection signal="pressed" from="Menu/Main/Quitter" to="." method="_on_quitter_pressed"]
