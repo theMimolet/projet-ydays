@@ -9,7 +9,8 @@ Narrateur: Veux-tu tenter de toucher la case bleue ?
     CaseBleue: ...Bienvenue dans le monde des couleurs...
     jump CaseBleueFin
 - Non
-    Narrateur: Tu ignores la case bleue. Peut-être vaut-il mieux ne pas tenter le destin...
+    Narrateur: Tu ignores la case bleue.
+    Narrateur: Peut-être vaut-il mieux ne pas tenter le destin...
     CaseBleue: Merci, voyageur prudent.
     jump CaseBleueFin
 
@@ -17,3 +18,4 @@ label CaseBleueFin
 Narrateur: Tu poursuis ton chemin, la lueur bleue derrière toi.
 
 [end_timeline]
+join  center

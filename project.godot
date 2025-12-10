@@ -34,10 +34,11 @@ directories/dtl_directory={
 "timeline-test": "res://Dialog/timeline-test.dtl"
 }
 layout/style_directory={
-"Dialogue": "res://Style/Dialogue.tres"
+"Dialogue": "res://Style/Dialogue.tres",
+"test style": "res://Style/test style.tres"
 }
 glossary/default_case_sensitive=true
-layout/style_list=["res://Style/Dialogue.tres"]
+layout/style_list=["res://Style/Dialogue.tres", "res://Style/test style.tres"]
 layout/default_style="Default"
 extensions_folder="res://addons/dialogic_additions"
 text/letter_speed=0.01
