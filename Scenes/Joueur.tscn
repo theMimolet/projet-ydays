@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://d1xvmuswrxu7v"]
+[gd_scene load_steps=18 format=3 uid="uid://d1xvmuswrxu7v"]
 
 [ext_resource type="Script" uid="uid://d0w3sybk1m6jo" path="res://Scripts/Joueur.gd" id="1_b0ct8"]
 [ext_resource type="Texture2D" uid="uid://daqdwstom1bus" path="res://Spritesheet/Joueur/Marche/sprite_walkback0.png" id="2_uej3h"]
@@ -6,9 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bwo8k1rcff0ts" path="res://Spritesheet/Joueur/Marche/sprite_walkback2.png" id="4_vkuwq"]
 [ext_resource type="Texture2D" uid="uid://4efk21b7w8g4" path="res://Spritesheet/Joueur/Marche/sprite_walkback3.png" id="5_i4bsu"]
 [ext_resource type="Texture2D" uid="uid://koh3ry4ag7tx" path="res://Spritesheet/Joueur/Marche/sprite_frontwalk0.png" id="6_dhsvm"]
-[ext_resource type="Texture2D" uid="uid://cmwjsg6u7a6xs" path="res://Spritesheet/Joueur/Marche/sprite_frontwalk1.png" id="7_fvesd"]
-[ext_resource type="Texture2D" uid="uid://bo6hmffpgpsgu" path="res://Spritesheet/Joueur/Marche/sprite_frontwalk2.png" id="8_wgmmy"]
-[ext_resource type="Texture2D" uid="uid://ddgunphvfiqwr" path="res://Spritesheet/Joueur/Marche/sprite_frontwalk3.png" id="9_algd0"]
+[ext_resource type="Texture2D" uid="uid://dgeoh47opal54" path="res://Spritesheet/Joueur/Marche/joueur-marche-bas (Copie).png" id="6_uej3h"]
 [ext_resource type="Texture2D" uid="uid://psnu27tn25m4" path="res://Spritesheet/Joueur/Marche/sprite_perso-sidD0.png" id="10_s8008"]
 [ext_resource type="Texture2D" uid="uid://d0xk33d0l21wb" path="res://Spritesheet/Joueur/Marche/sprite_perso-sidD1.png" id="11_gtwaa"]
 [ext_resource type="Texture2D" uid="uid://yqjwjkq8jk8q" path="res://Spritesheet/Joueur/Marche/sprite_perso_sideG0.png" id="12_vkuwq"]
@@ -16,6 +14,22 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ksi5g"]
 size = Vector2(11, 4)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bc5ls"]
+atlas = ExtResource("6_uej3h")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vkuwq"]
+atlas = ExtResource("6_uej3h")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i4bsu"]
+atlas = ExtResource("6_uej3h")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dhsvm"]
+atlas = ExtResource("6_uej3h")
+region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_3derw"]
 animations = [{
@@ -53,16 +67,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("7_fvesd")
+"texture": SubResource("AtlasTexture_bc5ls")
 }, {
 "duration": 1.0,
-"texture": ExtResource("8_wgmmy")
+"texture": SubResource("AtlasTexture_vkuwq")
 }, {
 "duration": 1.0,
-"texture": ExtResource("9_algd0")
+"texture": SubResource("AtlasTexture_i4bsu")
 }, {
 "duration": 1.0,
-"texture": ExtResource("6_dhsvm")
+"texture": SubResource("AtlasTexture_dhsvm")
 }],
 "loop": true,
 "name": &"marche-bas",
@@ -118,6 +132,8 @@ shape = SubResource("RectangleShape2D_ksi5g")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_3derw")
-animation = &"idle-haut"
+animation = &"marche-bas"
+frame = 2
+frame_progress = 0.8071616
 
 [node name="Camera2D" type="Camera2D" parent="."]

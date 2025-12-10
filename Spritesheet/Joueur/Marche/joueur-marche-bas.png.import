@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d2yjt1lfv7xvi"
-path="res://.godot/imported/IDLE.png-3a5284d8c8e0a3fc9c64db438a57400e.ctex"
+uid="uid://7oe0qgb7mfje"
+path="res://.godot/imported/joueur-marche-bas.png-31f622bb7b721617c285e3c1a66f022b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Spritesheet/IDLE.png"
-dest_files=["res://.godot/imported/IDLE.png-3a5284d8c8e0a3fc9c64db438a57400e.ctex"]
+source_file="res://Spritesheet/Joueur/Marche/joueur-marche-bas.png"
+dest_files=["res://.godot/imported/joueur-marche-bas.png-31f622bb7b721617c285e3c1a66f022b.ctex"]
 
 [params]
 

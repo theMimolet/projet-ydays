@@ -15,7 +15,6 @@ func _ready() -> void:
 
 func Mouvement() -> void :
 	var input_direction : Vector2 = Input.get_vector("Gauche", "Droite", "Haut", "Bas")
-	print(input_direction)
 	if input_direction != Vector2(0,0) : 
 		isMoving = true
 	else :
@@ -28,9 +27,8 @@ func Mouvement() -> void :
 		currentPlayerDirections = playerDirections.BAS
 	elif  input_direction.y < 0:
 		currentPlayerDirections = playerDirections.HAUT
-	print(currentPlayerDirections)
 	velocity = input_direction * SPEED
-	
+
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("Interract"):
 		canMove = false

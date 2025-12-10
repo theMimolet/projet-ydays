@@ -32,7 +32,6 @@ func setup_switcher() -> void :
 func connect_signals() -> void :
 	pass
 
-# YOUR BRILLIANT SWITCHING LOGIC - now universal! ✨
 func switch_to(index: int) -> void:
 	if not switcher_container:
 		push_error("No switcher container found!")
