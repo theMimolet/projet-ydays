@@ -1,9 +1,10 @@
 extends CharacterBody2D
 
-const SPEED = 100.0
+const SPEED = 40.0
 
 @onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
 var canMove : bool = true
+enum playerDirection {BAS, HAUT, GAUCHE, DROITE}
 
 func _ready() -> void:
 	if Dialogic.timeline_ended.connect(_on_timeline_ended) != OK:
@@ -11,6 +12,10 @@ func _ready() -> void:
 
 func Mouvement() -> void :
 	var input_direction : Vector2 = Input.get_vector("Gauche", "Droite", "Haut", "Bas")
+	print(input_direction)
+	match input_direction :
+		input_direction.x > 0.5 : 
+			"A"
 	velocity = input_direction * SPEED
 	Animate()
 	

@@ -1,9 +1,8 @@
-[gd_resource type="Resource" script_class="DialogicStyle" load_steps=21 format=3 uid="uid://u8vjljck1pg1"]
+[gd_resource type="Resource" script_class="DialogicStyle" load_steps=19 format=3 uid="uid://u8vjljck1pg1"]
 
 [ext_resource type="PackedScene" uid="uid://cqpb3ie51rwl5" path="res://addons/dialogic/Modules/DefaultLayoutParts/Base_Default/default_layout_base.tscn" id="1_3frhe"]
 [ext_resource type="Script" uid="uid://bwg6yncmh2cml" path="res://addons/dialogic/Resources/dialogic_style_layer.gd" id="2_qwie5"]
 [ext_resource type="PackedScene" uid="uid://c1k5m0w3r40xf" path="res://addons/dialogic/Modules/DefaultLayoutParts/Layer_FullBackground/full_background_layer.tscn" id="3_04m5v"]
-[ext_resource type="PackedScene" uid="uid://cy1y14inwkplb" path="res://addons/dialogic/Modules/DefaultLayoutParts/Layer_VN_Portraits/vn_portrait_layer.tscn" id="4_pcdh2"]
 [ext_resource type="PackedScene" uid="uid://cn674foxwedqu" path="res://addons/dialogic/Modules/DefaultLayoutParts/Layer_Input/full_advance_input_layer.tscn" id="5_y3piy"]
 [ext_resource type="PackedScene" uid="uid://bquja8jyk8kbr" path="res://addons/dialogic/Modules/DefaultLayoutParts/Layer_VN_Textbox/vn_textbox_layer.tscn" id="6_o78ih"]
 [ext_resource type="PackedScene" uid="uid://dsbwnp5hegnu3" path="res://addons/dialogic/Modules/DefaultLayoutParts/Layer_Glossary/glossary_popup_layer.tscn" id="7_lq2vb"]
@@ -16,16 +15,13 @@
 script = ExtResource("2_qwie5")
 scene = ExtResource("1_3frhe")
 overrides = {
-"global_font_size": "8.0"
+"follow_viewport": "true",
+"global_font_size": "5.0"
 }
 
 [sub_resource type="Resource" id="Resource_6pags"]
 script = ExtResource("2_qwie5")
 scene = ExtResource("3_04m5v")
-
-[sub_resource type="Resource" id="Resource_f0d5c"]
-script = ExtResource("2_qwie5")
-scene = ExtResource("4_pcdh2")
 
 [sub_resource type="Resource" id="Resource_jyycd"]
 script = ExtResource("2_qwie5")
@@ -35,10 +31,14 @@ scene = ExtResource("5_y3piy")
 script = ExtResource("2_qwie5")
 scene = ExtResource("6_o78ih")
 overrides = {
-"box_size": "Vector2(300, 75)",
+"box_margin_bottom": "5.0",
+"box_size": "Vector2(10, 5)",
+"name_label_alignment": "1",
+"name_label_custom_font_size": "5.0",
+"name_label_use_global_font_size": "false",
 "next_indicator_enabled": "false",
 "next_indicator_size": "Vector2(5, 25)",
-"text_size": "8.0"
+"text_size": "5.0"
 }
 
 [sub_resource type="Resource" id="Resource_h2ocw"]
@@ -64,11 +64,10 @@ scene = ExtResource("10_vjw4n")
 [resource]
 script = ExtResource("11_n5l6k")
 name = "Dialog"
-layer_list = Array[String](["10", "11", "12", "13", "14", "15", "16", "17"])
+layer_list = Array[String](["10", "12", "13", "14", "15", "16", "17"])
 layer_info = {
 "": SubResource("Resource_bbuif"),
 "10": SubResource("Resource_6pags"),
-"11": SubResource("Resource_f0d5c"),
 "12": SubResource("Resource_jyycd"),
 "13": SubResource("Resource_hq3gs"),
 "14": SubResource("Resource_h2ocw"),
