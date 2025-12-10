@@ -21,19 +21,34 @@ size = Vector2(11, 4)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_bc5ls")
+"texture": ExtResource("6_dhsvm")
+}],
+"loop": true,
+"name": &"idle-bas",
+"speed": 4.0
 }, {
+"frames": [{
 "duration": 1.0,
-"texture": ExtResource("4_vkuwq")
+"texture": ExtResource("10_s8008")
+}],
+"loop": true,
+"name": &"idle-droite",
+"speed": 4.0
 }, {
+"frames": [{
 "duration": 1.0,
-"texture": ExtResource("5_i4bsu")
+"texture": ExtResource("12_vkuwq")
+}],
+"loop": true,
+"name": &"idle-gauche",
+"speed": 4.0
 }, {
+"frames": [{
 "duration": 1.0,
 "texture": ExtResource("2_uej3h")
 }],
 "loop": true,
-"name": &"marche-derriere",
+"name": &"idle-haut",
 "speed": 4.0
 }, {
 "frames": [{
@@ -50,7 +65,7 @@ animations = [{
 "texture": ExtResource("6_dhsvm")
 }],
 "loop": true,
-"name": &"marche-devant",
+"name": &"marche-bas",
 "speed": 4.0
 }, {
 "frames": [{
@@ -74,6 +89,23 @@ animations = [{
 "loop": true,
 "name": &"marche-gauche",
 "speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_bc5ls")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_vkuwq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_i4bsu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_uej3h")
+}],
+"loop": true,
+"name": &"marche-haut",
+"speed": 4.0
 }]
 
 [node name="Joueur" type="CharacterBody2D"]
@@ -86,6 +118,6 @@ shape = SubResource("RectangleShape2D_ksi5g")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_3derw")
-animation = &"marche-derriere"
+animation = &"idle-haut"
 
 [node name="Camera2D" type="Camera2D" parent="."]

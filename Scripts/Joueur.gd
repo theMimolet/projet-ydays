@@ -4,7 +4,10 @@ const SPEED = 40.0
 
 @onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
 var canMove : bool = true
-enum playerDirection {BAS, HAUT, GAUCHE, DROITE}
+
+var isMoving : bool
+enum playerDirections {BAS, HAUT, GAUCHE, DROITE}
+var currentPlayerDirections : playerDirections
 
 func _ready() -> void:
 	if Dialogic.timeline_ended.connect(_on_timeline_ended) != OK:
@@ -13,11 +16,20 @@ func _ready() -> void:
 func Mouvement() -> void :
 	var input_direction : Vector2 = Input.get_vector("Gauche", "Droite", "Haut", "Bas")
 	print(input_direction)
-	match input_direction :
-		input_direction.x > 0.5 : 
-			"A"
+	if input_direction != Vector2(0,0) : 
+		isMoving = true
+	else :
+		isMoving = false
+	if input_direction.x > 0:
+		currentPlayerDirections = playerDirections.DROITE
+	elif  input_direction.x < 0 :
+		currentPlayerDirections = playerDirections.GAUCHE
+	elif  input_direction.y > 0:
+		currentPlayerDirections = playerDirections.BAS
+	elif  input_direction.y < 0:
+		currentPlayerDirections = playerDirections.HAUT
+	print(currentPlayerDirections)
 	velocity = input_direction * SPEED
-	Animate()
 	
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("Interract"):
@@ -30,6 +42,7 @@ func _physics_process(_delta: float) -> void:
 	
 	if canMove :
 		Mouvement()
+		Animate()
 	else :
 		velocity = Vector2(0, 0)
 		sprite.stop()
@@ -37,16 +50,23 @@ func _physics_process(_delta: float) -> void:
 	move_and_slide()
 
 func Animate() -> void : 
-	if velocity.x > 0:
-		sprite.play("marche-droite")
-	elif  velocity.x < 0 :
-		sprite.play("marche-gauche")
-	elif  velocity.y > 0:
-		sprite.play("marche-devant")
-	elif  velocity.y < 0:
-		sprite.play("marche-derriere")
-	else:
-		sprite.stop()
+	var currentAnimation : String
+	var currentFace : String
+	if isMoving :
+		currentAnimation = "marche"
+	else : 
+		currentAnimation = "idle"
+	match currentPlayerDirections :
+		0 : 
+			currentFace = "bas"
+		1 : 
+			currentFace = "haut"
+		2 : 
+			currentFace = "gauche"
+		3 : 
+			currentFace = "droite"
+	sprite.play(currentAnimation + "-" + currentFace)
+	
 
 func _on_timeline_ended() -> void:
 	canMove = true
