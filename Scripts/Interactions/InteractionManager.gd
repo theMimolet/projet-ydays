@@ -2,90 +2,84 @@ extends Node
 
 const Vase = preload("res://Scripts/Interactions/Vase.gd")
 
-func handle_interaction(player_position: Vector2) -> bool:
-	# Retourne true si une interaction a été trouvée, false sinon
+const VASE_TILE_COORDS = Vector2i(2, 0)
+const INTERACTION_DISTANCE = 32.0
+
+const CELLS_TO_CHECK := [
+	Vector2i(0, 0),   # Case du joueur
+	Vector2i(-1, -1), # Haut-Gauche
+	Vector2i(0, -1),  # Haut
+	Vector2i(1, -1), # Haut-Droite
+	Vector2i(-1, 0),  # Gauche
+	Vector2i(1, 0),   # Droite
+	Vector2i(-1, 1),  # Bas-Gauche
+	Vector2i(0, 1),   # Bas
+	Vector2i(1, 1),   # Bas-Droite
+]
+
+func _get_tilemap() -> TileMapLayer:
 	var rooms := get_tree().current_scene.get_node_or_null("Room")
 	if rooms == null:
-		print("Erreur : node Niveau introuvable !")
-		return false
-	
-	var tilemap := rooms.find_child("TileMapLayer", true, false)
+		return null
+	return rooms.find_child("TileMapLayer", true, false)
+
+func _find_vase_cell(player_position: Vector2) -> Vector2i:
+	var tilemap := _get_tilemap()
 	if tilemap == null:
-		print("Erreur : node TileMapLayer introuvable !")
-		return false
+		return Vector2i(-1, -1)
 	
-	var player_cell = tilemap.local_to_map(tilemap.to_local(player_position))
+	var player_cell: Vector2i = tilemap.local_to_map(tilemap.to_local(player_position))
 	
-	# Liste des cases à vérifier (joueur + 8 cases adjacentes)
-	var cells_to_check := [
-		Vector2i(0, 0),   # Case du joueur
-		Vector2i(-1, -1), # Haut-Gauche
-		Vector2i(0, -1),  # Haut
-		Vector2i(1, -1), # Haut-Droite
-		Vector2i(-1, 0),  # Gauche
-		Vector2i(1, 0),   # Droite
-		Vector2i(-1, 1),  # Bas-Gauche
-		Vector2i(0, 1),   # Bas
-		Vector2i(1, 1),   # Bas-Droite
-	]
-	
-	for offset in cells_to_check:
-		var cell = player_cell + offset
+	for offset: Vector2i in CELLS_TO_CHECK:
+		var cell: Vector2i = player_cell + offset
 		if tilemap.get_cell_source_id(cell) == -1:
 			continue
 		
-		if tilemap.get_cell_atlas_coords(cell) == Vector2i(2, 0):
-			Vase.interact(cell)
-			return true
+		if tilemap.get_cell_atlas_coords(cell) == VASE_TILE_COORDS:
+			return cell
 	
-	# Vérifier les coffres proches (ne bloque pas le mouvement)
-	check_coffre_interaction(player_position)
-	return false  # Les coffres ne bloquent pas le mouvement
+	return Vector2i(-1, -1)
+
+func _find_nearby_node_interactions(player_position: Vector2, group_name: String) -> Node:
+	var nodes: Array[Node] = get_tree().get_nodes_in_group(group_name)
+	
+	for node: Node in nodes:
+		if node.has_method("interact"):
+			var distance: float = player_position.distance_to(node.global_position)
+			if distance <= INTERACTION_DISTANCE:
+				return node
+	
+	return null
+
+func handle_interaction(player_position: Vector2) -> bool:
+	# Vérifier d'abord les interactions basées sur tiles (vases)
+	var vase_cell := _find_vase_cell(player_position)
+	if vase_cell != Vector2i(-1, -1):
+		Vase.interact(vase_cell)
+		return true
+	
+	# Vérifier les interactions basées sur nodes (PNJ)
+	var pnj := _find_nearby_node_interactions(player_position, "PNJ")
+	if pnj != null:
+		pnj.interact()
+		return true  # Les PNJ bloquent le mouvement pendant le dialogue
+	
+	# Vérifier les interactions basées sur nodes (coffres)
+	var coffre := _find_nearby_node_interactions(player_position, "Coffres")
+	if coffre != null:
+		coffre.interact()
+		return false  # Les coffres ne bloquent pas le mouvement
+	
+	return false
 
 func check_vase_collision(player_position: Vector2) -> void:
-	var rooms := get_tree().current_scene.get_node_or_null("Room")
-	if rooms == null:
+	var vase_cell := _find_vase_cell(player_position)
+	if vase_cell == Vector2i(-1, -1):
 		return
 	
-	var tilemap := rooms.find_child("TileMapLayer", true, false)
+	var tilemap := _get_tilemap()
 	if tilemap == null:
 		return
 	
-	var player_cell = tilemap.local_to_map(tilemap.to_local(player_position))
-	
-	# Liste des cases à vérifier (joueur + 8 cases adjacentes)
-	var cells_to_check := [
-		Vector2i(0, 0),   # Case du joueur
-		Vector2i(-1, -1), # Haut-Gauche
-		Vector2i(0, -1),  # Haut
-		Vector2i(1, -1), # Haut-Droite
-		Vector2i(-1, 0),  # Gauche
-		Vector2i(1, 0),   # Droite
-		Vector2i(-1, 1),  # Bas-Gauche
-		Vector2i(0, 1),   # Bas
-		Vector2i(1, 1),   # Bas-Droite
-	]
-	
-	for offset in cells_to_check:
-		var cell = player_cell + offset
-		if tilemap.get_cell_source_id(cell) == -1:
-			continue
-		
-		if tilemap.get_cell_atlas_coords(cell) == Vector2i(2, 0):
-			# Casser le vase en supprimant le tile
-			tilemap.erase_cell(cell)
-			return
-
-func check_coffre_interaction(player_position: Vector2) -> void:
-	# Chercher tous les coffres dans le groupe "Coffres"
-	var coffres = get_tree().get_nodes_in_group("Coffres")
-	
-	# Distance maximale pour l'interaction (en pixels)
-	const INTERACTION_DISTANCE = 32.0
-	
-	for coffre in coffres:
-		if coffre.has_method("interact"):
-			var distance = player_position.distance_to(coffre.global_position)
-			if distance <= INTERACTION_DISTANCE:
-				coffre.interact()
-				return
+	# Casser le vase en supprimant le tile
+	tilemap.erase_cell(vase_cell)

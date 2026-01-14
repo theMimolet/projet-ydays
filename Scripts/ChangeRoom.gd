@@ -36,13 +36,14 @@ func roomLoad(room: String, spawnPoint: String) -> void:
 	spawnNode = rooms.find_child(spawnPoint, true, false) # Cherche récursivement si un node avec le nom recherché existe
 	if spawnNode != null : 
 		joueur.position = spawnNode.position
-		if chat != null:
-			chat.position = spawnNode.position
 	else :
 		push_warning("Spawn point '%s' non trouvé, utilisation d'un spawn par défaut" % spawnPoint)
 		joueur.position = Vector2(0,0)
-		if chat != null:
-			chat.position = Vector2(0,0)
+	
+	await get_tree().process_frame
+	
+	if chat != null:
+		chat.teleport_to_player()
 	
 	$Animateur.play("fade-in")
 
