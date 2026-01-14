@@ -7,6 +7,7 @@ const DASH_COOLDOWN = 0.5
 
 @onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
 var canMove : bool = true
+var canDash : bool = true
 
 var isMoving : bool
 var isDashing : bool = false
@@ -47,7 +48,7 @@ func _input(event: InputEvent) -> void:
 		if interaction_found:
 			canMove = false
 	
-	if event is InputEventKey and event.keycode == KEY_SHIFT and event.pressed and canMove and not isDashing and dashCooldownTimer <= 0.0:
+	if event is InputEventKey and event.keycode == KEY_SHIFT and event.pressed and canMove and not isDashing and dashCooldownTimer <= 0.0 and canDash:
 		var input_direction : Vector2 = Input.get_vector("Gauche", "Droite", "Haut", "Bas")
 		if input_direction != Vector2.ZERO:
 			isDashing = true

@@ -46,7 +46,7 @@ roomToLoad = "uid://lsuq4yhka3a3"
 playerSpawn = Vector2(-33, 131)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ChunkSwitcher"]
-position = Vector2(-0.005001068, -0.01499939)
+position = Vector2(-96.005005, -13.020004)
 shape = SubResource("RectangleShape2D_6kej8")
 
 [node name="RoomTest1" type="Node2D" parent="."]
