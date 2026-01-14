@@ -83,6 +83,10 @@ window/size/mode=3
 window/stretch/mode="viewport"
 window/stretch/aspect="keep_width"
 
+[dotnet]
+
+project/assembly_name="Unlost"
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/dialogic/plugin.cfg")
