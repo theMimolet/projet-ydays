@@ -2,16 +2,17 @@ extends Node
 
 const Vase = preload("res://Scripts/Interactions/Vase.gd")
 
-func handle_interaction(player_position: Vector2) -> void:
+func handle_interaction(player_position: Vector2) -> bool:
+	# Retourne true si une interaction a été trouvée, false sinon
 	var rooms := get_tree().current_scene.get_node_or_null("Room")
 	if rooms == null:
 		print("Erreur : node Niveau introuvable !")
-		return
+		return false
 	
 	var tilemap := rooms.find_child("TileMapLayer", true, false)
 	if tilemap == null:
 		print("Erreur : node TileMapLayer introuvable !")
-		return
+		return false
 	
 	var player_cell = tilemap.local_to_map(tilemap.to_local(player_position))
 	
@@ -35,7 +36,13 @@ func handle_interaction(player_position: Vector2) -> void:
 		
 		if tilemap.get_cell_atlas_coords(cell) == Vector2i(2, 0):
 			Vase.interact(cell)
-			return
+			return true
+	
+	# Vérifier les coffres proches
+	if check_coffre_interaction(player_position):
+		return true
+	
+	return false
 
 func check_vase_collision(player_position: Vector2) -> void:
 	var rooms := get_tree().current_scene.get_node_or_null("Room")
@@ -70,3 +77,19 @@ func check_vase_collision(player_position: Vector2) -> void:
 			# Casser le vase en supprimant le tile
 			tilemap.erase_cell(cell)
 			return
+
+func check_coffre_interaction(player_position: Vector2) -> bool:
+	# Chercher tous les coffres dans le groupe "Coffres"
+	var coffres = get_tree().get_nodes_in_group("Coffres")
+	
+	# Distance maximale pour l'interaction (en pixels)
+	const INTERACTION_DISTANCE = 32.0
+	
+	for coffre in coffres:
+		if coffre.has_method("interact"):
+			var distance = player_position.distance_to(coffre.global_position)
+			if distance <= INTERACTION_DISTANCE:
+				coffre.interact()
+				return true
+	
+	return false

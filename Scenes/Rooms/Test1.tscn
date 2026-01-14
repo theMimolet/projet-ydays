@@ -1,7 +1,6 @@
-[gd_scene load_steps=7 format=4 uid="uid://lsuq4yhka3a3"]
+[gd_scene load_steps=6 format=4 uid="uid://lsuq4yhka3a3"]
 
 [ext_resource type="Texture2D" uid="uid://ckchfryvhfo0n" path="res://Tilesets/proto_tiles.png" id="1_ixoji"]
-[ext_resource type="Texture2D" uid="uid://d2vjwgqh6vile" path="res://Spritesheet/Coffre/sprite_coffre0.png" id="1_ljmtj"]
 [ext_resource type="PackedScene" uid="uid://dtwpnedsbtj8t" path="res://Scenes/RoomSwitcher.tscn" id="2_ljmtj"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7wwei"]
@@ -41,8 +40,3 @@ position = Vector2(-31, 165)
 
 [node name="InitialSpawn" type="Node2D" parent="."]
 position = Vector2(347, -78)
-
-[node name="SpriteCoffre0" type="Sprite2D" parent="."]
-position = Vector2(258, -84.00001)
-scale = Vector2(1.0400003, 1.0400003)
-texture = ExtResource("1_ljmtj")

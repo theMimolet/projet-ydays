@@ -42,8 +42,9 @@ func Mouvement() -> void :
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("Interract"):
-		canMove = false
-		InteractionManager.handle_interaction(global_position)
+		var interaction_found = InteractionManager.handle_interaction(global_position)
+		if interaction_found:
+			canMove = false
 	
 	if event is InputEventKey and event.keycode == KEY_SHIFT and event.pressed and canMove and not isDashing and dashCooldownTimer <= 0.0:
 		var input_direction : Vector2 = Input.get_vector("Gauche", "Droite", "Haut", "Bas")

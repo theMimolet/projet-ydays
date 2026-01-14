@@ -1,11 +1,21 @@
 extends Sprite2D
 
+const COFFRE_FERME_TEXTURE = preload("res://Spritesheet/Coffre/sprite_coffre0.png")
+const COFFRE_OUVERT_TEXTURE = preload("res://Spritesheet/Coffre/sprite_coffre2.png")
 
-# Called when the node enters the scene tree for the first time.
+var is_opened : bool = false
+
 func _ready() -> void:
-	pass # Replace with function body.
+	# Ajouter au groupe pour la détection
+	add_to_group("Coffres")
+	
+	# Initialiser avec le sprite fermé
+	texture = COFFRE_FERME_TEXTURE
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func interact() -> void:
+	if is_opened:
+		return
+	
+	# Changer le sprite pour le coffre ouvert
+	texture = COFFRE_OUVERT_TEXTURE
+	is_opened = true
