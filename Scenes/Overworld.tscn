@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://dhwd5kgfkv56y" path="res://Scripts/ChangeRoom.gd" id="2_7xrvl"]
 [ext_resource type="Script" uid="uid://b86xfcp055ajx" path="res://Scripts/CHat/chat.gd" id="3_8lvve"]
 [ext_resource type="Texture2D" uid="uid://dd3by3yef1i2l" path="res://Spritesheet/chat/Group_chat.png" id="4_s3goe"]
+[ext_resource type="Script" path="res://Scripts/UI/HUD.gd" id="5_hud"]
 
 [sub_resource type="Animation" id="Animation_0thx2"]
 length = 0.001
@@ -122,5 +123,26 @@ animation = &"chat"
 autoplay = "chat"
 frame = 1
 frame_progress = 0.11325879
+
+[node name="HUD" type="CanvasLayer" parent="."]
+script = ExtResource("5_hud")
+
+[node name="HUDContainer" type="MarginContainer" parent="HUD"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -100.0
+offset_bottom = 30.0
+grow_horizontal = 0
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+
+[node name="HPContainer" type="HBoxContainer" parent="HUD/HUDContainer"]
+layout_mode = 2
+
+[node name="HPLabel" type="Label" parent="HUD/HUDContainer/HPContainer"]
+layout_mode = 2
+text = "HP: 100 / 100"
+horizontal_alignment = 2
 
 [connection signal="animation_finished" from="RoomManager/Animateur" to="RoomManager" method="_on_animateur_animation_finished"]

@@ -114,4 +114,4 @@ shape = SubResource("RectangleShape2D_430hh")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Torche"]
 sprite_frames = SubResource("SpriteFrames_jmmq1")
 autoplay = "default"
-frame_progress = 0.5413073
+frame_progress = 0.71894294

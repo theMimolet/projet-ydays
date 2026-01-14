@@ -9,6 +9,12 @@ const DASH_COOLDOWN = 0.5
 var canMove : bool = true
 var canDash : bool = true
 
+# Système de points de vie
+const MAX_HP : int = 100
+var current_hp : int = MAX_HP
+
+signal hp_changed(new_hp: int, max_hp: int)
+
 var isMoving : bool
 var isDashing : bool = false
 var dashTimer : float = 0.0
@@ -21,6 +27,10 @@ func _ready() -> void:
 	add_to_group("Joueur")
 	if Dialogic.timeline_ended.connect(_on_timeline_ended) != OK:
 		print("Erreur : impossible de se connecter au signal timeline_ended de Dialogic")
+	
+	# Initialiser les HP et émettre le signal
+	current_hp = MAX_HP
+	hp_changed.emit(current_hp, MAX_HP)
 
 func Mouvement() -> void :
 	if isDashing:
