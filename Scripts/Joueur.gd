@@ -14,6 +14,7 @@ const MAX_HP : int = 100
 var current_hp : int = MAX_HP
 
 signal hp_changed(new_hp: int, max_hp: int)
+signal player_died
 
 var isMoving : bool
 var isDashing : bool = false
@@ -54,7 +55,7 @@ func Mouvement() -> void :
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("Interract"):
-		var interaction_found = InteractionManager.handle_interaction(global_position)
+		var interaction_found : bool = InteractionManager.handle_interaction(global_position)
 		if interaction_found:
 			canMove = false
 	
@@ -112,3 +113,56 @@ func Animate() -> void :
 
 func _on_timeline_ended() -> void:
 	canMove = true
+
+# ============== SYSTÈME DE POINTS DE VIE ==============
+
+func take_damage(damage: int) -> void:
+	"""Inflige des dégâts au joueur"""
+	if damage <= 0:
+		return
+	
+	current_hp -= damage
+	if current_hp < 0:
+		current_hp = 0
+	
+	hp_changed.emit(current_hp, MAX_HP)
+	
+	if current_hp <= 0:
+		player_died.emit()
+		_on_player_death()
+
+func heal(amount: int) -> void:
+	"""Soigne le joueur"""
+	if amount <= 0:
+		return
+	
+	current_hp += amount
+	if current_hp > MAX_HP:
+		current_hp = MAX_HP
+	
+	hp_changed.emit(current_hp, MAX_HP)
+
+func set_hp(new_hp: int) -> void:
+	"""Définit directement les HP (utile pour les potions, etc.)"""
+	current_hp = clamp(new_hp, 0, MAX_HP)
+	hp_changed.emit(current_hp, MAX_HP)
+	
+	if current_hp <= 0:
+		player_died.emit()
+		_on_player_death()
+
+func is_dead() -> bool:
+	"""Retourne true si le joueur est mort"""
+	return current_hp <= 0
+
+func get_hp_percentage() -> float:
+	"""Retourne le pourcentage de HP (0.0 à 1.0)"""
+	return float(current_hp) / float(MAX_HP)
+
+func _on_player_death() -> void:
+	"""Appelé quand le joueur meurt - à personnaliser selon vos besoins"""
+	print("Le joueur est mort !")
+	# Ici vous pouvez ajouter :
+	# - Animation de mort
+	# - Game Over screen
+	# - Respawn, etc.
