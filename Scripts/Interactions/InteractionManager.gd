@@ -38,11 +38,9 @@ func handle_interaction(player_position: Vector2) -> bool:
 			Vase.interact(cell)
 			return true
 	
-	# Vérifier les coffres proches
-	if check_coffre_interaction(player_position):
-		return true
-	
-	return false
+	# Vérifier les coffres proches (ne bloque pas le mouvement)
+	check_coffre_interaction(player_position)
+	return false  # Les coffres ne bloquent pas le mouvement
 
 func check_vase_collision(player_position: Vector2) -> void:
 	var rooms := get_tree().current_scene.get_node_or_null("Room")
@@ -78,7 +76,7 @@ func check_vase_collision(player_position: Vector2) -> void:
 			tilemap.erase_cell(cell)
 			return
 
-func check_coffre_interaction(player_position: Vector2) -> bool:
+func check_coffre_interaction(player_position: Vector2) -> void:
 	# Chercher tous les coffres dans le groupe "Coffres"
 	var coffres = get_tree().get_nodes_in_group("Coffres")
 	
@@ -90,6 +88,4 @@ func check_coffre_interaction(player_position: Vector2) -> bool:
 			var distance = player_position.distance_to(coffre.global_position)
 			if distance <= INTERACTION_DISTANCE:
 				coffre.interact()
-				return true
-	
-	return false
+				return

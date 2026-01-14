@@ -17,6 +17,7 @@ enum playerDirections {BAS, HAUT, GAUCHE, DROITE}
 var currentPlayerDirections : playerDirections
 
 func _ready() -> void:
+	add_to_group("Joueur")
 	if Dialogic.timeline_ended.connect(_on_timeline_ended) != OK:
 		print("Erreur : impossible de se connecter au signal timeline_ended de Dialogic")
 

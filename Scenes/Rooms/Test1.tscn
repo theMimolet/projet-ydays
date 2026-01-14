@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=4 uid="uid://lsuq4yhka3a3"]
+[gd_scene load_steps=8 format=4 uid="uid://lsuq4yhka3a3"]
 
 [ext_resource type="Texture2D" uid="uid://ckchfryvhfo0n" path="res://Tilesets/proto_tiles.png" id="1_ixoji"]
 [ext_resource type="PackedScene" uid="uid://dtwpnedsbtj8t" path="res://Scenes/RoomSwitcher.tscn" id="2_ljmtj"]
+[ext_resource type="Script" uid="uid://bt8sfngqeu8gg" path="res://Scripts/Interactions/Coffre.gd" id="4_o5rc3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7wwei"]
 texture = ExtResource("1_ixoji")
@@ -19,6 +20,8 @@ sources/1 = SubResource("TileSetAtlasSource_7wwei")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q8n12"]
 size = Vector2(96, 34)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ljmtj"]
 
 [node name="RoomTest1" type="Node2D"]
 
@@ -40,3 +43,12 @@ position = Vector2(-31, 165)
 
 [node name="InitialSpawn" type="Node2D" parent="."]
 position = Vector2(347, -78)
+
+[node name="Coffre" type="Sprite2D" parent="."]
+position = Vector2(350, 0)
+script = ExtResource("4_o5rc3")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Coffre"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Coffre/StaticBody2D"]
+shape = SubResource("RectangleShape2D_ljmtj")
