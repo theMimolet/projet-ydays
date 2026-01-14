@@ -1,12 +1,18 @@
 extends CharacterBody2D
 
 const SPEED = 40.0
-const RUN_SPEED = 80.0
+const DASH_SPEED = 200.0
+const DASH_DURATION = 0.2
+const DASH_COOLDOWN = 0.5
 
 @onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
 var canMove : bool = true
 
 var isMoving : bool
+var isDashing : bool = false
+var dashTimer : float = 0.0
+var dashCooldownTimer : float = 0.0
+var dashDirection : Vector2 = Vector2.ZERO
 enum playerDirections {BAS, HAUT, GAUCHE, DROITE}
 var currentPlayerDirections : playerDirections
 
@@ -15,6 +21,10 @@ func _ready() -> void:
 		print("Erreur : impossible de se connecter au signal timeline_ended de Dialogic")
 
 func Mouvement() -> void :
+	if isDashing:
+		velocity = dashDirection * DASH_SPEED
+		return
+	
 	var input_direction : Vector2 = Input.get_vector("Gauche", "Droite", "Haut", "Bas")
 	if input_direction != Vector2(0,0) : 
 		isMoving = true
@@ -28,17 +38,36 @@ func Mouvement() -> void :
 		currentPlayerDirections = playerDirections.BAS
 	elif  input_direction.y < 0:
 		currentPlayerDirections = playerDirections.HAUT
-	var current_speed = RUN_SPEED if Input.is_key_pressed(KEY_CTRL) else SPEED
-	velocity = input_direction * current_speed
+	velocity = input_direction * SPEED
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("Interract"):
 		canMove = false
 		InteractionManager.handle_interaction(global_position)
+	
+	if event is InputEventKey and event.keycode == KEY_SHIFT and event.pressed and canMove and not isDashing and dashCooldownTimer <= 0.0:
+		var input_direction : Vector2 = Input.get_vector("Gauche", "Droite", "Haut", "Bas")
+		if input_direction != Vector2.ZERO:
+			isDashing = true
+			dashDirection = input_direction.normalized()
+			dashTimer = DASH_DURATION
+			dashCooldownTimer = DASH_COOLDOWN
 
 func _physics_process(_delta: float) -> void:
 
 	# ============== MOUVEMENTS ==============
+	
+	# Gestion du dash
+	if isDashing:
+		dashTimer -= _delta
+		InteractionManager.check_vase_collision(global_position)
+		if dashTimer <= 0.0:
+			isDashing = false
+			dashDirection = Vector2.ZERO
+	
+	# Gestion du cooldown du dash
+	if dashCooldownTimer > 0.0:
+		dashCooldownTimer -= _delta
 	
 	if canMove :
 		Mouvement()
