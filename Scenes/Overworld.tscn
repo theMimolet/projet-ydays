@@ -86,9 +86,9 @@ animations = [{
 
 [node name="Room" type="Node" parent="."]
 
-[node name="Joueur" parent="." instance=ExtResource("1_ctcok")]
+[node name="Joueur" parent="." groups=["Joueur"] instance=ExtResource("1_ctcok")]
 
-[node name="RoomManager" type="CanvasLayer" parent="."]
+[node name="RoomManager" type="CanvasLayer" parent="." groups=["RoomManager"]]
 script = ExtResource("2_7xrvl")
 
 [node name="Transition" type="ColorRect" parent="RoomManager"]
