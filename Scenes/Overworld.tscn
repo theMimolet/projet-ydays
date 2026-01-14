@@ -1,7 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://d3wesmde18u6b"]
+[gd_scene load_steps=13 format=3 uid="uid://d3wesmde18u6b"]
 
 [ext_resource type="PackedScene" uid="uid://d1xvmuswrxu7v" path="res://Scenes/Joueur.tscn" id="1_ctcok"]
 [ext_resource type="Script" uid="uid://dhwd5kgfkv56y" path="res://Scripts/ChangeRoom.gd" id="2_7xrvl"]
+[ext_resource type="Script" uid="uid://b86xfcp055ajx" path="res://Scripts/CHat/chat.gd" id="3_8lvve"]
+[ext_resource type="Texture2D" uid="uid://dd3by3yef1i2l" path="res://Spritesheet/chat/Group_chat.png" id="4_s3goe"]
 
 [sub_resource type="Animation" id="Animation_0thx2"]
 length = 0.001
@@ -56,6 +58,30 @@ _data = {
 &"fade-out": SubResource("Animation_hjv83")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s7wd7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d6kyl"]
+atlas = ExtResource("4_s3goe")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7g7yc"]
+atlas = ExtResource("4_s3goe")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_p68c8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d6kyl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7g7yc")
+}],
+"loop": true,
+"name": &"chat",
+"speed": 5.0
+}]
+
 [node name="Jeu" type="Node"]
 
 [node name="Room" type="Node" parent="."]
@@ -80,5 +106,21 @@ root_node = NodePath("../..")
 libraries = {
 &"": SubResource("AnimationLibrary_elnyr")
 }
+
+[node name="Chat" type="CharacterBody2D" parent="."]
+script = ExtResource("3_8lvve")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Chat"]
+position = Vector2(-0.54, 12.595)
+scale = Vector2(0.79, 0.235)
+shape = SubResource("RectangleShape2D_s7wd7")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Chat"]
+position = Vector2(1, 11)
+sprite_frames = SubResource("SpriteFrames_p68c8")
+animation = &"chat"
+autoplay = "chat"
+frame = 1
+frame_progress = 0.11325879
 
 [connection signal="animation_finished" from="RoomManager/Animateur" to="RoomManager" method="_on_animateur_animation_finished"]
