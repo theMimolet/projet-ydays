@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://dhwd5kgfkv56y" path="res://Scripts/ChangeRoom.gd" id="2_7xrvl"]
 [ext_resource type="Script" uid="uid://b86xfcp055ajx" path="res://Scripts/CHat/chat.gd" id="3_8lvve"]
 [ext_resource type="Texture2D" uid="uid://dd3by3yef1i2l" path="res://Spritesheet/chat/Group_chat.png" id="4_s3goe"]
+[ext_resource type="PackedScene" path="res://Scenes/UI/StaminaBar.tscn" id="5_stamina"]
 
 [sub_resource type="Animation" id="Animation_0thx2"]
 length = 0.001
@@ -122,5 +123,7 @@ animation = &"chat"
 autoplay = "chat"
 frame = 1
 frame_progress = 0.11325879
+
+[node name="StaminaBar" parent="." instance=ExtResource("5_stamina")]
 
 [connection signal="animation_finished" from="RoomManager/Animateur" to="RoomManager" method="_on_animateur_animation_finished"]

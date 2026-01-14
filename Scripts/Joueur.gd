@@ -4,6 +4,9 @@ const SPEED = 40.0
 const DASH_SPEED = 200.0
 const DASH_DURATION = 0.2
 const DASH_COOLDOWN = 0.5
+const STAMINA_MAX = 3
+const STAMINA_REGEN_RATE = 0.5
+const DASH_STAMINA_COST = 1
 
 @onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
 var canMove : bool = true
@@ -14,8 +17,14 @@ var isDashing : bool = false
 var dashTimer : float = 0.0
 var dashCooldownTimer : float = 0.0
 var dashDirection : Vector2 = Vector2.ZERO
+var stamina : int = STAMINA_MAX
+var staminaRegenTimer : float = 0.0
+const STAMINA_REGEN_DELAY = 1.0
+
 enum playerDirections {BAS, HAUT, GAUCHE, DROITE}
 var currentPlayerDirections : playerDirections
+
+signal stamina_changed(new_stamina: int)
 
 func _ready() -> void:
 	add_to_group("Joueur")
@@ -48,13 +57,14 @@ func _input(event: InputEvent) -> void:
 		if interaction_found:
 			canMove = false
 	
-	if event is InputEventKey and event.keycode == KEY_SHIFT and event.pressed and canMove and not isDashing and dashCooldownTimer <= 0.0 and canDash:
+	if event is InputEventKey and event.keycode == KEY_SHIFT and event.pressed and canMove and not isDashing and dashCooldownTimer <= 0.0 and canDash and stamina >= DASH_STAMINA_COST:
 		var input_direction : Vector2 = Input.get_vector("Gauche", "Droite", "Haut", "Bas")
 		if input_direction != Vector2.ZERO:
 			isDashing = true
 			dashDirection = input_direction.normalized()
 			dashTimer = DASH_DURATION
 			dashCooldownTimer = DASH_COOLDOWN
+			consume_stamina(DASH_STAMINA_COST)
 
 func _physics_process(_delta: float) -> void:
 
@@ -71,6 +81,15 @@ func _physics_process(_delta: float) -> void:
 	# Gestion du cooldown du dash
 	if dashCooldownTimer > 0.0:
 		dashCooldownTimer -= _delta
+	
+	# Gestion de la régénération de stamina
+	if stamina < STAMINA_MAX and not isDashing:
+		staminaRegenTimer += _delta
+		if staminaRegenTimer >= STAMINA_REGEN_DELAY:
+			staminaRegenTimer = 0.0
+			regenerate_stamina()
+	else:
+		staminaRegenTimer = 0.0
 	
 	if canMove :
 		Mouvement()
@@ -102,3 +121,12 @@ func Animate() -> void :
 
 func _on_timeline_ended() -> void:
 	canMove = true
+
+func consume_stamina(amount: int) -> void:
+	stamina = max(0, stamina - amount)
+	stamina_changed.emit(stamina)
+
+func regenerate_stamina() -> void:
+	if stamina < STAMINA_MAX:
+		stamina += 1
+		stamina_changed.emit(stamina)
