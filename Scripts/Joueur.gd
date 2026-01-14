@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 const SPEED = 40.0
+const RUN_SPEED = 80.0
 
 @onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
 var canMove : bool = true
@@ -27,7 +28,8 @@ func Mouvement() -> void :
 		currentPlayerDirections = playerDirections.BAS
 	elif  input_direction.y < 0:
 		currentPlayerDirections = playerDirections.HAUT
-	velocity = input_direction * SPEED
+	var current_speed = RUN_SPEED if Input.is_key_pressed(KEY_CTRL) else SPEED
+	velocity = input_direction * current_speed
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("Interract"):
