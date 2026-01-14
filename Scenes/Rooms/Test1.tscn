@@ -1,9 +1,9 @@
-[gd_scene load_steps=8 format=4 uid="uid://lsuq4yhka3a3"]
+[gd_scene load_steps=10 format=4 uid="uid://lsuq4yhka3a3"]
 
 [ext_resource type="Texture2D" uid="uid://ckchfryvhfo0n" path="res://Tilesets/proto_tiles.png" id="1_ixoji"]
 [ext_resource type="PackedScene" uid="uid://dtwpnedsbtj8t" path="res://Scenes/RoomSwitcher.tscn" id="2_ljmtj"]
 [ext_resource type="PackedScene" uid="uid://c37g8d2neou34" path="res://Scenes/Entities/overworld_enemy.tscn" id="3_ljmtj"]
-[ext_resource type="Script" uid="uid://bt8sfngqeu8gg" path="res://Scripts/Interactions/Coffre.gd" id="4_o5rc3"]
+[ext_resource type="Script" path="res://Scripts/Interactions/Coffre.gd" id="4_o5rc3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7wwei"]
 texture = ExtResource("1_ixoji")
@@ -58,11 +58,11 @@ position = Vector2(-31, 165)
 [node name="InitialSpawn" type="Node2D" parent="."]
 position = Vector2(347, -78)
 
-
 [node name="OverworldEnemy" parent="." instance=ExtResource("3_ljmtj")]
 position = Vector2(166, -80)
 
 [node name="Origine" type="Node2D" parent="OverworldEnemy"]
+
 [node name="Coffre" type="Sprite2D" parent="."]
 position = Vector2(350, 0)
 script = ExtResource("4_o5rc3")

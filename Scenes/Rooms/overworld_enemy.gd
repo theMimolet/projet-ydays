@@ -12,7 +12,8 @@ var etatActuel : etat
 
 func _ready() -> void:
 	etatActuel = etat.COMA
-	roomManager.roomLoaded.connect(Callable(_on_room_loaded))
+	roomManager.loaded.connect(Callable(_on_room_loaded))
+	roomManager.unloading.connect(Callable(_on_room_unloading))
 	nav.velocity_computed.connect(Callable(_on_velocity_computed))
 
 func _physics_process(_delta: float) -> void:
@@ -23,9 +24,6 @@ func _physics_process(_delta: float) -> void:
 				nav.get_next_path_position()
 				
 				if NavigationServer2D.map_get_iteration_id(nav.get_navigation_map()) == 0:
-					return
-				if nav.is_navigation_finished():
-					etatActuel = etat.COMA
 					return
 				
 				var next_path_position: Vector2 = nav.get_next_path_position()
@@ -39,7 +37,6 @@ func _physics_process(_delta: float) -> void:
 				$OverworldEnemyTriggered.play()
 				$Timer.start()
 		etat.COMA : 
-			#print(self.name + " : \"Zzzzzzz\"")
 			pass
 
 func set_movement_target(movement_target: Vector2) -> void:
@@ -47,6 +44,9 @@ func set_movement_target(movement_target: Vector2) -> void:
 
 func _on_room_loaded() -> void :
 	etatActuel = etat.IDLE
+
+func _on_room_unloading() -> void :
+	etatActuel = etat.COMA
 
 func _on_velocity_computed(safe_velocity: Vector2) -> void:
 	velocity = safe_velocity
@@ -59,9 +59,10 @@ func _on_detection_body_entered(body: Node2D) -> void:
 		print("Je te vois !")
 
 func _on_touche_body_entered(body: Node2D) -> void:
-	if body.name == "Joueur":
-		etatActuel = etat.COMA
+	if body == joueur: 
+		joueur.paralysePlayer(true)
 		print("Je t'ai eu !")
+		etatActuel = etat.COMA
 
 func _on_timer_timeout() -> void:
 	print("RUN")
