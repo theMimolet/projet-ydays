@@ -40,6 +40,11 @@ func handle_interaction(player_position: Vector2) -> bool:
 	
 	# Vérifier les coffres proches (ne bloque pas le mouvement)
 	check_coffre_interaction(player_position)
+	
+	# Vérifier les items collectables proches
+	if check_collectable_items(player_position):
+		return true  # Les items collectables bloquent le mouvement pendant la collecte
+	
 	return false  # Les coffres ne bloquent pas le mouvement
 
 func check_vase_collision(player_position: Vector2) -> void:
@@ -89,3 +94,19 @@ func check_coffre_interaction(player_position: Vector2) -> void:
 			if distance <= INTERACTION_DISTANCE:
 				coffre.interact()
 				return
+
+func check_collectable_items(player_position: Vector2) -> bool:
+	"""Vérifie et collecte les items collectables proches. Retourne true si un item a été collecté"""
+	var collectables = get_tree().get_nodes_in_group("CollectableItems")
+	
+	# Distance maximale pour la collecte (en pixels)
+	const COLLECTION_DISTANCE = 32.0
+	
+	for collectable in collectables:
+		if collectable.has_method("collect") and collectable.has_method("can_be_collected"):
+			if collectable.can_be_collected():
+				var distance = player_position.distance_to(collectable.global_position)
+				if distance <= COLLECTION_DISTANCE:
+					return collectable.collect()
+	
+	return false
