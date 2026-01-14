@@ -6,7 +6,7 @@ const DASH_DURATION = 0.2
 const DASH_COOLDOWN = 0.5
 
 @onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
-var canMove : bool = true
+@export var canMove : bool = true
 var canDash : bool = true
 
 var isMoving : bool
@@ -48,7 +48,7 @@ func _input(event: InputEvent) -> void:
 		if interaction_found:
 			canMove = false
 	
-	if event is InputEventKey and event.keycode == KEY_SHIFT and event.pressed and canMove and not isDashing and dashCooldownTimer <= 0.0 and canDash:
+	if event.is_action_pressed("Dash") and canMove and not isDashing and dashCooldownTimer <= 0.0 and canDash:
 		var input_direction : Vector2 = Input.get_vector("Gauche", "Droite", "Haut", "Bas")
 		if input_direction != Vector2.ZERO:
 			isDashing = true
@@ -99,6 +99,11 @@ func Animate() -> void :
 			currentFace = "droite"
 	sprite.play(currentAnimation + "-" + currentFace)
 	
+func paralysePlayer(yes : bool) -> void :
+	if yes:
+		canMove = false
+	else : 
+		canMove = true
 
 func _on_timeline_ended() -> void:
-	canMove = true
+	paralysePlayer(false)

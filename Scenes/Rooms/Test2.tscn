@@ -216,7 +216,7 @@ position = Vector2(-96.005005, -13.020004)
 shape = SubResource("RectangleShape2D_6kej8")
 
 [node name="RoomTest1" type="Node2D" parent="."]
-position = Vector2(42, -145)
+position = Vector2(-56, -170)
 
 [node name="MonstreNoir" type="CharacterBody2D" parent="."]
 position = Vector2(-135, -83)

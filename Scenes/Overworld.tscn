@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://d1xvmuswrxu7v" path="res://Scenes/Joueur.tscn" id="1_ctcok"]
 [ext_resource type="Script" uid="uid://dhwd5kgfkv56y" path="res://Scripts/ChangeRoom.gd" id="2_7xrvl"]
-[ext_resource type="Script" uid="uid://b86xfcp055ajx" path="res://Scripts/CHat/chat.gd" id="3_8lvve"]
+[ext_resource type="Script" uid="uid://b86xfcp055ajx" path="res://Scripts/Chat/chat.gd" id="3_8lvve"]
 [ext_resource type="Texture2D" uid="uid://dd3by3yef1i2l" path="res://Spritesheet/chat/Group_chat.png" id="4_s3goe"]
 
 [sub_resource type="Animation" id="Animation_0thx2"]
@@ -86,9 +86,9 @@ animations = [{
 
 [node name="Room" type="Node" parent="."]
 
-[node name="Joueur" parent="." instance=ExtResource("1_ctcok")]
+[node name="Joueur" parent="." groups=["Joueur"] instance=ExtResource("1_ctcok")]
 
-[node name="RoomManager" type="CanvasLayer" parent="."]
+[node name="RoomManager" type="CanvasLayer" parent="." groups=["RoomManager"]]
 script = ExtResource("2_7xrvl")
 
 [node name="Transition" type="ColorRect" parent="RoomManager"]

@@ -1,6 +1,8 @@
 extends CanvasLayer
 
 signal unloadFinished
+signal unloading
+signal loaded
 
 @onready var rooms : Node = $"../Room" 
 @onready var joueur : Node = $"../Joueur"
@@ -17,8 +19,9 @@ func roomChange(newRoom: String) -> void:
 	roomLoad(newRoom, previousRoomName)
 
 func roomUnload() -> void:
+	emit_signal("unloading")
+	joueur.paralysePlayer(true)
 	$Animateur.play("fade-out")
-	joueur.canMove = false
 	if chat != null and chat.has_method("set") and chat.get("canMove") != null:
 		chat.canMove = false
 
@@ -56,6 +59,7 @@ func _on_animateur_animation_finished(anim_name: StringName) -> void:
 				child = null
 			emit_signal("unloadFinished")
 		"fade-in" :
-			joueur.canMove = true
+			joueur.paralysePlayer(false)
+			emit_signal("loaded")
 			if chat != null and chat.has_method("set") and chat.get("canMove") != null:
 				chat.canMove = true
