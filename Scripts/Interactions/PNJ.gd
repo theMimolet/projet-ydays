@@ -23,20 +23,8 @@ func _physics_process(_delta: float) -> void:
 	update_depth()
 
 func update_depth() -> void:
-	if player == null:
-		return
-	
-	const BASE_Z_INDEX := 10
-	
-	if player.z_index == 0:
-		player.z_index = BASE_Z_INDEX
-	
-	if global_position.y < player.global_position.y:
-		z_index = BASE_Z_INDEX - 1
-	else:
-		z_index = BASE_Z_INDEX + 1
-	
-	z_index = max(z_index, 1)
+	const BASE_OFFSET := 1000
+	z_index = BASE_OFFSET + int(global_position.y)
 
 func interact() -> void:
 	if not has_interacted:

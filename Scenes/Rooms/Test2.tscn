@@ -68,7 +68,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"idle",
-"speed": 5.0
+"speed": 3.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_773rk"]
@@ -89,18 +89,18 @@ region = Rect2(0, 0, 48, 43)
 [sub_resource type="SpriteFrames" id="SpriteFrames_xr16a"]
 animations = [{
 "frames": [{
-"duration": 2.01,
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_ftqpf")
 }, {
-"duration": 2.01,
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_5s5wa")
 }, {
-"duration": 2.01,
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_yto7a")
 }],
 "loop": true,
 "name": &"idle",
-"speed": 5.0
+"speed": 3.0
 }]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_oynwm"]
@@ -129,7 +129,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
-"speed": 5.0
+"speed": 3.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tpj1h"]
@@ -161,7 +161,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"idle",
-"speed": 5.0
+"speed": 3.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_37hg6"]

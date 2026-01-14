@@ -80,6 +80,11 @@ func _physics_process(_delta: float) -> void:
 		sprite.stop()
 
 	move_and_slide()
+	update_depth()
+
+func update_depth() -> void:
+	const BASE_OFFSET := 1000
+	z_index = BASE_OFFSET + int(global_position.y)
 
 func Animate() -> void : 
 	var currentAnimation : String
