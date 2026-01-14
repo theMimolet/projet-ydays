@@ -18,9 +18,13 @@ physics_layer_0/collision_layer = 1
 sources/1 = SubResource("TileSetAtlasSource_7wwei")
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_ljmtj"]
-vertices = PackedVector2Array(390, -119, 390, 149, 314, 72, 314, -43, -70, -119, 6, -43, -70, 198, 6, 72, 6, 149, 6, 198)
+vertices = PackedVector2Array(380, -109, 380, 139, 325.21094, 83, 323.78906, -53, -60, -109, -4, -53, -60, 188, -4, 83, -4, 139, -4, 188)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 0, 3, 5), PackedInt32Array(6, 4, 5, 7), PackedInt32Array(2, 1, 8, 7), PackedInt32Array(6, 7, 8), PackedInt32Array(6, 8, 9)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(-80, -129, 400, -129, 400, 159, 16, 159, 16, 208, -80, 208), PackedVector2Array(16, -33, 16, 62, 304, 62, 304, -33)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-80, -129, 400, -129, 400, 159, 16, 159, 16, 208, -80, 208), PackedVector2Array(16, -33, 16, 63, 305, 63, 304, -33)])
+parsed_collision_mask = 4294901775
+cell_size = 10.0
+border_size = 25.0
+agent_radius = 20.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q8n12"]
 size = Vector2(96, 34)
@@ -50,8 +54,7 @@ position = Vector2(-31, 165)
 [node name="InitialSpawn" type="Node2D" parent="."]
 position = Vector2(347, -78)
 
-[node name="OverworldEnemy" parent="." node_paths=PackedStringArray("Origine") instance=ExtResource("3_ljmtj")]
+[node name="OverworldEnemy" parent="." instance=ExtResource("3_ljmtj")]
 position = Vector2(166, -80)
-Origine = NodePath("Origine")
 
 [node name="Origine" type="Node2D" parent="OverworldEnemy"]
