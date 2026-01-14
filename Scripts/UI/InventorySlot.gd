@@ -8,10 +8,12 @@ const Item = preload("res://Scripts/Items/Item.gd")
 var item = null  # Item
 var quantity : int = 0
 var slot_index : int = -1
+var is_dragging : bool = false
 
 signal slot_clicked(slot)
 signal slot_drag_started(slot)
 signal slot_dropped(slot, target_slot)
+signal slot_right_clicked(slot)
 
 func _ready() -> void:
 	# Style du slot
@@ -24,12 +26,21 @@ func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if event.pressed:
-				slot_clicked.emit(self)
+				# Vérifier si Alt est pressé pour le split
+				if Input.is_key_pressed(KEY_ALT) and quantity > 1:
+					slot_clicked.emit(self)
+				elif not Input.is_key_pressed(KEY_ALT):
+					slot_clicked.emit(self)
 			else:
 				# Fin du drag
-				var target = _get_slot_under_mouse()
-				if target != null and target != self:
-					slot_dropped.emit(self, target)
+				if is_dragging:
+					var target = _get_slot_under_mouse()
+					if target != null and target != self:
+						slot_dropped.emit(self, target)
+					set_dragging(false)
+		elif event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+			if not is_empty():
+				slot_right_clicked.emit(self)
 
 func _get_slot_under_mouse():
 	var mouse_pos : Vector2 = get_global_mouse_position()
@@ -104,8 +115,24 @@ func update_display() -> void:
 	
 	# Afficher la quantité si > 1
 	if quantity > 1:
-		quantity_label.text = str(quantity)
+		quantity_label.text = "x" + str(quantity)
 		quantity_label.visible = true
 	else:
 		quantity_label.text = ""
 		quantity_label.visible = false
+
+func set_dragging(dragging: bool) -> void:
+	"""Active ou désactive l'état de drag pour le feedback visuel"""
+	is_dragging = dragging
+	if dragging:
+		modulate = Color(1, 1, 1, 0.5)
+	else:
+		modulate = Color(1, 1, 1, 1)
+
+func split_stack() -> bool:
+	"""Divise une pile en retirant 1 item. Retourne true si réussi"""
+	if quantity > 1:
+		quantity -= 1
+		update_display()
+		return true
+	return false
