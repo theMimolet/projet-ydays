@@ -42,7 +42,8 @@ func handle_interaction(player_position: Vector2) -> bool:
 	check_coffre_interaction(player_position)
 	
 	# Vérifier les items collectables proches
-	if check_collectable_items(player_position):
+	var item_collected : bool = check_collectable_items(player_position)
+	if item_collected:
 		return true  # Les items collectables bloquent le mouvement pendant la collecte
 	
 	return false  # Les coffres ne bloquent pas le mouvement
