@@ -1,5 +1,4 @@
-extends CharacterBody2D
-
+extends Node2D
 
 @export var speed : float = 75.0
 
@@ -7,10 +6,15 @@ extends CharacterBody2D
 @onready var joueur : CharacterBody2D = get_tree().get_first_node_in_group("Joueur")
 @onready var roomManager := get_tree().get_first_node_in_group("RoomManager")
 
+var joueurProche : bool
+var niveauAlerte : int
+
 enum etat {COMA, IDLE, ALERTE, POURSUITE} 
 var etatActuel : etat
 
 func _ready() -> void:
+	niveauAlerte = 0
+	joueurProche = false
 	etatActuel = etat.COMA
 	roomManager.loaded.connect(Callable(_on_room_loaded))
 	roomManager.unloading.connect(Callable(_on_room_unloading))
@@ -33,11 +37,27 @@ func _physics_process(_delta: float) -> void:
 				else:
 					_on_velocity_computed(new_velocity)
 		etat.ALERTE : 
-			if $Timer.is_stopped() : 
-				$OverworldEnemyTriggered.play()
-				$Timer.start()
-		etat.COMA : 
-			pass
+			if $TPoursuite.is_stopped() : 
+				$Triggered.play()
+				$TPoursuite.start()
+		etat.IDLE : 
+			if $TAlerte.is_stopped() : 
+				print(joueurProche)
+				if joueurProche :
+					majNiveauAlerte(true)
+				else : 
+					majNiveauAlerte(false)
+				$TAlerte.start()
+
+func majNiveauAlerte(ajout : bool) -> void : 
+	if ajout : 
+		niveauAlerte += 1
+	else : 
+		if niveauAlerte > 0 :
+			niveauAlerte -= 1
+	if niveauAlerte >= 5: 
+		etatActuel = etat.ALERTE
+	print(niveauAlerte)
 
 func set_movement_target(movement_target: Vector2) -> void:
 	nav.set_target_position(movement_target)
@@ -49,14 +69,19 @@ func _on_room_unloading() -> void :
 	etatActuel = etat.COMA
 
 func _on_velocity_computed(safe_velocity: Vector2) -> void:
-	velocity = safe_velocity
-	move_and_slide()
+	$"..".velocity = safe_velocity
+	$"..".move_and_slide()
 
 func _on_detection_body_entered(body: Node2D) -> void:
-	if body.name == "Joueur":
-		if etatActuel == etat.IDLE :
-			etatActuel = etat.ALERTE
-		print("Je te vois !")
+	if body == joueur: 
+		joueurProche = true
+		print("Je ressens quelqu'un...")
+		$TAlerte.start()
+
+func _on_detection_body_exited(body: Node2D) -> void:
+	if body == joueur: 
+		joueurProche = false
+		print("En fait non.")
 
 func _on_touche_body_entered(body: Node2D) -> void:
 	if body == joueur: 
@@ -64,7 +89,10 @@ func _on_touche_body_entered(body: Node2D) -> void:
 		print("Je t'ai eu !")
 		etatActuel = etat.COMA
 
-func _on_timer_timeout() -> void:
+func _on_t_poursuite_timeout() -> void:
 	print("RUN")
 	etatActuel = etat.POURSUITE
-	$Timer.stop()
+	$TPoursuite.stop()
+
+func _on_t_alerte_timeout() -> void:
+	$TAlerte.stop()

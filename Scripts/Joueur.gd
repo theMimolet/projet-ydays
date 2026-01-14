@@ -43,7 +43,7 @@ func Mouvement() -> void :
 	velocity = input_direction * SPEED
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("Interract"):
+	if event.is_action_pressed("Interact"):
 		var interaction_found = InteractionManager.handle_interaction(global_position)
 		if interaction_found:
 			canMove = false
