@@ -1,10 +1,11 @@
-[gd_scene load_steps=19 format=4 uid="uid://lsuq4yhka3a3"]
+[gd_scene load_steps=20 format=4 uid="uid://lsuq4yhka3a3"]
 
 [ext_resource type="Texture2D" uid="uid://ckchfryvhfo0n" path="res://Tilesets/proto_tiles.png" id="1_ixoji"]
 [ext_resource type="PackedScene" uid="uid://dtwpnedsbtj8t" path="res://Scenes/RoomSwitcher.tscn" id="2_ljmtj"]
 [ext_resource type="PackedScene" uid="uid://cqmqkjfkawmgy" path="res://Scenes/Entities/Overworld/OWTest.tscn" id="4_430hh"]
 [ext_resource type="Script" uid="uid://bt8sfngqeu8gg" path="res://Scripts/Interactions/Coffre.gd" id="4_o5rc3"]
 [ext_resource type="Texture2D" uid="uid://0xkmm505a4o1" path="res://Spritesheet/Torche/sprite_torche.png" id="5_430hh"]
+[ext_resource type="Script" uid="uid://dbk8n27v523gi" path="res://Scripts/Items/CollectableItem.gd" id="5_ftqpf"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_o5rc3"]
 
@@ -118,7 +119,7 @@ position = Vector2(177, -72)
 
 [node name="Torche" type="Sprite2D" parent="."]
 position = Vector2(391, -116)
-script = ExtResource("4_430hh")
+script = ExtResource("5_ftqpf")
 item_name_override = "Torche"
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Torche"]
@@ -133,7 +134,7 @@ frame_progress = 0.547988
 
 [node name="Torche2" type="Sprite2D" parent="."]
 position = Vector2(375.085, -116)
-script = ExtResource("4_430hh")
+script = ExtResource("5_ftqpf")
 item_name_override = "Torche"
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Torche2"]
@@ -148,7 +149,7 @@ frame_progress = 0.547988
 
 [node name="Torche3" type="Sprite2D" parent="."]
 position = Vector2(383.385, -95.175)
-script = ExtResource("4_430hh")
+script = ExtResource("5_ftqpf")
 item_name_override = "Torche"
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Torche3"]
