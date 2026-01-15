@@ -127,7 +127,7 @@ animations = [{
 motion_mode = 1
 script = ExtResource("1_b0ct8")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="s" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, 13)
 shape = SubResource("RectangleShape2D_ksi5g")
 
@@ -138,6 +138,9 @@ frame = 2
 frame_progress = 0.8071616
 
 [node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+
+[node name="Node" type="Node" parent="."]
 
 [node name="VignetteLayer" type="CanvasLayer" parent="Camera2D"]
 layer = 100
