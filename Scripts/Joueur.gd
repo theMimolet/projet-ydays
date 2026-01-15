@@ -72,12 +72,12 @@ func Mouvement() -> void :
 func _input(event: InputEvent) -> void:
 	# Ne pas gérer les interactions si l'inventaire est ouvert
 	if not is_inventory_open():
-		if event.is_action_pressed("Interract"):
+		if event.is_action_pressed("Interact"):
 			var interaction_found : bool = InteractionManager.handle_interaction(global_position)
 			if interaction_found:
 				canMove = false
 	
-	if event is InputEventKey and event.keycode == KEY_SHIFT and event.pressed and canMove and not isDashing and dashCooldownTimer <= 0.0 and canDash and stamina >= DASH_STAMINA_COST:
+	if event.is_action_pressed("Dash") and canMove and not isDashing and dashCooldownTimer <= 0.0 and canDash and stamina >= DASH_STAMINA_COST:
 		var input_direction : Vector2 = Input.get_vector("Gauche", "Droite", "Haut", "Bas")
 		if input_direction != Vector2.ZERO:
 			isDashing = true
