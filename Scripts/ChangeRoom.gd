@@ -1,6 +1,8 @@
 extends CanvasLayer
 
 signal unloadFinished
+signal unloading
+signal loaded
 
 @onready var rooms : Node = $"../Room" 
 @onready var joueur : Node = $"../Joueur"
@@ -17,8 +19,9 @@ func roomChange(newRoom: String) -> void:
 	roomLoad(newRoom, previousRoomName)
 
 func roomUnload() -> void:
+	emit_signal("unloading")
+	joueur.paralysePlayer(true)
 	$Animateur.play("fade-out")
-	joueur.canMove = false
 	if chat != null and chat.has_method("set") and chat.get("canMove") != null:
 		chat.canMove = false
 
@@ -36,13 +39,14 @@ func roomLoad(room: String, spawnPoint: String) -> void:
 	spawnNode = rooms.find_child(spawnPoint, true, false) # Cherche récursivement si un node avec le nom recherché existe
 	if spawnNode != null : 
 		joueur.position = spawnNode.position
-		if chat != null:
-			chat.position = spawnNode.position
 	else :
 		push_warning("Spawn point '%s' non trouvé, utilisation d'un spawn par défaut" % spawnPoint)
 		joueur.position = Vector2(0,0)
-		if chat != null:
-			chat.position = Vector2(0,0)
+	
+	await get_tree().process_frame
+	
+	if chat != null:
+		chat.teleport_to_player()
 	
 	$Animateur.play("fade-in")
 
@@ -55,6 +59,7 @@ func _on_animateur_animation_finished(anim_name: StringName) -> void:
 				child = null
 			emit_signal("unloadFinished")
 		"fade-in" :
-			joueur.canMove = true
+			joueur.paralysePlayer(false)
+			emit_signal("loaded")
 			if chat != null and chat.has_method("set") and chat.get("canMove") != null:
 				chat.canMove = true

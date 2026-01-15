@@ -9,7 +9,7 @@ const STAMINA_REGEN_RATE = 0.5
 const DASH_STAMINA_COST = 1
 
 @onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
-var canMove : bool = true
+@export var canMove : bool = true
 var canDash : bool = true
 
 # Système de points de vie
@@ -119,6 +119,11 @@ func _physics_process(_delta: float) -> void:
 		sprite.stop()
 
 	move_and_slide()
+	update_depth()
+
+func update_depth() -> void:
+	const BASE_OFFSET := 1000
+	z_index = BASE_OFFSET + int(global_position.y)
 
 func Animate() -> void : 
 	var currentAnimation : String
@@ -138,6 +143,11 @@ func Animate() -> void :
 			currentFace = "droite"
 	sprite.play(currentAnimation + "-" + currentFace)
 	
+func paralysePlayer(yes : bool) -> void :
+	if yes:
+		canMove = false
+	else : 
+		canMove = true
 
 func _on_timeline_ended() -> void:
 	canMove = true
