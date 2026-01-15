@@ -1,23 +1,38 @@
+
 [gd_scene load_steps=17 format=4 uid="uid://lsuq4yhka3a3"]
 
 [ext_resource type="Texture2D" uid="uid://ckchfryvhfo0n" path="res://Tilesets/proto_tiles.png" id="1_ixoji"]
-[ext_resource type="PackedScene" uid="uid://dtwpnedsbtj8t" path="res://Scenes/RoomSwitcher.tscn" id="2_ljmtj"]
 [ext_resource type="Script" uid="uid://dbk8n27v523gi" path="res://Scripts/Items/CollectableItem.gd" id="4_430hh"]
+[ext_resource type="PackedScene" uid="uid://dtwpnedsbtj8t" path="res://Scenes/RoomSwitcher.tscn" id="2_ljmtj"]
+[ext_resource type="PackedScene" uid="uid://cqmqkjfkawmgy" path="res://Scenes/Entities/Overworld/OWTest.tscn" id="4_430hh"]
 [ext_resource type="Script" uid="uid://bt8sfngqeu8gg" path="res://Scripts/Interactions/Coffre.gd" id="4_o5rc3"]
 [ext_resource type="Texture2D" uid="uid://0xkmm505a4o1" path="res://Spritesheet/Torche/sprite_torche.png" id="5_430hh"]
 
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_o5rc3"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_430hh"]
+vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)])
+agent_radius = 0.0
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7wwei"]
+resource_name = "Testing"
 texture = ExtResource("1_ixoji")
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+0:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_o5rc3")
 1:0/next_alternative_id = 2
 1:0/0 = 0
 1:0/0/z_index = -5
+1:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_430hh")
 2:0/0 = 0
 2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 8, -8, -8, 8, -8, 8, 8)
 
 [sub_resource type="TileSet" id="TileSet_7wwei"]
 physics_layer_0/collision_layer = 1
+navigation_layer_0/layers = 1
 sources/1 = SubResource("TileSetAtlasSource_7wwei")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q8n12"]
@@ -100,6 +115,9 @@ script = ExtResource("4_o5rc3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Coffre/StaticBody2D"]
 shape = SubResource("RectangleShape2D_ljmtj")
+
+[node name="Test" parent="." instance=ExtResource("4_430hh")]
+position = Vector2(177, -72)
 
 [node name="Torche" type="Sprite2D" parent="."]
 position = Vector2(391, -116)

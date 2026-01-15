@@ -1,0 +1,57 @@
+[gd_scene load_steps=11 format=3 uid="uid://cqmqkjfkawmgy"]
+
+[ext_resource type="PackedScene" uid="uid://c37g8d2neou34" path="res://Scenes/Entities/Overworld/OWHostileModule.tscn" id="1_2p4ad"]
+[ext_resource type="Texture2D" uid="uid://catynbo4vtkua" path="res://Textures/icon.svg" id="2_kewpm"]
+[ext_resource type="Texture2D" uid="uid://kxhsjvkw5rtc" path="res://Spritesheet/Monstres/OeilDetection/sprite_0.png" id="3_ofonb"]
+[ext_resource type="Texture2D" uid="uid://cpjabpscj8mm8" path="res://Spritesheet/Monstres/OeilDetection/sprite_1.png" id="4_3o8nb"]
+[ext_resource type="Texture2D" uid="uid://c57xqeotswtpj" path="res://Spritesheet/Monstres/OeilDetection/sprite_2.png" id="5_vv5rl"]
+[ext_resource type="Texture2D" uid="uid://cniexldfgmpgi" path="res://Spritesheet/Monstres/OeilDetection/sprite_3.png" id="6_840sr"]
+[ext_resource type="Texture2D" uid="uid://dn6vymg03tqjf" path="res://Spritesheet/Monstres/OeilDetection/sprite_4.png" id="7_1oh4o"]
+[ext_resource type="Script" uid="uid://bjp0v3aj1ejh0" path="res://Scripts/Entity/DetectionEye.gd" id="8_fp7je"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_medu7"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hp7ao"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_ofonb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_3o8nb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_vv5rl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_840sr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_1oh4o")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Test" type="CharacterBody2D"]
+motion_mode = 1
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_medu7")
+
+[node name="HostileModule" parent="." instance=ExtResource("1_2p4ad")]
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(3.5762787e-07, 1.1920929e-07)
+scale = Vector2(0.15625, 0.15625)
+texture = ExtResource("2_kewpm")
+
+[node name="Eye" type="AnimatedSprite2D" parent="."]
+position = Vector2(-1.1920929e-07, -27)
+sprite_frames = SubResource("SpriteFrames_hp7ao")
+frame = 1
+script = ExtResource("8_fp7je")
