@@ -51,7 +51,6 @@ layout_mode = 2
 size_flags_vertical = 3
 bbcode_enabled = true
 scroll_following = true
-scroll_active = true
 
 [node name="InputLine" type="LineEdit" parent="ConsolePanel/MarginContainer/VBoxContainer"]
 layout_mode = 2

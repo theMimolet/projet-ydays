@@ -2,6 +2,7 @@ extends Node
 
 const Vase = preload("res://Scripts/Interactions/Vase.gd")
 
+
 const VASE_TILE_COORDS = Vector2i(2, 0)
 const INTERACTION_DISTANCE = 32.0
 

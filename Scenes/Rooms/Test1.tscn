@@ -1,12 +1,10 @@
-[gd_scene load_steps=17 format=4 uid="uid://6nd6bmjcs0uk"]
+[gd_scene load_steps=19 format=4 uid="uid://lsuq4yhka3a3"]
 
 [ext_resource type="Texture2D" uid="uid://ckchfryvhfo0n" path="res://Tilesets/proto_tiles.png" id="1_ixoji"]
-[ext_resource type="Script" uid="uid://dbk8n27v523gi" path="res://Scripts/Items/CollectableItem.gd" id="4_430hh"]
 [ext_resource type="PackedScene" uid="uid://dtwpnedsbtj8t" path="res://Scenes/RoomSwitcher.tscn" id="2_ljmtj"]
 [ext_resource type="PackedScene" uid="uid://cqmqkjfkawmgy" path="res://Scenes/Entities/Overworld/OWTest.tscn" id="4_430hh"]
 [ext_resource type="Script" uid="uid://bt8sfngqeu8gg" path="res://Scripts/Interactions/Coffre.gd" id="4_o5rc3"]
 [ext_resource type="Texture2D" uid="uid://0xkmm505a4o1" path="res://Spritesheet/Torche/sprite_torche.png" id="5_430hh"]
-
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_o5rc3"]
 
@@ -104,7 +102,7 @@ shape = SubResource("RectangleShape2D_q8n12")
 position = Vector2(-31, 165)
 
 [node name="InitialSpawn" type="Node2D" parent="."]
-position = Vector2(347, -78)
+position = Vector2(-56, 177)
 
 [node name="Coffre" type="Sprite2D" parent="."]
 position = Vector2(350, 0)
