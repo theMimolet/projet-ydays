@@ -14,8 +14,8 @@ corner_radius_top_right = 4
 
 [node name="DevConsole" type="CanvasLayer"]
 layer = 100
-scale = Vector2(1, 0.5)
-transform = Transform2D(1, 0, 0, 0.5, 0, 0)
+scale = Vector2(1, 0.875)
+transform = Transform2D(1, 0, 0, 0.875, 0, 0)
 script = ExtResource("1_devconsole")
 
 [node name="ConsolePanel" type="Panel" parent="."]

@@ -1,0 +1,36 @@
+[gd_scene load_steps=3 format=3 uid="uid://7pav2b7oq5wj"]
+
+[ext_resource type="Script" uid="uid://cnsu46ncbx8m4" path="res://Scripts/UI/HPBar.gd" id="1_hpbar"]
+[ext_resource type="Texture2D" uid="uid://dof3q0uv14tlr" path="res://Spritesheet/HP/sprite_noirceur0.png" id="2_hp0"]
+
+[node name="HPBar" type="CanvasLayer"]
+layer = 110
+
+[node name="HPContainer" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 149.0
+offset_top = -91.0
+offset_right = 196.0
+offset_bottom = -39.0
+grow_vertical = 0
+mouse_filter = 2
+script = ExtResource("1_hpbar")
+
+[node name="HPSprite" type="TextureRect" parent="HPContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -149.0
+offset_top = 20.0
+offset_right = -149.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(3.5158136, 2.4403594)
+texture = ExtResource("2_hp0")
+expand_mode = 1
+stretch_mode = 5
