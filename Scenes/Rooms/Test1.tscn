@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=4 uid="uid://lsuq4yhka3a3"]
+[gd_scene load_steps=22 format=4 uid="uid://lsuq4yhka3a3"]
 
 [ext_resource type="Texture2D" uid="uid://ckchfryvhfo0n" path="res://Tilesets/proto_tiles.png" id="1_ixoji"]
 [ext_resource type="PackedScene" uid="uid://dtwpnedsbtj8t" path="res://Scenes/RoomSwitcher.tscn" id="2_ljmtj"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://bt8sfngqeu8gg" path="res://Scripts/Interactions/Coffre.gd" id="4_o5rc3"]
 [ext_resource type="Texture2D" uid="uid://0xkmm505a4o1" path="res://Spritesheet/Torche/sprite_torche.png" id="5_430hh"]
 [ext_resource type="Script" uid="uid://dbk8n27v523gi" path="res://Scripts/Items/CollectableItem.gd" id="5_ftqpf"]
+[ext_resource type="Script" uid="uid://dnll4e7su4a43" path="res://Scripts/DamageArea.gd" id="6_damage"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_o5rc3"]
 
@@ -85,6 +86,9 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_damage"]
+size = Vector2(50, 50)
+
 [node name="RoomTest1" type="Node2D"]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
@@ -159,3 +163,18 @@ shape = SubResource("RectangleShape2D_430hh")
 sprite_frames = SubResource("SpriteFrames_jmmq1")
 autoplay = "default"
 frame_progress = 0.547988
+
+[node name="DamageArea" type="Area2D" parent="."]
+position = Vector2(197.36, 135.155)
+script = ExtResource("6_damage")
+damage_amount = 50
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea"]
+shape = SubResource("RectangleShape2D_damage")
+
+[node name="ColorRect" type="ColorRect" parent="DamageArea"]
+offset_left = -25.0
+offset_top = -25.0
+offset_right = 25.0
+offset_bottom = 25.0
+color = Color(1, 0, 0, 0.5)
