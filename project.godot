@@ -24,6 +24,7 @@ config/icon="res://Textures/icon.svg"
 Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
 InteractionManager="*res://Scripts/Interactions/InteractionManager.gd"
 Global="*res://Scripts/Global.gd"
+GameSettings="*res://Scripts/GameSettings.gd"
 
 [debug]
 
@@ -100,7 +101,8 @@ enabled=PackedStringArray("res://addons/dialogic/plugin.cfg")
 [file_customization]
 
 folder_colors={
-"res://Dialog/": "green"
+"res://Dialog/": "green",
+"res://Scripts/": "gray"
 }
 
 [gui]
@@ -176,3 +178,4 @@ textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
 textures/vram_compression/import_etc2_astc=true
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)
