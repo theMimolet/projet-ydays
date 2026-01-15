@@ -118,8 +118,6 @@ position = Vector2(177, -72)
 
 [node name="Torche" type="Sprite2D" parent="."]
 position = Vector2(391, -116)
-script = ExtResource("4_430hh")
-item_name_override = "Torche"
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Torche"]
 
@@ -133,8 +131,6 @@ frame_progress = 0.547988
 
 [node name="Torche2" type="Sprite2D" parent="."]
 position = Vector2(375.085, -116)
-script = ExtResource("4_430hh")
-item_name_override = "Torche"
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Torche2"]
 
@@ -148,8 +144,6 @@ frame_progress = 0.547988
 
 [node name="Torche3" type="Sprite2D" parent="."]
 position = Vector2(383.385, -95.175)
-script = ExtResource("4_430hh")
-item_name_override = "Torche"
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Torche3"]
 

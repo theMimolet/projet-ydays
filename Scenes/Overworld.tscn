@@ -1,11 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://d3wesmde18u6b"]
+[gd_scene load_steps=17 format=3 uid="uid://d3wesmde18u6b"]
 
 [ext_resource type="PackedScene" uid="uid://d1xvmuswrxu7v" path="res://Scenes/Joueur.tscn" id="1_ctcok"]
 [ext_resource type="Script" uid="uid://dhwd5kgfkv56y" path="res://Scripts/ChangeRoom.gd" id="2_7xrvl"]
 [ext_resource type="Script" uid="uid://b86xfcp055ajx" path="res://Scripts/Chat/chat.gd" id="3_8lvve"]
 [ext_resource type="Texture2D" uid="uid://dd3by3yef1i2l" path="res://Spritesheet/chat/Group_chat.png" id="4_s3goe"]
-[ext_resource type="PackedScene" path="res://Scenes/UI/StaminaBar.tscn" id="5_stamina"]
 [ext_resource type="Script" uid="uid://l6vwf0agfahl" path="res://Scripts/UI/HUD.gd" id="5_hud"]
+[ext_resource type="PackedScene" uid="uid://ddm45fla0yj11" path="res://Scenes/UI/StaminaBar.tscn" id="5_stamina"]
 [ext_resource type="Script" uid="uid://bso8o41186mj5" path="res://Scripts/UI/Inventaire.gd" id="6_inv"]
 [ext_resource type="PackedScene" uid="uid://bnkogahkkn1a" path="res://Scenes/UI/DevConsole.tscn" id="7_devconsole"]
 

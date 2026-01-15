@@ -9,7 +9,7 @@ signal loaded
 @onready var chat : Node2D = $"../Chat" 
 
 func _ready() -> void:
-	roomLoad("res://Scenes/Rooms/Test1.tscn", "InitialSpawn")
+	roomLoad("res://Scenes/Rooms/Zone-1/room1.tscn", "InitialSpawn")
 
 func roomChange(newRoom: String) -> void:
 	var previousRoomName : String = rooms.get_child(0).name
