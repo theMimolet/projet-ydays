@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3 uid="uid://dyb522momk1mo"]
+
+[ext_resource type="Texture2D" uid="uid://d2vlfn1lath6k" path="res://Textures/gameover.jpg" id="1_fg4p2"]
+[ext_resource type="Script" uid="uid://bl1j431ixln1o" path="res://Scripts/UI/GameOver.gd" id="2_gameover"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("2_gameover")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_top = -70.0
+offset_right = 639.0
+offset_bottom = 364.0
+texture = ExtResource("1_fg4p2")
+expand_mode = 1
+stretch_mode = 3
+
+[node name="ButtonsContainer" type="VBoxContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 220.0
+offset_top = 233.0
+offset_right = 420.0
+offset_bottom = 333.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="MenuPrincipal" type="Button" parent="ButtonsContainer"]
+layout_mode = 2
+text = "Menu Principal"
+
+[node name="ChargerSauvegarde" type="Button" parent="ButtonsContainer"]
+layout_mode = 2
+text = "Charger une sauvegarde"
+
+[connection signal="pressed" from="ButtonsContainer/MenuPrincipal" to="." method="_on_menu_principal_pressed"]
+[connection signal="pressed" from="ButtonsContainer/ChargerSauvegarde" to="." method="_on_charger_sauvegarde_pressed"]
