@@ -1,0 +1,50 @@
+[gd_scene load_steps=4 format=3 uid="uid://c8m3ie04nr6w"]
+
+[ext_resource type="Texture2D" uid="uid://dxwboqmlilcxf" path="res://HUD/Combat/TextBox9patch.png" id="1_885kv"]
+
+[sub_resource type="Gradient" id="Gradient_snqii"]
+colors = PackedColorArray(0.3204496, 3.0683353e-07, 1.2032687e-07, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_885kv"]
+gradient = SubResource("Gradient_snqii")
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0, 0)
+
+[node name="Combat" type="Node2D"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 320.0
+offset_bottom = 182.0
+texture = SubResource("GradientTexture2D_885kv")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="NinePatchRect" type="NinePatchRect" parent="CanvasLayer"]
+offset_right = 89.0
+offset_bottom = 49.0
+texture = ExtResource("1_885kv")
+region_rect = Rect2(-2, -2, 44, 44)
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
+
+[node name="Label" type="Label" parent="CanvasLayer/NinePatchRect"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 11.0
+offset_right = 90.0
+offset_bottom = 28.0
+text = "Hello Mwahaha"
+
+[node name="Container" type="Container" parent="CanvasLayer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
