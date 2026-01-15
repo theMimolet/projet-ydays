@@ -31,7 +31,8 @@ gdscript/warnings/untyped_declaration=1
 
 directories/dch_directory={}
 directories/dtl_directory={
-"timeline-test": "res://Dialog/timeline-test.dtl"
+"timeline-test": "res://Dialog/timeline-test.dtl",
+"timeline_chevalier": "res://timeline_chevalier.dtl"
 }
 layout/style_directory={
 "Dialogue": "res://Style/Dialogue.tres",
@@ -90,6 +91,12 @@ project/assembly_name="Unlost"
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/dialogic/plugin.cfg")
+
+[file_customization]
+
+folder_colors={
+"res://Dialog/": "green"
+}
 
 [gui]
 

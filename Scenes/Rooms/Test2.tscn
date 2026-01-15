@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://d2vjwgqh6vile" path="res://Spritesheet/Coffre/sprite_coffre0.png" id="1_45roa"]
 [ext_resource type="Texture2D" uid="uid://ckchfryvhfo0n" path="res://Tilesets/proto_tiles.png" id="1_xom7c"]
 [ext_resource type="PackedScene" uid="uid://dtwpnedsbtj8t" path="res://Scenes/RoomSwitcher.tscn" id="2_45roa"]
-[ext_resource type="Script" uid="uid://cjpunc0862ksu" path="res://Scripts/Interactions/PNJ.gd" id="4_aqk3b"]
+[ext_resource type="Script" path="res://Scripts/Interactions/PNJ.gd" id="4_aqk3b"]
 [ext_resource type="Texture2D" uid="uid://o74inye6ey4f" path="res://Spritesheet/Monstres/Monstre-Noir/monstre-noir-sang-idle.png" id="4_xr16a"]
 [ext_resource type="Texture2D" uid="uid://dw155bh6gashm" path="res://Spritesheet/Monstres/Garde-Rouge/garde-rouge-idle.png" id="5_2yesy"]
 [ext_resource type="Texture2D" uid="uid://b7w4y45imsatw" path="res://Spritesheet/Monstres/Monstre-Noir/monstre-noir-idle.png" id="6_oynwm"]
