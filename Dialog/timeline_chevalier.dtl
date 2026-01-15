@@ -1,11 +1,15 @@
 [style name="Dialogue"]
 join  center
-Mefianzo: T’es qui toi ?? ne t’approche pas trop de moi pour commencer, t’as une mauvaise tête.
+Mefianzo: T’es qui toi ?? Ne t’approche pas trop de moi pour commencer, t’as une mauvaise tête.
 Mefianzo: C’est pas que je t’aime pas mais disons que quand on a pas vu quelqu’un de nouveau depuis 12 ans
 Mefianzo: On a tendance à se méfier, surtout quand la personne en question
 Mefianzo: A une apparence douteuse comme la tienne.
 Mefianzo: Même si notre mission était de faire attention à toi, j’ai jamais trop compris ce que tu avais de spécial.
 Mefianzo: Bref reste bien à l’écart de moi si tu ne veux pas de problème…
+- Qu'est-ce que vous faites ici ?
+	Mefianzo:Pose pas trop de questions. Tu me parles comme si t'avais attendu 12 ans avec nous ici.
+- Ne rien dire.
+	Mefianzo: Aller, du balais.
 
 [end_timeline]
 join  center
