@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=4 uid="uid://lsuq4yhka3a3"]
+[gd_scene load_steps=17 format=4 uid="uid://6nd6bmjcs0uk"]
 
 [ext_resource type="Texture2D" uid="uid://ckchfryvhfo0n" path="res://Tilesets/proto_tiles.png" id="1_ixoji"]
 [ext_resource type="PackedScene" uid="uid://dtwpnedsbtj8t" path="res://Scenes/RoomSwitcher.tscn" id="2_ljmtj"]
@@ -104,6 +104,7 @@ shape = SubResource("RectangleShape2D_ljmtj")
 [node name="Torche" type="Sprite2D" parent="."]
 position = Vector2(391, -116)
 script = ExtResource("4_430hh")
+item_name_override = "Torche"
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Torche"]
 
@@ -111,6 +112,36 @@ script = ExtResource("4_430hh")
 shape = SubResource("RectangleShape2D_430hh")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Torche"]
+sprite_frames = SubResource("SpriteFrames_jmmq1")
+autoplay = "default"
+frame_progress = 0.547988
+
+[node name="Torche2" type="Sprite2D" parent="."]
+position = Vector2(375.085, -116)
+script = ExtResource("4_430hh")
+item_name_override = "Torche"
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Torche2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Torche2/StaticBody2D"]
+shape = SubResource("RectangleShape2D_430hh")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Torche2"]
+sprite_frames = SubResource("SpriteFrames_jmmq1")
+autoplay = "default"
+frame_progress = 0.547988
+
+[node name="Torche3" type="Sprite2D" parent="."]
+position = Vector2(383.385, -95.175)
+script = ExtResource("4_430hh")
+item_name_override = "Torche"
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Torche3"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Torche3/StaticBody2D"]
+shape = SubResource("RectangleShape2D_430hh")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Torche3"]
 sprite_frames = SubResource("SpriteFrames_jmmq1")
 autoplay = "default"
 frame_progress = 0.547988

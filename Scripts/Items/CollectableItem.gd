@@ -6,8 +6,12 @@ extends Node2D
 @export var item_resource : Item  # Ressource Item à créer dans l'éditeur
 @export var quantity : int = 1  # Quantité à donner
 @export var collectable : bool = true  # Si false, l'item ne peut pas être collecté
+@export var item_name_override : String = ""  # Nom personnalisé pour l'item (pour le stacking)
 
 var is_collected : bool = false
+var indicator_sprite : Sprite2D = null
+var indicator_rect : ColorRect = null
+var is_targeted : bool = false
 
 func _ready() -> void:
 	add_to_group("CollectableItems")
@@ -15,14 +19,47 @@ func _ready() -> void:
 	# Si pas de ressource Item définie, créer un item par défaut
 	if item_resource == null:
 		item_resource = Item.new()
-		item_resource.item_name = name
+		# Utiliser item_name_override si défini, sinon utiliser le nom du node
+		if item_name_override != "":
+			item_resource.item_name = item_name_override
+		else:
+			item_resource.item_name = name
 		item_resource.item_description = "Un objet collectable"
-		item_resource.max_stack = 1
+		item_resource.max_stack = 5
 		print("Item créé par défaut pour : ", name, " - Nom: ", item_resource.item_name)
 	
 	# Récupérer automatiquement le sprite de l'objet si item_texture n'est pas défini
 	if item_resource.item_texture == null:
-		item_resource.item_texture = get_sprite_texture()
+		var texture := get_sprite_texture()
+		if texture != null:
+			item_resource.item_texture = texture
+	
+	# Récupérer les SpriteFrames si un AnimatedSprite2D existe
+	if item_resource.sprite_frames == null:
+		var animated_sprite := get_node_or_null("AnimatedSprite2D")
+		if animated_sprite != null and animated_sprite.sprite_frames != null:
+			item_resource.sprite_frames = animated_sprite.sprite_frames
+			if animated_sprite.animation != "":
+				item_resource.animation_name = animated_sprite.animation
+	
+	# S'assurer que max_stack est au moins 5 si l'item est créé automatiquement
+	# ou si item_name_override est défini (pour permettre le stacking)
+	if item_name_override != "":
+		# Si un nom personnalisé est défini, utiliser ce nom pour le stacking
+		if item_resource.item_name != item_name_override:
+			item_resource.item_name = item_name_override
+		if item_resource.max_stack < 5:
+			item_resource.max_stack = 5
+	
+	# Créer l'indicateur visuel (placeholder pour l'instant - ColorRect visible)
+	indicator_rect = ColorRect.new()
+	indicator_rect.name = "IndicatorRect"
+	indicator_rect.position = Vector2(-8, -28)  # Au-dessus de l'objet
+	indicator_rect.size = Vector2(16, 16)
+	indicator_rect.color = Color(1, 1, 0, 0.8)  # Jaune semi-transparent
+	indicator_rect.visible = false
+	add_child(indicator_rect)
+	indicator_sprite = null  # On utilise ColorRect pour l'instant
 
 func collect() -> bool:
 	"""Tente de collecter l'item. Retourne true si réussi"""
@@ -117,3 +154,21 @@ func get_sprite_texture() -> Texture2D:
 				return child_texture_rect.texture
 	
 	return null
+
+func show_indicator() -> void:
+	"""Affiche l'indicateur au-dessus de l'objet"""
+	if indicator_rect != null:
+		indicator_rect.visible = true
+		is_targeted = true
+	elif indicator_sprite != null:
+		indicator_sprite.visible = true
+		is_targeted = true
+
+func hide_indicator() -> void:
+	"""Cache l'indicateur"""
+	if indicator_rect != null:
+		indicator_rect.visible = false
+		is_targeted = false
+	elif indicator_sprite != null:
+		indicator_sprite.visible = false
+		is_targeted = false

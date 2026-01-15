@@ -5,6 +5,8 @@ const Vase = preload("res://Scripts/Interactions/Vase.gd")
 const VASE_TILE_COORDS = Vector2i(2, 0)
 const INTERACTION_DISTANCE = 32.0
 
+var last_targeted_item : Node2D = null
+
 const CELLS_TO_CHECK := [
 	Vector2i(0, 0),   # Case du joueur
 	Vector2i(-1, -1), # Haut-Gauche
@@ -74,8 +76,7 @@ func handle_interaction(player_position: Vector2) -> bool:
 	if item_collected:
 		return true  # Les items collectables bloquent le mouvement pendant la collecte
 	
-		return false  # Les coffres ne bloquent pas le mouvement
-	
+	# Les coffres ne bloquent pas le mouvement
 	return false
 
 func check_vase_collision(player_position: Vector2) -> void:
@@ -90,18 +91,51 @@ func check_vase_collision(player_position: Vector2) -> void:
 	# Casser le vase en supprimant le tile
 	tilemap.erase_cell(vase_cell)
 
+func get_nearest_collectable(player_position: Vector2) -> Node2D:
+	"""Retourne l'objet collectable le plus proche du joueur, ou null si aucun"""
+	var collectables : Array = get_tree().get_nodes_in_group("CollectableItems")
+	var nearest : Node2D = null
+	const COLLECTION_DISTANCE = 32.0
+	var nearest_distance : float = COLLECTION_DISTANCE
+	
+	for collectable : Node in collectables:
+		if collectable.has_method("can_be_collected") and collectable.can_be_collected():
+			var distance : float = player_position.distance_to(collectable.global_position)
+			if distance <= COLLECTION_DISTANCE and distance < nearest_distance:
+				nearest = collectable as Node2D
+				nearest_distance = distance
+	
+	return nearest
+
+func update_collectable_indicators(player_position: Vector2) -> void:
+	"""Met à jour les indicateurs visuels des objets collectables proches"""
+	var nearest = get_nearest_collectable(player_position)
+	
+	# Cacher l'indicateur de l'item précédent
+	if last_targeted_item != null and last_targeted_item != nearest:
+		if last_targeted_item.has_method("hide_indicator"):
+			last_targeted_item.hide_indicator()
+	
+	# Afficher l'indicateur du nouvel item
+	if nearest != null:
+		if nearest.has_method("show_indicator"):
+			nearest.show_indicator()
+		last_targeted_item = nearest
+	else:
+		if last_targeted_item != null:
+			if last_targeted_item.has_method("hide_indicator"):
+				last_targeted_item.hide_indicator()
+			last_targeted_item = null
+
 func check_collectable_items(player_position: Vector2) -> bool:
 	"""Vérifie et collecte les items collectables proches. Retourne true si un item a été collecté"""
-	var collectables = get_tree().get_nodes_in_group("CollectableItems")
+	# Mettre à jour les indicateurs
+	update_collectable_indicators(player_position)
 	
-	# Distance maximale pour la collecte (en pixels)
-	const COLLECTION_DISTANCE = 32.0
-	
-	for collectable in collectables:
-		if collectable.has_method("collect") and collectable.has_method("can_be_collected"):
-			if collectable.can_be_collected():
-				var distance = player_position.distance_to(collectable.global_position)
-				if distance <= COLLECTION_DISTANCE:
-					return collectable.collect()
+	# Si l'utilisateur appuie sur F, collecter l'item le plus proche
+	if last_targeted_item != null:
+		if last_targeted_item.has_method("collect") and last_targeted_item.has_method("can_be_collected"):
+			if last_targeted_item.can_be_collected():
+				return last_targeted_item.collect()
 	
 	return false

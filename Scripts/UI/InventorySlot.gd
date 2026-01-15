@@ -26,10 +26,14 @@ func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if event.pressed:
-				# Vérifier si Alt est pressé pour le split
-				if Input.is_key_pressed(KEY_ALT) and quantity > 1:
+				# Vérifier si Shift est pressé pour le split
+				if Input.is_key_pressed(KEY_SHIFT) and quantity > 1:
 					slot_clicked.emit(self)
-				elif not Input.is_key_pressed(KEY_ALT):
+				elif not Input.is_key_pressed(KEY_SHIFT):
+					# Commencer le drag normal
+					if not is_empty():
+						is_dragging = true
+						set_dragging(true)
 					slot_clicked.emit(self)
 			else:
 				# Fin du drag
@@ -37,6 +41,9 @@ func _gui_input(event: InputEvent) -> void:
 					var target = _get_slot_under_mouse()
 					if target != null and target != self:
 						slot_dropped.emit(self, target)
+					else:
+						# Si on relâche sans cible, annuler le drag
+						slot_dropped.emit(self, null)
 					set_dragging(false)
 		elif event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
 			if not is_empty():
@@ -106,6 +113,9 @@ func is_empty() -> bool:
 
 func update_display() -> void:
 	"""Met à jour l'affichage du slot"""
+	if item_texture == null:
+		return  # Le slot n'est pas encore initialisé
+	
 	if item != null and item.item_texture != null:
 		item_texture.texture = item.item_texture
 		item_texture.visible = true

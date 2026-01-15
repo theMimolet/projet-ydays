@@ -120,6 +120,9 @@ func _physics_process(_delta: float) -> void:
 
 	move_and_slide()
 	update_depth()
+	
+	# Mettre à jour les indicateurs des objets collectables proches (toujours, même si inventaire ouvert)
+	InteractionManager.update_collectable_indicators(global_position)
 
 func update_depth() -> void:
 	const BASE_OFFSET := 1000

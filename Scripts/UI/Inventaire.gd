@@ -11,7 +11,6 @@ var is_open : bool = false
 var joueur : Node = null
 var slots : Array = []
 var dragged_slot = null
-var split_mode : bool = false
 
 signal inventaire_opened
 signal inventaire_closed
@@ -130,24 +129,19 @@ func get_item_count(item_name: String) -> int:
 func _on_slot_clicked(slot) -> void:
 	"""Gère le clic sur un slot"""
 	if dragged_slot == null and not slot.is_empty():
-		# Vérifier si Alt est pressé pour le split
-		if Input.is_key_pressed(KEY_ALT) and slot.quantity > 1:
-			# Mode split : créer un slot temporaire avec 1 item
-			split_mode = true
-			# Créer une copie du slot pour le drag
-			var temp_slot = SLOT_SCENE.instantiate()
-			temp_slot.set_item(slot.item, 1)
-			temp_slot.add_to_group("InventorySlot")
-			temp_slot.slot_dropped.connect(_on_slot_dropped)
-			inventaire_container.add_child(temp_slot)
-			# Réduire la quantité du slot source
-			slot.split_stack()
-			dragged_slot = temp_slot
-			temp_slot.set_dragging(true)
-			print("Split: 1 item de ", slot.item.item_name)
+		# Vérifier si Shift est pressé pour le split
+		if Input.is_key_pressed(KEY_SHIFT) and slot.quantity > 1:
+			# Mode split : déplacer 1 item vers le slot libre le plus proche
+			var nearest_empty_slot = _find_nearest_empty_slot(slot)
+			if nearest_empty_slot != null:
+				# Déplacer 1 item vers le slot libre
+				nearest_empty_slot.set_item(slot.item, 1)
+				slot.split_stack()
+				print("Split: 1 item de ", slot.item.item_name, " déplacé vers slot ", nearest_empty_slot.slot_index)
+			else:
+				print("Split: Aucun slot libre disponible")
 		else:
 			# Mode drag normal
-			split_mode = false
 			dragged_slot = slot
 			slot.set_dragging(true)
 			print("Début du drag: ", slot.item.item_name)
@@ -158,63 +152,31 @@ func _on_slot_dropped(source_slot, target_slot) -> void:
 		_cleanup_drag(source_slot)
 		return
 	
-	# Si le slot source est un slot temporaire de split, le supprimer après le drop
-	var is_temp_slot : bool = split_mode and source_slot not in slots
-	
 	# Si le slot cible est vide, on déplace l'item
 	if target_slot.is_empty():
 		target_slot.set_item(source_slot.item, source_slot.quantity)
-		if is_temp_slot:
-			source_slot.queue_free()
-		else:
-			source_slot.clear_slot()
+		source_slot.clear_slot()
 	# Si c'est le même item, on empile
 	elif target_slot.item.item_name == source_slot.item.item_name:
 		var total : int = target_slot.quantity + source_slot.quantity
 		if total <= target_slot.item.max_stack:
 			target_slot.quantity = total
 			target_slot.update_display()
-			if is_temp_slot:
-				source_slot.queue_free()
-			else:
-				source_slot.clear_slot()
+			source_slot.clear_slot()
 		else:
 			# Échanger les quantités
 			var max_stack : int = target_slot.item.max_stack
 			var excess : int = total - max_stack
 			target_slot.quantity = max_stack
-			if is_temp_slot:
-				# Si c'est un slot temporaire, créer un nouveau slot pour l'excès
-				var excess_slot = SLOT_SCENE.instantiate()
-				excess_slot.set_item(source_slot.item, excess)
-				excess_slot.add_to_group("InventorySlot")
-				excess_slot.slot_clicked.connect(_on_slot_clicked)
-				excess_slot.slot_dropped.connect(_on_slot_dropped)
-				excess_slot.slot_right_clicked.connect(_on_slot_right_clicked)
-				# Trouver un slot vide pour le placer
-				for slot in slots:
-					if slot.is_empty():
-						slot.set_item(source_slot.item, excess)
-						break
-				source_slot.queue_free()
-			else:
-				source_slot.quantity = excess
-				source_slot.update_display()
+			source_slot.quantity = excess
+			source_slot.update_display()
 			target_slot.update_display()
 	# Sinon, on échange les items
 	else:
 		var temp_item = target_slot.item
 		var temp_quantity : int = target_slot.quantity
 		target_slot.set_item(source_slot.item, source_slot.quantity)
-		if is_temp_slot:
-			# Si c'est un slot temporaire, créer un nouveau slot pour l'item échangé
-			for slot in slots:
-				if slot.is_empty():
-					slot.set_item(temp_item, temp_quantity)
-					break
-			source_slot.queue_free()
-		else:
-			source_slot.set_item(temp_item, temp_quantity)
+		source_slot.set_item(temp_item, temp_quantity)
 	
 	_cleanup_drag(source_slot)
 	print("Drop effectué")
@@ -224,7 +186,42 @@ func _cleanup_drag(slot) -> void:
 	if slot != null and slot.has_method("set_dragging"):
 		slot.set_dragging(false)
 	dragged_slot = null
-	split_mode = false
+
+func _find_nearest_empty_slot(reference_slot) -> Node:
+	"""Trouve le slot vide le plus proche du slot de référence"""
+	var nearest_slot = null
+	var nearest_distance : float = INF
+	
+	# Obtenir la position du slot de référence dans le container
+	var ref_index : int = reference_slot.slot_index
+	var ref_pos : Vector2 = _get_slot_position_in_container(ref_index)
+	
+	for slot in slots:
+		if slot.is_empty():
+			var slot_pos : Vector2 = _get_slot_position_in_container(slot.slot_index)
+			var distance : float = ref_pos.distance_to(slot_pos)
+			if distance < nearest_distance:
+				nearest_distance = distance
+				nearest_slot = slot
+	
+	return nearest_slot
+
+func _get_slot_position_in_container(slot_index: int) -> Vector2:
+	"""Calcule la position d'un slot dans le container basé sur son index"""
+	# Le GridContainer organise les slots en grille
+	# On peut calculer la position en fonction de l'index
+	var columns : int = inventaire_container.columns if inventaire_container.columns > 0 else 4
+	var row : int = slot_index / columns
+	var col : int = slot_index % columns
+	# Estimation de la taille d'un slot (40x40 + espacement)
+	var slot_size : float = 40.0
+	var h_spacing : float = inventaire_container.get_theme_constant(&"h_separation")
+	var v_spacing : float = inventaire_container.get_theme_constant(&"v_separation")
+	if h_spacing == 0.0:
+		h_spacing = 4.0  # Valeur par défaut
+	if v_spacing == 0.0:
+		v_spacing = 4.0  # Valeur par défaut
+	return Vector2(col * (slot_size + h_spacing), row * (slot_size + v_spacing))
 # ============== DROP SUR LA MAP ==============
 
 func _on_slot_right_clicked(slot) -> void:
@@ -273,12 +270,28 @@ func create_collectable_item(item: Item, position: Vector2, quantity: int = 1) -
 	collectable.quantity = quantity
 	collectable.collectable = true
 	
-	# Créer un Sprite2D pour afficher l'item
-	if item.item_texture != null:
+	# Créer un AnimatedSprite2D si sprite_frames est défini, sinon un Sprite2D simple
+	if item.sprite_frames != null:
+		var animated_sprite := AnimatedSprite2D.new()
+		animated_sprite.name = "AnimatedSprite2D"
+		animated_sprite.sprite_frames = item.sprite_frames
+		if item.animation_name != "" and item.sprite_frames.has_animation(item.animation_name):
+			animated_sprite.animation = item.animation_name
+		else:
+			# Utiliser la première animation disponible
+			var animations = item.sprite_frames.get_animation_names()
+			if animations.size() > 0:
+				animated_sprite.animation = animations[0]
+		collectable.add_child(animated_sprite)
+		# Lancer l'animation après avoir ajouté au parent
+		if animated_sprite.animation != "":
+			animated_sprite.play()
+	elif item.item_texture != null:
 		var sprite := Sprite2D.new()
-		sprite.texture = item.item_texture
 		sprite.name = "Sprite2D"
 		collectable.add_child(sprite)
+		# Assigner la texture après avoir ajouté au parent pour éviter les erreurs
+		sprite.texture = item.item_texture
 	
 	# Ajouter une collision shape pour l'interaction
 	var static_body := StaticBody2D.new()

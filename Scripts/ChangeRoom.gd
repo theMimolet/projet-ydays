@@ -28,7 +28,7 @@ func roomUnload() -> void:
 func roomLoad(room: String, spawnPoint: String) -> void: 
 	$Animateur.play("RESET") # Écran noir
 	
-	# Charger la scène et vérifier qu'elle existe
+		# Charger la scène et vérifier qu'elle existe
 	var room_resource = load(room)
 	if room_resource == null:
 		push_error("Impossible de charger la scène: %s" % room)
