@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=4 uid="uid://brwifbbdn3ob3"]
+[gd_scene load_steps=60 format=4 uid="uid://brwifbbdn3ob3"]
 
 [ext_resource type="Texture2D" uid="uid://d2vjwgqh6vile" path="res://Spritesheet/Coffre/sprite_coffre0.png" id="1_45roa"]
 [ext_resource type="Texture2D" uid="uid://ckchfryvhfo0n" path="res://Tilesets/proto_tiles.png" id="1_xom7c"]
@@ -14,6 +14,8 @@
 [ext_resource type="Script" uid="uid://3tptfvsxk7aa" path="res://Scripts/Interactions/garde_jaune.gd" id="9_ejb0k"]
 [ext_resource type="Texture2D" uid="uid://by7efkaivrrl7" path="res://Spritesheet/Monstres/Garde-Bleu/garde-bleu-idle.png" id="9_xr16a"]
 [ext_resource type="Script" uid="uid://cqvkvxb0a6j4f" path="res://Scripts/Interactions/garde_bleu.gd" id="11_tpj1h"]
+[ext_resource type="Texture2D" uid="uid://bv2xkflfc38ay" path="res://Spritesheet/Monstres/Mob-Course/mob-course-gauche.png" id="11_bgtnb"]
+[ext_resource type="Texture2D" uid="uid://ebywetxyb7td" path="res://Spritesheet/Monstres/Poussin/poussin-idle.png" id="12_tpj1h"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8h6yt"]
 texture = ExtResource("1_45roa")
@@ -229,6 +231,98 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_27nhb"]
 size = Vector2(22, 13)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w3ejm"]
+size = Vector2(42, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wgehe"]
+atlas = ExtResource("11_bgtnb")
+region = Rect2(0, 0, 56, 47)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_27nhb"]
+atlas = ExtResource("11_bgtnb")
+region = Rect2(56, 0, 56, 47)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7m8l0"]
+atlas = ExtResource("11_bgtnb")
+region = Rect2(112, 0, 56, 47)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4g88j"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wgehe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_27nhb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7m8l0")
+}],
+"loop": true,
+"name": &"course-gauche",
+"speed": 3.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4g88j"]
+atlas = ExtResource("12_tpj1h")
+region = Rect2(0, 0, 34, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6rut1"]
+atlas = ExtResource("12_tpj1h")
+region = Rect2(34, 0, 34, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2i6vj"]
+atlas = ExtResource("12_tpj1h")
+region = Rect2(68, 0, 34, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e54wi"]
+atlas = ExtResource("12_tpj1h")
+region = Rect2(102, 0, 34, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bt66n"]
+atlas = ExtResource("12_tpj1h")
+region = Rect2(136, 0, 34, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dutdc"]
+atlas = ExtResource("12_tpj1h")
+region = Rect2(170, 0, 34, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7cjxe"]
+atlas = ExtResource("12_tpj1h")
+region = Rect2(204, 0, 34, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1jr8g"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4g88j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6rut1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2i6vj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e54wi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bt66n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dutdc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7cjxe")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u4tnw"]
+size = Vector2(27, 11.5)
+
 [node name="RoomTest2" type="Node2D"]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
@@ -325,3 +419,28 @@ autoplay = "idle"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Garde Bleu"]
 position = Vector2(-2, 13.5)
 shape = SubResource("RectangleShape2D_27nhb")
+
+[node name="Mob Course" type="CharacterBody2D" parent="."]
+position = Vector2(-66, 18)
+script = ExtResource("4_aqk3b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Mob Course"]
+position = Vector2(2, 6.5)
+shape = SubResource("RectangleShape2D_w3ejm")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Mob Course"]
+sprite_frames = SubResource("SpriteFrames_4g88j")
+animation = &"course-gauche"
+autoplay = "course-gauche"
+
+[node name="Poussin" type="CharacterBody2D" parent="."]
+script = ExtResource("4_aqk3b")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Poussin"]
+sprite_frames = SubResource("SpriteFrames_1jr8g")
+autoplay = "default"
+frame_progress = 0.037764102
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Poussin"]
+position = Vector2(2, 11.75)
+shape = SubResource("RectangleShape2D_u4tnw")

@@ -130,6 +130,7 @@ frame_progress = 0.11325879
 [node name="StaminaBar" parent="." instance=ExtResource("5_stamina")]
 
 [node name="HUD" type="CanvasLayer" parent="."]
+layer = 110
 script = ExtResource("5_hud")
 
 [node name="HUDContainer" type="MarginContainer" parent="HUD"]
