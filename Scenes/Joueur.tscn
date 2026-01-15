@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://d1xvmuswrxu7v"]
+[gd_scene load_steps=19 format=3 uid="uid://d1xvmuswrxu7v"]
 
 [ext_resource type="Script" uid="uid://d0w3sybk1m6jo" path="res://Scripts/Joueur.gd" id="1_b0ct8"]
 [ext_resource type="Texture2D" uid="uid://daqdwstom1bus" path="res://Spritesheet/Joueur/Marche/sprite_walkback0.png" id="2_uej3h"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://d0xk33d0l21wb" path="res://Spritesheet/Joueur/Marche/sprite_perso-sidD1.png" id="11_gtwaa"]
 [ext_resource type="Texture2D" uid="uid://yqjwjkq8jk8q" path="res://Spritesheet/Joueur/Marche/sprite_perso_sideG0.png" id="12_vkuwq"]
 [ext_resource type="Texture2D" uid="uid://btp33m62fkjjy" path="res://Spritesheet/Joueur/Marche/sprite_perso_sideG1.png" id="13_i4bsu"]
+[ext_resource type="Texture2D" uid="uid://jymoqtr155wl" path="res://Textures/Vignette-base.webp" id="14_vignette"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ksi5g"]
 size = Vector2(11, 4)
@@ -137,3 +138,17 @@ frame = 2
 frame_progress = 0.8071616
 
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="VignetteLayer" type="CanvasLayer" parent="Camera2D"]
+layer = 100
+
+[node name="Vignette" type="TextureRect" parent="Camera2D/VignetteLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("14_vignette")
+expand_mode = 1
+stretch_mode = 6

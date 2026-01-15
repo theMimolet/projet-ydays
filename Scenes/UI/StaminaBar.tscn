@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://csdsghcmmw5i8" path="res://Spritesheet/stamina/1.png" id="2_stamina1"]
 
 [node name="StaminaBar" type="CanvasLayer"]
-layer = 10
+layer = 110
 
 [node name="StaminaContainer" type="Control" parent="."]
 layout_mode = 3
