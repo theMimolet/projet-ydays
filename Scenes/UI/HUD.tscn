@@ -1,24 +1,33 @@
-[gd_scene load_steps=2 format=3 uid="uid://br5r3ljdk8cs8"]
+[gd_scene load_steps=3 format=3 uid="uid://br5r3ljdk8cs8"]
 
 [ext_resource type="Script" path="res://Scripts/UI/HUD.gd" id="1_hud"]
+[ext_resource type="Texture2D" path="res://Spritesheet/HP/sprite_noirceur0.png" id="2_hp0"]
 
 [node name="HUD" type="CanvasLayer"]
+layer = 110
 script = ExtResource("1_hud")
 
-[node name="HUDContainer" type="MarginContainer" parent="."]
-anchors_preset = 1
-anchor_left = 1.0
+[node name="HPContainer" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -90.0
+offset_right = 200.0
+offset_bottom = -50.0
+grow_vertical = 0
+mouse_filter = 2
+modulate = Color(1, 1, 1, 1)
+
+[node name="HPSprite" type="TextureRect" parent="HPContainer"]
+layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
-offset_left = -100.0
-offset_bottom = 30.0
-grow_horizontal = 0
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-
-[node name="HPContainer" type="HBoxContainer" parent="HUDContainer"]
-layout_mode = 2
-
-[node name="HPLabel" type="Label" parent="HUDContainer/HPContainer"]
-layout_mode = 2
-text = "HP: 100 / 100"
-horizontal_alignment = 2
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_hp0")
+expand_mode = 1
+stretch_mode = 5
+modulate = Color(1, 1, 1, 1)

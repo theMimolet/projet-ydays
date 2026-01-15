@@ -1,7 +1,6 @@
-extends CanvasLayer
+extends Control
 
-@onready var hp_sprite: TextureRect = $HPContainer/HPSprite
-@onready var hp_container: Control = $HPContainer
+@onready var hp_sprite: TextureRect = $HPSprite
 
 const HP_TEXTURES := [
 	"res://Spritesheet/HP/sprite_noirceur0.png",  # 100 HP
@@ -15,35 +14,29 @@ const HP_TEXTURES := [
 	"res://Spritesheet/HP/sprite_noirceur8.png"   # 0 HP
 ]
 
-var joueur : Node = null
-
 func _ready() -> void:
-	if hp_container != null:
-		hp_container.visible = true
-		hp_container.modulate = Color(1, 1, 1, 1)
+	visible = true
+	modulate = Color(1, 1, 1, 1)
 	
-	# Chercher le joueur
-	joueur = get_tree().get_first_node_in_group("Joueur")
+	await get_tree().process_frame
 	
-	if joueur == null:
-		# Attendre un frame si le joueur n'est pas encore prêt
-		await get_tree().process_frame
-		joueur = get_tree().get_first_node_in_group("Joueur")
+	var player := get_tree().get_first_node_in_group("Joueur")
+	if player == null:
+		player = get_tree().current_scene.get_node_or_null("Joueur")
 	
-	if joueur != null and joueur.has_signal("hp_changed"):
-		joueur.hp_changed.connect(_on_hp_changed)
-		# Mettre à jour l'affichage initial
-		if "current_hp" in joueur and "MAX_HP" in joueur:
-			_on_hp_changed(joueur.current_hp, joueur.MAX_HP)
+	if player != null and player.has_signal("hp_changed"):
+		player.hp_changed.connect(_on_hp_changed)
+		if "current_hp" in player and "MAX_HP" in player:
+			_on_hp_changed(player.current_hp, player.MAX_HP)
 	else:
-		print("Erreur HUD : joueur introuvable ou signal hp_changed manquant")
+		print("HPBar: Joueur non trouvé ou signal manquant")
 
 func _on_hp_changed(new_hp: int, max_hp: int) -> void:
 	if hp_sprite == null or max_hp <= 0:
 		return
 	
-	# Déterminer l'index du sprite selon les paliers (comme dans Joueur.gd)
-	var sprite_index : int = 0
+	# Déterminer l'index du sprite selon les paliers
+	var sprite_index: int = 0
 	
 	if new_hp >= 100:
 		sprite_index = 0  # sprite0
@@ -75,12 +68,11 @@ func _on_hp_changed(new_hp: int, max_hp: int) -> void:
 				hp_sprite.texture = texture
 				hp_sprite.visible = true
 				hp_sprite.modulate = Color(1, 1, 1, 1)
-				if hp_container != null:
-					hp_container.visible = true
-					hp_container.modulate = Color(1, 1, 1, 1)
+				visible = true
+				modulate = Color(1, 1, 1, 1)
 			else:
-				push_warning("HUD: Texture size is invalid for " + texture_path)
+				push_warning("HPBar: Texture size is invalid for " + texture_path)
 		else:
-			push_warning("HUD: Failed to load texture: " + texture_path)
+			push_warning("HPBar: Failed to load texture: " + texture_path)
 	else:
-		push_warning("HUD: Invalid sprite_index: " + str(sprite_index))
+		push_warning("HPBar: Invalid sprite_index: " + str(sprite_index))

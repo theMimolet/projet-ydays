@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://ddm45fla0yj11"]
+[gd_scene load_steps=3 format=3 uid="uid://ccgsl7418eydt"]
 
 [ext_resource type="Script" uid="uid://brpajj631m6er" path="res://Scripts/UI/StaminaBar.gd" id="1_stamina"]
 [ext_resource type="Texture2D" uid="uid://csdsghcmmw5i8" path="res://Spritesheet/stamina/1.png" id="2_stamina1"]
@@ -17,7 +17,6 @@ offset_right = 50.0
 offset_bottom = -10.0
 grow_vertical = 0
 mouse_filter = 2
-modulate = Color(1, 1, 1, 1)
 script = ExtResource("1_stamina")
 
 [node name="StaminaSprite" type="TextureRect" parent="StaminaContainer"]
@@ -27,7 +26,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(2.2258065, 1)
 texture = ExtResource("2_stamina1")
 expand_mode = 1
 stretch_mode = 5
-modulate = Color(1, 1, 1, 1)
