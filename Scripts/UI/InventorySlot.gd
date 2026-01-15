@@ -145,4 +145,8 @@ func split_stack() -> bool:
 		quantity -= 1
 		update_display()
 		return true
+	elif quantity == 1:
+		# Si on retire le dernier item, vider le slot
+		clear_slot()
+		return true
 	return false

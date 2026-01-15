@@ -1,4 +1,3 @@
-class_name CommandRegistry
 extends RefCounted
 
 ## Gestionnaire de commandes pour la console de développement
