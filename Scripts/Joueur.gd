@@ -72,7 +72,7 @@ func Mouvement() -> void :
 func _input(event: InputEvent) -> void:
 	# Ne pas gérer les interactions si l'inventaire est ouvert
 	if not is_inventory_open():
-		if event.is_action_pressed("Interract"):
+		if event.is_action_pressed("Interact"):
 			var interaction_found : bool = InteractionManager.handle_interaction(global_position)
 			if interaction_found:
 				canMove = false
