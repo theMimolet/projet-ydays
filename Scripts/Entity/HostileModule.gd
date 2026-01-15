@@ -1,6 +1,8 @@
 extends Node2D
 
-@export var speed : float = 75.0
+@export var baseSpeed : float = 40.0
+@export var maxSpeed : float = 200.0
+var speed : float = baseSpeed
 
 @onready var nav : NavigationAgent2D = $NavigationAgent2D
 @onready var joueur : CharacterBody2D = get_tree().get_first_node_in_group("Joueur")
@@ -30,6 +32,10 @@ func _physics_process(_delta: float) -> void:
 				if NavigationServer2D.map_get_iteration_id(nav.get_navigation_map()) == 0:
 					return
 				
+				if speed < maxSpeed : 
+					speed += 0.5
+				print(speed)
+				
 				var next_path_position: Vector2 = nav.get_next_path_position()
 				var new_velocity: Vector2 = global_position.direction_to(next_path_position) * speed
 				if nav.avoidance_enabled:
@@ -48,6 +54,8 @@ func _physics_process(_delta: float) -> void:
 				else : 
 					majNiveauAlerte(false)
 				$TAlerte.start()
+		etat.COMA : 
+			$"..".velocity = Vector2(0, 0)
 
 func majNiveauAlerte(ajout : bool) -> void : 
 	if ajout : 

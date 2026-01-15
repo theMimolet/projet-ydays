@@ -12,4 +12,4 @@ func _process(_delta: float) -> void:
 	frame = hostileModule.niveauAlerte
 	
 	if hostileModule.niveauAlerte == 5 : 
-		position = origin + Vector2(randi() % 20,randi() % 20) 
+		position = origin + Vector2((randi() % 2) - 1,(randi() % 2)-1) 

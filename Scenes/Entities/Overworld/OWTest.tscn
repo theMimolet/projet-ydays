@@ -52,7 +52,6 @@ texture = ExtResource("2_kewpm")
 
 [node name="Eye" type="AnimatedSprite2D" parent="."]
 position = Vector2(-1.1920929e-07, -27)
-scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_hp7ao")
 frame = 1
 script = ExtResource("8_fp7je")
