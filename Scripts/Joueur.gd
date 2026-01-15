@@ -224,9 +224,7 @@ func get_speed() -> float:
 	return base_speed
 
 func _on_player_death() -> void:
-	"""Appelé quand le joueur meurt - à personnaliser selon vos besoins"""
+	"""Appelé quand le joueur meurt - change vers la scène game over"""
 	print("Le joueur est mort !")
-	# Ici vous pouvez ajouter :
-	# - Animation de mort
-	# - Game Over screen
-	# - Respawn, etc.
+	# Changer vers la scène game over
+	get_tree().change_scene_to_file("res://Scenes/gameover.tscn")
