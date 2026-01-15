@@ -3,6 +3,10 @@ extends MenuSwitcher
 enum menuState {MAIN, OPTIONS}
 #@onready var join_values: NodePath = "MenuContainer/Join/Values"
 
+func _ready() -> void:
+	$VersionMargin/Version.text = ProjectSettings.get_setting("application/config/version")
+	pass
+
 func setup_switcher() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	default_index = menuState.MAIN

@@ -11,8 +11,10 @@ config_version=5
 [application]
 
 config/name="Unlost"
+config/version="dev-26.01.15"
 run/main_scene="uid://dulehm44jbn4i"
 config/features=PackedStringArray("4.5", "GL Compatibility")
+boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/fullsize=false
 boot_splash/image="uid://n4ar6xlgkstd"
 config/icon="res://Textures/icon.svg"
