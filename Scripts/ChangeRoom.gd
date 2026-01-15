@@ -28,7 +28,26 @@ func roomUnload() -> void:
 func roomLoad(room: String, spawnPoint: String) -> void: 
 	$Animateur.play("RESET") # Écran noir
 	
-	rooms.add_child(load(room).instantiate()) # Charge la nouvelle room et l'instantie en tant qu'enfant de "Rooms"
+	# Charger la scène et vérifier qu'elle existe
+	var room_resource = load(room)
+	if room_resource == null:
+		push_error("Impossible de charger la scène: %s" % room)
+		return
+	
+	# Vérifier que c'est bien une PackedScene
+	if not room_resource is PackedScene:
+		push_error("La ressource chargée n'est pas une PackedScene: %s" % room)
+		return
+	
+	var room_scene: PackedScene = room_resource as PackedScene
+	
+	# Instancier la scène et vérifier qu'elle est valide
+	var room_instance: Node = room_scene.instantiate()
+	if room_instance == null:
+		push_error("Impossible d'instancier la scène: %s" % room)
+		return
+	
+	rooms.add_child(room_instance) # Ajoute la nouvelle room en tant qu'enfant de "Rooms"
 	Global.currentRoom = room
 	
 	await get_tree().process_frame
