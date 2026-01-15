@@ -1,9 +1,13 @@
-[gd_scene load_steps=11 format=4 uid="uid://lsuq4yhka3a3"]
+
+[gd_scene load_steps=17 format=4 uid="uid://lsuq4yhka3a3"]
 
 [ext_resource type="Texture2D" uid="uid://ckchfryvhfo0n" path="res://Tilesets/proto_tiles.png" id="1_ixoji"]
+[ext_resource type="Script" uid="uid://dbk8n27v523gi" path="res://Scripts/Items/CollectableItem.gd" id="4_430hh"]
 [ext_resource type="PackedScene" uid="uid://dtwpnedsbtj8t" path="res://Scenes/RoomSwitcher.tscn" id="2_ljmtj"]
 [ext_resource type="PackedScene" uid="uid://cqmqkjfkawmgy" path="res://Scenes/Entities/Overworld/OWTest.tscn" id="4_430hh"]
-[ext_resource type="Script" path="res://Scripts/Interactions/Coffre.gd" id="4_o5rc3"]
+[ext_resource type="Script" uid="uid://bt8sfngqeu8gg" path="res://Scripts/Interactions/Coffre.gd" id="4_o5rc3"]
+[ext_resource type="Texture2D" uid="uid://0xkmm505a4o1" path="res://Spritesheet/Torche/sprite_torche.png" id="5_430hh"]
+
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_o5rc3"]
 
@@ -35,6 +39,53 @@ sources/1 = SubResource("TileSetAtlasSource_7wwei")
 size = Vector2(96, 34)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ljmtj"]
+size = Vector2(19, 19)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_430hh"]
+size = Vector2(10, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ftqpf"]
+atlas = ExtResource("5_430hh")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5s5wa"]
+atlas = ExtResource("5_430hh")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yto7a"]
+atlas = ExtResource("5_430hh")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d7sbv"]
+atlas = ExtResource("5_430hh")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eihsg"]
+atlas = ExtResource("5_430hh")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jmmq1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ftqpf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5s5wa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yto7a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d7sbv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eihsg")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="RoomTest1" type="Node2D"]
 
@@ -67,3 +118,17 @@ shape = SubResource("RectangleShape2D_ljmtj")
 
 [node name="Test" parent="." instance=ExtResource("4_430hh")]
 position = Vector2(177, -72)
+
+[node name="Torche" type="Sprite2D" parent="."]
+position = Vector2(391, -116)
+script = ExtResource("4_430hh")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Torche"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Torche/StaticBody2D"]
+shape = SubResource("RectangleShape2D_430hh")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Torche"]
+sprite_frames = SubResource("SpriteFrames_jmmq1")
+autoplay = "default"
+frame_progress = 0.547988

@@ -1,0 +1,58 @@
+[gd_scene load_steps=3 format=3 uid="uid://bnkogahkkn1a"]
+
+[ext_resource type="Script" uid="uid://d4fry2y08w0qf" path="res://Scripts/UI/DevConsole.gd" id="1_devconsole"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_console"]
+bg_color = Color(0.05, 0.05, 0.05, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0.8, 0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+
+[node name="DevConsole" type="CanvasLayer"]
+layer = 100
+scale = Vector2(1, 0.5)
+transform = Transform2D(1, 0, 0, 0.5, 0, 0)
+script = ExtResource("1_devconsole")
+
+[node name="ConsolePanel" type="Panel" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 350.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_console")
+
+[node name="MarginContainer" type="MarginContainer" parent="ConsolePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ConsolePanel/MarginContainer"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="ConsolePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "DEV CONSOLE"
+horizontal_alignment = 1
+
+[node name="HistoryLabel" type="RichTextLabel" parent="ConsolePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+scroll_following = true
+scroll_active = true
+
+[node name="InputLine" type="LineEdit" parent="ConsolePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "Tapez une commande... (help pour aide, TAB pour completion, historique)"
