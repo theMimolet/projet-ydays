@@ -11,8 +11,10 @@ config_version=5
 [application]
 
 config/name="Unlost"
+config/version="dev-26.01.15"
 run/main_scene="uid://dulehm44jbn4i"
 config/features=PackedStringArray("4.5", "GL Compatibility")
+boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/fullsize=false
 boot_splash/image="uid://n4ar6xlgkstd"
 config/icon="res://Textures/icon.svg"
@@ -22,6 +24,7 @@ config/icon="res://Textures/icon.svg"
 Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
 InteractionManager="*res://Scripts/Interactions/InteractionManager.gd"
 Global="*res://Scripts/Global.gd"
+GameSettings="*res://Scripts/GameSettings.gd"
 
 [debug]
 
@@ -98,7 +101,8 @@ enabled=PackedStringArray("res://addons/dialogic/plugin.cfg")
 [file_customization]
 
 folder_colors={
-"res://Dialog/": "green"
+"res://Dialog/": "green",
+"res://Scripts/": "gray"
 }
 
 [gui]
