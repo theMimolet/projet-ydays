@@ -26,12 +26,15 @@ func update_depth() -> void:
 	const BASE_OFFSET := 1000
 	z_index = BASE_OFFSET + int(global_position.y)
 
-func interact() -> void:
+func interact(timeline: String = "") -> void:
 	if not has_interacted:
 		has_interacted = true
 	
+	# Utiliser la timeline passée en paramètre, ou celle par défaut du PNJ
+	var timeline_to_use: String = timeline if timeline != "" else dialogue_timeline
+	
 	# Lancer le dialogue Dialogic
-	Dialogic.start(dialogue_timeline)
+	Dialogic.start(timeline_to_use)
 	
 	# Bloquer le mouvement du joueur pendant le dialogue
 	if player != null and "canMove" in player:
