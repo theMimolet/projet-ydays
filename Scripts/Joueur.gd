@@ -1,31 +1,34 @@
 extends CharacterBody2D
 
 var base_speed : float = 40.0  # Vitesse de base (modifiable)
-const DASH_SPEED = 200.0
-const DASH_DURATION = 0.2
-const DASH_COOLDOWN = 0.5
-const STAMINA_MAX = 3
-const STAMINA_REGEN_RATE = 0.5
-const DASH_STAMINA_COST = 1
 
 @onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
+
 @export var canMove : bool = true
-var canDash : bool = true
+var isMoving : bool
 
 # Système de points de vie
 const MAX_HP : int = 100
 var current_hp : int = MAX_HP
-
 signal hp_changed(new_hp: int, max_hp: int)
 signal player_died
 
-var isMoving : bool
+# Système Dash
+const DASH_SPEED = 200.0
+const DASH_DURATION = 0.2
+const DASH_COOLDOWN = 0.5
+const DASH_STAMINA_COST = 1
+var canDash : bool = true
 var isDashing : bool = false
 var dashTimer : float = 0.0
 var dashCooldownTimer : float = 0.0
 var dashDirection : Vector2 = Vector2.ZERO
+
+# Système Stamina
 var stamina : int = STAMINA_MAX
 var staminaRegenTimer : float = 0.0
+const STAMINA_MAX = 3
+const STAMINA_REGEN_RATE = 0.5
 const STAMINA_REGEN_DELAY = 1.0
 
 enum playerDirections {BAS, HAUT, GAUCHE, DROITE}
@@ -34,7 +37,6 @@ var currentPlayerDirections : playerDirections
 signal stamina_changed(new_stamina: int)
 
 func _ready() -> void:
-	add_to_group("Joueur")
 	if Dialogic.timeline_ended.connect(_on_timeline_ended) != OK:
 		print("Erreur : impossible de se connecter au signal timeline_ended de Dialogic")
 	
@@ -86,13 +88,13 @@ func _input(event: InputEvent) -> void:
 			dashCooldownTimer = DASH_COOLDOWN
 			consume_stamina(DASH_STAMINA_COST)
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 
 	# ============== MOUVEMENTS ==============
 	
 	# Gestion du dash
 	if isDashing:
-		dashTimer -= _delta
+		dashTimer -= delta
 		InteractionManager.check_vase_collision(global_position)
 		if dashTimer <= 0.0:
 			isDashing = false
@@ -100,11 +102,11 @@ func _physics_process(_delta: float) -> void:
 	
 	# Gestion du cooldown du dash
 	if dashCooldownTimer > 0.0:
-		dashCooldownTimer -= _delta
+		dashCooldownTimer -= delta
 	
 	# Gestion de la régénération de stamina
 	if stamina < STAMINA_MAX and not isDashing:
-		staminaRegenTimer += _delta
+		staminaRegenTimer += delta
 		if staminaRegenTimer >= STAMINA_REGEN_DELAY:
 			staminaRegenTimer = 0.0
 			regenerate_stamina()

@@ -4,8 +4,8 @@
 [ext_resource type="Script" uid="uid://dhwd5kgfkv56y" path="res://Scripts/ChangeRoom.gd" id="2_7xrvl"]
 [ext_resource type="Script" uid="uid://b86xfcp055ajx" path="res://Scripts/Chat/chat.gd" id="3_8lvve"]
 [ext_resource type="Texture2D" uid="uid://dd3by3yef1i2l" path="res://Spritesheet/chat/Group_chat.png" id="4_s3goe"]
-[ext_resource type="PackedScene" path="res://Scenes/UI/HPBar.tscn" id="6_hpbar"]
-[ext_resource type="PackedScene" uid="uid://ddm45fla0yj11" path="res://Scenes/UI/StaminaBar.tscn" id="5_stamina"]
+[ext_resource type="PackedScene" uid="uid://ccgsl7418eydt" path="res://Scenes/UI/StaminaBar.tscn" id="5_stamina"]
+[ext_resource type="PackedScene" uid="uid://7pav2b7oq5wj" path="res://Scenes/UI/HPBar.tscn" id="6_hpbar"]
 [ext_resource type="Script" uid="uid://bso8o41186mj5" path="res://Scripts/UI/Inventaire.gd" id="7_inv"]
 [ext_resource type="PackedScene" uid="uid://bnkogahkkn1a" path="res://Scenes/UI/DevConsole.tscn" id="8_devconsole"]
 

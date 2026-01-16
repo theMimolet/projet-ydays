@@ -1,7 +1,30 @@
-[gd_scene load_steps=3 format=3 uid="uid://ccgsl7418eydt"]
+[gd_scene load_steps=7 format=3 uid="uid://ccgsl7418eydt"]
 
 [ext_resource type="Script" uid="uid://brpajj631m6er" path="res://Scripts/UI/StaminaBar.gd" id="1_stamina"]
 [ext_resource type="Texture2D" uid="uid://csdsghcmmw5i8" path="res://Spritesheet/stamina/1.png" id="2_stamina1"]
+[ext_resource type="Texture2D" uid="uid://bmtrg7vhnkrdt" path="res://Spritesheet/stamina/2.png" id="3_682e8"]
+[ext_resource type="Texture2D" uid="uid://de2wcgjtiot2k" path="res://Spritesheet/stamina/3.png" id="4_xfjoq"]
+[ext_resource type="Texture2D" uid="uid://bcnuensj5o8rt" path="res://Spritesheet/stamina/4.png" id="5_he3nn"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qdpiv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_he3nn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_xfjoq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_682e8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_stamina1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="StaminaBar" type="CanvasLayer"]
 layer = 110
@@ -19,14 +42,7 @@ grow_vertical = 0
 mouse_filter = 2
 script = ExtResource("1_stamina")
 
-[node name="StaminaSprite" type="TextureRect" parent="StaminaContainer"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(2.2258065, 1)
-texture = ExtResource("2_stamina1")
-expand_mode = 1
-stretch_mode = 5
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="StaminaContainer"]
+position = Vector2(36.999996, 19.999998)
+scale = Vector2(0.155, 0.155)
+sprite_frames = SubResource("SpriteFrames_qdpiv")
