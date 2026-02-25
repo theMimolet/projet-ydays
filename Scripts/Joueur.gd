@@ -1,31 +1,34 @@
 extends CharacterBody2D
 
 var base_speed : float = 40.0  # Vitesse de base (modifiable)
-const DASH_SPEED = 200.0
-const DASH_DURATION = 0.2
-const DASH_COOLDOWN = 0.5
-const STAMINA_MAX = 3
-const STAMINA_REGEN_RATE = 0.5
-const DASH_STAMINA_COST = 1
 
 @onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
+
 @export var canMove : bool = true
-var canDash : bool = true
+var isMoving : bool
 
 # Système de points de vie
 const MAX_HP : int = 100
-var current_hp : int = MAX_HP
-
+var currentHP : int = MAX_HP
 signal hp_changed(new_hp: int, max_hp: int)
 signal player_died
 
-var isMoving : bool
+# Système Dash
+const DASH_SPEED = 200.0
+const DASH_DURATION = 0.2
+const DASH_COOLDOWN = 0.5
+const DASH_STAMINA_COST = 1
+var canDash : bool = true
 var isDashing : bool = false
 var dashTimer : float = 0.0
 var dashCooldownTimer : float = 0.0
 var dashDirection : Vector2 = Vector2.ZERO
+
+# Système Stamina
 var stamina : int = STAMINA_MAX
 var staminaRegenTimer : float = 0.0
+const STAMINA_MAX = 3
+const STAMINA_REGEN_RATE = 0.5
 const STAMINA_REGEN_DELAY = 1.0
 
 enum playerDirections {BAS, HAUT, GAUCHE, DROITE}
@@ -34,13 +37,12 @@ var currentPlayerDirections : playerDirections
 signal stamina_changed(new_stamina: int)
 
 func _ready() -> void:
-	add_to_group("Joueur")
 	if Dialogic.timeline_ended.connect(_on_timeline_ended) != OK:
 		print("Erreur : impossible de se connecter au signal timeline_ended de Dialogic")
 	
 	# Initialiser les HP et émettre le signal
-	current_hp = MAX_HP
-	hp_changed.emit(current_hp, MAX_HP)
+	currentHP = MAX_HP
+	hp_changed.emit(currentHP, MAX_HP)
 
 func is_inventory_open() -> bool:
 	"""Vérifie si l'inventaire est ouvert"""
@@ -86,13 +88,13 @@ func _input(event: InputEvent) -> void:
 			dashCooldownTimer = DASH_COOLDOWN
 			consume_stamina(DASH_STAMINA_COST)
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 
 	# ============== MOUVEMENTS ==============
 	
 	# Gestion du dash
 	if isDashing:
-		dashTimer -= _delta
+		dashTimer -= delta
 		InteractionManager.check_vase_collision(global_position)
 		if dashTimer <= 0.0:
 			isDashing = false
@@ -100,11 +102,11 @@ func _physics_process(_delta: float) -> void:
 	
 	# Gestion du cooldown du dash
 	if dashCooldownTimer > 0.0:
-		dashCooldownTimer -= _delta
+		dashCooldownTimer -= delta
 	
 	# Gestion de la régénération de stamina
 	if stamina < STAMINA_MAX and not isDashing:
-		staminaRegenTimer += _delta
+		staminaRegenTimer += delta
 		if staminaRegenTimer >= STAMINA_REGEN_DELAY:
 			staminaRegenTimer = 0.0
 			regenerate_stamina()
@@ -171,13 +173,13 @@ func take_damage(damage: int) -> void:
 	if damage <= 0:
 		return
 	
-	current_hp -= damage
-	if current_hp < 0:
-		current_hp = 0
+	currentHP -= damage
+	if currentHP < 0:
+		currentHP = 0
 	
-	hp_changed.emit(current_hp, MAX_HP)
+	hp_changed.emit(currentHP, MAX_HP)
 	
-	if current_hp <= 0:
+	if currentHP <= 0:
 		player_died.emit()
 		_on_player_death()
 
@@ -186,28 +188,28 @@ func heal(amount: int) -> void:
 	if amount <= 0:
 		return
 	
-	current_hp += amount
-	if current_hp > MAX_HP:
-		current_hp = MAX_HP
+	currentHP += amount
+	if currentHP > MAX_HP:
+		currentHP = MAX_HP
 	
-	hp_changed.emit(current_hp, MAX_HP)
+	hp_changed.emit(currentHP, MAX_HP)
 
 func set_hp(new_hp: int) -> void:
 	"""Définit directement les HP (utile pour les potions, etc.)"""
-	current_hp = clamp(new_hp, 0, MAX_HP)
-	hp_changed.emit(current_hp, MAX_HP)
+	currentHP = clamp(new_hp, 0, MAX_HP)
+	hp_changed.emit(currentHP, MAX_HP)
 	
-	if current_hp <= 0:
+	if currentHP <= 0:
 		player_died.emit()
 		_on_player_death()
 
 func is_dead() -> bool:
 	"""Retourne true si le joueur est mort"""
-	return current_hp <= 0
+	return currentHP <= 0
 
 func get_hp_percentage() -> float:
 	"""Retourne le pourcentage de HP (0.0 à 1.0)"""
-	return float(current_hp) / float(MAX_HP)
+	return float(currentHP) / float(MAX_HP)
 
 # ============== GESTION DE LA VITESSE ==============
 

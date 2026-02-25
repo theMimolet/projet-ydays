@@ -323,7 +323,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u4tnw"]
 size = Vector2(27, 11.5)
 
-[node name="RoomTest2" type="Node2D"]
+[node name="Test2" type="Node2D"]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 position = Vector2(-97, -23)
@@ -339,7 +339,7 @@ playerSpawn = Vector2(-33, 131)
 position = Vector2(-96.005005, -13.020004)
 shape = SubResource("RectangleShape2D_6kej8")
 
-[node name="RoomTest1" type="Node2D" parent="."]
+[node name="Test1" type="Node2D" parent="."]
 position = Vector2(-56, -170)
 
 [node name="MonstreNoir sang" type="CharacterBody2D" parent="."]

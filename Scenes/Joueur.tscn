@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://d1xvmuswrxu7v"]
+[gd_scene format=3 uid="uid://d1xvmuswrxu7v"]
 
 [ext_resource type="Script" uid="uid://d0w3sybk1m6jo" path="res://Scripts/Joueur.gd" id="1_b0ct8"]
 [ext_resource type="Texture2D" uid="uid://daqdwstom1bus" path="res://Spritesheet/Joueur/Marche/sprite_walkback0.png" id="2_uej3h"]
@@ -10,8 +10,12 @@
 [ext_resource type="Texture2D" uid="uid://psnu27tn25m4" path="res://Spritesheet/Joueur/Marche/sprite_perso-sidD0.png" id="10_s8008"]
 [ext_resource type="Texture2D" uid="uid://d0xk33d0l21wb" path="res://Spritesheet/Joueur/Marche/sprite_perso-sidD1.png" id="11_gtwaa"]
 [ext_resource type="Texture2D" uid="uid://yqjwjkq8jk8q" path="res://Spritesheet/Joueur/Marche/sprite_perso_sideG0.png" id="12_vkuwq"]
+[ext_resource type="PackedScene" uid="uid://ccgsl7418eydt" path="res://Scenes/UI/StaminaBar.tscn" id="13_fvesd"]
 [ext_resource type="Texture2D" uid="uid://btp33m62fkjjy" path="res://Spritesheet/Joueur/Marche/sprite_perso_sideG1.png" id="13_i4bsu"]
 [ext_resource type="Texture2D" uid="uid://jymoqtr155wl" path="res://Textures/Vignette-base.webp" id="14_vignette"]
+[ext_resource type="PackedScene" uid="uid://7pav2b7oq5wj" path="res://Scenes/UI/HPBar.tscn" id="14_wgmmy"]
+[ext_resource type="Script" uid="uid://bso8o41186mj5" path="res://Scripts/UI/Inventaire.gd" id="15_algd0"]
+[ext_resource type="PackedScene" uid="uid://bnkogahkkn1a" path="res://Scenes/UI/DevConsole.tscn" id="16_s8008"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ksi5g"]
 size = Vector2(11, 4)
@@ -123,29 +127,27 @@ animations = [{
 "speed": 4.0
 }]
 
-[node name="Joueur" type="CharacterBody2D"]
+[node name="Joueur" type="CharacterBody2D" unique_id=1099176385]
 motion_mode = 1
 script = ExtResource("1_b0ct8")
 
-[node name="s" type="CollisionShape2D" parent="."]
+[node name="Pieds" type="CollisionShape2D" parent="." unique_id=1708619638]
 position = Vector2(-0.5, 13)
 shape = SubResource("RectangleShape2D_ksi5g")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1464844206]
 sprite_frames = SubResource("SpriteFrames_3derw")
 animation = &"marche-bas"
 frame = 2
 frame_progress = 0.8071616
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=2047598505]
 zoom = Vector2(2, 2)
 
-[node name="Node" type="Node" parent="."]
-
-[node name="VignetteLayer" type="CanvasLayer" parent="Camera2D"]
+[node name="VignetteLayer" type="CanvasLayer" parent="Camera2D" unique_id=1783042377]
 layer = 100
 
-[node name="Vignette" type="TextureRect" parent="Camera2D/VignetteLayer"]
+[node name="Vignette" type="TextureRect" parent="Camera2D/VignetteLayer" unique_id=1863427510]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -155,3 +157,56 @@ mouse_filter = 2
 texture = ExtResource("14_vignette")
 expand_mode = 1
 stretch_mode = 6
+
+[node name="Node" type="Node" parent="." unique_id=496379395]
+
+[node name="StaminaBar" parent="." unique_id=1957040935 instance=ExtResource("13_fvesd")]
+
+[node name="HPBar" parent="." unique_id=472608486 instance=ExtResource("14_wgmmy")]
+
+[node name="Inventaire" type="CanvasLayer" parent="." unique_id=80722604]
+script = ExtResource("15_algd0")
+
+[node name="InventairePanel" type="Panel" parent="Inventaire" unique_id=1845179380]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -129.0
+offset_top = -70.0
+offset_right = 171.0
+offset_bottom = 130.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.84000045, 0.72000027)
+
+[node name="TitreLabel" type="Label" parent="Inventaire/InventairePanel" unique_id=975050336]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -222.61908
+offset_top = 8.333332
+offset_right = -122.61908
+offset_bottom = 28.333332
+grow_horizontal = 0
+scale = Vector2(1.6190481, 1.2222221)
+text = "INVENTAIRE"
+horizontal_alignment = 1
+
+[node name="InventaireContainer" type="GridContainer" parent="Inventaire/InventairePanel" unique_id=599248343]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 30.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 5
+theme_override_constants/v_separation = 5
+columns = 4
+
+[node name="DevConsole" parent="." unique_id=1272832658 instance=ExtResource("16_s8008")]

@@ -9,14 +9,13 @@ signal loaded
 @onready var chat : Node2D = $"../Chat" 
 
 func _ready() -> void:
-	roomLoad("res://Scenes/Rooms/Zone-1/room1.tscn", "InitialSpawn")
+	roomLoad("res://Scenes/Rooms/Test1.tscn", "InitialSpawn")
 
-func roomChange(newRoom: String) -> void:
-	var previousRoomName : String = rooms.get_child(0).name
-	print(previousRoomName)
+func roomChange(newRoom: String, spawnPoint: String) -> void:
+	print("New Room : "+newRoom+" / Spawnpoint : " + spawnPoint)
 	roomUnload()
 	await unloadFinished
-	roomLoad(newRoom, previousRoomName)
+	roomLoad(newRoom, spawnPoint)
 
 func roomUnload() -> void:
 	emit_signal("unloading")
@@ -28,26 +27,20 @@ func roomUnload() -> void:
 func roomLoad(room: String, spawnPoint: String) -> void: 
 	$Animateur.play("RESET") # Écran noir
 	
-		# Charger la scène et vérifier qu'elle existe
-	var room_resource = load(room)
-	if room_resource == null:
+	# Charger la scène et vérifier qu'elle existe
+	
+	var roomScene: PackedScene = load(room)
+	if roomScene == null:
 		push_error("Impossible de charger la scène: %s" % room)
 		return
 	
-	# Vérifier que c'est bien une PackedScene
-	if not room_resource is PackedScene:
-		push_error("La ressource chargée n'est pas une PackedScene: %s" % room)
-		return
-	
-	var room_scene: PackedScene = room_resource as PackedScene
-	
 	# Instancier la scène et vérifier qu'elle est valide
-	var room_instance: Node = room_scene.instantiate()
-	if room_instance == null:
+	var roomInstance: Node = roomScene.instantiate()
+	if roomInstance == null:
 		push_error("Impossible d'instancier la scène: %s" % room)
 		return
 	
-	rooms.add_child(room_instance) # Ajoute la nouvelle room en tant qu'enfant de "Rooms"
+	rooms.add_child(roomInstance) # Ajoute la nouvelle room en tant qu'enfant de "Rooms"
 	Global.currentRoom = room
 	
 	await get_tree().process_frame

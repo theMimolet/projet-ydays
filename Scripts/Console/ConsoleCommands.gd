@@ -152,6 +152,40 @@ static func cmd_set_hp(args: Array) -> String:
 	
 	return "[color=red]Erreur: Méthode set_hp() introuvable[/color]"
 
+static func cmd_set_room(args: Array) -> String:
+	"""Definit la nouvelle room et le spawnpoint du joueur"""
+	var requestedRoom: String = String(args[0])
+	var requestedSpawn: String = "InitialSpawn"
+	
+	if args.size() > 1:
+		requestedSpawn = String(args[1])
+	
+	if requestedRoom == null : 
+		return "[color=red]Erreur: Veuillez entrer le chemin de la room[/color]"
+	
+	var cheminScene: String = "res://Scenes/Rooms/"+requestedRoom+".tscn"
+	
+	if !ResourceLoader.exists(cheminScene):
+		return "[color=red]Erreur: La room "+requestedRoom+" n'existe pas[/color]"
+	
+	var sceneResource: PackedScene = load(cheminScene) 
+	var sceneInstance := sceneResource.instantiate()
+	
+	if !sceneInstance.has_node(requestedSpawn):
+		return "[color=red]Erreur: Le Spawn "+requestedSpawn+" n'existe pas[/color]"
+		
+	var spawnNode : Node = sceneInstance.get_node(requestedSpawn)
+	if spawnNode.get_class() != "Node2D":
+		return "[color=red]Erreur: Le Spawn "+requestedSpawn+" n'a pas le bon type[/color]"
+	
+	sceneInstance.queue_free()
+	
+	var roomManager : Node = _get_tree().get_first_node_in_group("RoomManager")
+	
+	roomManager.roomChange(cheminScene, requestedSpawn)
+	
+	return "[color=green] Chargement de "+requestedRoom+"...[/color]"
+
 # ============== FONCTIONS UTILITAIRES ==============
 
 static func _get_tree() -> SceneTree:
