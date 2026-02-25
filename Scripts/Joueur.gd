@@ -43,6 +43,9 @@ func _ready() -> void:
 	# Initialiser les HP et émettre le signal
 	currentHP = MAX_HP
 	hp_changed.emit(currentHP, MAX_HP)
+	
+	# Restaurer la position si on revient d'un combat (après le chargement de la room)
+	_try_restore_combat_position()
 
 func is_inventory_open() -> bool:
 	"""Vérifie si l'inventaire est ouvert"""
@@ -230,3 +233,26 @@ func _on_player_death() -> void:
 	print("Le joueur est mort !")
 	# Changer vers la scène game over
 	get_tree().change_scene_to_file("res://Scenes/gameover.tscn")
+
+
+func _try_restore_combat_position() -> void:
+	"""Essaie de restaurer la position après un combat"""
+	if Global.player_return_position == Vector2.ZERO:
+		return
+	
+	# Se cacher pendant le chargement
+	visible = false
+	
+	# Attendre que le RoomManager ait fini de charger
+	var room_manager := get_tree().get_first_node_in_group("RoomManager")
+	if room_manager and room_manager.has_signal("loaded"):
+		await room_manager.loaded
+	else:
+		await get_tree().process_frame
+	
+	# Restaurer la position immédiatement
+	global_position = Global.player_return_position
+	Global.player_return_position = Vector2.ZERO
+	
+	# Redevenir visible
+	visible = true

@@ -116,7 +116,7 @@ grow_horizontal = 2
 position = Vector2(80, 20)
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_hpbar")
-frame = 8
+frame = 0
 
 [node name="ZoneEnnemi" type="Panel" parent="AreneContainer" unique_id=1455663335]
 layout_mode = 1
@@ -160,18 +160,19 @@ text = "ENNEMI"
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="HPEnnemi" type="ProgressBar" parent="AreneContainer/ZoneEnnemi" unique_id=278790356]
-visible = false
+[node name="HPEnnemiContainer" type="Control" parent="AreneContainer/ZoneEnnemi"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = 10.0
-offset_top = 5.0
-offset_right = -10.0
-offset_bottom = 20.0
+offset_top = -30.0
+offset_bottom = 10.0
 grow_horizontal = 2
-value = 100.0
-show_percentage = false
+
+[node name="HPEnnemi" type="AnimatedSprite2D" parent="AreneContainer/ZoneEnnemi/HPEnnemiContainer"]
+position = Vector2(80, 20)
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_hpbar")
+frame = 0
 
 [node name="UI" type="Control" parent="." unique_id=1693993331]
 layout_mode = 1
@@ -278,3 +279,44 @@ offset_right = 30.0
 offset_bottom = -30.0
 grow_horizontal = 2
 horizontal_alignment = 1
+
+[node name="ModalVictoire" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -60.0
+offset_right = 120.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="ModalVictoire"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="LabelVictoire" type="Label" parent="ModalVictoire/VBox"]
+layout_mode = 2
+text = "Vous avez gagné !"
+horizontal_alignment = 1
+
+[node name="Spacer" type="Control" parent="ModalVictoire/VBox"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="BtnSuivre" type="Button" parent="ModalVictoire/VBox"]
+layout_mode = 2
+text = "Suivre"
