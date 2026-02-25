@@ -4,8 +4,16 @@
 [ext_resource type="Script" uid="uid://cs3wfgxf0axj4" path="res://Scripts/RoomSwitcher.gd" id="2_t5nnj"]
 [ext_resource type="Script" uid="uid://dbk8n27v523gi" path="res://Scripts/Items/CollectableItem.gd" id="3_collect"]
 [ext_resource type="Item" path="res://Items/KeyZone1.tres" id="4_key"]
-[ext_resource type="Texture2D" uid="uid://dxwboqmlilcxf" path="res://HUD/Combat/TextBox9patch.png" id="5_0bimb"]
+[ext_resource type="Texture2D" uid="uid://dna8ovg5p2qdy" path="res://Spritesheet/Cle/sprite_0 (1).webp" id="5_6qopq"]
 [ext_resource type="Script" uid="uid://tcqfo61gtyfq" path="res://Scripts/Interactions/Door.gd" id="5_door"]
+[ext_resource type="Script" uid="uid://cleremmooj2fa" path="res://Scripts/Interactions/Armoire.gd" id="6_armoire"]
+[ext_resource type="Texture2D" uid="uid://d0vr78hb2v84u" path="res://Spritesheet/Cle/sprite_1 (1).webp" id="6_eyu58"]
+[ext_resource type="Texture2D" uid="uid://cgy7a7qirg7r6" path="res://Spritesheet/Cle/sprite_2.webp" id="7_e8bpl"]
+[ext_resource type="Texture2D" uid="uid://i2dkdycp0d0y" path="res://Spritesheet/Cle/sprite_3.webp" id="8_qb5kr"]
+[ext_resource type="Texture2D" uid="uid://ba84bun4ou8ap" path="res://Spritesheet/Cle/sprite_4.webp" id="9_cf2co"]
+[ext_resource type="Texture2D" uid="uid://dv4d6eprqyuy" path="res://Spritesheet/Cle/sprite_5.webp" id="10_7nq4w"]
+[ext_resource type="Texture2D" uid="uid://tvyekxq4gj7t" path="res://Spritesheet/Cle/sprite_6.webp" id="11_qtm2r"]
+[ext_resource type="Texture2D" uid="uid://cgmxoqeo66afq" path="res://Spritesheet/Cle/sprite_7.webp" id="12_14w5e"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y6r2r"]
 size = Vector2(16, 123.8125)
@@ -19,8 +27,45 @@ size = Vector2(8, 72)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t5nnj"]
 size = Vector2(72, 9)
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_c8s71"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_6qopq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_eyu58")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_e8bpl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_qb5kr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_cf2co")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_7nq4w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_qtm2r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_14w5e")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 8.0
+}]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_door"]
 size = Vector2(10.000008, 71.99998)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_x1re5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x1re5"]
+size = Vector2(32, 8)
 
 [node name="Room1" type="Node2D" unique_id=1397696051]
 
@@ -89,13 +134,19 @@ debug_color = Color(0.92414904, 4.870832e-05, 0.68302995, 0.41960785)
 position = Vector2(-1, 70)
 
 [node name="KeyTest" type="Node2D" parent="." unique_id=180162224]
-position = Vector2(-40, 40)
+visible = false
+position = Vector2(59, -44)
+scale = Vector2(0.8, 0.8)
 script = ExtResource("3_collect")
 item_resource = ExtResource("4_key")
 item_name_override = "key_zone1"
 
-[node name="Sprite2D" type="Sprite2D" parent="KeyTest" unique_id=217835686]
-texture = ExtResource("5_0bimb")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="KeyTest" unique_id=177032915]
+scale = Vector2(0.8, 0.8)
+sprite_frames = SubResource("SpriteFrames_c8s71")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.8056501
 
 [node name="DoorTest" type="Node2D" parent="." unique_id=719315229]
 position = Vector2(0, 82)
@@ -112,5 +163,16 @@ scale = Vector2(2.2, 1)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DoorTest/StaticBody2D_Door" unique_id=516500099]
 position = Vector2(-7.6293945e-06, 0)
 shape = SubResource("RectangleShape2D_door")
+
+[node name="Armoire" type="Sprite2D" parent="." unique_id=1600000000]
+position = Vector2(58, -48)
+script = ExtResource("6_armoire")
+
+[node name="StaticBody2D_Armoire" type="StaticBody2D" parent="Armoire" unique_id=1600000001]
+physics_material_override = SubResource("PhysicsMaterial_x1re5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Armoire/StaticBody2D_Armoire" unique_id=702175237]
+position = Vector2(0, 11)
+shape = SubResource("RectangleShape2D_x1re5")
 
 [connection signal="body_entered" from="ChunkSwitcher" to="ChunkSwitcher" method="_on_body_entered"]
