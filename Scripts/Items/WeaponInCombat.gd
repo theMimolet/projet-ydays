@@ -1,63 +1,42 @@
-extends Node
-class_name Weapon
+extends Resource
+class_name WeaponInCombat
 
-## ====== STATS MODIFIABLES DANS L'INSPECTEUR ======
+## Données de combat pour une arme.
+## Crée une nouvelle Resource dans Godot, assigne ce script, et modifie les valeurs.
 
 @export_category("Dégâts")
-@export var damage: float = 10.0
-@export var damage_variation: float = 0.0 # Exemple: 2 = +/-2 dégâts
+@export var damage_min: int = 5
+@export var damage_max: int = 10
+@export var degats_fixes: bool = false
 
-@export_category("Critiques")
-@export var crit_chance: float = 0.1 # 0.1 = 10%
-@export var crit_multiplier: float = 1.5
-
-## ====== VARIABLES INTERNES ======
-
-var _can_attack: bool = true
-
-## ====== FONCTION PRINCIPALE ======
-
-func attack(target):
-	if not _can_attack:
-		return
-	
-	if target == null:
-		return
-	
-	var final_damage = calculate_damage()
-	
-	if target.has_method("take_damage"):
-		target.take_damage(final_damage)
-	
-## ====== CALCUL DES DEGATS ======
-
-func calculate_damage() -> float:
-	var final_damage = damage
-	
-	# Variation aléatoire
-	if damage_variation > 0:
-		final_damage += randf_range(-damage_variation, damage_variation)
-	
-	# Critique
-	if randf() <= crit_chance:
-		final_damage *= crit_multiplier
-		print("COUP CRITIQUE !")
-	
-	return max(final_damage, 0)
+@export_category("Options")
+@export var multiplicateur_critique: float = 1.5
+@export_range(0.0, 1.0, 0.01) var chance_critique: float = 0.1
+@export var nom_arme: String = "Arme"
 
 
-# L'ennemi doit avoir 
-# extends CharacterBody2D
+func get_degats() -> int:
+	if degats_fixes:
+		return damage_min
+	return randi_range(damage_min, damage_max)
 
-# @export var health: float = 100
 
-# func take_damage(amount: float):
-# 	health -= amount
-# 	print("Dégâts reçus :", amount)
-	
-# 	if health <= 0:
-# 		die()
+func get_degats_avec_critique() -> Dictionary:
+	var est_critique := randf() < chance_critique
+	var base := get_degats()
+	var degats_finaux := base
+	if est_critique:
+		degats_finaux = int(base * multiplicateur_critique)
+	return { "degats": degats_finaux, "critique": est_critique }
 
-# func die():
-# 	print("Ennemi mort")
-# 	queue_free()
+
+func get_description_degats() -> String:
+	if degats_fixes:
+		return str(damage_min)
+	return "%d-%d" % [damage_min, damage_max]
+
+
+func get_degats_moyens() -> float:
+	if degats_fixes:
+		return float(damage_min)
+	return (damage_min + damage_max) / 2.0

@@ -1,13 +1,130 @@
 [gd_scene format=3 uid="uid://de1iuhhoi2us0"]
 
-[ext_resource type="Texture2D" uid="uid://cgqka8dwc50qi" path="res://Spritesheet/Torche/sprite_torche0.png" id="1_5lmnv"]
-[ext_resource type="Script" uid="uid://bxauyhj4q6588" path="res://Scripts/Items/WeaponInCombat.gd" id="2_djx4s"]
+[ext_resource type="Script" uid="uid://dsmox8b1rub7l" path="res://Scripts/Combat/CombatController.gd" id="1_combat"]
+[ext_resource type="Resource" uid="uid://b4ejgf6g0fck1" path="res://Resources/Armes/Epee.tres" id="2_djx4s"]
+[ext_resource type="Script" uid="uid://cnubciq834w8p" path="res://Scripts/Combat/QTESystem.gd" id="2_qte"]
 
-[node name="CombatView" type="Node2D" unique_id=1779191833]
+[node name="CombatView" type="Control" unique_id=1415228214]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_combat")
+arme_equipee = ExtResource("2_djx4s")
 
-[node name="TorcheWeapon" type="Sprite2D" parent="." unique_id=1815476988]
-position = Vector2(302, 217)
-texture = ExtResource("1_5lmnv")
-script = ExtResource("2_djx4s")
-damage = 1.0
-damage_variation = 0.5
+[node name="Background" type="ColorRect" parent="." unique_id=1754938843]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.1, 0.1, 0.15, 1)
+
+[node name="UI" type="Control" parent="." unique_id=192973034]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="BtnAttaque" type="Button" parent="UI" unique_id=417927368]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -60.0
+offset_top = -60.0
+offset_right = 60.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Attaque"
+
+[node name="LabelResultat" type="Label" parent="UI" unique_id=1615834194]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -100.0
+offset_top = 20.0
+offset_right = 100.0
+offset_bottom = 50.0
+grow_horizontal = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="QTESystem" type="Control" parent="." unique_id=1502563670]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -60.0
+offset_right = 150.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_qte")
+
+[node name="PanelQTE" type="Panel" parent="QTESystem" unique_id=538604275]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="QTESystem/PanelQTE" unique_id=263623613]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="LabelInstructions" type="Label" parent="QTESystem/PanelQTE/VBox" unique_id=2040735012]
+layout_mode = 2
+text = "Appuie sur les touches !"
+horizontal_alignment = 1
+
+[node name="ContainerTouches" type="HBoxContainer" parent="QTESystem" unique_id=1778608629]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = -20.0
+offset_right = 80.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="LabelTemps" type="Label" parent="QTESystem" unique_id=1311651167]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -30.0
+offset_top = 40.0
+offset_right = 30.0
+offset_bottom = 55.0
+grow_horizontal = 2
+horizontal_alignment = 1
