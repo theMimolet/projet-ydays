@@ -152,6 +152,104 @@ static func cmd_set_hp(args: Array) -> String:
 	
 	return "[color=red]Erreur: Méthode set_hp() introuvable[/color]"
 
+static func cmd_give_weapon(args: Array) -> String:
+	"""Donne une arme au joueur (dague, epee1, epee2, epee3, bloodsword)"""
+	var weapon_name: String = args[0].to_lower()
+	
+	# Mapping des noms d'armes vers les fichiers .tres
+	var weapon_paths: Dictionary = {
+		"dague": "res://Resources/Armes/Dague.tres",
+		"epee1": "res://Resources/Armes/Epee1.tres",
+		"epee2": "res://Resources/Armes/Epee2.tres",
+		"epee3": "res://Resources/Armes/Epee3.tres",
+		"bloodsword": "res://Resources/Armes/BloodSword.tres",
+		"blood": "res://Resources/Armes/BloodSword.tres",
+	}
+	
+	if not weapon_paths.has(weapon_name):
+		var available: String = ", ".join(weapon_paths.keys())
+		return "[color=red]Arme inconnue: '" + weapon_name + "'. Disponibles: " + available + "[/color]"
+	
+	var weapon_path: String = weapon_paths[weapon_name]
+	
+	if not ResourceLoader.exists(weapon_path):
+		return "[color=red]Erreur: Fichier d'arme introuvable: " + weapon_path + "[/color]"
+	
+	var weapon: Resource = load(weapon_path)
+	if weapon == null:
+		return "[color=red]Erreur: Impossible de charger l'arme[/color]"
+	
+	# Récupérer l'inventaire
+	var inventaire: Node = _get_tree().get_first_node_in_group("Inventaire")
+	if inventaire == null:
+		return "[color=red]Erreur: Inventaire introuvable[/color]"
+	
+	# Ajouter à l'inventaire
+	if inventaire.has_method("add_item"):
+		var success: bool = inventaire.add_item(weapon, 1)
+		if success:
+			var nom: String = weapon.item_name if "item_name" in weapon else weapon_name
+			return "[color=green]Arme '" + nom + "' ajoutée à l'inventaire![/color]"
+		else:
+			return "[color=red]Erreur: Inventaire plein[/color]"
+	
+	return "[color=red]Erreur: Inventaire invalide[/color]"
+
+
+static func cmd_equip_weapon(args: Array) -> String:
+	"""Equipe directement une arme sur le joueur (dague, epee1, epee2, epee3, bloodsword)"""
+	var weapon_name: String = args[0].to_lower()
+	
+	var weapon_paths: Dictionary = {
+		"dague": "res://Resources/Armes/Dague.tres",
+		"epee1": "res://Resources/Armes/Epee1.tres",
+		"epee2": "res://Resources/Armes/Epee2.tres",
+		"epee3": "res://Resources/Armes/Epee3.tres",
+		"bloodsword": "res://Resources/Armes/BloodSword.tres",
+		"blood": "res://Resources/Armes/BloodSword.tres",
+	}
+	
+	if not weapon_paths.has(weapon_name):
+		var available: String = ", ".join(weapon_paths.keys())
+		return "[color=red]Arme inconnue: '" + weapon_name + "'. Disponibles: " + available + "[/color]"
+	
+	var weapon_path: String = weapon_paths[weapon_name]
+	var weapon: Resource = load(weapon_path)
+	if weapon == null:
+		return "[color=red]Erreur: Impossible de charger l'arme[/color]"
+	
+	var joueur: Node = _get_tree().get_first_node_in_group("Joueur")
+	if joueur == null:
+		return "[color=red]Erreur: Joueur introuvable[/color]"
+	
+	if joueur.has_method("equiper_arme"):
+		joueur.equiper_arme(weapon)
+		var nom: String = weapon.item_name if "item_name" in weapon else weapon_name
+		return "[color=green]Arme '" + nom + "' équipée![/color]"
+	
+	return "[color=red]Erreur: Méthode equiper_arme() introuvable sur le joueur[/color]"
+
+
+static func cmd_list_weapons(_args: Array) -> String:
+	"""Liste toutes les armes disponibles"""
+	var weapons_info: Array = [
+		["dague", "Dague", "3-6 dmg", "20% crit"],
+		["epee1", "Epee de fer", "5-10 dmg", "10% crit"],
+		["epee2", "Epee d'acier", "8-14 dmg", "12% crit"],
+		["bloodsword", "Epee de sang", "12-18 dmg", "15% crit"],
+		["epee3", "Epee legendaire", "15-25 dmg", "25% crit"],
+	]
+	
+	var result: String = "[color=yellow]=== ARMES DISPONIBLES ===[/color]\n"
+	for info in weapons_info:
+		result += "[color=cyan]" + info[0].rpad(12) + "[/color] "
+		result += info[1].rpad(18) + " | " + info[2].rpad(10) + " | " + info[3] + "\n"
+	
+	result += "\n[color=gray]Utilisez 'give_weapon <nom>' pour ajouter à l'inventaire[/color]"
+	result += "\n[color=gray]Utilisez 'equip_weapon <nom>' pour équiper directement[/color]"
+	return result
+
+
 static func cmd_set_room(args: Array) -> String:
 	"""Definit la nouvelle room et le spawnpoint du joueur"""
 	var requestedRoom: String = String(args[0])

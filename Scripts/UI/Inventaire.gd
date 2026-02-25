@@ -16,8 +16,14 @@ var joueur: Node = null
 var slots: Array = []
 var dragged_slot = null
 
+# Slot d'équipement
+var equipment_slot = null
+var equipment_panel: Panel = null
+
 signal inventaire_opened
 signal inventaire_closed
+signal weapon_equipped(weapon: Resource)
+signal weapon_unequipped
 
 func _ready() -> void:
 	# S'assurer que l'inventaire est au-dessus des autres UI (layer 0)
@@ -32,6 +38,9 @@ func _ready() -> void:
 	# Créer les slots d'inventaire
 	create_inventory_slots()
 	
+	# Créer le slot d'équipement
+	_setup_equipment_slot()
+	
 	# Panneau d'aide des contrôles (bas droite)
 	_setup_controles_hint()
 	# Preview de l'item pendant le drag
@@ -40,6 +49,9 @@ func _ready() -> void:
 	# Cacher l'inventaire au départ
 	inventaire_panel.visible = false
 	is_open = false
+	
+	# Restaurer l'inventaire depuis Global si des données sont sauvegardées
+	call_deferred("_restore_from_global")
 
 func create_inventory_slots() -> void:
 	"""Crée tous les slots d'inventaire"""
@@ -52,6 +64,61 @@ func create_inventory_slots() -> void:
 		slot.slot_right_clicked.connect(_on_slot_right_clicked)
 		inventaire_container.add_child(slot)
 		slots.append(slot)
+
+func _setup_equipment_slot() -> void:
+	"""Crée le panneau d'équipement à gauche de l'inventaire"""
+	# Créer un panneau pour l'équipement
+	equipment_panel = Panel.new()
+	equipment_panel.name = "EquipmentPanel"
+	equipment_panel.custom_minimum_size = Vector2(60, 100)
+	equipment_panel.mouse_filter = Control.MOUSE_FILTER_STOP
+	inventaire_panel.add_child(equipment_panel)
+	
+	# Positionner à gauche du container d'inventaire
+	equipment_panel.set_anchors_preset(Control.PRESET_TOP_LEFT)
+	equipment_panel.offset_left = -70
+	equipment_panel.offset_top = 10
+	equipment_panel.offset_right = -10
+	equipment_panel.offset_bottom = 110
+	
+	# Label "Arme"
+	var label := Label.new()
+	label.name = "EquipLabel"
+	label.text = "Arme"
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.set_anchors_preset(Control.PRESET_TOP_WIDE)
+	label.offset_top = 5
+	label.offset_bottom = 25
+	equipment_panel.add_child(label)
+	
+	# Créer le slot d'équipement
+	equipment_slot = SLOT_SCENE.instantiate()
+	equipment_slot.name = "EquipmentSlot"
+	equipment_slot.slot_index = -1  # Index spécial pour équipement
+	equipment_slot.add_to_group("InventorySlot")
+	equipment_slot.add_to_group("EquipmentSlot")
+	equipment_slot.slot_clicked.connect(_on_equipment_slot_clicked)
+	equipment_slot.slot_dropped.connect(_on_equipment_slot_dropped)
+	equipment_panel.add_child(equipment_slot)
+	
+	# Positionner au centre du panneau
+	equipment_slot.set_anchors_preset(Control.PRESET_CENTER)
+	equipment_slot.offset_left = -20
+	equipment_slot.offset_top = 10
+	equipment_slot.offset_right = 20
+	equipment_slot.offset_bottom = 50
+	
+	# Style spécial pour distinguer (bordure colorée)
+	var style_box := StyleBoxFlat.new()
+	style_box.bg_color = Color(0.15, 0.15, 0.2)
+	style_box.border_color = Color(0.8, 0.6, 0.2)  # Bordure dorée
+	style_box.set_border_width_all(2)
+	style_box.set_corner_radius_all(4)
+	equipment_slot.add_theme_stylebox_override("panel", style_box)
+	
+	# Mettre à jour l'affichage avec l'arme équipée actuelle
+	call_deferred("_update_equipment_slot_display")
+
 
 func _setup_controles_hint() -> void:
 	controles_hint = MarginContainer.new()
@@ -215,6 +282,12 @@ func _on_slot_dropped(source_slot, target_slot) -> void:
 		_cleanup_drag(source_slot)
 		return
 	
+	# Vérifier si on drop sur le slot d'équipement
+	if target_slot.is_in_group("EquipmentSlot"):
+		_on_slot_dropped_to_equipment(source_slot, target_slot)
+		_cleanup_drag(source_slot)
+		return
+	
 	# Si le slot cible est vide, on déplace l'item
 	if target_slot.is_empty():
 		target_slot.set_item(source_slot.item, source_slot.quantity)
@@ -370,3 +443,148 @@ func create_collectable_item(item: Item, position: Vector2, quantity: int = 1) -
 	collectable.add_child(static_body)
 	
 	return collectable
+
+
+# ============== SLOT D'EQUIPEMENT ==============
+
+func _on_equipment_slot_clicked(slot) -> void:
+	"""Gère le clic sur le slot d'équipement"""
+	if dragged_slot == null and not slot.is_empty():
+		# Commencer le drag depuis le slot d'équipement
+		dragged_slot = slot
+		slot.set_dragging(true)
+		if drag_preview != null and slot.item != null and slot.item.item_texture != null:
+			drag_preview.texture = slot.item.item_texture
+			drag_preview.visible = true
+		print("Début du drag depuis équipement: ", slot.item.item_name)
+
+
+func _on_equipment_slot_dropped(source_slot, target_slot) -> void:
+	"""Gère le drop depuis le slot d'équipement"""
+	if source_slot == null:
+		_cleanup_drag(source_slot)
+		return
+	
+	# Si on drop le slot d'équipement sur un slot d'inventaire
+	if target_slot != null and target_slot != source_slot:
+		if target_slot.is_in_group("EquipmentSlot"):
+			# Drop sur lui-même, annuler
+			_cleanup_drag(source_slot)
+			return
+		
+		# Déséquiper l'arme vers l'inventaire
+		var weapon_to_unequip = source_slot.item
+		
+		if target_slot.is_empty():
+			target_slot.set_item(weapon_to_unequip, 1)
+			source_slot.clear_slot()
+			_unequip_weapon_on_player()
+		else:
+			# Vérifier si on peut échanger (si c'est une arme)
+			if target_slot.item != null and "item_type" in target_slot.item and target_slot.item.item_type == "weapon":
+				# Échanger les armes
+				var new_weapon = target_slot.item
+				target_slot.set_item(weapon_to_unequip, 1)
+				source_slot.set_item(new_weapon, 1)
+				_equip_weapon_on_player(new_weapon)
+			else:
+				# Annuler le drop
+				_cleanup_drag(source_slot)
+				return
+	
+	_cleanup_drag(source_slot)
+
+
+func _on_slot_dropped_to_equipment(source_slot, _target_slot) -> void:
+	"""Gère le drop d'un slot d'inventaire vers le slot d'équipement"""
+	if source_slot == null or source_slot.is_empty():
+		return
+	
+	var item = source_slot.item
+	
+	# Vérifier que c'est une arme
+	if item == null or not "item_type" in item or item.item_type != "weapon":
+		print("Seules les armes peuvent être équipées!")
+		return
+	
+	# Si le slot d'équipement est vide
+	if equipment_slot.is_empty():
+		equipment_slot.set_item(item, 1)
+		if source_slot.quantity > 1:
+			source_slot.remove_item(1)
+		else:
+			source_slot.clear_slot()
+		_equip_weapon_on_player(item)
+	else:
+		# Échanger avec l'arme actuellement équipée
+		var old_weapon = equipment_slot.item
+		equipment_slot.set_item(item, 1)
+		if source_slot.quantity > 1:
+			source_slot.remove_item(1)
+			# Ajouter l'ancienne arme dans un slot vide
+			add_item(old_weapon, 1)
+		else:
+			source_slot.set_item(old_weapon, 1)
+		_equip_weapon_on_player(item)
+
+
+func _equip_weapon_on_player(weapon: Resource) -> void:
+	"""Équipe une arme sur le joueur"""
+	if joueur and joueur.has_method("equiper_arme"):
+		joueur.equiper_arme(weapon)
+	elif joueur and "arme_equipee" in joueur:
+		joueur.arme_equipee = weapon
+		if joueur.has_method("_update_arme_sprite"):
+			joueur._update_arme_sprite()
+	
+	Global.equipped_weapon = weapon
+	weapon_equipped.emit(weapon)
+	print("Arme équipée: ", weapon.item_name if "item_name" in weapon else "Unknown")
+
+
+func _unequip_weapon_on_player() -> void:
+	"""Déséquipe l'arme du joueur"""
+	if joueur and joueur.has_method("desequiper_arme"):
+		joueur.desequiper_arme()
+	elif joueur and "arme_equipee" in joueur:
+		joueur.arme_equipee = null
+		if joueur.has_method("_update_arme_sprite"):
+			joueur._update_arme_sprite()
+	
+	Global.equipped_weapon = null
+	weapon_unequipped.emit()
+	print("Arme déséquipée")
+
+
+func _update_equipment_slot_display() -> void:
+	"""Met à jour l'affichage du slot d'équipement avec l'arme actuellement équipée"""
+	if equipment_slot == null:
+		return
+	
+	var current_weapon: Resource = null
+	
+	# D'abord vérifier dans Global
+	if Global.equipped_weapon != null:
+		current_weapon = Global.equipped_weapon
+	# Sinon vérifier sur le joueur
+	elif joueur != null:
+		if joueur.has_method("get_arme_equipee"):
+			current_weapon = joueur.get_arme_equipee()
+		elif "arme_equipee" in joueur:
+			current_weapon = joueur.arme_equipee
+	
+	if current_weapon != null:
+		equipment_slot.set_item(current_weapon, 1)
+	else:
+		equipment_slot.clear_slot()
+
+
+# ============== PERSISTENCE ==============
+
+func _restore_from_global() -> void:
+	"""Restaure l'inventaire depuis Global si des données sont sauvegardées"""
+	if Global.has_saved_inventory():
+		Global.restore_inventory()
+	
+	# Mettre à jour l'affichage du slot d'équipement
+	_update_equipment_slot_display()

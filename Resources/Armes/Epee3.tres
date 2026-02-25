@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="Weapon" format=3]
+
+[ext_resource type="Script" uid="uid://bxauyhj4q6588" path="res://Scripts/Items/WeaponInCombat.gd" id="1_combat"]
+[ext_resource type="Script" path="res://Scripts/Items/Weapon.gd" id="2_weapon"]
+[ext_resource type="Texture2D" uid="uid://ckvlsroittifm" path="res://Spritesheet/Armes/sprite_sword3.png" id="3_texture"]
+
+[sub_resource type="Resource" id="Resource_combat"]
+script = ExtResource("1_combat")
+damage_min = 15
+damage_max = 25
+degats_fixes = false
+multiplicateur_critique = 2.0
+chance_critique = 0.25
+nom_arme = "Epee legendaire"
+
+[resource]
+script = ExtResource("2_weapon")
+item_name = "Epee legendaire"
+item_description = "Une arme legendaire aux degats devastateurs et critiques frequents."
+item_texture = ExtResource("3_texture")
+max_stack = 1
+item_type = "weapon"
+combat_data = SubResource("Resource_combat")
+sprite_overworld = ExtResource("3_texture")

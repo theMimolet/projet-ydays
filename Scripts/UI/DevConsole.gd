@@ -109,12 +109,8 @@ func _close_console() -> void:
 	if joueur and "canMove" in joueur:
 		joueur.canMove = true
 	
-	# Restaurer le mode souris
-	var inventaire: Node = get_tree().get_first_node_in_group("Inventaire")
-	if inventaire and "is_open" in inventaire and inventaire.is_open:
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	else:
-		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	# Garder le curseur visible (ne pas le cacher)
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 func _on_command_submitted(command_text: String) -> void:
 	"""Appelé quand l'utilisateur appuie sur Entrée"""
@@ -235,3 +231,8 @@ func _register_commands() -> void:
 	registry.register_command("heal", ConsoleCommands.cmd_heal, "Soigne le joueur", 0, 1, "heal [quantite]")
 	registry.register_command("set_hp", ConsoleCommands.cmd_set_hp, "Definit les HP", 1, 1, "set_hp <valeur>")
 	registry.register_command("set_room", ConsoleCommands.cmd_set_room, "Change la room actuelle", 1, 2, "set_hp <room> [spawnpoint]")
+	
+	# Armes
+	registry.register_command("give_weapon", ConsoleCommands.cmd_give_weapon, "Donne une arme", 1, 1, "give_weapon <dague|epee1|epee2|epee3|bloodsword>")
+	registry.register_command("equip_weapon", ConsoleCommands.cmd_equip_weapon, "Equipe une arme", 1, 1, "equip_weapon <dague|epee1|epee2|epee3|bloodsword>")
+	registry.register_command("list_weapons", ConsoleCommands.cmd_list_weapons, "Liste les armes", 0, 0, "list_weapons")

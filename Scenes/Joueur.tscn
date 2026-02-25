@@ -141,6 +141,12 @@ animation = &"marche-bas"
 frame = 2
 frame_progress = 0.8071616
 
+[node name="ArmeSprite" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(8, 4)
+rotation = 0.785398
+scale = Vector2(0.5, 0.5)
+
 [node name="Camera2D" type="Camera2D" parent="." unique_id=2047598505]
 zoom = Vector2(2, 2)
 
