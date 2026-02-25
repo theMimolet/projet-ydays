@@ -234,3 +234,4 @@ func _register_commands() -> void:
 	registry.register_command("set_speed", ConsoleCommands.cmd_set_speed, "Definit la vitesse", 1, 1, "set_speed <valeur>")
 	registry.register_command("heal", ConsoleCommands.cmd_heal, "Soigne le joueur", 0, 1, "heal [quantite]")
 	registry.register_command("set_hp", ConsoleCommands.cmd_set_hp, "Definit les HP", 1, 1, "set_hp <valeur>")
+	registry.register_command("set_room", ConsoleCommands.cmd_set_room, "Change la room actuelle", 1, 2, "set_hp <room> [spawnpoint]")

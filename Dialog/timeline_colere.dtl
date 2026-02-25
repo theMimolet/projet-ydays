@@ -1,10 +1,13 @@
 [style name="Dialogue"]
 join  center
-Rabiacci: AH BAH JE VOIS QUE Y'EN A UN QUI A DÉCIDÉ DE SE RÉVEILLER ! 
-Rabiacci: C’est dingue ça, 12ans qu’on poirot ici et tout ce qu’on reçoit c’est un ados en habit déchiré.
-Rabiacci:  D'ailleurs si jamais les autres te l’ont pas encore dit, on est coincé ici à l’intérieur 
-Rabiacci: Parce qu'un mécanisme bloque la porte on a tout essayer donc essaye même pas. 
+Rabiacci: AH BAH JE VOIS QUE Y'EN A UN QUI A DÉCIDÉ DE SE RÉVEILLER !
+Rabiacci: C’est dingue ça, 12 ans qu’on poireaute ici et tout ce qu’on reçoit c’est un ado en habit déchiré.
+Rabiacci: D'ailleurs si jamais les autres te l’ont pas encore dit, on est coincé ici, à l’intérieur
+Rabiacci: Parce qu'un mécanisme bloque la porte on a tout essayé donc essaye même pas.
 Rabiacci: Tu vas pourrir avec nous jusqu’à la fin ici.
+- Qu'est-ce qu'on fait ici ?
+	Rabiacci: Va voir ailleurs si j'y suis.
+- Ne rien dire.
 
 [end_timeline]
 join  center

@@ -1,12 +1,55 @@
-[gd_scene load_steps=3 format=3 uid="uid://7pav2b7oq5wj"]
+[gd_scene format=3 uid="uid://7pav2b7oq5wj"]
 
 [ext_resource type="Script" uid="uid://cnsu46ncbx8m4" path="res://Scripts/UI/HPBar.gd" id="1_hpbar"]
 [ext_resource type="Texture2D" uid="uid://dof3q0uv14tlr" path="res://Spritesheet/HP/sprite_noirceur0.png" id="2_hp0"]
+[ext_resource type="Texture2D" uid="uid://cwcx8engxgfnf" path="res://Spritesheet/HP/sprite_noirceur1.png" id="3_ob6ba"]
+[ext_resource type="Texture2D" uid="uid://dxt2ukn78ys71" path="res://Spritesheet/HP/sprite_noirceur2.png" id="4_aehv5"]
+[ext_resource type="Texture2D" uid="uid://564r44503iak" path="res://Spritesheet/HP/sprite_noirceur3.png" id="5_ayie1"]
+[ext_resource type="Texture2D" uid="uid://dmt8l211t66po" path="res://Spritesheet/HP/sprite_noirceur4.png" id="6_obcst"]
+[ext_resource type="Texture2D" uid="uid://ifody0ek2lqf" path="res://Spritesheet/HP/sprite_noirceur5.png" id="7_ht1lr"]
+[ext_resource type="Texture2D" uid="uid://nb31k00qlayo" path="res://Spritesheet/HP/sprite_noirceur6.png" id="8_fasc5"]
+[ext_resource type="Texture2D" uid="uid://18bp6a3vbfbn" path="res://Spritesheet/HP/sprite_noirceur7.png" id="9_2qohb"]
+[ext_resource type="Texture2D" uid="uid://bj1hf0n1d7nn3" path="res://Spritesheet/HP/sprite_noirceur8.png" id="10_w7bae"]
 
-[node name="HPBar" type="CanvasLayer"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_mulhe"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_w7bae")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_2qohb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_fasc5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_ht1lr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_obcst")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_ayie1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_aehv5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_ob6ba")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_hp0")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="HPBar" type="CanvasLayer" unique_id=1762312062]
 layer = 110
 
-[node name="HPContainer" type="Control" parent="."]
+[node name="HPContainer" type="Control" parent="." unique_id=641861716]
 layout_mode = 3
 anchors_preset = 2
 anchor_top = 1.0
@@ -16,21 +59,13 @@ offset_top = -91.0
 offset_right = 196.0
 offset_bottom = -39.0
 grow_vertical = 0
+size_flags_horizontal = 0
+size_flags_vertical = 8
 mouse_filter = 2
 script = ExtResource("1_hpbar")
 
-[node name="HPSprite" type="TextureRect" parent="HPContainer"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -149.0
-offset_top = 20.0
-offset_right = -149.0
-offset_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(3.5158136, 2.4403594)
-texture = ExtResource("2_hp0")
-expand_mode = 1
-stretch_mode = 5
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="HPContainer" unique_id=840748416]
+position = Vector2(-63.999996, 84.99999)
+scale = Vector2(5, 5)
+sprite_frames = SubResource("SpriteFrames_mulhe")
+frame = 8

@@ -8,12 +8,18 @@
 
 config_version=5
 
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
 [application]
 
 config/name="Unlost"
+config/version="dev-26.01.17"
 run/main_scene="uid://dulehm44jbn4i"
-config/features=PackedStringArray("4.5", "GL Compatibility")
-boot_splash/fullsize=false
+config/features=PackedStringArray("4.6", "GL Compatibility")
+boot_splash/bg_color=Color(0, 0, 0, 1)
+boot_splash/stretch_mode=0
 boot_splash/image="uid://n4ar6xlgkstd"
 config/icon="res://Textures/icon.svg"
 
@@ -22,6 +28,8 @@ config/icon="res://Textures/icon.svg"
 Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
 InteractionManager="*res://Scripts/Interactions/InteractionManager.gd"
 Global="*res://Scripts/Global.gd"
+GameSettings="*res://Scripts/GameSettings.gd"
+SaveSystem="*uid://cw42lcw05j7n1"
 
 [debug]
 
@@ -83,7 +91,6 @@ variables={}
 
 window/size/viewport_width=640
 window/size/viewport_height=360
-window/size/mode=3
 window/stretch/mode="viewport"
 window/stretch/aspect="keep_width"
 
@@ -98,7 +105,9 @@ enabled=PackedStringArray("res://addons/dialogic/plugin.cfg")
 [file_customization]
 
 folder_colors={
-"res://Dialog/": "green"
+"res://Dialog/": "green",
+"res://Scenes/": "blue",
+"res://Scripts/": "gray"
 }
 
 [gui]
@@ -174,3 +183,4 @@ textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
 textures/vram_compression/import_etc2_astc=true
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)
