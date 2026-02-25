@@ -1,19 +1,19 @@
 extends Panel
 
-const Item = preload("res://Scripts/Items/Item.gd")
+const ITEM : Resource = preload("res://Scripts/Items/Item.gd")
 
 @onready var item_texture : TextureRect = $ItemTexture
 @onready var quantity_label : Label = $QuantityLabel
 
-var item = null  # Item
+var item : Item
 var quantity : int = 0
 var slot_index : int = -1
 var is_dragging : bool = false
 
-signal slot_clicked(slot)
-signal slot_drag_started(slot)
-signal slot_dropped(slot, target_slot)
-signal slot_right_clicked(slot)
+signal slot_clicked(slot : Node)
+signal slot_drag_started(slot : Node)
+signal slot_dropped(slot : Node, target_slot : Node)
+signal slot_right_clicked(slot : Node)
 
 func _ready() -> void:
 	# Style du slot

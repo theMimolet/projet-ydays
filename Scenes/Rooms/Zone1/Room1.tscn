@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dof6jbjjwnxl7"]
+[gd_scene format=3 uid="uid://dof6jbjjwnxl7"]
 
 [ext_resource type="Texture2D" uid="uid://cae55ot0rabrp" path="res://Scenes/Rooms/Map/Environnement_1_YDAYS.webp" id="1_y6r2r"]
 [ext_resource type="Script" uid="uid://cs3wfgxf0axj4" path="res://Scripts/RoomSwitcher.gd" id="2_t5nnj"]
@@ -20,73 +20,72 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(-144, 80, -144, -43, 14
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t5nnj"]
 size = Vector2(72, 9)
 
-[node name="Room1" type="Node2D"]
+[node name="Room1" type="Node2D" unique_id=1686094894]
 
-[node name="Colliders" type="Node2D" parent="."]
+[node name="Colliders" type="Node2D" parent="." unique_id=1913247565]
 
-[node name="StaticBody2D4" type="StaticBody2D" parent="Colliders"]
+[node name="StaticBody2D4" type="StaticBody2D" parent="Colliders" unique_id=637302484]
 position = Vector2(98, 88)
 rotation = 1.5707964
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D4"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D4" unique_id=1073213515]
 position = Vector2(0, -0.125)
 shape = SubResource("RectangleShape2D_y6r2r")
 
-[node name="StaticBody2D5" type="StaticBody2D" parent="Colliders"]
+[node name="StaticBody2D5" type="StaticBody2D" parent="Colliders" unique_id=2128055332]
 position = Vector2(-98, -51)
 rotation = 1.5707964
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D5"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D5" unique_id=959329088]
 position = Vector2(-1.0000038, -98)
 shape = SubResource("RectangleShape2D_ob1wg")
 
-[node name="StaticBody2D3" type="StaticBody2D" parent="Colliders"]
+[node name="StaticBody2D3" type="StaticBody2D" parent="Colliders" unique_id=1296843149]
 position = Vector2(-98, 88)
 rotation = 1.5707964
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D3"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D3" unique_id=777660661]
 shape = SubResource("RectangleShape2D_y6r2r")
 
-[node name="StaticBody2D2" type="StaticBody2D" parent="Colliders"]
+[node name="StaticBody2D2" type="StaticBody2D" parent="Colliders" unique_id=1799453429]
 position = Vector2(-152, 18)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D2" unique_id=1940403362]
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_y6r2r")
 
-[node name="StaticBody2D6" type="StaticBody2D" parent="Colliders"]
+[node name="StaticBody2D6" type="StaticBody2D" parent="Colliders" unique_id=944293518]
 position = Vector2(304, 37)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D6"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D6" unique_id=1449693471]
 position = Vector2(-304, 63)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_pkce1")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="Colliders"]
+[node name="StaticBody2D" type="StaticBody2D" parent="Colliders" unique_id=978863848]
 position = Vector2(152, 18.5)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D" unique_id=717543244]
 position = Vector2(0, -0.3124981)
 shape = SubResource("RectangleShape2D_y6r2r")
 
-[node name="Environnement1Ydays" type="Sprite2D" parent="."]
+[node name="Environnement1Ydays" type="Sprite2D" parent="." unique_id=1079033494]
 position = Vector2(0, 6)
 texture = ExtResource("1_y6r2r")
 
-[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=296928267]
 navigation_polygon = SubResource("NavigationPolygon_y6r2r")
 
-[node name="ChunkSwitcher" type="Area2D" parent="."]
+[node name="ChunkSwitcher" type="Area2D" parent="." unique_id=27290581]
 script = ExtResource("2_t5nnj")
 roomToLoad = "uid://drhfsi6nm5qod"
-playerSpawn = Vector2(-271, 39)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ChunkSwitcher"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ChunkSwitcher" unique_id=320214560]
 position = Vector2(0, 91.5)
 shape = SubResource("RectangleShape2D_t5nnj")
 debug_color = Color(0.92414904, 4.870832e-05, 0.68302995, 0.41960785)
 
-[node name="Couloir" type="Node2D" parent="."]
+[node name="Couloir" type="Node2D" parent="." unique_id=74920407]
 position = Vector2(-1, 70)
 
 [connection signal="body_entered" from="ChunkSwitcher" to="ChunkSwitcher" method="_on_body_entered"]

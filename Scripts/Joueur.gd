@@ -3,7 +3,7 @@ extends CharacterBody2D
 var base_speed : float = 40.0  # Vitesse de base (modifiable)
 
 @onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
-
+@onready var inventory : Node = $Inventaire
 @export var canMove : bool = true
 var isMoving : bool
 
@@ -46,9 +46,8 @@ func _ready() -> void:
 
 func is_inventory_open() -> bool:
 	"""Vérifie si l'inventaire est ouvert"""
-	var inventaire : Node = get_tree().get_first_node_in_group("Inventaire")
-	if inventaire != null and "is_open" in inventaire:
-		return inventaire.is_open
+	if inventory != null and "is_open" in inventory:
+		return inventory.is_open
 	return false
 
 func Mouvement() -> void :

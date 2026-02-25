@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cqmqkjfkawmgy"]
+[gd_scene format=3 uid="uid://cqmqkjfkawmgy"]
 
 [ext_resource type="PackedScene" uid="uid://c37g8d2neou34" path="res://Scenes/Entities/Overworld/OWHostileModule.tscn" id="1_2p4ad"]
 [ext_resource type="Texture2D" uid="uid://catynbo4vtkua" path="res://Textures/icon.svg" id="2_kewpm"]
@@ -37,20 +37,20 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Test" type="CharacterBody2D"]
+[node name="Test" type="CharacterBody2D" unique_id=683536570]
 motion_mode = 1
 
-[node name="Collision" type="CollisionShape2D" parent="."]
+[node name="Collision" type="CollisionShape2D" parent="." unique_id=1468314051]
 shape = SubResource("CircleShape2D_medu7")
 
-[node name="HostileModule" parent="." instance=ExtResource("1_2p4ad")]
+[node name="HostileModule" parent="." unique_id=481882914 instance=ExtResource("1_2p4ad")]
 
-[node name="Sprite" type="Sprite2D" parent="."]
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1423693503]
 position = Vector2(3.5762787e-07, 1.1920929e-07)
 scale = Vector2(0.15625, 0.15625)
 texture = ExtResource("2_kewpm")
 
-[node name="Eye" type="AnimatedSprite2D" parent="."]
+[node name="Eye" type="AnimatedSprite2D" parent="." unique_id=2014405612]
 position = Vector2(-1.1920929e-07, -27)
 sprite_frames = SubResource("SpriteFrames_hp7ao")
 frame = 1

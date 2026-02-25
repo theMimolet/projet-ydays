@@ -110,7 +110,7 @@ func get_nearest_collectable(player_position: Vector2) -> Node2D:
 
 func update_collectable_indicators(player_position: Vector2) -> void:
 	"""Met à jour les indicateurs visuels des objets collectables proches"""
-	var nearest = get_nearest_collectable(player_position)
+	var nearest : Node2D = get_nearest_collectable(player_position)
 	
 	# Cacher l'indicateur de l'item précédent
 	if last_targeted_item != null and last_targeted_item != nearest:

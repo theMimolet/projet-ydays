@@ -6,7 +6,7 @@ var speed : float = baseSpeed
 
 @onready var nav : NavigationAgent2D = $NavigationAgent2D
 @onready var joueur : CharacterBody2D = get_tree().get_first_node_in_group("Joueur")
-@onready var roomManager := get_tree().get_first_node_in_group("RoomManager")
+@onready var roomManager : Node = get_tree().get_first_node_in_group("RoomManager")
 
 var joueurProche : bool
 var niveauAlerte : int
@@ -34,7 +34,7 @@ func _physics_process(_delta: float) -> void:
 				
 				if speed < maxSpeed : 
 					speed += 0.5
-				print(speed)
+				#print(speed)
 				
 				var next_path_position: Vector2 = nav.get_next_path_position()
 				var new_velocity: Vector2 = global_position.direction_to(next_path_position) * speed
@@ -48,7 +48,7 @@ func _physics_process(_delta: float) -> void:
 				$TPoursuite.start()
 		etat.IDLE : 
 			if $TAlerte.is_stopped() : 
-				print(joueurProche)
+				#print(joueurProche)
 				if joueurProche :
 					majNiveauAlerte(true)
 				else : 
@@ -65,7 +65,7 @@ func majNiveauAlerte(ajout : bool) -> void :
 			niveauAlerte -= 1
 	if niveauAlerte >= 5: 
 		etatActuel = etat.ALERTE
-	print(niveauAlerte)
+	#print(niveauAlerte)
 
 func set_movement_target(movement_target: Vector2) -> void:
 	nav.set_target_position(movement_target)
