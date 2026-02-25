@@ -2,20 +2,23 @@ extends CanvasLayer
 
 const SLOT_SCENE = preload("res://Scenes/UI/InventorySlot.tscn")
 const Item = preload("res://Scripts/Items/Item.gd")
-const INVENTORY_SIZE : int = 16  # Nombre de slots d'inventaire
+const INVENTORY_SIZE: int = 16 # Nombre de slots d'inventaire
 
-@onready var inventaire_panel : Panel = $InventairePanel
-@onready var inventaire_container : GridContainer = $InventairePanel/InventaireContainer
+@onready var inventaire_panel: Panel = $InventairePanel
+@onready var inventaire_container: GridContainer = $InventairePanel/InventaireContainer
 
-var is_open : bool = false
-var joueur : Node = null
-var slots : Array = []
+var is_open: bool = false
+var joueur: Node = null
+var slots: Array = []
 var dragged_slot = null
 
 signal inventaire_opened
 signal inventaire_closed
 
 func _ready() -> void:
+	# S'assurer que l'inventaire est au-dessus des autres UI (layer 0)
+	layer = 10
+	
 	# Ajouter au groupe pour faciliter la recherche
 	add_to_group("Inventaire")
 	
@@ -41,10 +44,13 @@ func create_inventory_slots() -> void:
 		inventaire_container.add_child(slot)
 		slots.append(slot)
 
-func _input(event: InputEvent) -> void:
-	if event is InputEventKey and event.pressed:
-		if event.keycode == KEY_TAB:
-			toggle_inventaire()
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("toggle_inventaire"):
+		toggle_inventaire()
+		get_viewport().set_input_as_handled()
+	elif event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE and is_open:
+		toggle_inventaire()
+		get_viewport().set_input_as_handled()
 
 func toggle_inventaire() -> void:
 	is_open = !is_open
@@ -72,9 +78,9 @@ func add_item(item, quantity: int = 1) -> bool:
 	# Chercher un slot avec le même item qui peut encore en contenir
 	for slot in slots:
 		if not slot.is_empty() and slot.item.item_name == item.item_name:
-			var remaining : int = slot.item.max_stack - slot.quantity
+			var remaining: int = slot.item.max_stack - slot.quantity
 			if remaining > 0:
-				var to_add : int = min(quantity, remaining)
+				var to_add: int = min(quantity, remaining)
 				slot.quantity += to_add
 				slot.update_display()
 				quantity -= to_add
@@ -84,7 +90,7 @@ func add_item(item, quantity: int = 1) -> bool:
 	# Chercher un slot vide
 	for slot in slots:
 		if slot.is_empty():
-			var to_add : int = min(quantity, item.max_stack)
+			var to_add: int = min(quantity, item.max_stack)
 			slot.set_item(item, to_add)
 			quantity -= to_add
 			if quantity <= 0:
@@ -96,11 +102,11 @@ func add_item(item, quantity: int = 1) -> bool:
 
 func remove_item(item_name: String, quantity: int = 1) -> bool:
 	"""Retire un item de l'inventaire. Retourne true si réussi"""
-	var remaining : int = quantity
+	var remaining: int = quantity
 	
 	for slot in slots:
 		if not slot.is_empty() and slot.item.item_name == item_name:
-			var to_remove : int = min(remaining, slot.quantity)
+			var to_remove: int = min(remaining, slot.quantity)
 			slot.remove_item(to_remove)
 			remaining -= to_remove
 			if remaining <= 0:
@@ -118,7 +124,7 @@ func has_item(item_name: String, quantity: int = 1) -> bool:
 
 func get_item_count(item_name: String) -> int:
 	"""Retourne le nombre total d'un item dans l'inventaire"""
-	var total : int = 0
+	var total: int = 0
 	for slot in slots:
 		if not slot.is_empty() and slot.item.item_name == item_name:
 			total += slot.quantity
@@ -158,15 +164,15 @@ func _on_slot_dropped(source_slot, target_slot) -> void:
 		source_slot.clear_slot()
 	# Si c'est le même item, on empile
 	elif target_slot.item.item_name == source_slot.item.item_name:
-		var total : int = target_slot.quantity + source_slot.quantity
+		var total: int = target_slot.quantity + source_slot.quantity
 		if total <= target_slot.item.max_stack:
 			target_slot.quantity = total
 			target_slot.update_display()
 			source_slot.clear_slot()
 		else:
 			# Échanger les quantités
-			var max_stack : int = target_slot.item.max_stack
-			var excess : int = total - max_stack
+			var max_stack: int = target_slot.item.max_stack
+			var excess: int = total - max_stack
 			target_slot.quantity = max_stack
 			source_slot.quantity = excess
 			source_slot.update_display()
@@ -174,7 +180,7 @@ func _on_slot_dropped(source_slot, target_slot) -> void:
 	# Sinon, on échange les items
 	else:
 		var temp_item = target_slot.item
-		var temp_quantity : int = target_slot.quantity
+		var temp_quantity: int = target_slot.quantity
 		target_slot.set_item(source_slot.item, source_slot.quantity)
 		source_slot.set_item(temp_item, temp_quantity)
 	
@@ -190,16 +196,16 @@ func _cleanup_drag(slot) -> void:
 func _find_nearest_empty_slot(reference_slot) -> Node:
 	"""Trouve le slot vide le plus proche du slot de référence"""
 	var nearest_slot = null
-	var nearest_distance : float = INF
+	var nearest_distance: float = INF
 	
 	# Obtenir la position du slot de référence dans le container
-	var ref_index : int = reference_slot.slot_index
-	var ref_pos : Vector2 = _get_slot_position_in_container(ref_index)
+	var ref_index: int = reference_slot.slot_index
+	var ref_pos: Vector2 = _get_slot_position_in_container(ref_index)
 	
 	for slot in slots:
 		if slot.is_empty():
-			var slot_pos : Vector2 = _get_slot_position_in_container(slot.slot_index)
-			var distance : float = ref_pos.distance_to(slot_pos)
+			var slot_pos: Vector2 = _get_slot_position_in_container(slot.slot_index)
+			var distance: float = ref_pos.distance_to(slot_pos)
 			if distance < nearest_distance:
 				nearest_distance = distance
 				nearest_slot = slot
@@ -210,17 +216,17 @@ func _get_slot_position_in_container(slot_index: int) -> Vector2:
 	"""Calcule la position d'un slot dans le container basé sur son index"""
 	# Le GridContainer organise les slots en grille
 	# On peut calculer la position en fonction de l'index
-	var columns : int = inventaire_container.columns if inventaire_container.columns > 0 else 4
-	var row : int = slot_index / columns
-	var col : int = slot_index % columns
+	var columns: int = inventaire_container.columns if inventaire_container.columns > 0 else 4
+	var row: int = slot_index / columns
+	var col: int = slot_index % columns
 	# Estimation de la taille d'un slot (40x40 + espacement)
-	var slot_size : float = 40.0
-	var h_spacing : float = inventaire_container.get_theme_constant(&"h_separation")
-	var v_spacing : float = inventaire_container.get_theme_constant(&"v_separation")
+	var slot_size: float = 40.0
+	var h_spacing: float = inventaire_container.get_theme_constant(&"h_separation")
+	var v_spacing: float = inventaire_container.get_theme_constant(&"v_separation")
 	if h_spacing == 0.0:
-		h_spacing = 4.0  # Valeur par défaut
+		h_spacing = 4.0 # Valeur par défaut
 	if v_spacing == 0.0:
-		v_spacing = 4.0  # Valeur par défaut
+		v_spacing = 4.0 # Valeur par défaut
 	return Vector2(col * (slot_size + h_spacing), row * (slot_size + v_spacing))
 # ============== DROP SUR LA MAP ==============
 
@@ -237,7 +243,7 @@ func drop_item_on_map(slot) -> void:
 		return
 	
 	var item_to_drop = slot.item
-	var quantity_to_drop : int = 1
+	var quantity_to_drop: int = 1
 	
 	# Créer un objet CollectableItem
 	var collectable_item := create_collectable_item(item_to_drop, joueur.global_position, quantity_to_drop)
