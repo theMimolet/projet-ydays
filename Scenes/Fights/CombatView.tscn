@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://de1iuhhoi2us0"]
+
+[ext_resource type="Texture2D" uid="uid://cgqka8dwc50qi" path="res://Spritesheet/Torche/sprite_torche0.png" id="1_5lmnv"]
+[ext_resource type="Script" uid="uid://bxauyhj4q6588" path="res://Scripts/Items/WeaponInCombat.gd" id="2_djx4s"]
+
+[node name="CombatView" type="Node2D" unique_id=1779191833]
+
+[node name="TorcheWeapon" type="Sprite2D" parent="." unique_id=1815476988]
+position = Vector2(302, 217)
+texture = ExtResource("1_5lmnv")
+script = ExtResource("2_djx4s")
+damage = 1.0
+damage_variation = 0.5
