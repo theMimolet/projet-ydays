@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 const SPEED = 35.0
 const FOLLOW_DISTANCE = 32.0
-const MIN_DISTANCE = 16.0
+const MIN_DISTANCE = 17.0
 const FOLLOW_SPEED_MULTIPLIER = 1.2
 const TELEPORT_DISTANCE = 150.0
 const TELEPORT_OFFSET = 40.0
@@ -52,7 +52,7 @@ func _physics_process(delta: float) -> void:
 
 func update_depth() -> void:
 	const BASE_OFFSET := 1000
-	z_index = BASE_OFFSET + int(global_position.y)
+	z_index = BASE_OFFSET + int(global_position.y) + 10
 
 func teleport_to_player() -> void:
 	if is_teleporting or player == null:

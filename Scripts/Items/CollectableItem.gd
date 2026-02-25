@@ -9,6 +9,7 @@ const VIEW_ITEM_TEXTURE = preload("res://Spritesheet/items/view-item.png")
 @export var item_resource: Item # Ressource Item à créer dans l'éditeur
 @export var quantity: int = 1 # Quantité à donner
 @export var collectable: bool = true # Si false, l'item ne peut pas être collecté
+@export var can_collect: bool = true # Si false, l'item ne peut pas être collecté (contrôle logique externe)
 @export var item_name_override: String = "" # Nom personnalisé pour l'item (pour le stacking)
 
 var is_collected: bool = false
@@ -65,7 +66,7 @@ func _ready() -> void:
 
 func collect() -> bool:
 	"""Tente de collecter l'item. Retourne true si réussi"""
-	if not collectable or is_collected:
+	if not collectable or not can_collect or is_collected:
 		enable_player_movement()
 		return false
 	
@@ -116,7 +117,7 @@ func _enable_player_movement_deferred() -> void:
 
 func can_be_collected() -> bool:
 	"""Vérifie si l'item peut être collecté"""
-	return collectable and not is_collected
+	return collectable and can_collect and not is_collected
 
 func get_sprite_texture() -> Texture2D:
 	"""Récupère le sprite de l'objet (Sprite2D, AnimatedSprite2D, ou TextureRect)"""

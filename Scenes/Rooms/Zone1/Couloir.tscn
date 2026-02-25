@@ -27,6 +27,9 @@ size = Vector2(76, 68)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uoaph"]
 size = Vector2(72, 18)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hsgx3"]
+size = Vector2(9, 35)
+
 [node name="Couloir" type="Node2D" unique_id=279907654]
 
 [node name="Environnement1Ydays1" type="Sprite2D" parent="." unique_id=1851106250]
@@ -173,4 +176,17 @@ position = Vector2(-272, -80)
 shape = SubResource("RectangleShape2D_uoaph")
 debug_color = Color(0.93673784, 1.8193425e-05, 0.63304937, 0.41960785)
 
+[node name="ChunkSwitcher2" type="Area2D" parent="." unique_id=1671094315]
+position = Vector2(71.00001, -42)
+rotation = 0.7853982
+script = ExtResource("2_dqgav")
+roomToLoad = "uid://bnaxhtmt0lk42"
+playerSpawn = Vector2(20, 0)
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="ChunkSwitcher2" unique_id=1268668109]
+rotation = 0.7853982
+shape = SubResource("RectangleShape2D_hsgx3")
+debug_color = Color(0.9316478, 2.7434528e-05, 0.65395343, 0.41960785)
+
 [connection signal="body_entered" from="ChunkSwitcher" to="ChunkSwitcher" method="_on_body_entered"]
+[connection signal="body_entered" from="ChunkSwitcher2" to="ChunkSwitcher2" method="_on_body_entered"]
