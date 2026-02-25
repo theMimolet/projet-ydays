@@ -1,0 +1,11 @@
+[gd_resource type="Item" script_path="res://Scripts/Items/Item.gd" load_steps=2]
+
+[resource]
+item_name = "key_zone1"
+item_description = "Clé de la porte de Zone1"
+item_texture = null
+max_stack = 1
+item_type = "misc"
+sprite_frames = null
+animation_name = "default"
+

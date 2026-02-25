@@ -72,6 +72,11 @@ func handle_interaction(player_position: Vector2) -> bool:
 	if coffre != null:
 		coffre.interact()
 	
+	# Vérifier les interactions basées sur nodes (portes)
+	var door := _find_nearby_node_interactions(player_position, "Doors")
+	if door != null:
+		door.interact()
+	
 	# Vérifier les items collectables proches
 	var item_collected : bool = check_collectable_items(player_position)
 	if item_collected:

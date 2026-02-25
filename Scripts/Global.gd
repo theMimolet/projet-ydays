@@ -2,17 +2,23 @@ extends Node
 
 @export var currentRoom : String
 
-# Called when the node enters the scene tree for the first time.
+var pending_door : Node = null
+
 func _ready() -> void:
-	pass # Replace with function body.
+	pass
 
 func _input(event: InputEvent) -> void:
-	# Détecter Ctrl+R pour reset rapide de la scène
 	if event is InputEventKey and event.pressed:
 		if event.keycode == KEY_R and (event.ctrl_pressed or event.meta_pressed):
-			# Meta = Cmd sur Mac, Ctrl sur Windows/Linux
 			reset_scene()
 
 func reset_scene() -> void:
-	# Recharger la scène actuelle
 	get_tree().reload_current_scene()
+
+func set_pending_door(door: Node) -> void:
+	pending_door = door
+
+func use_key_on_pending_door() -> void:
+	if pending_door != null and pending_door.is_inside_tree() and pending_door.has_method("use_key_and_open"):
+		pending_door.use_key_and_open()
+	pending_door = null
