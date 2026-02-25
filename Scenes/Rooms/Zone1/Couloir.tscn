@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://drhfsi6nm5qod"]
+[gd_scene format=3 uid="uid://drhfsi6nm5qod"]
 
 [ext_resource type="Texture2D" uid="uid://c4fo1vgo0kcmf" path="res://Scenes/Rooms/Map/Environnement_1_YDAYS_1.webp" id="1_42vvc"]
 [ext_resource type="Script" uid="uid://cs3wfgxf0axj4" path="res://Scripts/RoomSwitcher.gd" id="2_dqgav"]
@@ -27,149 +27,149 @@ size = Vector2(76, 68)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uoaph"]
 size = Vector2(72, 18)
 
-[node name="Couloir" type="Node2D"]
+[node name="Couloir" type="Node2D" unique_id=279907654]
 
-[node name="Environnement1Ydays1" type="Sprite2D" parent="."]
+[node name="Environnement1Ydays1" type="Sprite2D" parent="." unique_id=1851106250]
 texture = ExtResource("1_42vvc")
 
-[node name="Colliders" type="Node2D" parent="."]
+[node name="Colliders" type="Node2D" parent="." unique_id=333400230]
 
-[node name="StaticBody2D11" type="StaticBody2D" parent="Colliders"]
+[node name="StaticBody2D11" type="StaticBody2D" parent="Colliders" unique_id=162775172]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D11"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D11" unique_id=2035948524]
 position = Vector2(280, -21.25)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_42vvc")
 
-[node name="StaticBody2D10" type="StaticBody2D" parent="Colliders"]
+[node name="StaticBody2D10" type="StaticBody2D" parent="Colliders" unique_id=1307357481]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D10"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D10" unique_id=28358594]
 position = Vector2(280, 64.5)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_42vvc")
 
-[node name="StaticBody2D9" type="StaticBody2D" parent="Colliders"]
+[node name="StaticBody2D9" type="StaticBody2D" parent="Colliders" unique_id=1697193063]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D9"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D9" unique_id=1493794829]
 position = Vector2(-38, -56.499996)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_usp6u")
 
-[node name="StaticBody2D8" type="StaticBody2D" parent="Colliders"]
+[node name="StaticBody2D8" type="StaticBody2D" parent="Colliders" unique_id=2043977202]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D8"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D8" unique_id=23738174]
 position = Vector2(-136, 31.000004)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_dqgav")
 
-[node name="StaticBody2D7" type="StaticBody2D" parent="Colliders"]
+[node name="StaticBody2D7" type="StaticBody2D" parent="Colliders" unique_id=1157428948]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D7"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D7" unique_id=1552705048]
 position = Vector2(77, 30)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_tldjq")
 
-[node name="StaticBody2D6" type="StaticBody2D" parent="Colliders"]
+[node name="StaticBody2D6" type="StaticBody2D" parent="Colliders" unique_id=1717323646]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D6"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D6" unique_id=2116335435]
 position = Vector2(111, 56)
 shape = SubResource("RectangleShape2D_tldjq")
 
-[node name="StaticBody2D5" type="StaticBody2D" parent="Colliders"]
+[node name="StaticBody2D5" type="StaticBody2D" parent="Colliders" unique_id=862940714]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D5"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D5" unique_id=1560040154]
 position = Vector2(44, 56)
 shape = SubResource("RectangleShape2D_tldjq")
 
-[node name="StaticBody2D4" type="StaticBody2D" parent="Colliders"]
+[node name="StaticBody2D4" type="StaticBody2D" parent="Colliders" unique_id=391050489]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D4"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D4" unique_id=409901947]
 position = Vector2(-44, 56)
 shape = SubResource("RectangleShape2D_tldjq")
 
-[node name="StaticBody2D3" type="StaticBody2D" parent="Colliders"]
+[node name="StaticBody2D3" type="StaticBody2D" parent="Colliders" unique_id=1116245750]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D3"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D3" unique_id=1053474406]
 position = Vector2(-228, 56)
 shape = SubResource("RectangleShape2D_tldjq")
 
-[node name="StaticBody2D14" type="StaticBody2D" parent="Colliders"]
+[node name="StaticBody2D14" type="StaticBody2D" parent="Colliders" unique_id=1816949982]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D14"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D14" unique_id=1828412149]
 position = Vector2(-232, -69)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_arfx5")
 
-[node name="StaticBody2D13" type="StaticBody2D" parent="Colliders"]
+[node name="StaticBody2D13" type="StaticBody2D" parent="Colliders" unique_id=709734299]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D13"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D13" unique_id=484612943]
 position = Vector2(-312, -68.5)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_arfx5")
 
-[node name="StaticBody2D19" type="StaticBody2D" parent="Colliders"]
+[node name="StaticBody2D19" type="StaticBody2D" parent="Colliders" unique_id=1016586975]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D19"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D19" unique_id=1594931316]
 position = Vector2(401, 21)
 shape = SubResource("RectangleShape2D_b0rmy")
 
-[node name="StaticBody2D18" type="StaticBody2D" parent="Colliders"]
+[node name="StaticBody2D18" type="StaticBody2D" parent="Colliders" unique_id=675387618]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D18"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D18" unique_id=1078165627]
 position = Vector2(130, 91)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_b0rmy")
 
-[node name="StaticBody2D17" type="StaticBody2D" parent="Colliders"]
+[node name="StaticBody2D17" type="StaticBody2D" parent="Colliders" unique_id=1338805260]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D17"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D17" unique_id=912239687]
 position = Vector2(-2, 91)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_b0rmy")
 
-[node name="StaticBody2D16" type="StaticBody2D" parent="Colliders"]
+[node name="StaticBody2D16" type="StaticBody2D" parent="Colliders" unique_id=982090886]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D16"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D16" unique_id=390836963]
 position = Vector2(-270, -92)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_b0rmy")
 
-[node name="StaticBody2D15" type="StaticBody2D" parent="Colliders"]
+[node name="StaticBody2D15" type="StaticBody2D" parent="Colliders" unique_id=1020079564]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D15"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D15" unique_id=1373294694]
 position = Vector2(-265, 91.5)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_b0rmy")
 
-[node name="StaticBody2D12" type="StaticBody2D" parent="Colliders"]
+[node name="StaticBody2D12" type="StaticBody2D" parent="Colliders" unique_id=1959420677]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D12"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D12" unique_id=1228835127]
 position = Vector2(-350, -55)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_tldjq")
 
-[node name="StaticBody2D2" type="StaticBody2D" parent="Colliders"]
+[node name="StaticBody2D2" type="StaticBody2D" parent="Colliders" unique_id=149758167]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D2" unique_id=1873617953]
 position = Vector2(-392, -12)
 shape = SubResource("RectangleShape2D_tldjq")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="Colliders"]
+[node name="StaticBody2D" type="StaticBody2D" parent="Colliders" unique_id=2051329165]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D" unique_id=188216810]
 position = Vector2(-346, 56)
 shape = SubResource("RectangleShape2D_riwp6")
 
-[node name="Room1" type="Node2D" parent="."]
-position = Vector2(-271, 39)
+[node name="Room1" type="Node2D" parent="." unique_id=273959893]
+position = Vector2(-272, -53)
 
-[node name="ChunkSwitcher" type="Area2D" parent="."]
+[node name="ChunkSwitcher" type="Area2D" parent="." unique_id=1205335799]
 script = ExtResource("2_dqgav")
 roomToLoad = "uid://dof6jbjjwnxl7"
 playerSpawn = Vector2(0, 72)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ChunkSwitcher"]
-position = Vector2(-272, 81)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ChunkSwitcher" unique_id=1481545367]
+position = Vector2(-272, -80)
 shape = SubResource("RectangleShape2D_uoaph")
 debug_color = Color(0.93673784, 1.8193425e-05, 0.63304937, 0.41960785)
 
