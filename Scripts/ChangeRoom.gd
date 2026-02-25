@@ -9,7 +9,7 @@ signal loaded
 @onready var chat : Node2D = $"../Chat" 
 
 func _ready() -> void:
-	roomLoad("res://Scenes/Rooms/Zone1/Room1.tscn", "InitialSpawn")
+	roomLoad("res://Scenes/Rooms/Zone1/Couloir.tscn", "InitialSpawn")
 
 func roomChange(newRoom: String, spawnPoint: String) -> void:
 	print("New Room : "+newRoom+" / Spawnpoint : " + spawnPoint)
