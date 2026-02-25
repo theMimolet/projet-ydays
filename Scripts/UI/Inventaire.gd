@@ -7,6 +7,10 @@ const INVENTORY_SIZE: int = 16 # Nombre de slots d'inventaire
 @onready var inventaire_panel: Panel = $InventairePanel
 @onready var inventaire_container: GridContainer = $InventairePanel/InventaireContainer
 
+var controles_hint: Control = null
+var drag_preview: TextureRect = null
+const DRAG_PREVIEW_SIZE: Vector2 = Vector2(36, 36)
+
 var is_open: bool = false
 var joueur: Node = null
 var slots: Array = []
@@ -28,6 +32,11 @@ func _ready() -> void:
 	# Créer les slots d'inventaire
 	create_inventory_slots()
 	
+	# Panneau d'aide des contrôles (bas droite)
+	_setup_controles_hint()
+	# Preview de l'item pendant le drag
+	_setup_drag_preview()
+	
 	# Cacher l'inventaire au départ
 	inventaire_panel.visible = false
 	is_open = false
@@ -44,6 +53,40 @@ func create_inventory_slots() -> void:
 		inventaire_container.add_child(slot)
 		slots.append(slot)
 
+func _setup_controles_hint() -> void:
+	controles_hint = MarginContainer.new()
+	controles_hint.name = "ControlesHint"
+	controles_hint.set_anchors_preset(Control.PRESET_BOTTOM_RIGHT)
+	controles_hint.offset_left = -220
+	controles_hint.offset_top = -90
+	controles_hint.offset_right = -10
+	controles_hint.offset_bottom = -10
+	controles_hint.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	controles_hint.add_theme_constant_override("margin_left", 8)
+	controles_hint.add_theme_constant_override("margin_top", 8)
+	controles_hint.add_theme_constant_override("margin_right", 8)
+	controles_hint.add_theme_constant_override("margin_bottom", 8)
+	var label: Label = Label.new()
+	label.text = "TAB / ESC : Fermer\nClic gauche : Déplacer\nShift + Clic : Diviser\nClic droit : Utiliser"
+	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	controles_hint.add_child(label)
+	add_child(controles_hint)
+	controles_hint.visible = false
+
+func _setup_drag_preview() -> void:
+	drag_preview = TextureRect.new()
+	drag_preview.name = "DragPreview"
+	drag_preview.set_anchors_preset(Control.PRESET_TOP_LEFT)
+	drag_preview.offset_left = 0
+	drag_preview.offset_top = 0
+	drag_preview.offset_right = DRAG_PREVIEW_SIZE.x
+	drag_preview.offset_bottom = DRAG_PREVIEW_SIZE.y
+	drag_preview.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	drag_preview.visible = false
+	drag_preview.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	drag_preview.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	add_child(drag_preview)
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_inventaire"):
 		toggle_inventaire()
@@ -52,9 +95,20 @@ func _unhandled_input(event: InputEvent) -> void:
 		toggle_inventaire()
 		get_viewport().set_input_as_handled()
 
+func _process(_delta: float) -> void:
+	if dragged_slot != null and drag_preview != null and drag_preview.visible:
+		var mouse: Vector2 = get_viewport().get_mouse_position()
+		var half: Vector2 = DRAG_PREVIEW_SIZE / 2
+		drag_preview.offset_left = int(mouse.x - half.x)
+		drag_preview.offset_top = int(mouse.y - half.y)
+		drag_preview.offset_right = int(mouse.x + half.x)
+		drag_preview.offset_bottom = int(mouse.y + half.y)
+
 func toggle_inventaire() -> void:
 	is_open = !is_open
 	inventaire_panel.visible = is_open
+	if controles_hint != null:
+		controles_hint.visible = is_open
 	
 	if is_open:
 		open_inventaire()
@@ -150,6 +204,9 @@ func _on_slot_clicked(slot) -> void:
 			# Mode drag normal
 			dragged_slot = slot
 			slot.set_dragging(true)
+			if drag_preview != null and slot.item != null and slot.item.item_texture != null:
+				drag_preview.texture = slot.item.item_texture
+				drag_preview.visible = true
 			print("Début du drag: ", slot.item.item_name)
 
 func _on_slot_dropped(source_slot, target_slot) -> void:
@@ -191,6 +248,9 @@ func _cleanup_drag(slot) -> void:
 	"""Nettoie l'état de drag"""
 	if slot != null and slot.has_method("set_dragging"):
 		slot.set_dragging(false)
+	if drag_preview != null:
+		drag_preview.visible = false
+		drag_preview.texture = null
 	dragged_slot = null
 
 func _find_nearest_empty_slot(reference_slot) -> Node:

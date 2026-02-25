@@ -2,16 +2,18 @@ extends Node2D
 
 # Script à attacher aux objets collectables dans le monde
 # Quand le joueur interagit avec (F), l'item est automatiquement ajouté à l'inventaire
+# Quand l'objet est ciblé (le plus proche), le flag view-item.png s'affiche au-dessus pour indiquer qu'on peut le ramasser
 
-@export var item_resource : Item  # Ressource Item à créer dans l'éditeur
-@export var quantity : int = 1  # Quantité à donner
-@export var collectable : bool = true  # Si false, l'item ne peut pas être collecté
-@export var item_name_override : String = ""  # Nom personnalisé pour l'item (pour le stacking)
+const VIEW_ITEM_TEXTURE = preload("res://Spritesheet/items/view-item.png")
 
-var is_collected : bool = false
-var indicator_sprite : Sprite2D = null
-var indicator_rect : ColorRect = null
-var is_targeted : bool = false
+@export var item_resource: Item # Ressource Item à créer dans l'éditeur
+@export var quantity: int = 1 # Quantité à donner
+@export var collectable: bool = true # Si false, l'item ne peut pas être collecté
+@export var item_name_override: String = "" # Nom personnalisé pour l'item (pour le stacking)
+
+var is_collected: bool = false
+var indicator_sprite: Sprite2D = null
+var is_targeted: bool = false
 
 func _ready() -> void:
 	add_to_group("CollectableItems")
@@ -51,15 +53,15 @@ func _ready() -> void:
 		if item_resource.max_stack < 5:
 			item_resource.max_stack = 5
 	
-	# Créer l'indicateur visuel (placeholder pour l'instant - ColorRect visible)
-	indicator_rect = ColorRect.new()
-	indicator_rect.name = "IndicatorRect"
-	indicator_rect.position = Vector2(-8, -28)  # Au-dessus de l'objet
-	indicator_rect.size = Vector2(16, 16)
-	indicator_rect.color = Color(1, 1, 0, 0.8)  # Jaune semi-transparent
-	indicator_rect.visible = false
-	add_child(indicator_rect)
-	indicator_sprite = null  # On utilise ColorRect pour l'instant
+	# Indicateur flottant (view-item.png) au-dessus de l'objet quand le joueur le cible
+	indicator_sprite = Sprite2D.new()
+	indicator_sprite.name = "IndicatorSprite"
+	indicator_sprite.texture = VIEW_ITEM_TEXTURE
+	indicator_sprite.position = Vector2(0, -28) # Au-dessus de l'objet
+	indicator_sprite.centered = true
+	indicator_sprite.scale = Vector2(0.3, 0.3) # Très petit au-dessus de l'objet
+	indicator_sprite.visible = false
+	add_child(indicator_sprite)
 
 func collect() -> bool:
 	"""Tente de collecter l'item. Retourne true si réussi"""
@@ -82,7 +84,7 @@ func collect() -> bool:
 	print("Tentative de collecte : ", item_resource.item_name, " (x", quantity, ")")
 	
 	# Ajouter l'item à l'inventaire
-	var success : bool = inventaire.add_item(item_resource, quantity)
+	var success: bool = inventaire.add_item(item_resource, quantity)
 	
 	if success:
 		is_collected = true
@@ -121,8 +123,8 @@ func get_sprite_texture() -> Texture2D:
 	# Chercher un AnimatedSprite2D (priorité car souvent plus visible)
 	var animated_sprite := get_node_or_null("AnimatedSprite2D")
 	if animated_sprite != null and animated_sprite.sprite_frames != null:
-		var frames : SpriteFrames = animated_sprite.sprite_frames
-		var anim_name : String = "default"
+		var frames: SpriteFrames = animated_sprite.sprite_frames
+		var anim_name: String = "default"
 		if animated_sprite.animation != "":
 			anim_name = animated_sprite.animation
 		if frames.has_animation(anim_name) and frames.get_frame_count(anim_name) > 0:
@@ -138,8 +140,8 @@ func get_sprite_texture() -> Texture2D:
 		if child is AnimatedSprite2D:
 			var child_animated := child as AnimatedSprite2D
 			if child_animated.sprite_frames != null:
-				var frames : SpriteFrames = child_animated.sprite_frames
-				var anim_name : String = "default"
+				var frames: SpriteFrames = child_animated.sprite_frames
+				var anim_name: String = "default"
 				if child_animated.animation != "":
 					anim_name = child_animated.animation
 				if frames.has_animation(anim_name) and frames.get_frame_count(anim_name) > 0:
@@ -156,19 +158,13 @@ func get_sprite_texture() -> Texture2D:
 	return null
 
 func show_indicator() -> void:
-	"""Affiche l'indicateur au-dessus de l'objet"""
-	if indicator_rect != null:
-		indicator_rect.visible = true
-		is_targeted = true
-	elif indicator_sprite != null:
+	"""Affiche le flag (view-item) au-dessus de l'objet pour indiquer qu'on peut le ramasser"""
+	if indicator_sprite != null:
 		indicator_sprite.visible = true
 		is_targeted = true
 
 func hide_indicator() -> void:
-	"""Cache l'indicateur"""
-	if indicator_rect != null:
-		indicator_rect.visible = false
-		is_targeted = false
-	elif indicator_sprite != null:
+	"""Cache le flag"""
+	if indicator_sprite != null:
 		indicator_sprite.visible = false
 		is_targeted = false
