@@ -9,7 +9,7 @@ var isMoving : bool
 
 # Système de points de vie
 const MAX_HP : int = 100
-var current_hp : int = MAX_HP
+var currentHP : int = MAX_HP
 signal hp_changed(new_hp: int, max_hp: int)
 signal player_died
 
@@ -41,8 +41,8 @@ func _ready() -> void:
 		print("Erreur : impossible de se connecter au signal timeline_ended de Dialogic")
 	
 	# Initialiser les HP et émettre le signal
-	current_hp = MAX_HP
-	hp_changed.emit(current_hp, MAX_HP)
+	currentHP = MAX_HP
+	hp_changed.emit(currentHP, MAX_HP)
 
 func is_inventory_open() -> bool:
 	"""Vérifie si l'inventaire est ouvert"""
@@ -173,13 +173,13 @@ func take_damage(damage: int) -> void:
 	if damage <= 0:
 		return
 	
-	current_hp -= damage
-	if current_hp < 0:
-		current_hp = 0
+	currentHP -= damage
+	if currentHP < 0:
+		currentHP = 0
 	
-	hp_changed.emit(current_hp, MAX_HP)
+	hp_changed.emit(currentHP, MAX_HP)
 	
-	if current_hp <= 0:
+	if currentHP <= 0:
 		player_died.emit()
 		_on_player_death()
 
@@ -188,28 +188,28 @@ func heal(amount: int) -> void:
 	if amount <= 0:
 		return
 	
-	current_hp += amount
-	if current_hp > MAX_HP:
-		current_hp = MAX_HP
+	currentHP += amount
+	if currentHP > MAX_HP:
+		currentHP = MAX_HP
 	
-	hp_changed.emit(current_hp, MAX_HP)
+	hp_changed.emit(currentHP, MAX_HP)
 
 func set_hp(new_hp: int) -> void:
 	"""Définit directement les HP (utile pour les potions, etc.)"""
-	current_hp = clamp(new_hp, 0, MAX_HP)
-	hp_changed.emit(current_hp, MAX_HP)
+	currentHP = clamp(new_hp, 0, MAX_HP)
+	hp_changed.emit(currentHP, MAX_HP)
 	
-	if current_hp <= 0:
+	if currentHP <= 0:
 		player_died.emit()
 		_on_player_death()
 
 func is_dead() -> bool:
 	"""Retourne true si le joueur est mort"""
-	return current_hp <= 0
+	return currentHP <= 0
 
 func get_hp_percentage() -> float:
 	"""Retourne le pourcentage de HP (0.0 à 1.0)"""
-	return float(current_hp) / float(MAX_HP)
+	return float(currentHP) / float(MAX_HP)
 
 # ============== GESTION DE LA VITESSE ==============
 

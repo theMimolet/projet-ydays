@@ -29,6 +29,7 @@ Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
 InteractionManager="*res://Scripts/Interactions/InteractionManager.gd"
 Global="*res://Scripts/Global.gd"
 GameSettings="*res://Scripts/GameSettings.gd"
+SaveSystem="*uid://cw42lcw05j7n1"
 
 [debug]
 
