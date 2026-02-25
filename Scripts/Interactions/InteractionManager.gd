@@ -74,7 +74,10 @@ func handle_interaction(player_position: Vector2) -> bool:
 	# Vérifier les interactions basées sur nodes (armoires)
 	var armoire := _find_nearby_node_interactions(player_position, "Armoires")
 	if armoire != null:
-		armoire.interact()
+		# Si l'armoire est fermée, le premier appui sert uniquement à l'ouvrir
+		if "is_opened" in armoire and not armoire.is_opened:
+			armoire.interact()
+			return true
 	
 	# Vérifier les interactions basées sur nodes (portes)
 	var door := _find_nearby_node_interactions(player_position, "Doors")

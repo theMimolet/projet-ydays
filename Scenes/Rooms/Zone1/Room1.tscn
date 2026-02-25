@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://dv4d6eprqyuy" path="res://Spritesheet/Cle/sprite_5.webp" id="10_7nq4w"]
 [ext_resource type="Texture2D" uid="uid://tvyekxq4gj7t" path="res://Spritesheet/Cle/sprite_6.webp" id="11_qtm2r"]
 [ext_resource type="Texture2D" uid="uid://cgmxoqeo66afq" path="res://Spritesheet/Cle/sprite_7.webp" id="12_14w5e"]
+[ext_resource type="Texture2D" uid="uid://d1xjic7utprd7" path="res://Spritesheet/Torche/light.png" id="15_eyu58"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y6r2r"]
 size = Vector2(16, 123.8125)
@@ -26,6 +27,14 @@ size = Vector2(8, 72)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t5nnj"]
 size = Vector2(72, 9)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_door"]
+size = Vector2(10.000008, 71.99998)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_x1re5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x1re5"]
+size = Vector2(32, 8)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_c8s71"]
 animations = [{
@@ -58,14 +67,6 @@ animations = [{
 "name": &"idle",
 "speed": 8.0
 }]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_door"]
-size = Vector2(10.000008, 71.99998)
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_x1re5"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_x1re5"]
-size = Vector2(32, 8)
 
 [node name="Room1" type="Node2D" unique_id=1397696051]
 
@@ -133,21 +134,6 @@ debug_color = Color(0.92414904, 4.870832e-05, 0.68302995, 0.41960785)
 [node name="Couloir" type="Node2D" parent="." unique_id=1551550128]
 position = Vector2(-1, 70)
 
-[node name="KeyTest" type="Node2D" parent="." unique_id=180162224]
-visible = false
-position = Vector2(59, -44)
-scale = Vector2(0.8, 0.8)
-script = ExtResource("3_collect")
-item_resource = ExtResource("4_key")
-item_name_override = "key_zone1"
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="KeyTest" unique_id=177032915]
-scale = Vector2(0.8, 0.8)
-sprite_frames = SubResource("SpriteFrames_c8s71")
-animation = &"idle"
-autoplay = "idle"
-frame_progress = 0.8056501
-
 [node name="DoorTest" type="Node2D" parent="." unique_id=719315229]
 position = Vector2(0, 82)
 rotation = 1.5715761
@@ -174,5 +160,27 @@ physics_material_override = SubResource("PhysicsMaterial_x1re5")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Armoire/StaticBody2D_Armoire" unique_id=702175237]
 position = Vector2(0, 11)
 shape = SubResource("RectangleShape2D_x1re5")
+
+[node name="Key" type="Node2D" parent="Armoire" unique_id=180162224]
+position = Vector2(1.7881393e-07, 2.0000038)
+scale = Vector2(0.6, 0.6)
+script = ExtResource("3_collect")
+item_resource = ExtResource("4_key")
+item_name_override = "key_zone1"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Armoire/Key" unique_id=177032915]
+scale = Vector2(0.6, 0.6)
+sprite_frames = SubResource("SpriteFrames_c8s71")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.8056501
+
+[node name="PointLight2D" type="PointLight2D" parent="Armoire/Key/AnimatedSprite2D" unique_id=1036362183]
+position = Vector2(-2.7777777, -1.5258789e-05)
+scale = Vector2(1.6666669, 1.6666669)
+color = Color(1, 0.81960785, 0.5372549, 1)
+energy = 2.07
+texture = ExtResource("15_eyu58")
+texture_scale = 0.06
 
 [connection signal="body_entered" from="ChunkSwitcher" to="ChunkSwitcher" method="_on_body_entered"]
