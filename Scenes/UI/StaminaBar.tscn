@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://ccgsl7418eydt"]
+[gd_scene format=3 uid="uid://ccgsl7418eydt"]
 
 [ext_resource type="Script" uid="uid://brpajj631m6er" path="res://Scripts/UI/StaminaBar.gd" id="1_stamina"]
 [ext_resource type="Texture2D" uid="uid://csdsghcmmw5i8" path="res://Spritesheet/stamina/1.png" id="2_stamina1"]
@@ -26,10 +26,10 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="StaminaBar" type="CanvasLayer"]
+[node name="StaminaBar" type="CanvasLayer" unique_id=782897342]
 layer = 110
 
-[node name="StaminaContainer" type="Control" parent="."]
+[node name="StaminaContainer" type="Control" parent="." unique_id=197804419]
 layout_mode = 3
 anchors_preset = 2
 anchor_top = 1.0
@@ -42,7 +42,7 @@ grow_vertical = 0
 mouse_filter = 2
 script = ExtResource("1_stamina")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="StaminaContainer"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="StaminaContainer" unique_id=623218645]
 position = Vector2(36.999996, 19.999998)
 scale = Vector2(0.155, 0.155)
 sprite_frames = SubResource("SpriteFrames_qdpiv")

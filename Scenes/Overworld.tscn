@@ -1,13 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://d3wesmde18u6b"]
+[gd_scene format=3 uid="uid://d3wesmde18u6b"]
 
 [ext_resource type="PackedScene" uid="uid://d1xvmuswrxu7v" path="res://Scenes/Joueur.tscn" id="1_ctcok"]
 [ext_resource type="Script" uid="uid://dhwd5kgfkv56y" path="res://Scripts/ChangeRoom.gd" id="2_7xrvl"]
 [ext_resource type="Script" uid="uid://b86xfcp055ajx" path="res://Scripts/Chat/chat.gd" id="3_8lvve"]
 [ext_resource type="Texture2D" uid="uid://dd3by3yef1i2l" path="res://Spritesheet/chat/Group_chat.png" id="4_s3goe"]
-[ext_resource type="PackedScene" uid="uid://ccgsl7418eydt" path="res://Scenes/UI/StaminaBar.tscn" id="5_stamina"]
-[ext_resource type="PackedScene" uid="uid://7pav2b7oq5wj" path="res://Scenes/UI/HPBar.tscn" id="6_hpbar"]
-[ext_resource type="Script" uid="uid://bso8o41186mj5" path="res://Scripts/UI/Inventaire.gd" id="7_inv"]
-[ext_resource type="PackedScene" uid="uid://bnkogahkkn1a" path="res://Scenes/UI/DevConsole.tscn" id="8_devconsole"]
 
 [sub_resource type="Animation" id="Animation_0thx2"]
 length = 0.001
@@ -86,16 +82,16 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Jeu" type="Node"]
+[node name="Jeu" type="Node" unique_id=331606980]
 
-[node name="Room" type="Node" parent="."]
+[node name="Room" type="Node" parent="." unique_id=505477938]
 
-[node name="Joueur" parent="." groups=["Joueur"] instance=ExtResource("1_ctcok")]
+[node name="Joueur" parent="." unique_id=1445301834 groups=["Joueur"] instance=ExtResource("1_ctcok")]
 
-[node name="RoomManager" type="CanvasLayer" parent="." groups=["RoomManager"]]
+[node name="RoomManager" type="CanvasLayer" parent="." unique_id=222966879 groups=["RoomManager"]]
 script = ExtResource("2_7xrvl")
 
-[node name="Transition" type="ColorRect" parent="RoomManager"]
+[node name="Transition" type="ColorRect" parent="RoomManager" unique_id=1169437011]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -105,77 +101,24 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color(0, 0, 0, 1)
 
-[node name="Animateur" type="AnimationPlayer" parent="RoomManager"]
+[node name="Animateur" type="AnimationPlayer" parent="RoomManager" unique_id=748035869]
 root_node = NodePath("../..")
-libraries = {
-&"": SubResource("AnimationLibrary_elnyr")
-}
+libraries/ = SubResource("AnimationLibrary_elnyr")
 
-[node name="Chat" type="CharacterBody2D" parent="."]
+[node name="Chat" type="CharacterBody2D" parent="." unique_id=603029512]
 script = ExtResource("3_8lvve")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Chat"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Chat" unique_id=99044765]
 position = Vector2(-0.54, 12.595)
 scale = Vector2(0.79, 0.235)
 shape = SubResource("RectangleShape2D_s7wd7")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Chat"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Chat" unique_id=1330937203]
 position = Vector2(1, 11)
 sprite_frames = SubResource("SpriteFrames_p68c8")
 animation = &"chat"
 autoplay = "chat"
 frame = 1
 frame_progress = 0.11325879
-
-[node name="StaminaBar" parent="." instance=ExtResource("5_stamina")]
-
-[node name="HPBar" parent="." instance=ExtResource("6_hpbar")]
-
-[node name="Inventaire" type="CanvasLayer" parent="."]
-script = ExtResource("7_inv")
-
-[node name="InventairePanel" type="Panel" parent="Inventaire"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -129.0
-offset_top = -70.0
-offset_right = 171.0
-offset_bottom = 130.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.84000045, 0.72000027)
-
-[node name="TitreLabel" type="Label" parent="Inventaire/InventairePanel"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -222.61908
-offset_top = 8.333332
-offset_right = -122.61908
-offset_bottom = 28.333332
-grow_horizontal = 0
-scale = Vector2(1.6190481, 1.2222221)
-text = "INVENTAIRE"
-horizontal_alignment = 1
-
-[node name="InventaireContainer" type="GridContainer" parent="Inventaire/InventairePanel"]
-layout_mode = 0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = 30.0
-offset_right = -10.0
-offset_bottom = -10.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/h_separation = 5
-theme_override_constants/v_separation = 5
-columns = 4
-
-[node name="DevConsole" parent="." instance=ExtResource("8_devconsole")]
 
 [connection signal="animation_finished" from="RoomManager/Animateur" to="RoomManager" method="_on_animateur_animation_finished"]

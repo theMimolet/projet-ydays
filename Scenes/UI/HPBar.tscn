@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://7pav2b7oq5wj"]
+[gd_scene format=3 uid="uid://7pav2b7oq5wj"]
 
 [ext_resource type="Script" uid="uid://cnsu46ncbx8m4" path="res://Scripts/UI/HPBar.gd" id="1_hpbar"]
 [ext_resource type="Texture2D" uid="uid://dof3q0uv14tlr" path="res://Spritesheet/HP/sprite_noirceur0.png" id="2_hp0"]
@@ -15,41 +15,41 @@
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_hp0")
-}, {
-"duration": 1.0,
-"texture": ExtResource("3_ob6ba")
-}, {
-"duration": 1.0,
-"texture": ExtResource("4_aehv5")
-}, {
-"duration": 1.0,
-"texture": ExtResource("5_ayie1")
-}, {
-"duration": 1.0,
-"texture": ExtResource("6_obcst")
-}, {
-"duration": 1.0,
-"texture": ExtResource("7_ht1lr")
-}, {
-"duration": 1.0,
-"texture": ExtResource("8_fasc5")
+"texture": ExtResource("10_w7bae")
 }, {
 "duration": 1.0,
 "texture": ExtResource("9_2qohb")
 }, {
 "duration": 1.0,
-"texture": ExtResource("10_w7bae")
+"texture": ExtResource("8_fasc5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_ht1lr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_obcst")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_ayie1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_aehv5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_ob6ba")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_hp0")
 }],
 "loop": true,
 "name": &"default",
 "speed": 5.0
 }]
 
-[node name="HPBar" type="CanvasLayer"]
+[node name="HPBar" type="CanvasLayer" unique_id=1762312062]
 layer = 110
 
-[node name="HPContainer" type="Control" parent="."]
+[node name="HPContainer" type="Control" parent="." unique_id=641861716]
 layout_mode = 3
 anchors_preset = 2
 anchor_top = 1.0
@@ -64,7 +64,8 @@ size_flags_vertical = 8
 mouse_filter = 2
 script = ExtResource("1_hpbar")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="HPContainer"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="HPContainer" unique_id=840748416]
 position = Vector2(-63.999996, 84.99999)
 scale = Vector2(5, 5)
 sprite_frames = SubResource("SpriteFrames_mulhe")
+frame = 8

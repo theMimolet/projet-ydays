@@ -19,21 +19,23 @@ func _on_hp_changed(new_hp: int, max_hp: int) -> void:
 	if hp_sprite == null or max_hp <= 0:
 		return
 	
+	# Laissé en brut pour le moment en attente d'un sprite plus propre
+	
 	if new_hp >= 100:
-		hp_sprite.frame = 0  # sprite0
+		hp_sprite.frame = 8  # sprite0
 	elif new_hp >= 90:
-		hp_sprite.frame = 1  # sprite1
+		hp_sprite.frame = 7  # sprite1
 	elif new_hp >= 80:
-		hp_sprite.frame = 2  # sprite2
+		hp_sprite.frame = 6  # sprite2
 	elif new_hp >= 65:
-		hp_sprite.frame = 3  # sprite3
+		hp_sprite.frame = 5  # sprite3
 	elif new_hp >= 50:
 		hp_sprite.frame = 4  # sprite4
 	elif new_hp >= 40:
-		hp_sprite.frame = 5  # sprite5
+		hp_sprite.frame = 3  # sprite5
 	elif new_hp >= 25:
-		hp_sprite.frame = 6  # sprite6
+		hp_sprite.frame = 2  # sprite6
 	elif new_hp >= 10:
-		hp_sprite.frame = 7  # sprite7
+		hp_sprite.frame = 1  # sprite7
 	else:
-		hp_sprite.frame = 8  # sprite8 (0 HP)
+		hp_sprite.frame = 0  # sprite8 (0 HP)
