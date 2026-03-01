@@ -4,8 +4,14 @@ var base_speed : float = 40.0  # Vitesse de base (modifiable)
 
 @onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
 @onready var inventory : Node = $Inventaire
+@onready var arme_sprite : Sprite2D = $ArmeSprite
+
 @export var canMove : bool = true
 var isMoving : bool
+
+# Système d'arme équipée
+var arme_equipee: Resource = null
+signal arme_changed(arme: Resource)
 
 # Système de points de vie
 const MAX_HP : int = 100
@@ -43,6 +49,9 @@ func _ready() -> void:
 	# Initialiser les HP et émettre le signal
 	currentHP = MAX_HP
 	hp_changed.emit(currentHP, MAX_HP)
+	
+	# Restaurer la position si on revient d'un combat (après le chargement de la room)
+	_try_restore_combat_position()
 
 func is_inventory_open() -> bool:
 	"""Vérifie si l'inventaire est ouvert"""
@@ -146,6 +155,7 @@ func Animate() -> void :
 		3 : 
 			currentFace = "droite"
 	sprite.play(currentAnimation + "-" + currentFace)
+	_update_arme_position()
 	
 func paralysePlayer(yes : bool) -> void :
 	if yes:
@@ -155,6 +165,68 @@ func paralysePlayer(yes : bool) -> void :
 
 func _on_timeline_ended() -> void:
 	canMove = true
+
+# ============== SYSTÈME D'ARME ÉQUIPÉE ==============
+
+func equiper_arme(arme: Resource) -> void:
+	arme_equipee = arme
+	_update_arme_sprite()
+	arme_changed.emit(arme)
+
+
+func desequiper_arme() -> void:
+	arme_equipee = null
+	_update_arme_sprite()
+	arme_changed.emit(null)
+
+
+func get_arme_equipee() -> Resource:
+	return arme_equipee
+
+
+func _update_arme_sprite() -> void:
+	if arme_sprite == null:
+		return
+	
+	if arme_equipee == null or not arme_equipee.has_method("get_nom_arme"):
+		arme_sprite.visible = false
+		return
+	
+	if arme_equipee.sprite_overworld == null:
+		arme_sprite.visible = false
+		return
+	
+	arme_sprite.texture = arme_equipee.sprite_overworld
+	arme_sprite.visible = true
+	_update_arme_position()
+
+
+func _update_arme_position() -> void:
+	if arme_sprite == null or not arme_sprite.visible:
+		return
+	
+	match currentPlayerDirections:
+		playerDirections.BAS:
+			arme_sprite.position = Vector2(8, 4)
+			arme_sprite.rotation_degrees = 45
+			arme_sprite.flip_h = false
+			arme_sprite.z_index = 1
+		playerDirections.HAUT:
+			arme_sprite.position = Vector2(-8, -4)
+			arme_sprite.rotation_degrees = -135
+			arme_sprite.flip_h = false
+			arme_sprite.z_index = -1
+		playerDirections.GAUCHE:
+			arme_sprite.position = Vector2(-10, 2)
+			arme_sprite.rotation_degrees = -45
+			arme_sprite.flip_h = true
+			arme_sprite.z_index = 1
+		playerDirections.DROITE:
+			arme_sprite.position = Vector2(10, 2)
+			arme_sprite.rotation_degrees = 45
+			arme_sprite.flip_h = false
+			arme_sprite.z_index = 1
+
 
 func consume_stamina(amount: int) -> void:
 	stamina = max(0, stamina - amount)
@@ -229,3 +301,26 @@ func _on_player_death() -> void:
 	print("Le joueur est mort !")
 	# Changer vers la scène game over
 	get_tree().change_scene_to_file("res://Scenes/gameover.tscn")
+
+
+func _try_restore_combat_position() -> void:
+	"""Essaie de restaurer la position après un combat"""
+	if Global.player_return_position == Vector2.ZERO:
+		return
+	
+	# Se cacher pendant le chargement
+	visible = false
+	
+	# Attendre que le RoomManager ait fini de charger
+	var room_manager := get_tree().get_first_node_in_group("RoomManager")
+	if room_manager and room_manager.has_signal("loaded"):
+		await room_manager.loaded
+	else:
+		await get_tree().process_frame
+	
+	# Restaurer la position immédiatement
+	global_position = Global.player_return_position
+	Global.player_return_position = Vector2.ZERO
+	
+	# Redevenir visible
+	visible = true

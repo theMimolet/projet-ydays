@@ -2,8 +2,8 @@ extends Panel
 
 const ITEM : Resource = preload("res://Scripts/Items/Item.gd")
 
-@onready var item_texture : TextureRect = $ItemTexture
-@onready var quantity_label : Label = $QuantityLabel
+@onready var item_texture: TextureRect = $ItemTexture
+@onready var quantity_label: Label = $QuantityLabel
 
 var item : Item
 var quantity : int = 0
@@ -50,12 +50,12 @@ func _gui_input(event: InputEvent) -> void:
 				slot_right_clicked.emit(self)
 
 func _get_slot_under_mouse():
-	var mouse_pos : Vector2 = get_global_mouse_position()
+	var mouse_pos: Vector2 = get_global_mouse_position()
 	var slots = get_tree().get_nodes_in_group("InventorySlot")
 	
 	for slot in slots:
 		if slot.has_method("is_empty"):
-			var rect : Rect2 = Rect2(slot.global_position, slot.size)
+			var rect: Rect2 = slot.get_global_rect()
 			if rect.has_point(mouse_pos):
 				return slot
 	return null
@@ -114,7 +114,7 @@ func is_empty() -> bool:
 func update_display() -> void:
 	"""Met à jour l'affichage du slot"""
 	if item_texture == null:
-		return  # Le slot n'est pas encore initialisé
+		return # Le slot n'est pas encore initialisé
 	
 	if item != null and item.item_texture != null:
 		item_texture.texture = item.item_texture

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dd3by3yef1i2l"
-path="res://.godot/imported/Group_chat.png-67ddff22c3a093b166b8d98ab435381d.ctex"
+uid="uid://dm12aajqhd1ij"
+path="res://.godot/imported/sprite_dague.png-732b8bce3d429549372b429831422134.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Spritesheet/chat/Group_chat.png"
-dest_files=["res://.godot/imported/Group_chat.png-67ddff22c3a093b166b8d98ab435381d.ctex"]
+source_file="res://Spritesheet/Armes/sprite_dague.png"
+dest_files=["res://.godot/imported/sprite_dague.png-732b8bce3d429549372b429831422134.ctex"]
 
 [params]
 

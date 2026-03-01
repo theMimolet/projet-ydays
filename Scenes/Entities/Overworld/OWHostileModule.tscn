@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://c37g8d2neou34"]
+[gd_scene format=3 uid="uid://c37g8d2neou34"]
 
 [ext_resource type="Script" uid="uid://weqsau6b8m2t" path="res://Scripts/Entity/HostileModule.gd" id="1_rc1qw"]
 [ext_resource type="AudioStream" uid="uid://dahcy8obdhah2" path="res://SFX/overworld_enemy_triggered.mp3" id="2_4of7q"]
@@ -9,10 +9,11 @@ size = Vector2(28, 28)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ftqpf"]
 size = Vector2(250, 250)
 
-[node name="HostileModule" type="Node2D"]
+[node name="HostileModule" type="Node2D" unique_id=1928765582]
 script = ExtResource("1_rc1qw")
+monster_hp = 10
 
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=557804846]
 path_desired_distance = 10.0
 target_desired_distance = 15.0
 path_postprocessing = 1
@@ -21,23 +22,23 @@ avoidance_enabled = true
 radius = 25.0
 max_speed = 200.0
 
-[node name="Touche" type="Area2D" parent="."]
+[node name="Touche" type="Area2D" parent="." unique_id=116620509]
 
-[node name="Collision" type="CollisionShape2D" parent="Touche"]
+[node name="Collision" type="CollisionShape2D" parent="Touche" unique_id=1088491695]
 shape = SubResource("RectangleShape2D_lugxe")
 
-[node name="Detection" type="Area2D" parent="."]
+[node name="Detection" type="Area2D" parent="." unique_id=1625733109]
 
-[node name="Collision" type="CollisionShape2D" parent="Detection"]
+[node name="Collision" type="CollisionShape2D" parent="Detection" unique_id=157265358]
 shape = SubResource("RectangleShape2D_ftqpf")
 
-[node name="TAlerte" type="Timer" parent="."]
+[node name="TAlerte" type="Timer" parent="." unique_id=2144683531]
 wait_time = 0.2
 
-[node name="TPoursuite" type="Timer" parent="."]
+[node name="TPoursuite" type="Timer" parent="." unique_id=531876007]
 wait_time = 2.0
 
-[node name="Triggered" type="AudioStreamPlayer" parent="."]
+[node name="Triggered" type="AudioStreamPlayer" parent="." unique_id=143161518]
 stream = ExtResource("2_4of7q")
 
 [connection signal="body_entered" from="Touche" to="." method="_on_touche_body_entered"]

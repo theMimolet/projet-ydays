@@ -3,7 +3,14 @@
 [ext_resource type="PackedScene" uid="uid://d1xvmuswrxu7v" path="res://Scenes/Joueur.tscn" id="1_ctcok"]
 [ext_resource type="Script" uid="uid://dhwd5kgfkv56y" path="res://Scripts/ChangeRoom.gd" id="2_7xrvl"]
 [ext_resource type="Script" uid="uid://b86xfcp055ajx" path="res://Scripts/Chat/chat.gd" id="3_8lvve"]
-[ext_resource type="Texture2D" uid="uid://dd3by3yef1i2l" path="res://Spritesheet/chat/Group_chat.png" id="4_s3goe"]
+[ext_resource type="Texture2D" uid="uid://khxo0r7p636l" path="res://Spritesheet/Chat/idle-off/sprite_0.png" id="4_d6kyl"]
+[ext_resource type="Texture2D" uid="uid://bqt8u7drelwls" path="res://Spritesheet/Chat/idle-off/sprite_1.png" id="5_7g7yc"]
+[ext_resource type="Texture2D" uid="uid://bbaxwmpngd4xo" path="res://Spritesheet/Chat/idle-off/sprite_2.png" id="6_p68c8"]
+[ext_resource type="Texture2D" uid="uid://bq4plfga82ldn" path="res://Spritesheet/Chat/idle-off/sprite_3.png" id="7_vd8s3"]
+[ext_resource type="Texture2D" uid="uid://t8pccv18pdct" path="res://Spritesheet/Chat/idle-on/sprite_0.png" id="8_36n5q"]
+[ext_resource type="Texture2D" uid="uid://dig26biqjjs5y" path="res://Spritesheet/Chat/idle-on/sprite_1.png" id="9_5di4m"]
+[ext_resource type="Texture2D" uid="uid://b3t7kthol4yho" path="res://Spritesheet/Chat/idle-on/sprite_2.png" id="10_kepvy"]
+[ext_resource type="Texture2D" uid="uid://cqweeepofhkin" path="res://Spritesheet/Chat/idle-on/sprite_3.png" id="11_76uc8"]
 
 [sub_resource type="Animation" id="Animation_0thx2"]
 length = 0.001
@@ -58,29 +65,45 @@ _data = {
 &"fade-out": SubResource("Animation_hjv83")
 }
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_s7wd7"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_d6kyl"]
-atlas = ExtResource("4_s3goe")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7g7yc"]
-atlas = ExtResource("4_s3goe")
-region = Rect2(32, 0, 32, 32)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_p68c8"]
 animations = [{
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_d6kyl")
+"duration": 1.5,
+"texture": ExtResource("4_d6kyl")
 }, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7g7yc")
+"duration": 1.5,
+"texture": ExtResource("5_7g7yc")
+}, {
+"duration": 1.5,
+"texture": ExtResource("6_p68c8")
+}, {
+"duration": 1.5,
+"texture": ExtResource("7_vd8s3")
 }],
 "loop": true,
-"name": &"chat",
+"name": &"idle-off",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.5,
+"texture": ExtResource("8_36n5q")
+}, {
+"duration": 1.5,
+"texture": ExtResource("9_5di4m")
+}, {
+"duration": 1.5,
+"texture": ExtResource("10_kepvy")
+}, {
+"duration": 1.5,
+"texture": ExtResource("11_76uc8")
+}],
+"loop": true,
+"name": &"idle-on",
 "speed": 5.0
 }]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s7wd7"]
+size = Vector2(13.924049, 17.021276)
 
 [node name="Jeu" type="Node" unique_id=331606980]
 
@@ -106,19 +129,19 @@ root_node = NodePath("../..")
 libraries/ = SubResource("AnimationLibrary_elnyr")
 
 [node name="Chat" type="CharacterBody2D" parent="." unique_id=603029512]
+position = Vector2(-14, 2)
 script = ExtResource("3_8lvve")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Chat" unique_id=99044765]
-position = Vector2(-0.54, 12.595)
-scale = Vector2(0.79, 0.235)
-shape = SubResource("RectangleShape2D_s7wd7")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Chat" unique_id=1330937203]
 position = Vector2(1, 11)
 sprite_frames = SubResource("SpriteFrames_p68c8")
-animation = &"chat"
-autoplay = "chat"
-frame = 1
-frame_progress = 0.11325879
+animation = &"idle-off"
+autoplay = "idle-off"
+frame_progress = 0.16592379
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Chat" unique_id=99044765]
+position = Vector2(1.5, 24)
+scale = Vector2(0.79, 0.235)
+shape = SubResource("RectangleShape2D_s7wd7")
 
 [connection signal="animation_finished" from="RoomManager/Animateur" to="RoomManager" method="_on_animateur_animation_finished"]

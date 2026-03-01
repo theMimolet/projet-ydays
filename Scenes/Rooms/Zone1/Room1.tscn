@@ -2,6 +2,19 @@
 
 [ext_resource type="Texture2D" uid="uid://cae55ot0rabrp" path="res://Scenes/Rooms/Map/Environnement_1_YDAYS.webp" id="1_y6r2r"]
 [ext_resource type="Script" uid="uid://cs3wfgxf0axj4" path="res://Scripts/RoomSwitcher.gd" id="2_t5nnj"]
+[ext_resource type="Script" uid="uid://dbk8n27v523gi" path="res://Scripts/Items/CollectableItem.gd" id="3_collect"]
+[ext_resource type="Item" path="res://Items/KeyZone1.tres" id="4_key"]
+[ext_resource type="Texture2D" uid="uid://dna8ovg5p2qdy" path="res://Spritesheet/Cle/sprite_0 (1).webp" id="5_6qopq"]
+[ext_resource type="Script" uid="uid://tcqfo61gtyfq" path="res://Scripts/Interactions/Door.gd" id="5_door"]
+[ext_resource type="Script" uid="uid://cleremmooj2fa" path="res://Scripts/Interactions/Armoire.gd" id="6_armoire"]
+[ext_resource type="Texture2D" uid="uid://d0vr78hb2v84u" path="res://Spritesheet/Cle/sprite_1 (1).webp" id="6_eyu58"]
+[ext_resource type="Texture2D" uid="uid://cgy7a7qirg7r6" path="res://Spritesheet/Cle/sprite_2.webp" id="7_e8bpl"]
+[ext_resource type="Texture2D" uid="uid://i2dkdycp0d0y" path="res://Spritesheet/Cle/sprite_3.webp" id="8_qb5kr"]
+[ext_resource type="Texture2D" uid="uid://ba84bun4ou8ap" path="res://Spritesheet/Cle/sprite_4.webp" id="9_cf2co"]
+[ext_resource type="Texture2D" uid="uid://dv4d6eprqyuy" path="res://Spritesheet/Cle/sprite_5.webp" id="10_7nq4w"]
+[ext_resource type="Texture2D" uid="uid://tvyekxq4gj7t" path="res://Spritesheet/Cle/sprite_6.webp" id="11_qtm2r"]
+[ext_resource type="Texture2D" uid="uid://cgmxoqeo66afq" path="res://Spritesheet/Cle/sprite_7.webp" id="12_14w5e"]
+[ext_resource type="Texture2D" uid="uid://d1xjic7utprd7" path="res://Spritesheet/Torche/light.png" id="15_eyu58"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y6r2r"]
 size = Vector2(16, 123.8125)
@@ -12,80 +25,162 @@ size = Vector2(17.999996, 320)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pkce1"]
 size = Vector2(8, 72)
 
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_y6r2r"]
-vertices = PackedVector2Array(134, -33, 134, 70, 26, 70, -134, -33, 26, 86, -26, 86, -26, 70, -134, 70)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(2, 4, 5, 6), PackedInt32Array(3, 2, 6), PackedInt32Array(3, 6, 7)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(-144, 80, -144, -43, 144, -43, 144, 80, 36, 80, 36, 96, -36, 96, -36, 80)])
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t5nnj"]
 size = Vector2(72, 9)
 
-[node name="Room1" type="Node2D" unique_id=1686094894]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_door"]
+size = Vector2(10.000008, 71.99998)
 
-[node name="Colliders" type="Node2D" parent="." unique_id=1913247565]
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_x1re5"]
 
-[node name="StaticBody2D4" type="StaticBody2D" parent="Colliders" unique_id=637302484]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x1re5"]
+size = Vector2(32, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_c8s71"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_6qopq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_eyu58")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_e8bpl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_qb5kr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_cf2co")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_7nq4w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_qtm2r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_14w5e")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 8.0
+}]
+
+[node name="Room1" type="Node2D" unique_id=1397696051]
+
+[node name="Colliders" type="Node2D" parent="." unique_id=75879568]
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="Colliders" unique_id=1416126591]
 position = Vector2(98, 88)
 rotation = 1.5707964
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D4" unique_id=1073213515]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D4" unique_id=927989810]
 position = Vector2(0, -0.125)
 shape = SubResource("RectangleShape2D_y6r2r")
 
-[node name="StaticBody2D5" type="StaticBody2D" parent="Colliders" unique_id=2128055332]
+[node name="StaticBody2D5" type="StaticBody2D" parent="Colliders" unique_id=1443663722]
 position = Vector2(-98, -51)
 rotation = 1.5707964
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D5" unique_id=959329088]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D5" unique_id=1220506807]
 position = Vector2(-1.0000038, -98)
 shape = SubResource("RectangleShape2D_ob1wg")
 
-[node name="StaticBody2D3" type="StaticBody2D" parent="Colliders" unique_id=1296843149]
+[node name="StaticBody2D3" type="StaticBody2D" parent="Colliders" unique_id=142358276]
 position = Vector2(-98, 88)
 rotation = 1.5707964
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D3" unique_id=777660661]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D3" unique_id=1364347807]
 shape = SubResource("RectangleShape2D_y6r2r")
 
-[node name="StaticBody2D2" type="StaticBody2D" parent="Colliders" unique_id=1799453429]
+[node name="StaticBody2D2" type="StaticBody2D" parent="Colliders" unique_id=2063878459]
 position = Vector2(-152, 18)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D2" unique_id=1940403362]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D2" unique_id=1008669305]
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_y6r2r")
 
-[node name="StaticBody2D6" type="StaticBody2D" parent="Colliders" unique_id=944293518]
+[node name="StaticBody2D6" type="StaticBody2D" parent="Colliders" unique_id=2121178472]
 position = Vector2(304, 37)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D6" unique_id=1449693471]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D6" unique_id=2005457170]
 position = Vector2(-304, 63)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_pkce1")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="Colliders" unique_id=978863848]
+[node name="StaticBody2D" type="StaticBody2D" parent="Colliders" unique_id=489980014]
 position = Vector2(152, 18.5)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D" unique_id=717543244]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D" unique_id=325635824]
 position = Vector2(0, -0.3124981)
 shape = SubResource("RectangleShape2D_y6r2r")
 
-[node name="Environnement1Ydays" type="Sprite2D" parent="." unique_id=1079033494]
+[node name="Environnement1Ydays" type="Sprite2D" parent="." unique_id=225599303]
 position = Vector2(0, 6)
 texture = ExtResource("1_y6r2r")
 
-[node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=296928267]
-navigation_polygon = SubResource("NavigationPolygon_y6r2r")
-
-[node name="ChunkSwitcher" type="Area2D" parent="." unique_id=27290581]
+[node name="ChunkSwitcher" type="Area2D" parent="." unique_id=1208768353]
 script = ExtResource("2_t5nnj")
 roomToLoad = "uid://drhfsi6nm5qod"
+playerSpawn = Vector2(-272, 53)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ChunkSwitcher" unique_id=320214560]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ChunkSwitcher" unique_id=1329458378]
 position = Vector2(0, 91.5)
 shape = SubResource("RectangleShape2D_t5nnj")
 debug_color = Color(0.92414904, 4.870832e-05, 0.68302995, 0.41960785)
 
-[node name="Couloir" type="Node2D" parent="." unique_id=74920407]
+[node name="Couloir" type="Node2D" parent="." unique_id=1551550128]
 position = Vector2(-1, 70)
+
+[node name="DoorTest" type="Node2D" parent="." unique_id=719315229]
+position = Vector2(0, 82)
+rotation = 1.5715761
+script = ExtResource("5_door")
+room_to_load = "uid://drhfsi6nm5qod"
+
+[node name="DoorSprite" type="Sprite2D" parent="DoorTest" unique_id=2729131]
+rotation = 1.5707964
+scale = Vector2(2.2, 1)
+
+[node name="StaticBody2D_Door" type="StaticBody2D" parent="DoorTest" unique_id=1666744900]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DoorTest/StaticBody2D_Door" unique_id=516500099]
+position = Vector2(-7.6293945e-06, 0)
+shape = SubResource("RectangleShape2D_door")
+
+[node name="Armoire" type="Sprite2D" parent="." unique_id=1600000000]
+position = Vector2(58, -48)
+script = ExtResource("6_armoire")
+
+[node name="StaticBody2D_Armoire" type="StaticBody2D" parent="Armoire" unique_id=1600000001]
+physics_material_override = SubResource("PhysicsMaterial_x1re5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Armoire/StaticBody2D_Armoire" unique_id=702175237]
+position = Vector2(0, 11)
+shape = SubResource("RectangleShape2D_x1re5")
+
+[node name="Key" type="Node2D" parent="Armoire" unique_id=180162224]
+position = Vector2(1.7881393e-07, 2.0000038)
+scale = Vector2(0.6, 0.6)
+script = ExtResource("3_collect")
+item_resource = ExtResource("4_key")
+item_name_override = "key_zone1"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Armoire/Key" unique_id=177032915]
+scale = Vector2(0.6, 0.6)
+sprite_frames = SubResource("SpriteFrames_c8s71")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.8056501
+
+[node name="PointLight2D" type="PointLight2D" parent="Armoire/Key/AnimatedSprite2D" unique_id=1036362183]
+position = Vector2(-2.7777777, -1.5258789e-05)
+scale = Vector2(1.6666669, 1.6666669)
+color = Color(1, 0.81960785, 0.5372549, 1)
+energy = 2.07
+texture = ExtResource("15_eyu58")
+texture_scale = 0.06
 
 [connection signal="body_entered" from="ChunkSwitcher" to="ChunkSwitcher" method="_on_body_entered"]

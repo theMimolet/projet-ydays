@@ -27,16 +27,19 @@ size = Vector2(76, 68)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uoaph"]
 size = Vector2(72, 18)
 
-[node name="Couloir" type="Node2D" unique_id=1635779144]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hsgx3"]
+size = Vector2(9, 35)
 
-[node name="Environnement1Ydays1" type="Sprite2D" parent="." unique_id=392829036]
+[node name="Couloir" type="Node2D" unique_id=279907654]
+
+[node name="Environnement1Ydays1" type="Sprite2D" parent="." unique_id=1851106250]
 texture = ExtResource("1_42vvc")
 
-[node name="Colliders" type="Node2D" parent="." unique_id=1981227929]
+[node name="Colliders" type="Node2D" parent="." unique_id=333400230]
 
-[node name="StaticBody2D11" type="StaticBody2D" parent="Colliders" unique_id=508731099]
+[node name="StaticBody2D11" type="StaticBody2D" parent="Colliders" unique_id=162775172]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D11" unique_id=137865764]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D11" unique_id=2035948524]
 position = Vector2(280, -21.25)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_42vvc")
@@ -148,29 +151,42 @@ position = Vector2(-350, -55)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_tldjq")
 
-[node name="StaticBody2D2" type="StaticBody2D" parent="Colliders" unique_id=681910685]
+[node name="StaticBody2D2" type="StaticBody2D" parent="Colliders" unique_id=149758167]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D2" unique_id=258249023]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D2" unique_id=1873617953]
 position = Vector2(-392, -12)
 shape = SubResource("RectangleShape2D_tldjq")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="Colliders" unique_id=81793832]
+[node name="StaticBody2D" type="StaticBody2D" parent="Colliders" unique_id=2051329165]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D" unique_id=466316306]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D" unique_id=188216810]
 position = Vector2(-346, 56)
 shape = SubResource("RectangleShape2D_riwp6")
 
-[node name="Room1" type="Node2D" parent="." unique_id=534410011]
-position = Vector2(-271, 39)
+[node name="Room1" type="Node2D" parent="." unique_id=273959893]
+position = Vector2(-272, -53)
 
-[node name="ChunkSwitcher" type="Area2D" parent="." unique_id=2038142711]
+[node name="ChunkSwitcher" type="Area2D" parent="." unique_id=1205335799]
 script = ExtResource("2_dqgav")
 roomToLoad = "uid://dof6jbjjwnxl7"
 playerSpawn = Vector2(0, 72)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ChunkSwitcher" unique_id=48106315]
-position = Vector2(-272, 81)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ChunkSwitcher" unique_id=1481545367]
+position = Vector2(-272, -80)
 shape = SubResource("RectangleShape2D_uoaph")
 debug_color = Color(0.93673784, 1.8193425e-05, 0.63304937, 0.41960785)
 
+[node name="ChunkSwitcher2" type="Area2D" parent="." unique_id=1671094315]
+position = Vector2(71.00001, -42)
+rotation = 0.7853982
+script = ExtResource("2_dqgav")
+roomToLoad = "uid://bnaxhtmt0lk42"
+playerSpawn = Vector2(20, 0)
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="ChunkSwitcher2" unique_id=1268668109]
+rotation = 0.7853982
+shape = SubResource("RectangleShape2D_hsgx3")
+debug_color = Color(0.9316478, 2.7434528e-05, 0.65395343, 0.41960785)
+
 [connection signal="body_entered" from="ChunkSwitcher" to="ChunkSwitcher" method="_on_body_entered"]
+[connection signal="body_entered" from="ChunkSwitcher2" to="ChunkSwitcher2" method="_on_body_entered"]

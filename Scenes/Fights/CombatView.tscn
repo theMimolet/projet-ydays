@@ -1,0 +1,425 @@
+[gd_scene format=3 uid="uid://de1iuhhoi2us0"]
+
+[ext_resource type="Script" uid="uid://dsmox8b1rub7l" path="res://Scripts/Combat/CombatController.gd" id="1_combat"]
+[ext_resource type="Resource" uid="uid://b4ejgf6g0fck1" path="res://Resources/Armes/Epee.tres" id="2_djx4s"]
+[ext_resource type="Script" uid="uid://cnubciq834w8p" path="res://Scripts/Combat/QTESystem.gd" id="2_qte"]
+[ext_resource type="Texture2D" uid="uid://psnu27tn25m4" path="res://Spritesheet/Joueur/Marche/sprite_perso-sidD0.png" id="3_7ih2b"]
+[ext_resource type="Texture2D" uid="uid://ch00xgtxrg5m6" path="res://Spritesheet/ASUPPRIMER.webp" id="3_24hbo"]
+[ext_resource type="Script" uid="uid://dmtljqt6hd8d4" path="res://Scripts/Combat/WeaponSelectMenu.gd" id="4_weapon_menu"]
+[ext_resource type="Texture2D" uid="uid://dof3q0uv14tlr" path="res://Spritesheet/HP/sprite_noirceur0.png" id="5_hp0"]
+[ext_resource type="Texture2D" uid="uid://cwcx8engxgfnf" path="res://Spritesheet/HP/sprite_noirceur1.png" id="6_hp1"]
+[ext_resource type="Texture2D" uid="uid://dxt2ukn78ys71" path="res://Spritesheet/HP/sprite_noirceur2.png" id="7_hp2"]
+[ext_resource type="Texture2D" uid="uid://564r44503iak" path="res://Spritesheet/HP/sprite_noirceur3.png" id="8_hp3"]
+[ext_resource type="Texture2D" uid="uid://dmt8l211t66po" path="res://Spritesheet/HP/sprite_noirceur4.png" id="9_hp4"]
+[ext_resource type="Texture2D" uid="uid://ifody0ek2lqf" path="res://Spritesheet/HP/sprite_noirceur5.png" id="10_hp5"]
+[ext_resource type="Texture2D" uid="uid://nb31k00qlayo" path="res://Spritesheet/HP/sprite_noirceur6.png" id="11_hp6"]
+[ext_resource type="Texture2D" uid="uid://18bp6a3vbfbn" path="res://Spritesheet/HP/sprite_noirceur7.png" id="12_hp7"]
+[ext_resource type="Texture2D" uid="uid://bj1hf0n1d7nn3" path="res://Spritesheet/HP/sprite_noirceur8.png" id="13_hp8"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hpbar"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_hp0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_hp1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_hp2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_hp3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_hp4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_hp5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_hp6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_hp7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_hp8")
+}],
+"loop": false,
+"name": &"default",
+"speed": 0.0
+}]
+
+[node name="CombatView" type="Control" unique_id=679225732]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_combat")
+arme_equipee = ExtResource("2_djx4s")
+
+[node name="Background" type="ColorRect" parent="." unique_id=142203584]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Asupprimer" type="Sprite2D" parent="Background" unique_id=776825964]
+position = Vector2(320.50003, 179.99998)
+scale = Vector2(1.0683334, 1.3481481)
+texture = ExtResource("3_24hbo")
+
+[node name="AreneContainer" type="Control" parent="." unique_id=1979857817]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ZoneJoueur" type="Panel" parent="AreneContainer" unique_id=1947222261]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.3
+anchor_right = 0.35
+anchor_bottom = 0.75
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="JoueurSprite" type="TextureRect" parent="AreneContainer/ZoneJoueur" unique_id=1186279710]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -48.0
+offset_right = 32.0
+offset_bottom = 48.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_7ih2b")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ArmeSpriteCombat" type="TextureRect" parent="AreneContainer/ZoneJoueur/JoueurSprite" unique_id=1760170502]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -24.0
+offset_top = -40.0
+offset_right = 8.0
+offset_bottom = -8.0
+grow_horizontal = 0
+grow_vertical = 0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HPJoueurContainer" type="Control" parent="AreneContainer/ZoneJoueur" unique_id=1050331306]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -30.0
+offset_bottom = 10.0
+grow_horizontal = 2
+
+[node name="HPJoueur" type="AnimatedSprite2D" parent="AreneContainer/ZoneJoueur/HPJoueurContainer" unique_id=1117001516]
+position = Vector2(80, 20)
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_hpbar")
+
+[node name="ZoneEnnemi" type="Panel" parent="AreneContainer" unique_id=1455663335]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.65
+anchor_top = 0.3
+anchor_right = 0.9
+anchor_bottom = 0.75
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="EnnemiSprite" type="TextureRect" parent="AreneContainer/ZoneEnnemi" unique_id=1993191316]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -48.0
+offset_right = 32.0
+offset_bottom = 48.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="LabelEnnemi" type="Label" parent="AreneContainer/ZoneEnnemi" unique_id=1554037326]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -50.0
+offset_top = -25.0
+offset_right = 50.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "ENNEMI"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="HPEnnemiContainer" type="Control" parent="AreneContainer/ZoneEnnemi" unique_id=1094640603]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -30.0
+offset_bottom = 10.0
+grow_horizontal = 2
+
+[node name="HPEnnemi" type="AnimatedSprite2D" parent="AreneContainer/ZoneEnnemi/HPEnnemiContainer" unique_id=959729781]
+position = Vector2(80, 20)
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_hpbar")
+
+[node name="UI" type="Control" parent="." unique_id=1693993331]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="BtnAttaque" type="Button" parent="UI" unique_id=160324145]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -130.0
+offset_top = -60.0
+offset_right = -10.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Attaque"
+
+[node name="BtnArmes" type="Button" parent="UI" unique_id=1321655762]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -60.0
+offset_right = 130.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Armes"
+
+[node name="LabelArmeActuelle" type="Label" parent="UI" unique_id=1974140321]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -85.0
+offset_right = 100.0
+offset_bottom = -65.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Aucune arme"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LabelResultat" type="Label" parent="UI" unique_id=38811524]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -100.0
+offset_top = 20.0
+offset_right = 100.0
+offset_bottom = 50.0
+grow_horizontal = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="QTESystem" type="Control" parent="." unique_id=398407702]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -60.0
+offset_right = 150.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_qte")
+
+[node name="PanelQTE" type="Panel" parent="QTESystem" unique_id=2071313185]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="QTESystem/PanelQTE" unique_id=1342109825]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="LabelInstructions" type="Label" parent="QTESystem/PanelQTE/VBox" unique_id=2051148348]
+visible = false
+layout_mode = 2
+text = "Appuie sur les touches !"
+horizontal_alignment = 1
+
+[node name="ContainerTouches" type="HBoxContainer" parent="QTESystem" unique_id=177420074]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = -20.0
+offset_right = 80.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="LabelTemps" type="Label" parent="QTESystem" unique_id=1334270092]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -30.0
+offset_top = -50.0
+offset_right = 30.0
+offset_bottom = -30.0
+grow_horizontal = 2
+horizontal_alignment = 1
+
+[node name="ModalVictoire" type="Panel" parent="." unique_id=561699106]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -60.0
+offset_right = 120.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="ModalVictoire" unique_id=299161841]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="LabelVictoire" type="Label" parent="ModalVictoire/VBox" unique_id=306719386]
+layout_mode = 2
+text = "Vous avez gagné !"
+horizontal_alignment = 1
+
+[node name="Spacer" type="Control" parent="ModalVictoire/VBox" unique_id=684193828]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="BtnSuivre" type="Button" parent="ModalVictoire/VBox" unique_id=450827582]
+layout_mode = 2
+text = "Continuer l'aventure"
+
+[node name="WeaponSelectMenu" type="Panel" parent="." unique_id=475660157]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -180.0
+offset_top = -150.0
+offset_right = 180.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_weapon_menu")
+
+[node name="MarginContainer" type="MarginContainer" parent="WeaponSelectMenu" unique_id=1383376678]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="WeaponSelectMenu/MarginContainer" unique_id=1101055290]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="WeaponSelectMenu/MarginContainer/VBoxContainer" unique_id=2099505189]
+layout_mode = 2
+text = "Choisir une arme"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="WeaponSelectMenu/MarginContainer/VBoxContainer" unique_id=2068307959]
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="WeaponSelectMenu/MarginContainer/VBoxContainer" unique_id=1312522887]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+columns = 4
+
+[node name="CloseButton" type="Button" parent="WeaponSelectMenu/MarginContainer/VBoxContainer" unique_id=1702411080]
+layout_mode = 2
+text = "Fermer"

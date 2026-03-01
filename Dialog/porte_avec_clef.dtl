@@ -1,0 +1,4 @@
+Cette porte est fermée. Voulez‑vous utiliser la clef ?
+- Oui
+	do Global.use_key_on_pending_door()
+- Non
