@@ -1,20 +1,20 @@
 extends CanvasLayer
 
 const SLOT_SCENE = preload("res://Scenes/UI/InventorySlot.tscn")
-const Item = preload("res://Scripts/Items/Item.gd")
-const INVENTORY_SIZE: int = 16 # Nombre de slots d'inventaire
+const ITEM : Resource = preload("res://Scripts/Items/Item.gd")
+const INVENTORY_SIZE : int = 16  # Nombre de slots d'inventaire
 
-@onready var inventaire_panel: Panel = $InventairePanel
-@onready var inventaire_container: GridContainer = $InventairePanel/InventaireContainer
+@onready var inventairePanel : Panel = $InventairePanel
+@onready var inventaireContainer : GridContainer = inventairePanel.find_child("InventaireContainer")
+
+@onready var joueur : CharacterBody2D = $".."
+var isOpen : bool = false
+var slots : Array = []
+var draggedSlot : Node = null
 
 var controles_hint: Control = null
 var drag_preview: TextureRect = null
 const DRAG_PREVIEW_SIZE: Vector2 = Vector2(36, 36)
-
-var is_open: bool = false
-var joueur: Node = null
-var slots: Array = []
-var dragged_slot = null
 
 # Slot d'équipement
 var equipment_slot = null
@@ -32,9 +32,6 @@ func _ready() -> void:
 	# Ajouter au groupe pour faciliter la recherche
 	add_to_group("Inventaire")
 	
-	# Chercher le joueur
-	joueur = get_tree().get_first_node_in_group("Joueur")
-	
 	# Créer les slots d'inventaire
 	create_inventory_slots()
 	
@@ -47,8 +44,8 @@ func _ready() -> void:
 	_setup_drag_preview()
 	
 	# Cacher l'inventaire au départ
-	inventaire_panel.visible = false
-	is_open = false
+	inventairePanel.visible = false
+	isOpen = false
 	
 	# Restaurer l'inventaire depuis Global si des données sont sauvegardées
 	call_deferred("_restore_from_global")
@@ -56,14 +53,25 @@ func _ready() -> void:
 func create_inventory_slots() -> void:
 	"""Crée tous les slots d'inventaire"""
 	for i in range(INVENTORY_SIZE):
-		var slot = SLOT_SCENE.instantiate()
+		var slot : Node = SLOT_SCENE.instantiate()
 		slot.slot_index = i
 		slot.add_to_group("InventorySlot")
 		slot.slot_clicked.connect(_on_slot_clicked)
 		slot.slot_dropped.connect(_on_slot_dropped)
 		slot.slot_right_clicked.connect(_on_slot_right_clicked)
-		inventaire_container.add_child(slot)
+		inventaireContainer.add_child(slot)
 		slots.append(slot)
+
+#func _input(event: InputEvent) -> void:
+#	if event.is_action_pressed("Inventory"):
+#		if event.keycode == KEY_TAB:
+#			toggle_inventaire()
+
+func toggle_inventaire() -> void:
+	isOpen = !isOpen
+	inventairePanel.visible = isOpen
+  if controles_hint != null:
+		controles_hint.visible = isOpen
 
 func _setup_equipment_slot() -> void:
 	"""Crée le panneau d'équipement à gauche de l'inventaire"""
@@ -170,14 +178,8 @@ func _process(_delta: float) -> void:
 		drag_preview.offset_top = int(mouse.y - half.y)
 		drag_preview.offset_right = int(mouse.x + half.x)
 		drag_preview.offset_bottom = int(mouse.y + half.y)
-
-func toggle_inventaire() -> void:
-	is_open = !is_open
-	inventaire_panel.visible = is_open
-	if controles_hint != null:
-		controles_hint.visible = is_open
 	
-	if is_open:
+	if isOpen:
 		open_inventaire()
 	else:
 		close_inventaire()
@@ -194,10 +196,10 @@ func close_inventaire() -> void:
 
 # ============== GESTION DES ITEMS ==============
 
-func add_item(item, quantity: int = 1) -> bool:
+func add_item(item : Item, quantity: int = 1) -> bool:
 	"""Ajoute un item à l'inventaire. Retourne true si réussi"""
 	# Chercher un slot avec le même item qui peut encore en contenir
-	for slot in slots:
+	for slot : Node in slots:
 		if not slot.is_empty() and slot.item.item_name == item.item_name:
 			var remaining: int = slot.item.max_stack - slot.quantity
 			if remaining > 0:
@@ -209,7 +211,7 @@ func add_item(item, quantity: int = 1) -> bool:
 					return true
 	
 	# Chercher un slot vide
-	for slot in slots:
+	for slot : Node in slots:
 		if slot.is_empty():
 			var to_add: int = min(quantity, item.max_stack)
 			slot.set_item(item, to_add)
@@ -225,7 +227,7 @@ func remove_item(item_name: String, quantity: int = 1) -> bool:
 	"""Retire un item de l'inventaire. Retourne true si réussi"""
 	var remaining: int = quantity
 	
-	for slot in slots:
+	for slot : Node in slots:
 		if not slot.is_empty() and slot.item.item_name == item_name:
 			var to_remove: int = min(remaining, slot.quantity)
 			slot.remove_item(to_remove)
@@ -237,29 +239,29 @@ func remove_item(item_name: String, quantity: int = 1) -> bool:
 
 func has_item(item_name: String, quantity: int = 1) -> bool:
 	"""Vérifie si l'inventaire contient l'item en quantité suffisante"""
-	var total = 0
-	for slot in slots:
+	var total : int = 0
+	for slot : Item in slots:
 		if not slot.is_empty() and slot.item.item_name == item_name:
 			total += slot.quantity
 	return total >= quantity
 
 func get_item_count(item_name: String) -> int:
 	"""Retourne le nombre total d'un item dans l'inventaire"""
-	var total: int = 0
-	for slot in slots:
+	var total : int = 0
+	for slot : Node in slots:
 		if not slot.is_empty() and slot.item.item_name == item_name:
 			total += slot.quantity
 	return total
 
 # ============== DRAG & DROP ==============
 
-func _on_slot_clicked(slot) -> void:
+func _on_slot_clicked(slot : Node) -> void:
 	"""Gère le clic sur un slot"""
-	if dragged_slot == null and not slot.is_empty():
+	if draggedSlot == null and not slot.is_empty():
 		# Vérifier si Shift est pressé pour le split
 		if Input.is_key_pressed(KEY_SHIFT) and slot.quantity > 1:
 			# Mode split : déplacer 1 item vers le slot libre le plus proche
-			var nearest_empty_slot = _find_nearest_empty_slot(slot)
+			var nearest_empty_slot : Node = _find_nearest_empty_slot(slot)
 			if nearest_empty_slot != null:
 				# Déplacer 1 item vers le slot libre
 				nearest_empty_slot.set_item(slot.item, 1)
@@ -269,14 +271,14 @@ func _on_slot_clicked(slot) -> void:
 				print("Split: Aucun slot libre disponible")
 		else:
 			# Mode drag normal
-			dragged_slot = slot
+			draggedSlot = slot
 			slot.set_dragging(true)
 			if drag_preview != null and slot.item != null and slot.item.item_texture != null:
 				drag_preview.texture = slot.item.item_texture
 				drag_preview.visible = true
 			print("Début du drag: ", slot.item.item_name)
 
-func _on_slot_dropped(source_slot, target_slot) -> void:
+func _on_slot_dropped(source_slot : Node, target_slot : Node) -> void:
 	"""Gère le drop d'un slot vers un autre"""
 	if source_slot == null or target_slot == null:
 		_cleanup_drag(source_slot)
@@ -309,33 +311,33 @@ func _on_slot_dropped(source_slot, target_slot) -> void:
 			target_slot.update_display()
 	# Sinon, on échange les items
 	else:
-		var temp_item = target_slot.item
-		var temp_quantity: int = target_slot.quantity
+		var temp_item : Item = target_slot.item
+		var temp_quantity : int = target_slot.quantity
 		target_slot.set_item(source_slot.item, source_slot.quantity)
 		source_slot.set_item(temp_item, temp_quantity)
 	
 	_cleanup_drag(source_slot)
 	print("Drop effectué")
 
-func _cleanup_drag(slot) -> void:
+func _cleanup_drag(slot : Node) -> void:
 	"""Nettoie l'état de drag"""
 	if slot != null and slot.has_method("set_dragging"):
 		slot.set_dragging(false)
 	if drag_preview != null:
 		drag_preview.visible = false
 		drag_preview.texture = null
-	dragged_slot = null
+	draggedSlot = null
 
-func _find_nearest_empty_slot(reference_slot) -> Node:
+func _find_nearest_empty_slot(reference_slot : Node) -> Node:
 	"""Trouve le slot vide le plus proche du slot de référence"""
-	var nearest_slot = null
-	var nearest_distance: float = INF
+	var nearest_slot : Node
+	var nearest_distance : float = INF
 	
 	# Obtenir la position du slot de référence dans le container
 	var ref_index: int = reference_slot.slot_index
 	var ref_pos: Vector2 = _get_slot_position_in_container(ref_index)
 	
-	for slot in slots:
+	for slot : Node in slots:
 		if slot.is_empty():
 			var slot_pos: Vector2 = _get_slot_position_in_container(slot.slot_index)
 			var distance: float = ref_pos.distance_to(slot_pos)
@@ -349,13 +351,15 @@ func _get_slot_position_in_container(slot_index: int) -> Vector2:
 	"""Calcule la position d'un slot dans le container basé sur son index"""
 	# Le GridContainer organise les slots en grille
 	# On peut calculer la position en fonction de l'index
-	var columns: int = inventaire_container.columns if inventaire_container.columns > 0 else 4
-	var row: int = slot_index / columns
-	var col: int = slot_index % columns
+	var columns : int = inventaireContainer.columns if inventaireContainer.columns > 0 else 4
+	@warning_ignore("integer_division")
+	var row : int = slot_index / columns
+	var col : int = slot_index % columns
+
 	# Estimation de la taille d'un slot (40x40 + espacement)
-	var slot_size: float = 40.0
-	var h_spacing: float = inventaire_container.get_theme_constant(&"h_separation")
-	var v_spacing: float = inventaire_container.get_theme_constant(&"v_separation")
+	var slot_size : float = 40.0
+	var h_spacing : float = inventaireContainer.get_theme_constant(&"h_separation")
+	var v_spacing : float = inventaireContainer.get_theme_constant(&"v_separation")
 	if h_spacing == 0.0:
 		h_spacing = 4.0 # Valeur par défaut
 	if v_spacing == 0.0:
@@ -363,20 +367,20 @@ func _get_slot_position_in_container(slot_index: int) -> Vector2:
 	return Vector2(col * (slot_size + h_spacing), row * (slot_size + v_spacing))
 # ============== DROP SUR LA MAP ==============
 
-func _on_slot_right_clicked(slot) -> void:
+func _on_slot_right_clicked(slot : Node) -> void:
 	"""Gère le clic droit sur un slot pour drop l'item sur la map"""
 	if slot.is_empty():
 		return
 	
 	drop_item_on_map(slot)
 
-func drop_item_on_map(slot) -> void:
+func drop_item_on_map(slot : Node) -> void:
 	"""Pose un item sur la map à la position du joueur"""
 	if slot.is_empty() or joueur == null:
 		return
 	
-	var item_to_drop = slot.item
-	var quantity_to_drop: int = 1
+	var item_to_drop : Item = slot.item
+	var quantity_to_drop : int = 1
 	
 	# Créer un objet CollectableItem
 	var collectable_item := create_collectable_item(item_to_drop, joueur.global_position, quantity_to_drop)
@@ -418,7 +422,7 @@ func create_collectable_item(item: Item, position: Vector2, quantity: int = 1) -
 			animated_sprite.animation = item.animation_name
 		else:
 			# Utiliser la première animation disponible
-			var animations = item.sprite_frames.get_animation_names()
+			var animations : PackedStringArray = item.sprite_frames.get_animation_names()
 			if animations.size() > 0:
 				animated_sprite.animation = animations[0]
 		collectable.add_child(animated_sprite)

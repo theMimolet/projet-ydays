@@ -37,15 +37,15 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Test" type="CharacterBody2D" unique_id=918111336]
+[node name="Test" type="CharacterBody2D" unique_id=683536570]
 motion_mode = 1
 
-[node name="Collision" type="CollisionShape2D" parent="." unique_id=1881540237]
+[node name="Collision" type="CollisionShape2D" parent="." unique_id=1468314051]
 shape = SubResource("CircleShape2D_medu7")
 
-[node name="HostileModule" parent="." unique_id=1900226684 instance=ExtResource("1_2p4ad")]
+[node name="HostileModule" parent="." unique_id=481882914 instance=ExtResource("1_2p4ad")]
 
-[node name="Sprite" type="Sprite2D" parent="." unique_id=564013995]
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1423693503]
 position = Vector2(3.5762787e-07, 1.1920929e-07)
 scale = Vector2(0.15625, 0.15625)
 texture = ExtResource("2_ofonb")

@@ -1,5 +1,9 @@
 extends Node2D
 
+@onready var nav : NavigationAgent2D = $NavigationAgent2D
+@onready var joueur : CharacterBody2D = get_tree().get_first_node_in_group("Joueur")
+@onready var roomManager : Node = get_tree().get_first_node_in_group("RoomManager")
+
 ## Stats de combat (modifiables dans l'inspecteur)
 @export_category("Combat")
 @export var monster_id: String = ""
@@ -12,10 +16,6 @@ extends Node2D
 @export var baseSpeed: float = 40.0
 @export var maxSpeed: float = 200.0
 var speed: float = baseSpeed
-
-@onready var nav: NavigationAgent2D = $NavigationAgent2D
-@onready var joueur: CharacterBody2D = get_tree().get_first_node_in_group("Joueur")
-@onready var roomManager := get_tree().get_first_node_in_group("RoomManager")
 
 var joueurProche: bool
 var niveauAlerte: int
@@ -88,7 +88,6 @@ func majNiveauAlerte(ajout: bool) -> void:
 			niveauAlerte -= 1
 	if niveauAlerte >= 5: 
 		etatActuel = etat.ALERTE
-
 
 func set_movement_target(movement_target: Vector2) -> void:
 	nav.set_target_position(movement_target)
