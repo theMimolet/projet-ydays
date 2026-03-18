@@ -117,12 +117,13 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -24.0
-offset_top = -40.0
-offset_right = 8.0
-offset_bottom = -8.0
+offset_left = -0.09000015
+offset_top = -55.425
+offset_right = 31.91011
+offset_bottom = -23.425064
 grow_horizontal = 0
 grow_vertical = 0
+rotation = -4.6896996
 expand_mode = 1
 stretch_mode = 5
 
@@ -199,6 +200,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -1.0
+offset_right = -1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -212,10 +215,11 @@ anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -130.0
 offset_top = -60.0
-offset_right = -10.0
+offset_right = -9.999695
 offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 0
+scale = Vector2(0.64, 0.64)
 text = "Attaque"
 
 [node name="BtnArmes" type="Button" parent="UI" unique_id=1321655762]
@@ -225,12 +229,13 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 10.0
+offset_left = 56.640015
 offset_top = -60.0
-offset_right = 130.0
+offset_right = 176.64032
 offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 0
+scale = Vector2(0.64, 0.64)
 text = "Armes"
 
 [node name="LabelArmeActuelle" type="Label" parent="UI" unique_id=1974140321]

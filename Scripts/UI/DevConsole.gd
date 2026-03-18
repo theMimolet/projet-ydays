@@ -234,5 +234,6 @@ func _register_commands() -> void:
 	
 	# Armes
 	registry.register_command("give_weapon", ConsoleCommands.cmd_give_weapon, "Donne une arme", 1, 1, "give_weapon <dague|epee1|epee2|epee3|bloodsword>")
+	registry.register_command("give_all_weapons", ConsoleCommands.cmd_give_all_weapons, "Donne toutes les armes", 0, 0, "give_all_weapons")
 	registry.register_command("equip_weapon", ConsoleCommands.cmd_equip_weapon, "Equipe une arme", 1, 1, "equip_weapon <dague|epee1|epee2|epee3|bloodsword>")
 	registry.register_command("list_weapons", ConsoleCommands.cmd_list_weapons, "Liste les armes", 0, 0, "list_weapons")
