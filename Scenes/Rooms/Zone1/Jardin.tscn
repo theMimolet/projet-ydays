@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://nljyccxrdjba" path="res://Spritesheet/Jardin/roche_0.png" id="11_3cehf"]
 [ext_resource type="Script" uid="uid://cfa506s6i6uxc" path="res://Scripts/roche_bizarre.gd" id="11_d3dr6"]
 [ext_resource type="Texture2D" uid="uid://73oxq1kl4b3" path="res://Spritesheet/Jardin/roche_1.png" id="13_ckfm0"]
+[ext_resource type="Texture2D" uid="uid://0bcivcq3p8av" path="res://Spritesheet/Jardin/Maison-04.png" id="14_d3dr6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fu3vt"]
 size = Vector2(96, 34)
@@ -142,8 +143,19 @@ position = Vector2(21.72902, -19.16565)
 texture = ExtResource("11_3cehf")
 script = SubResource("GDScript_ih1ky")
 
-[node name="Roche1" type="Sprite2D" parent="VillageEnvironnement" unique_id=814795832]
-position = Vector2(-173, -348)
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="VillageEnvironnement/CharacterBody2D3" unique_id=237185136]
+position = Vector2(22.729004, -7.1656494)
+polygon = PackedVector2Array(8, 0, 0, 0, -6, 0, -11, -4, -16, -6, -15, -15, -8, -22, 0, -26, 6, -22, 12, -20, 14, -15, 16, -11, 17, -6, 12, 0)
+
+[node name="CharacterBody2D9" type="CharacterBody2D" parent="VillageEnvironnement" unique_id=2138343673]
+position = Vector2(-173.20186, -340.17224)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="VillageEnvironnement/CharacterBody2D9" unique_id=1387587352]
+position = Vector2(0.20185852, -7.8277435)
+polygon = PackedVector2Array(-1, -1.0000153, -6, -4.0000153, -15, 2.9999847, -13, 8.999985, 3, 11.999985, 11, 4.9999847, 17, -4.0000153, 17, -10.000015, 13, -15.000015, 8, -14.000015, -6, -4.0000153)
+
+[node name="Roche1" type="Sprite2D" parent="VillageEnvironnement/CharacterBody2D9" unique_id=814795832]
+position = Vector2(0.20185852, -8.827759)
 texture = ExtResource("13_ckfm0")
 
 [node name="Sprite1" type="Sprite2D" parent="VillageEnvironnement" unique_id=1743124344]
@@ -213,3 +225,41 @@ scale = Vector2(18.916414, -0.38577172)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="VillageEnvironnement/StaticBody2D6" unique_id=1434887762]
 position = Vector2(1.5, -7)
 shape = SubResource("RectangleShape2D_uyj8a")
+
+[node name="CharacterBody2D11" type="CharacterBody2D" parent="VillageEnvironnement" unique_id=279089531]
+position = Vector2(188, 55)
+scale = Vector2(0.445, 0.44500005)
+
+[node name="Maison04" type="Sprite2D" parent="VillageEnvironnement/CharacterBody2D11" unique_id=2052896866]
+position = Vector2(146.53076, 125.92142)
+scale = Vector2(0.99999994, 0.99999994)
+texture = ExtResource("14_d3dr6")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="VillageEnvironnement/CharacterBody2D11" unique_id=609037389]
+position = Vector2(51.685394, 47.19101)
+polygon = PackedVector2Array(4.494385, -4.4944153, 17.97754, -13.483154, 67.41565, -13.483154, 110.112305, -33.707886, 141.573, -17.97754, 148.31458, -2.247223, 177.52808, 8.98877, 184.26965, 26.966248, 186.51685, 44.943787, 188.76404, 49.43817, 175.28088, 51.685364, 175.28088, 182.02246, 47.190918, 182.02246, 47.190918, 152.80896, 2.2471924, 152.80896, 2.2471924, 51.685364, 13.483154, 58.42694, 20.224731, 51.685364, 20.224731, 35.955017, 2.2471924, 29.21344, 2.2471924, 17.977478, -2.2471924, 17.977478, -2.2471924, -2.247223)
+
+[node name="CharacterBody2D10" type="CharacterBody2D" parent="VillageEnvironnement" unique_id=508445877]
+position = Vector2(110, -37)
+scale = Vector2(1.5972395, 1.5972395)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="VillageEnvironnement/CharacterBody2D10" unique_id=1027643655]
+position = Vector2(0.20185852, -7.8277435)
+polygon = PackedVector2Array(-1, -1.0000153, -6, -4.0000153, -15, 2.9999847, -13, 8.999985, 3, 11.999985, 11, 4.9999847, 17, -4.0000153, 17, -10.000015, 13, -15.000015, 8, -14.000015, -6, -4.0000153)
+
+[node name="Roche1" type="Sprite2D" parent="VillageEnvironnement/CharacterBody2D10" unique_id=1658365742]
+position = Vector2(0.20185852, -8.827759)
+texture = ExtResource("13_ckfm0")
+
+[node name="CharacterBody2D12" type="CharacterBody2D" parent="VillageEnvironnement" unique_id=942579102]
+position = Vector2(26.999985, -406)
+scale = Vector2(0.445, 0.44500005)
+
+[node name="Maison04" type="Sprite2D" parent="VillageEnvironnement/CharacterBody2D12" unique_id=1757557313]
+position = Vector2(146.53076, 125.92142)
+scale = Vector2(0.99999994, 0.99999994)
+texture = ExtResource("14_d3dr6")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="VillageEnvironnement/CharacterBody2D12" unique_id=288737632]
+position = Vector2(51.685394, 47.19101)
+polygon = PackedVector2Array(4.494385, -4.4944153, 17.97754, -13.483154, 67.41565, -13.483154, 110.112305, -33.707886, 141.573, -17.97754, 148.31458, -2.247223, 177.52808, 8.98877, 184.26965, 26.966248, 186.51685, 44.943787, 188.76404, 49.43817, 175.28088, 51.685364, 175.28088, 182.02246, 47.190918, 182.02246, 47.190918, 152.80896, 2.2471924, 152.80896, 2.2471924, 51.685364, 13.483154, 58.42694, 20.224731, 51.685364, 20.224731, 35.955017, 2.2471924, 29.21344, 2.2471924, 17.977478, -2.2471924, 17.977478, -2.2471924, -2.247223)

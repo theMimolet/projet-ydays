@@ -63,12 +63,21 @@ func _creer_slot_arme(arme: Resource) -> Control:
 	texture_rect.custom_minimum_size = Vector2(48, 48)
 	texture_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	texture_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	if arme.item_texture:
+	if "item_texture" in arme and arme.item_texture != null:
 		texture_rect.texture = arme.item_texture
 	vbox.add_child(texture_rect)
 	
 	var nom_label := Label.new()
-	nom_label.text = arme.get_nom_arme() if arme.has_method("get_nom_arme") else arme.item_name
+	var nom_texte: String = ""
+	if arme.has_method("get_nom_arme"):
+		nom_texte = arme.get_nom_arme()
+	elif "nom_arme" in arme and (arme.nom_arme as String).length() > 0:
+		nom_texte = arme.nom_arme
+	elif "item_name" in arme:
+		nom_texte = arme.item_name
+	else:
+		nom_texte = "Arme"
+	nom_label.text = nom_texte
 	nom_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	nom_label.add_theme_font_size_override("font_size", 10)
 	vbox.add_child(nom_label)
@@ -76,7 +85,7 @@ func _creer_slot_arme(arme: Resource) -> Control:
 	var degats_label := Label.new()
 	if arme.has_method("get_description_degats"):
 		degats_label.text = arme.get_description_degats() + " dmg"
-	elif arme.combat_data:
+	elif "combat_data" in arme and arme.combat_data != null:
 		degats_label.text = arme.combat_data.get_description_degats() + " dmg"
 	else:
 		degats_label.text = "? dmg"

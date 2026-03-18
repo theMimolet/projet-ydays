@@ -47,6 +47,7 @@ directories/dtl_directory={
 "timeline_chevalier": "res://Dialog/timeline_chevalier.dtl",
 "timeline_colere": "res://Dialog/timeline_colere.dtl",
 "timeline_curieux": "res://Dialog/timeline_curieux.dtl",
+"timeline_save": "res://Dialog/timeline_save.dtl",
 "timeline_symbole": "res://Dialog/timeline_symbole.dtl",
 "timeline_triste": "res://Dialog/timeline_triste.dtl"
 }

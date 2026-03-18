@@ -1,7 +1,7 @@
 extends "res://Scripts/Interactions/PNJ.gd"
 
 @export var log_message: String = "Interaction avec la fontaine"
-@export var dialog_timeline: String = "timeline-test"
+@export var dialog_timeline: String = "timeline_save"
 
 func _ready() -> void:
 	super._ready()
