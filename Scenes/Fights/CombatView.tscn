@@ -175,6 +175,7 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="LabelEnnemi" type="Label" parent="AreneContainer/ZoneEnnemi" unique_id=1554037326]
+visible = false
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -298,6 +299,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="VBox" type="VBoxContainer" parent="QTESystem/PanelQTE" unique_id=1342109825]
 layout_mode = 1
@@ -313,9 +315,8 @@ grow_vertical = 2
 alignment = 1
 
 [node name="LabelInstructions" type="Label" parent="QTESystem/PanelQTE/VBox" unique_id=2051148348]
-visible = false
 layout_mode = 2
-text = "Appuie sur les touches !"
+text = "Appuie sur les touches dans l'ordre !"
 horizontal_alignment = 1
 
 [node name="ContainerTouches" type="HBoxContainer" parent="QTESystem" unique_id=177420074]
@@ -356,6 +357,7 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="Dimmer" type="ColorRect" parent="ModalVictoire" unique_id=649565782]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

@@ -15,6 +15,14 @@
 [ext_resource type="Texture2D" uid="uid://tvyekxq4gj7t" path="res://Spritesheet/Cle/sprite_6.webp" id="11_qtm2r"]
 [ext_resource type="Texture2D" uid="uid://cgmxoqeo66afq" path="res://Spritesheet/Cle/sprite_7.webp" id="12_14w5e"]
 [ext_resource type="Texture2D" uid="uid://d1xjic7utprd7" path="res://Spritesheet/Torche/light.png" id="15_eyu58"]
+[ext_resource type="Script" uid="uid://cx164losuegqd" path="res://Scripts/Interactions/garde_rouge.gd" id="16_unx2d"]
+[ext_resource type="Texture2D" uid="uid://dw155bh6gashm" path="res://Spritesheet/Monstres/Garde-Rouge/garde-rouge-idle.png" id="17_7qfsh"]
+[ext_resource type="Script" uid="uid://3tptfvsxk7aa" path="res://Scripts/Interactions/garde_jaune.gd" id="18_5miwy"]
+[ext_resource type="Texture2D" uid="uid://dyeougl82rpci" path="res://Spritesheet/Monstres/Garde-Jaune/garde-jaune-idle.png" id="19_jchqa"]
+[ext_resource type="Script" uid="uid://gplmt2s3b2k6" path="res://Scripts/Interactions/garde_vert.gd" id="20_gw4l0"]
+[ext_resource type="Texture2D" uid="uid://d2g7igioe3hjl" path="res://Spritesheet/Monstres/Garde-Vert/garde-vert-idle.png" id="21_nyovn"]
+[ext_resource type="Script" uid="uid://cqvkvxb0a6j4f" path="res://Scripts/Interactions/garde_bleu.gd" id="22_gxddj"]
+[ext_resource type="Texture2D" uid="uid://by7efkaivrrl7" path="res://Spritesheet/Monstres/Garde-Bleu/garde-bleu-idle.png" id="23_lt27j"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y6r2r"]
 size = Vector2(16, 123.8125)
@@ -67,6 +75,134 @@ animations = [{
 "name": &"idle",
 "speed": 8.0
 }]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wjh22"]
+size = Vector2(22, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ftqpf"]
+atlas = ExtResource("17_7qfsh")
+region = Rect2(96, 0, 48, 43)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5s5wa"]
+atlas = ExtResource("17_7qfsh")
+region = Rect2(48, 0, 48, 43)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yto7a"]
+atlas = ExtResource("17_7qfsh")
+region = Rect2(0, 0, 48, 43)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fkys0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ftqpf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5s5wa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yto7a")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 3.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oynwm"]
+atlas = ExtResource("19_jchqa")
+region = Rect2(0, 0, 48, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_773rk"]
+atlas = ExtResource("19_jchqa")
+region = Rect2(48, 0, 48, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xr16a"]
+atlas = ExtResource("19_jchqa")
+region = Rect2(96, 0, 48, 44)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g5bu5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oynwm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_773rk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xr16a")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 3.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sg33v"]
+size = Vector2(20, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bgtnb"]
+atlas = ExtResource("21_nyovn")
+region = Rect2(0, 0, 48, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yovro"]
+atlas = ExtResource("21_nyovn")
+region = Rect2(48, 0, 48, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hh6fh"]
+atlas = ExtResource("21_nyovn")
+region = Rect2(96, 0, 48, 44)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wac57"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bgtnb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yovro")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hh6fh")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 3.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pq6tj"]
+size = Vector2(20, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cs0nj"]
+atlas = ExtResource("23_lt27j")
+region = Rect2(0, 0, 48, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pe8mr"]
+atlas = ExtResource("23_lt27j")
+region = Rect2(48, 0, 48, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xtl6w"]
+atlas = ExtResource("23_lt27j")
+region = Rect2(96, 0, 48, 44)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_h7jlv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cs0nj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pe8mr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xtl6w")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 3.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f33ym"]
+size = Vector2(22, 13)
 
 [node name="Room1" type="Node2D" unique_id=1397696051]
 
@@ -124,7 +260,6 @@ texture = ExtResource("1_y6r2r")
 [node name="ChunkSwitcher" type="Area2D" parent="." unique_id=1208768353]
 script = ExtResource("2_t5nnj")
 roomToLoad = "uid://drhfsi6nm5qod"
-playerSpawn = Vector2(-272, 53)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ChunkSwitcher" unique_id=1329458378]
 position = Vector2(0, 91.5)
@@ -182,5 +317,57 @@ color = Color(1, 0.81960785, 0.5372549, 1)
 energy = 2.07
 texture = ExtResource("15_eyu58")
 texture_scale = 0.06
+
+[node name="Garde Rouge" type="CharacterBody2D" parent="." unique_id=1978858656]
+position = Vector2(-116, 50)
+script = ExtResource("16_unx2d")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Garde Rouge" unique_id=1931393953]
+position = Vector2(-1, 13)
+shape = SubResource("RectangleShape2D_wjh22")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Garde Rouge" unique_id=1404692142]
+sprite_frames = SubResource("SpriteFrames_fkys0")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="Garde Jaune" type="CharacterBody2D" parent="." unique_id=1418781173]
+position = Vector2(-117, -37)
+script = ExtResource("18_5miwy")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Garde Jaune" unique_id=1931074558]
+sprite_frames = SubResource("SpriteFrames_g5bu5")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Garde Jaune" unique_id=1651633258]
+position = Vector2(-1, 14)
+shape = SubResource("RectangleShape2D_sg33v")
+
+[node name="Garde Vert" type="CharacterBody2D" parent="." unique_id=1879524596]
+position = Vector2(124, 50)
+script = ExtResource("20_gw4l0")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Garde Vert" unique_id=1815414904]
+sprite_frames = SubResource("SpriteFrames_wac57")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Garde Vert" unique_id=1645648935]
+position = Vector2(-1, 15)
+shape = SubResource("RectangleShape2D_pq6tj")
+
+[node name="Garde Bleu" type="CharacterBody2D" parent="." unique_id=1281752114]
+position = Vector2(127, -45)
+script = ExtResource("22_gxddj")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Garde Bleu" unique_id=1948756059]
+sprite_frames = SubResource("SpriteFrames_h7jlv")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Garde Bleu" unique_id=677819857]
+position = Vector2(-2, 13.5)
+shape = SubResource("RectangleShape2D_f33ym")
 
 [connection signal="body_entered" from="ChunkSwitcher" to="ChunkSwitcher" method="_on_body_entered"]
