@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dlt7c8myqomd4"
-path="res://.godot/imported/EnvironnementVillage.webp-8b6dc3f3ba3a99f4b289a28e211594bc.ctex"
+uid="uid://dylinn17jxyya"
+path="res://.godot/imported/Fontaine.png-85cb492b1013935f256522174f4045a7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scenes/Rooms/Map/EnvironnementVillage.webp"
-dest_files=["res://.godot/imported/EnvironnementVillage.webp-8b6dc3f3ba3a99f4b289a28e211594bc.ctex"]
+source_file="res://Spritesheet/Jardin/Fontaine.png"
+dest_files=["res://.godot/imported/Fontaine.png-85cb492b1013935f256522174f4045a7.ctex"]
 
 [params]
 

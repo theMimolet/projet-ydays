@@ -178,3 +178,11 @@ offset_top = -25.0
 offset_right = 25.0
 offset_bottom = 25.0
 color = Color(1, 0, 0, 0.5)
+
+[node name="ChunkSwitcher2" parent="." unique_id=1489420599 instance=ExtResource("2_ljmtj")]
+position = Vector2(124, 163)
+roomToLoad = "uid://bnaxhtmt0lk42"
+spawnPointName = "Test1"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ChunkSwitcher2" unique_id=1736414772]
+shape = SubResource("RectangleShape2D_q8n12")

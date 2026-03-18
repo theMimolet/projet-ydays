@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://chil6w1cgdhgf"]
+
+[ext_resource type="Texture2D" uid="uid://ck8fbqlfcavxu" path="res://Scenes/Rooms/Map/Village_Environnement.png" id="1_faihy"]
+[ext_resource type="PackedScene" uid="uid://dtwpnedsbtj8t" path="res://Scenes/RoomSwitcher.tscn" id="2_70go5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ceuy6"]
+size = Vector2(96, 34)
+
+[node name="Jardin" type="Node2D" unique_id=1423606161]
+position = Vector2(1, 0)
+
+[node name="VillageEnvironnement" type="Sprite2D" parent="." unique_id=963700773]
+position = Vector2(369, 16)
+texture = ExtResource("1_faihy")
+
+[node name="ChunkSwitcher" parent="VillageEnvironnement" unique_id=1197551655 instance=ExtResource("2_70go5")]
+position = Vector2(1, 382)
+roomToLoad = "uid://brwifbbdn3ob3"
+spawnPointName = "Test1"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VillageEnvironnement/ChunkSwitcher" unique_id=740387506]
+shape = SubResource("RectangleShape2D_ceuy6")
+
+[node name="ChunkSwitcher2" parent="VillageEnvironnement" unique_id=780742961 instance=ExtResource("2_70go5")]
+position = Vector2(1, -405)
+roomToLoad = "uid://brwifbbdn3ob3"
+spawnPointName = "Test1"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VillageEnvironnement/ChunkSwitcher2" unique_id=1071009825]
+shape = SubResource("RectangleShape2D_ceuy6")
+
+[node name="InitialSpawn" type="Node2D" parent="." unique_id=367851303]
+position = Vector2(371, 368)
