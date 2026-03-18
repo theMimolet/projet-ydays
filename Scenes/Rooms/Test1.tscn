@@ -96,7 +96,7 @@ tile_map_data = PackedByteArray("AAD8/wgAAQABAAAAAAAFAAgAAQABAAAAAAAOAPv/AQABAAA
 tile_set = SubResource("TileSet_7wwei")
 
 [node name="ChunkSwitcher" parent="." unique_id=1401503915 instance=ExtResource("2_ljmtj")]
-position = Vector2(-33, 226)
+position = Vector2(-33, 225)
 roomToLoad = "uid://brwifbbdn3ob3"
 spawnPointName = "Test1"
 
@@ -181,8 +181,8 @@ color = Color(1, 0, 0, 0.5)
 
 [node name="ChunkSwitcher2" parent="." unique_id=1489420599 instance=ExtResource("2_ljmtj")]
 position = Vector2(124, 163)
-roomToLoad = "uid://bnaxhtmt0lk42"
-spawnPointName = "Test1"
+roomToLoad = "uid://s1w0gr0l2n64"
+spawnPointName = "Jardin_Sud"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ChunkSwitcher2" unique_id=1736414772]
 shape = SubResource("RectangleShape2D_q8n12")
