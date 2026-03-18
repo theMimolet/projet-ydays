@@ -9,6 +9,15 @@ class_name Item
 @export var sprite_frames : SpriteFrames = null  # SpriteFrames pour les animations (optionnel)
 @export var animation_name : String = "default"  # Nom de l'animation à utiliser
 
+# Optional: world-drop visuals captured from CollectableItem on pickup.
+@export var world_scale: Vector2 = Vector2.ONE
+@export var drop_light_texture: Texture2D = null
+@export var drop_light_color: Color = Color.WHITE
+@export var drop_light_energy: float = 1.0
+@export var drop_light_texture_scale: float = 1.0
+@export var drop_light_position: Vector2 = Vector2.ZERO
+@export var drop_light_scale: Vector2 = Vector2.ONE
+
 func _init(name: String = "", description: String = "", texture: Texture2D = null, stack: int = 1, type: String = "misc") -> void:
 	item_name = name
 	item_description = description
