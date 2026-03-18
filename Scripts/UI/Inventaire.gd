@@ -70,7 +70,7 @@ func create_inventory_slots() -> void:
 func toggle_inventaire() -> void:
 	isOpen = !isOpen
 	inventairePanel.visible = isOpen
-  if controles_hint != null:
+	if controles_hint != null:
 		controles_hint.visible = isOpen
 
 func _setup_equipment_slot() -> void:
@@ -80,15 +80,15 @@ func _setup_equipment_slot() -> void:
 	equipment_panel.name = "EquipmentPanel"
 	equipment_panel.custom_minimum_size = Vector2(60, 100)
 	equipment_panel.mouse_filter = Control.MOUSE_FILTER_STOP
-	inventaire_panel.add_child(equipment_panel)
-	
+	inventairePanel.add_child(equipment_panel)
+
 	# Positionner à gauche du container d'inventaire
 	equipment_panel.set_anchors_preset(Control.PRESET_TOP_LEFT)
 	equipment_panel.offset_left = -70
 	equipment_panel.offset_top = 10
 	equipment_panel.offset_right = -10
 	equipment_panel.offset_bottom = 110
-	
+
 	# Label "Arme"
 	var label := Label.new()
 	label.name = "EquipLabel"
@@ -98,7 +98,7 @@ func _setup_equipment_slot() -> void:
 	label.offset_top = 5
 	label.offset_bottom = 25
 	equipment_panel.add_child(label)
-	
+
 	# Créer le slot d'équipement
 	equipment_slot = SLOT_SCENE.instantiate()
 	equipment_slot.name = "EquipmentSlot"
@@ -108,14 +108,14 @@ func _setup_equipment_slot() -> void:
 	equipment_slot.slot_clicked.connect(_on_equipment_slot_clicked)
 	equipment_slot.slot_dropped.connect(_on_equipment_slot_dropped)
 	equipment_panel.add_child(equipment_slot)
-	
+
 	# Positionner au centre du panneau
 	equipment_slot.set_anchors_preset(Control.PRESET_CENTER)
 	equipment_slot.offset_left = -20
 	equipment_slot.offset_top = 10
 	equipment_slot.offset_right = 20
 	equipment_slot.offset_bottom = 50
-	
+
 	# Style spécial pour distinguer (bordure colorée)
 	var style_box := StyleBoxFlat.new()
 	style_box.bg_color = Color(0.15, 0.15, 0.2)
@@ -123,7 +123,7 @@ func _setup_equipment_slot() -> void:
 	style_box.set_border_width_all(2)
 	style_box.set_corner_radius_all(4)
 	equipment_slot.add_theme_stylebox_override("panel", style_box)
-	
+
 	# Mettre à jour l'affichage avec l'arme équipée actuelle
 	call_deferred("_update_equipment_slot_display")
 
@@ -166,19 +166,19 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_inventaire"):
 		toggle_inventaire()
 		get_viewport().set_input_as_handled()
-	elif event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE and is_open:
+	elif event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE and isOpen:
 		toggle_inventaire()
 		get_viewport().set_input_as_handled()
 
 func _process(_delta: float) -> void:
-	if dragged_slot != null and drag_preview != null and drag_preview.visible:
+	if draggedSlot != null and drag_preview != null and drag_preview.visible:
 		var mouse: Vector2 = get_viewport().get_mouse_position()
 		var half: Vector2 = DRAG_PREVIEW_SIZE / 2
 		drag_preview.offset_left = int(mouse.x - half.x)
 		drag_preview.offset_top = int(mouse.y - half.y)
 		drag_preview.offset_right = int(mouse.x + half.x)
 		drag_preview.offset_bottom = int(mouse.y + half.y)
-	
+
 	if isOpen:
 		open_inventaire()
 	else:
@@ -209,7 +209,7 @@ func add_item(item : Item, quantity: int = 1) -> bool:
 				quantity -= to_add
 				if quantity <= 0:
 					return true
-	
+
 	# Chercher un slot vide
 	for slot : Node in slots:
 		if slot.is_empty():
@@ -218,7 +218,7 @@ func add_item(item : Item, quantity: int = 1) -> bool:
 			quantity -= to_add
 			if quantity <= 0:
 				return true
-	
+
 	# Si on arrive ici, l'inventaire est plein
 	print("Inventaire plein !")
 	return false
@@ -453,9 +453,9 @@ func create_collectable_item(item: Item, position: Vector2, quantity: int = 1) -
 
 func _on_equipment_slot_clicked(slot) -> void:
 	"""Gère le clic sur le slot d'équipement"""
-	if dragged_slot == null and not slot.is_empty():
+	if draggedSlot == null and not slot.is_empty():
 		# Commencer le drag depuis le slot d'équipement
-		dragged_slot = slot
+		draggedSlot = slot
 		slot.set_dragging(true)
 		if drag_preview != null and slot.item != null and slot.item.item_texture != null:
 			drag_preview.texture = slot.item.item_texture
