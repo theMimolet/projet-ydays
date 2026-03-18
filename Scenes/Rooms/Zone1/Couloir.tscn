@@ -44,109 +44,109 @@ position = Vector2(280, -21.25)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_42vvc")
 
-[node name="StaticBody2D10" type="StaticBody2D" parent="Colliders" unique_id=1307357481]
+[node name="StaticBody2D10" type="StaticBody2D" parent="Colliders" unique_id=1616098884]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D10" unique_id=28358594]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D10" unique_id=1017930377]
 position = Vector2(280, 64.5)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_42vvc")
 
-[node name="StaticBody2D9" type="StaticBody2D" parent="Colliders" unique_id=1697193063]
+[node name="StaticBody2D9" type="StaticBody2D" parent="Colliders" unique_id=595180985]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D9" unique_id=1493794829]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D9" unique_id=304147384]
 position = Vector2(-38, -56.499996)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_usp6u")
 
-[node name="StaticBody2D8" type="StaticBody2D" parent="Colliders" unique_id=2043977202]
+[node name="StaticBody2D8" type="StaticBody2D" parent="Colliders" unique_id=763564798]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D8" unique_id=23738174]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D8" unique_id=2117245088]
 position = Vector2(-136, 31.000004)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_dqgav")
 
-[node name="StaticBody2D7" type="StaticBody2D" parent="Colliders" unique_id=1157428948]
+[node name="StaticBody2D7" type="StaticBody2D" parent="Colliders" unique_id=538784630]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D7" unique_id=1552705048]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D7" unique_id=1757664843]
 position = Vector2(77, 30)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_tldjq")
 
-[node name="StaticBody2D6" type="StaticBody2D" parent="Colliders" unique_id=1717323646]
+[node name="StaticBody2D6" type="StaticBody2D" parent="Colliders" unique_id=1643189573]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D6" unique_id=2116335435]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D6" unique_id=1730284289]
 position = Vector2(111, 56)
 shape = SubResource("RectangleShape2D_tldjq")
 
-[node name="StaticBody2D5" type="StaticBody2D" parent="Colliders" unique_id=862940714]
+[node name="StaticBody2D5" type="StaticBody2D" parent="Colliders" unique_id=139654404]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D5" unique_id=1560040154]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D5" unique_id=883163951]
 position = Vector2(44, 56)
 shape = SubResource("RectangleShape2D_tldjq")
 
-[node name="StaticBody2D4" type="StaticBody2D" parent="Colliders" unique_id=391050489]
+[node name="StaticBody2D4" type="StaticBody2D" parent="Colliders" unique_id=945377377]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D4" unique_id=409901947]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D4" unique_id=925188200]
 position = Vector2(-44, 56)
 shape = SubResource("RectangleShape2D_tldjq")
 
-[node name="StaticBody2D3" type="StaticBody2D" parent="Colliders" unique_id=1116245750]
+[node name="StaticBody2D3" type="StaticBody2D" parent="Colliders" unique_id=1231491201]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D3" unique_id=1053474406]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D3" unique_id=2099757066]
 position = Vector2(-228, 56)
 shape = SubResource("RectangleShape2D_tldjq")
 
-[node name="StaticBody2D14" type="StaticBody2D" parent="Colliders" unique_id=1816949982]
+[node name="StaticBody2D14" type="StaticBody2D" parent="Colliders" unique_id=1305171546]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D14" unique_id=1828412149]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D14" unique_id=1753100906]
 position = Vector2(-232, -69)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_arfx5")
 
-[node name="StaticBody2D13" type="StaticBody2D" parent="Colliders" unique_id=709734299]
+[node name="StaticBody2D13" type="StaticBody2D" parent="Colliders" unique_id=2007304687]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D13" unique_id=484612943]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D13" unique_id=1411789106]
 position = Vector2(-312, -68.5)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_arfx5")
 
-[node name="StaticBody2D19" type="StaticBody2D" parent="Colliders" unique_id=1016586975]
+[node name="StaticBody2D19" type="StaticBody2D" parent="Colliders" unique_id=374459271]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D19" unique_id=1594931316]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D19" unique_id=1223910559]
 position = Vector2(401, 21)
 shape = SubResource("RectangleShape2D_b0rmy")
 
-[node name="StaticBody2D18" type="StaticBody2D" parent="Colliders" unique_id=675387618]
+[node name="StaticBody2D18" type="StaticBody2D" parent="Colliders" unique_id=10484626]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D18" unique_id=1078165627]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D18" unique_id=1131785521]
 position = Vector2(130, 91)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_b0rmy")
 
-[node name="StaticBody2D17" type="StaticBody2D" parent="Colliders" unique_id=1338805260]
+[node name="StaticBody2D17" type="StaticBody2D" parent="Colliders" unique_id=578821253]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D17" unique_id=912239687]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D17" unique_id=1411042168]
 position = Vector2(-2, 91)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_b0rmy")
 
-[node name="StaticBody2D16" type="StaticBody2D" parent="Colliders" unique_id=982090886]
+[node name="StaticBody2D16" type="StaticBody2D" parent="Colliders" unique_id=605804092]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D16" unique_id=390836963]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D16" unique_id=845354164]
 position = Vector2(-270, -92)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_b0rmy")
 
-[node name="StaticBody2D15" type="StaticBody2D" parent="Colliders" unique_id=1020079564]
+[node name="StaticBody2D15" type="StaticBody2D" parent="Colliders" unique_id=1076447190]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D15" unique_id=1373294694]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D15" unique_id=680415770]
 position = Vector2(-265, 91.5)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_b0rmy")
 
-[node name="StaticBody2D12" type="StaticBody2D" parent="Colliders" unique_id=1959420677]
+[node name="StaticBody2D12" type="StaticBody2D" parent="Colliders" unique_id=176756220]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D12" unique_id=1228835127]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D12" unique_id=773573673]
 position = Vector2(-350, -55)
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_tldjq")

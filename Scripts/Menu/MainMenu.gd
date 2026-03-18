@@ -4,7 +4,7 @@ enum menuState {MAIN, OPTIONS}
 
 func _ready() -> void:
 	GameSettings.window_mode_changed.connect(OnFullscreenChanged)
-	OnFullscreenChanged(GameSettings.isFullscreen())
+	OnFullscreenChanged(GameSettings.IsFullscreen())
 	$VersionContainer/Version.text = ProjectSettings.get_setting("application/config/version")
 
 func setup_switcher() -> void:

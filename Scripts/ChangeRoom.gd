@@ -4,46 +4,76 @@ signal unloadFinished
 signal unloading
 signal loaded
 
+var isLoading : bool = false
+
 @onready var rooms : Node = $"../Room" 
 @onready var joueur : Node = $"../Joueur"
 @onready var chat : Node2D = $"../Chat" 
 
 func _ready() -> void:
-	roomLoad("res://Scenes/Rooms/Test1.tscn", "InitialSpawn")
+	#RoomLoadToSpawnPoint("res://Scenes/Rooms/Room1.tscn", "InitialSpawn")
+	SaveSystem.LoadFromFile()
 
-func roomChange(newRoom: String, spawnPoint: String) -> void:
-	print("New Room : "+newRoom+" / Spawnpoint : " + spawnPoint)
-	roomUnload()
+func AreRoomsLoaded() -> bool:
+	print(rooms.get_child_count() > 0)
+	return rooms.get_child_count() > 0
+
+func RoomChangeSpawnPoint(newRoom: String, spawnPoint: String) -> void:
+	if isLoading : return
+	print("Salle : "+newRoom+"\nPoint d'apparition : " + spawnPoint)
+	RoomUnload()
 	await unloadFinished
-	roomLoad(newRoom, spawnPoint)
+	RoomLoadToSpawnPoint(newRoom, spawnPoint)
 
-func roomUnload() -> void:
+func RoomChangeCoords(newRoom: String, targetX: float, targetY: float) -> void:
+	if isLoading : return
+	print("Salle : "+ newRoom +"\nX:" + str(targetX) + "\nY:" + str(targetY))
+	RoomUnload()
+	await unloadFinished
+	RoomLoadToCoords(newRoom, targetX, targetY)
+
+func RoomUnload() -> void:
+	isLoading = true
 	emit_signal("unloading")
 	joueur.paralysePlayer(true)
 	$Animateur.play("fade-out")
-	if chat != null and chat.has_method("set") and chat.get("canMove") != null:
+	if chat != null:
 		chat.canMove = false
 
-func roomLoad(room: String, spawnPoint: String) -> void: 
+func RoomToLoad(room: String) -> bool: 
 	$Animateur.play("RESET") # Écran noir
+	isLoading = true
 	
 	# Charger la scène et vérifier qu'elle existe
 	
 	var roomScene: PackedScene = load(room)
 	if roomScene == null:
 		push_error("Impossible de charger la scène: %s" % room)
-		return
+		isLoading = false
+		return false
 	
 	# Instancier la scène et vérifier qu'elle est valide
 	var roomInstance: Node = roomScene.instantiate()
 	if roomInstance == null:
 		push_error("Impossible d'instancier la scène: %s" % room)
-		return
+		isLoading = false
+		return false
 	
 	rooms.add_child(roomInstance) # Ajoute la nouvelle room en tant qu'enfant de "Rooms"
 	Global.currentRoom = room
 	
 	await get_tree().process_frame
+	
+	return true
+
+func FinishRoomLoad() -> void:
+	await get_tree().process_frame
+	if chat != null:
+		chat.teleport_to_player()
+	$Animateur.play("fade-in")
+
+func RoomLoadToSpawnPoint(room: String, spawnPoint: String) -> void :
+	if not await RoomToLoad(room): return
 	
 	# Système qui détermine si le spawnpoint visé existe ou non - sinon le joueur spawne à 0,0
 	
@@ -55,12 +85,12 @@ func roomLoad(room: String, spawnPoint: String) -> void:
 		push_warning("Spawn point '%s' non trouvé, utilisation d'un spawn par défaut" % spawnPoint)
 		joueur.position = Vector2(0,0)
 	
-	await get_tree().process_frame
-	
-	if chat != null:
-		chat.teleport_to_player()
-	
-	$Animateur.play("fade-in")
+	FinishRoomLoad()
+
+func RoomLoadToCoords(room: String, targetX: float, targetY: float) -> void :
+	if not await RoomToLoad(room): return
+	joueur.position = Vector2(targetX, targetY)
+	FinishRoomLoad()
 
 func _on_animateur_animation_finished(anim_name: StringName) -> void:
 	match anim_name :
@@ -73,5 +103,6 @@ func _on_animateur_animation_finished(anim_name: StringName) -> void:
 		"fade-in" :
 			joueur.paralysePlayer(false)
 			emit_signal("loaded")
-			if chat != null and chat.has_method("set") and chat.get("canMove") != null:
+			if chat != null :
 				chat.canMove = true
+			isLoading = false
