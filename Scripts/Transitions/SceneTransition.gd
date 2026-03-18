@@ -2,7 +2,7 @@ extends CanvasLayer
 
 ## Autoload pour les transitions de scène avec fondu noir
 
-@onready var color_rect: ColorRect = $ColorRect
+var color_rect: ColorRect
 
 var is_transitioning: bool = false
 
@@ -10,7 +10,8 @@ var is_transitioning: bool = false
 func _ready() -> void:
 	layer = 200
 	
-	if not has_node("ColorRect"):
+	color_rect = get_node_or_null("ColorRect") as ColorRect
+	if color_rect == null:
 		var rect := ColorRect.new()
 		rect.name = "ColorRect"
 		rect.color = Color.BLACK

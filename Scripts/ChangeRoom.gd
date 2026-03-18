@@ -11,8 +11,10 @@ var isLoading : bool = false
 @onready var chat : Node2D = $"../Chat" 
 
 func _ready() -> void:
-	#RoomLoadToSpawnPoint("res://Scenes/Rooms/Room1.tscn", "InitialSpawn")
-	SaveSystem.LoadFromFile()
+	if FileAccess.file_exists("user://savegame.save"):
+		SaveSystem.LoadFromFile()
+	else:
+		RoomLoadToCoords("res://Scenes/Rooms/Zone1/Room1.tscn", 0.0, 0.0)
 
 func AreRoomsLoaded() -> bool:
 	print(rooms.get_child_count() > 0)

@@ -1,6 +1,9 @@
-[gd_resource type="Item" script_path="res://Scripts/Items/Item.gd" load_steps=2]
+[gd_resource type="Resource" script_class="Item" format=3]
+
+[ext_resource type="Script" path="res://Scripts/Items/Item.gd" id="1_item"]
 
 [resource]
+script = ExtResource("1_item")
 item_name = "key_zone1"
 item_description = "Clé de la porte de Zone1"
 item_texture = null

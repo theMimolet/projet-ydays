@@ -240,7 +240,7 @@ func remove_item(item_name: String, quantity: int = 1) -> bool:
 func has_item(item_name: String, quantity: int = 1) -> bool:
 	"""Vérifie si l'inventaire contient l'item en quantité suffisante"""
 	var total : int = 0
-	for slot : Item in slots:
+	for slot : Node in slots:
 		if not slot.is_empty() and slot.item.item_name == item_name:
 			total += slot.quantity
 	return total >= quantity
