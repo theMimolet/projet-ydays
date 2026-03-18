@@ -3,14 +3,20 @@
 [ext_resource type="Texture2D" uid="uid://cae55ot0rabrp" path="res://Scenes/Rooms/Map/Environnement_1_YDAYS.webp" id="1_y6r2r"]
 [ext_resource type="Script" uid="uid://cs3wfgxf0axj4" path="res://Scripts/RoomSwitcher.gd" id="2_t5nnj"]
 [ext_resource type="Script" uid="uid://dbk8n27v523gi" path="res://Scripts/Items/CollectableItem.gd" id="3_collect"]
+[ext_resource type="Texture2D" uid="uid://duo6tm0cfkvka" path="res://Spritesheet/Porte/Vue arriere/sprite_0.webp" id="4_14w5e"]
 [ext_resource type="Item" uid="uid://b4fh2pk4rdlwf" path="res://Items/KeyZone1.tres" id="4_key"]
 [ext_resource type="Texture2D" uid="uid://dna8ovg5p2qdy" path="res://Spritesheet/Cle/sprite_0 (1).webp" id="5_6qopq"]
+[ext_resource type="Texture2D" uid="uid://jtdedkd8sg6a" path="res://Spritesheet/Porte/Vue arriere/sprite_1.webp" id="5_c8s71"]
 [ext_resource type="Script" uid="uid://tcqfo61gtyfq" path="res://Scripts/Interactions/Door.gd" id="5_door"]
 [ext_resource type="Script" uid="uid://cleremmooj2fa" path="res://Scripts/Interactions/Armoire.gd" id="6_armoire"]
 [ext_resource type="Texture2D" uid="uid://d0vr78hb2v84u" path="res://Spritesheet/Cle/sprite_1 (1).webp" id="6_eyu58"]
+[ext_resource type="Texture2D" uid="uid://bto5if5teo0nk" path="res://Spritesheet/Porte/Vue arriere/sprite_2.webp" id="6_unx2d"]
+[ext_resource type="Texture2D" uid="uid://blrrygg67lng8" path="res://Spritesheet/Porte/Vue arriere/sprite_3.webp" id="7_7qfsh"]
 [ext_resource type="Texture2D" uid="uid://cgy7a7qirg7r6" path="res://Spritesheet/Cle/sprite_2.webp" id="7_e8bpl"]
+[ext_resource type="Texture2D" uid="uid://cjsbqaatjamo7" path="res://Spritesheet/Porte/Vue arriere/sprite_4.webp" id="8_5miwy"]
 [ext_resource type="Texture2D" uid="uid://i2dkdycp0d0y" path="res://Spritesheet/Cle/sprite_3.webp" id="8_qb5kr"]
 [ext_resource type="Texture2D" uid="uid://ba84bun4ou8ap" path="res://Spritesheet/Cle/sprite_4.webp" id="9_cf2co"]
+[ext_resource type="Texture2D" uid="uid://dr06jyc2da5wn" path="res://Spritesheet/Porte/Vue arriere/sprite_5.webp" id="9_jchqa"]
 [ext_resource type="Texture2D" uid="uid://dv4d6eprqyuy" path="res://Spritesheet/Cle/sprite_5.webp" id="10_7nq4w"]
 [ext_resource type="Texture2D" uid="uid://tvyekxq4gj7t" path="res://Spritesheet/Cle/sprite_6.webp" id="11_qtm2r"]
 [ext_resource type="Texture2D" uid="uid://cgmxoqeo66afq" path="res://Spritesheet/Cle/sprite_7.webp" id="12_14w5e"]
@@ -29,7 +35,39 @@ size = Vector2(8, 72)
 size = Vector2(72, 9)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_door"]
-size = Vector2(10.000008, 71.99998)
+size = Vector2(4.999996, 71.99998)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gw4l0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_14w5e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_c8s71")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_unx2d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_7qfsh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_5miwy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_jchqa")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_14w5e"]
+size = Vector2(27.730972, 5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c8s71"]
+size = Vector2(29.489483, 3.1809616)
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_x1re5"]
 
@@ -124,6 +162,7 @@ texture = ExtResource("1_y6r2r")
 [node name="ChunkSwitcher" type="Area2D" parent="." unique_id=1208768353]
 script = ExtResource("2_t5nnj")
 roomToLoad = "uid://drhfsi6nm5qod"
+spawnPointName = "Room1"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ChunkSwitcher" unique_id=1329458378]
 position = Vector2(0, 91.5)
@@ -133,21 +172,49 @@ debug_color = Color(0.92414904, 4.870832e-05, 0.68302995, 0.41960785)
 [node name="Couloir" type="Node2D" parent="." unique_id=1551550128]
 position = Vector2(-1, 70)
 
-[node name="DoorTest" type="Node2D" parent="." unique_id=719315229]
+[node name="Door" type="Node2D" parent="." unique_id=719315229]
 position = Vector2(0, 82)
 rotation = 1.5715761
 script = ExtResource("5_door")
 room_to_load = "uid://drhfsi6nm5qod"
 
-[node name="DoorSprite" type="Sprite2D" parent="DoorTest" unique_id=2729131]
-rotation = 1.5707964
-scale = Vector2(2.2, 1)
+[node name="StaticBody2D_Door" type="StaticBody2D" parent="Door" unique_id=1666744900]
 
-[node name="StaticBody2D_Door" type="StaticBody2D" parent="DoorTest" unique_id=1666744900]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DoorTest/StaticBody2D_Door" unique_id=516500099]
-position = Vector2(-7.6293945e-06, 0)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door/StaticBody2D_Door" unique_id=516500099]
+position = Vector2(2.5, -7.450581e-09)
 shape = SubResource("RectangleShape2D_door")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Door" unique_id=131706533]
+position = Vector2(11.999995, -0.0093575)
+rotation = -1.5707964
+scale = Vector2(1, 0.8552251)
+sprite_frames = SubResource("SpriteFrames_gw4l0")
+animation = &"idle"
+
+[node name="Opened1" type="StaticBody2D" parent="Door" unique_id=1586985710]
+z_index = 1
+position = Vector2(-6.9781494, 28.005457)
+rotation = -1.8571486
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door/Opened1" unique_id=742829848]
+z_index = 1
+position = Vector2(0.7921846, 4.401402)
+rotation = -0.24206182
+shape = SubResource("RectangleShape2D_14w5e")
+disabled = true
+
+[node name="Opened2" type="StaticBody2D" parent="Door" unique_id=129489618]
+z_index = 1
+position = Vector2(-89.01946, -24.930592)
+rotation = -1.2898892
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door/Opened2" unique_id=2077231336]
+z_index = 1
+position = Vector2(25.82715, 82.05461)
+rotation = 0.24397287
+scale = Vector2(0.9999999, 0.9999999)
+shape = SubResource("RectangleShape2D_c8s71")
+disabled = true
 
 [node name="Armoire" type="Sprite2D" parent="." unique_id=1600000000]
 position = Vector2(58, -48)
