@@ -16,7 +16,6 @@
 [ext_resource type="PackedScene" uid="uid://7pav2b7oq5wj" path="res://Scenes/UI/HPBar.tscn" id="14_wgmmy"]
 [ext_resource type="Script" uid="uid://bso8o41186mj5" path="res://Scripts/UI/Inventaire.gd" id="15_algd0"]
 [ext_resource type="PackedScene" uid="uid://bnkogahkkn1a" path="res://Scenes/UI/DevConsole.tscn" id="16_s8008"]
-[ext_resource type="Theme" uid="uid://bugehytmyoyev" path="res://Style/MainUI.tres" id="16_wgmmy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ksi5g"]
 size = Vector2(11, 4)
@@ -138,9 +137,9 @@ shape = SubResource("RectangleShape2D_ksi5g")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1464844206]
 sprite_frames = SubResource("SpriteFrames_3derw")
-animation = &"marche-haut"
+animation = &"marche-bas"
 
-[node name="ArmeSprite" type="Sprite2D" parent="."]
+[node name="ArmeSprite" type="Sprite2D" parent="." unique_id=1309665084]
 visible = false
 position = Vector2(8, 4)
 rotation = 0.785398
