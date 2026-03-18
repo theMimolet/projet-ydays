@@ -87,9 +87,13 @@ mouse_filter = 2
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.1
-anchor_top = 0.3
+anchor_top = 0.4
 anchor_right = 0.35
-anchor_bottom = 0.75
+anchor_bottom = 0.85
+offset_left = -11.134998
+offset_top = 38.0
+offset_right = -11.1349945
+offset_bottom = 38.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -144,9 +148,13 @@ sprite_frames = SubResource("SpriteFrames_hpbar")
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.65
-anchor_top = 0.3
+anchor_top = 0.4
 anchor_right = 0.9
-anchor_bottom = 0.75
+anchor_bottom = 0.85
+offset_left = 5.0
+offset_top = 37.0
+offset_right = 5.0
+offset_bottom = 37.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -213,10 +221,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -130.0
-offset_top = -60.0
-offset_right = -9.999695
-offset_bottom = -20.0
+offset_left = -40.0
+offset_top = -100.29501
+offset_right = 80.000305
+offset_bottom = -60.295013
 grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(0.64, 0.64)
@@ -229,9 +237,9 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 56.640015
+offset_left = -40.0
 offset_top = -60.0
-offset_right = 176.64032
+offset_right = 80.000305
 offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 0
@@ -246,9 +254,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -100.0
-offset_top = -85.0
-offset_right = 100.0
-offset_bottom = -65.0
+offset_top = -134.27
+offset_right = 100.000275
+offset_bottom = -114.270004
 grow_horizontal = 2
 grow_vertical = 0
 text = "Aucune arme"
@@ -276,15 +284,14 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -150.0
-offset_top = -60.0
+offset_top = -153.275
 offset_right = 150.0
-offset_bottom = 60.0
+offset_bottom = -33.27484
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_qte")
 
 [node name="PanelQTE" type="Panel" parent="QTESystem" unique_id=2071313185]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -332,50 +339,76 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -30.0
-offset_top = -50.0
+offset_top = 125.274994
 offset_right = 30.0
-offset_bottom = -30.0
+offset_bottom = 145.275
 grow_horizontal = 2
 horizontal_alignment = 1
 
 [node name="ModalVictoire" type="Panel" parent="." unique_id=561699106]
-self_modulate = Color(0, 0, 0, 1)
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -120.0
-offset_top = -60.0
-offset_right = 120.0
-offset_bottom = 60.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="VBox" type="VBoxContainer" parent="ModalVictoire" unique_id=299161841]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = 10.0
-offset_right = -10.0
-offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+
+[node name="Dimmer" type="ColorRect" parent="ModalVictoire" unique_id=649565782]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.65)
+
+[node name="Center" type="CenterContainer" parent="ModalVictoire" unique_id=90141947]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Card" type="PanelContainer" parent="ModalVictoire/Center" unique_id=1262407981]
+custom_minimum_size = Vector2(360, 190)
+layout_mode = 2
+
+[node name="Margin" type="MarginContainer" parent="ModalVictoire/Center/Card" unique_id=135877441]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 18
+
+[node name="VBox" type="VBoxContainer" parent="ModalVictoire/Center/Card/Margin" unique_id=299161841]
+layout_mode = 2
 alignment = 1
 
-[node name="LabelVictoire" type="Label" parent="ModalVictoire/VBox" unique_id=306719386]
+[node name="LabelVictoire" type="Label" parent="ModalVictoire/Center/Card/Margin/VBox" unique_id=306719386]
 layout_mode = 2
-text = "Vous avez gagné !"
+text = "Victoire"
 horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="Spacer" type="Control" parent="ModalVictoire/VBox" unique_id=684193828]
-custom_minimum_size = Vector2(0, 10)
+[node name="LabelSubtitle" type="Label" parent="ModalVictoire/Center/Card/Margin/VBox" unique_id=1791505916]
+layout_mode = 2
+text = "Vous avez vaincu l'ennemi."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Spacer" type="Control" parent="ModalVictoire/Center/Card/Margin/VBox" unique_id=684193828]
+custom_minimum_size = Vector2(0, 12)
 layout_mode = 2
 
-[node name="BtnSuivre" type="Button" parent="ModalVictoire/VBox" unique_id=450827582]
+[node name="Actions" type="HBoxContainer" parent="ModalVictoire/Center/Card/Margin/VBox" unique_id=1508132141]
+layout_mode = 2
+alignment = 1
+
+[node name="BtnSuivre" type="Button" parent="ModalVictoire/Center/Card/Margin/VBox/Actions" unique_id=450827582]
 layout_mode = 2
 text = "Continuer l'aventure"
 

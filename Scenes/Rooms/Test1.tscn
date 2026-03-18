@@ -1,9 +1,9 @@
-[gd_scene format=4 uid="uid://lsuq4yhka3a3"]
+[gd_scene format=4 uid="uid://cepwe66vv24ij"]
 
 [ext_resource type="Texture2D" uid="uid://ckchfryvhfo0n" path="res://Tilesets/proto_tiles.png" id="1_ixoji"]
 [ext_resource type="PackedScene" uid="uid://dtwpnedsbtj8t" path="res://Scenes/RoomSwitcher.tscn" id="2_ljmtj"]
 [ext_resource type="PackedScene" uid="uid://cqmqkjfkawmgy" path="res://Scenes/Entities/Overworld/OWTest.tscn" id="4_430hh"]
-[ext_resource type="Script" path="res://Scripts/Interactions/Coffre.gd" id="4_o5rc3"]
+[ext_resource type="Script" uid="uid://bt8sfngqeu8gg" path="res://Scripts/Interactions/Coffre.gd" id="4_o5rc3"]
 [ext_resource type="Texture2D" uid="uid://0xkmm505a4o1" path="res://Spritesheet/Torche/sprite_torche.png" id="5_430hh"]
 [ext_resource type="Script" uid="uid://dbk8n27v523gi" path="res://Scripts/Items/CollectableItem.gd" id="5_ftqpf"]
 [ext_resource type="Script" path="res://Scripts/DamageArea.gd" id="6_damage"]
@@ -119,7 +119,7 @@ script = ExtResource("4_o5rc3")
 shape = SubResource("RectangleShape2D_ljmtj")
 
 [node name="Test" parent="." unique_id=1041784991 instance=ExtResource("4_430hh")]
-position = Vector2(177, -72)
+position = Vector2(178, -73)
 
 [node name="Torche" type="Sprite2D" parent="." unique_id=187896]
 position = Vector2(391, -116)

@@ -25,7 +25,7 @@ signal ennemi_hp_changed(current_hp: int, max_hp: int)
 @onready var ennemi_sprite: TextureRect = $AreneContainer/ZoneEnnemi/EnnemiSprite
 @onready var label_ennemi: Label = $AreneContainer/ZoneEnnemi/LabelEnnemi
 @onready var modal_victoire: Panel = $ModalVictoire
-@onready var btn_suivre: Button = $ModalVictoire/VBox/BtnSuivre
+@onready var btn_suivre: Button = $ModalVictoire/Center/Card/Margin/VBox/Actions/BtnSuivre
 @onready var weapon_select_menu: Panel = $WeaponSelectMenu
 @onready var arme_sprite_combat: TextureRect = $AreneContainer/ZoneJoueur/JoueurSprite/ArmeSpriteCombat
 
