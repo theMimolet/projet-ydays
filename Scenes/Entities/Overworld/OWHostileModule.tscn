@@ -12,6 +12,8 @@ size = Vector2(250, 250)
 [node name="HostileModule" type="Node2D" unique_id=1928765582]
 script = ExtResource("1_rc1qw")
 monster_hp = 10
+monster_damage_min = 5
+monster_damage_max = 10
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=557804846]
 path_desired_distance = 10.0

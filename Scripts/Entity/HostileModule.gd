@@ -1,15 +1,20 @@
 extends Node2D
 
-@onready var nav : NavigationAgent2D = $NavigationAgent2D
+@onready var nav: NavigationAgent2D = get_node_or_null("NavigationAgent2D")
 @onready var joueur : CharacterBody2D = get_tree().get_first_node_in_group("Joueur")
 @onready var roomManager : Node = get_tree().get_first_node_in_group("RoomManager")
+@onready var tAlerte: Timer = get_node_or_null("TAlerte")
+@onready var tPoursuite: Timer = get_node_or_null("TPoursuite")
+@onready var triggeredAudio: Node = get_node_or_null("Triggered")
 
 ## Stats de combat (modifiables dans l'inspecteur)
 @export_category("Combat")
 @export var monster_id: String = ""
-@export var monster_hp: int = 50
-@export var monster_attack: int = 10
 @export var monster_name: String = "Monstre"
+@export var monster_hp: int = 50
+@export_subgroup("Dégâts par tour")
+@export var monster_damage_min: int = 5
+@export var monster_damage_max: int = 10
 
 ## Stats de mouvement
 @export_category("Mouvement")
@@ -43,12 +48,15 @@ func _ready() -> void:
 		roomManager.loaded.connect(Callable(_on_room_loaded))
 		roomManager.unloading.connect(Callable(_on_room_unloading))
 	
-	nav.velocity_computed.connect(Callable(_on_velocity_computed))
+	if nav != null:
+		nav.velocity_computed.connect(Callable(_on_velocity_computed))
 
 
 func _physics_process(_delta: float) -> void:
 	match etatActuel: 
 		etat.POURSUITE:
+			if nav == null:
+				return
 			if joueur: 
 				nav.target_position = joueur.position
 				nav.get_next_path_position()
@@ -66,18 +74,21 @@ func _physics_process(_delta: float) -> void:
 				else:
 					_on_velocity_computed(new_velocity)
 		etat.ALERTE: 
-			if $TPoursuite.is_stopped(): 
-				$Triggered.play()
-				$TPoursuite.start()
+			if tPoursuite != null and tPoursuite.is_stopped():
+				if triggeredAudio != null and triggeredAudio.has_method("play"):
+					triggeredAudio.play()
+				tPoursuite.start()
 		etat.IDLE: 
-			if $TAlerte.is_stopped(): 
+			if tAlerte != null and tAlerte.is_stopped():
 				if joueurProche:
 					majNiveauAlerte(true)
-				else: 
+				else:
 					majNiveauAlerte(false)
-				$TAlerte.start()
+				tAlerte.start()
 		etat.COMA: 
-			get_parent().velocity = Vector2(0, 0)
+			var host := get_parent() as CharacterBody2D
+			if host != null:
+				host.velocity = Vector2.ZERO
 
 
 func majNiveauAlerte(ajout: bool) -> void: 
@@ -102,14 +113,18 @@ func _on_room_unloading() -> void:
 
 
 func _on_velocity_computed(safe_velocity: Vector2) -> void:
-	get_parent().velocity = safe_velocity
-	get_parent().move_and_slide()
+	var host := get_parent() as CharacterBody2D
+	if host == null:
+		return
+	host.velocity = safe_velocity
+	host.move_and_slide()
 
 
 func _on_detection_body_entered(body: Node2D) -> void:
 	if body == joueur: 
 		joueurProche = true
-		$TAlerte.start()
+		if tAlerte != null:
+			tAlerte.start()
 
 
 func _on_detection_body_exited(body: Node2D) -> void:
@@ -119,12 +134,13 @@ func _on_detection_body_exited(body: Node2D) -> void:
 
 func _on_touche_body_entered(body: Node2D) -> void:
 	if body == joueur:
-		# Préparer les données de combat
 		var combat_data: Dictionary = {
 			"monster_id": monster_id,
 			"monster_hp": monster_hp,
 			"monster_max_hp": monster_hp,
-			"monster_attack": monster_attack,
+			"monster_attack": monster_damage_min,
+			"monster_attack_min": monster_damage_min,
+			"monster_attack_max": monster_damage_max,
 			"monster_name": monster_name,
 		}
 		
@@ -142,8 +158,10 @@ func _on_touche_body_entered(body: Node2D) -> void:
 
 func _on_t_poursuite_timeout() -> void:
 	etatActuel = etat.POURSUITE
-	$TPoursuite.stop()
+	if tPoursuite != null:
+		tPoursuite.stop()
 
 
 func _on_t_alerte_timeout() -> void:
-	$TAlerte.stop()
+	if tAlerte != null:
+		tAlerte.stop()

@@ -3,10 +3,11 @@
 [ext_resource type="Texture2D" uid="uid://ckchfryvhfo0n" path="res://Tilesets/proto_tiles.png" id="1_ixoji"]
 [ext_resource type="PackedScene" uid="uid://dtwpnedsbtj8t" path="res://Scenes/RoomSwitcher.tscn" id="2_ljmtj"]
 [ext_resource type="PackedScene" uid="uid://cqmqkjfkawmgy" path="res://Scenes/Entities/Overworld/OWTest.tscn" id="4_430hh"]
-[ext_resource type="Script" path="res://Scripts/Interactions/Coffre.gd" id="4_o5rc3"]
+[ext_resource type="Script" uid="uid://bt8sfngqeu8gg" path="res://Scripts/Interactions/Coffre.gd" id="4_o5rc3"]
 [ext_resource type="Texture2D" uid="uid://0xkmm505a4o1" path="res://Spritesheet/Torche/sprite_torche.png" id="5_430hh"]
 [ext_resource type="Script" uid="uid://dbk8n27v523gi" path="res://Scripts/Items/CollectableItem.gd" id="5_ftqpf"]
-[ext_resource type="Script" path="res://Scripts/DamageArea.gd" id="6_damage"]
+[ext_resource type="Script" uid="uid://dnll4e7su4a43" path="res://Scripts/DamageArea.gd" id="6_damage"]
+[ext_resource type="Script" uid="uid://weqsau6b8m2t" path="res://Scripts/Entity/HostileModule.gd" id="8_yto7a"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_o5rc3"]
 
@@ -178,3 +179,9 @@ offset_top = -25.0
 offset_right = 25.0
 offset_bottom = 25.0
 color = Color(1, 0, 0, 0.5)
+
+[node name="Test3" parent="." unique_id=683536570 instance=ExtResource("4_430hh")]
+position = Vector2(57, 107)
+script = ExtResource("8_yto7a")
+monster_damage_min = 20
+monster_damage_max = 30
