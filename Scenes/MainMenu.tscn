@@ -91,6 +91,7 @@ theme_override_constants/margin_left = 10
 theme_override_constants/margin_bottom = 10
 
 [node name="Main" type="VBoxContainer" parent="MenuContainer" unique_id=1637498369]
+visible = false
 layout_mode = 2
 theme_override_constants/separation = 20
 
@@ -136,6 +137,26 @@ layout_mode = 2
 theme = ExtResource("3_8saeu")
 text = "Retour"
 
+[node name="PlayList" type="VBoxContainer" parent="MenuContainer" unique_id=885985616]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="NewGame" type="Button" parent="MenuContainer/PlayList" unique_id=1582110259]
+layout_mode = 2
+theme = ExtResource("3_8saeu")
+text = "Nouvelle partie"
+
+[node name="LoadGame" type="Button" parent="MenuContainer/PlayList" unique_id=1444091700]
+layout_mode = 2
+theme = ExtResource("3_8saeu")
+text = "Reprendre une partie"
+
+[node name="Return" type="Button" parent="MenuContainer/PlayList" unique_id=1200681076]
+layout_mode = 2
+theme = ExtResource("3_8saeu")
+text = "Retour"
+
 [node name="MainMenu" type="AudioStreamPlayer" parent="." unique_id=513291645]
 stream = ExtResource("5_df05h")
 volume_db = -11.354
@@ -146,3 +167,4 @@ autoplay = true
 [connection signal="pressed" from="MenuContainer/Main/Quitter" to="." method="_on_quitter_pressed"]
 [connection signal="pressed" from="MenuContainer/Options/Fullscreen" to="." method="_on_fullscreen_pressed"]
 [connection signal="pressed" from="MenuContainer/Options/Return" to="." method="_on_return_pressed"]
+[connection signal="pressed" from="MenuContainer/PlayList/Return" to="." method="_on_return_pressed"]

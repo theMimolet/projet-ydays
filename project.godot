@@ -15,7 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="Unlost"
-config/version="dev-26.01.17"
+config/version="dev-26.03.18"
 run/main_scene="uid://dulehm44jbn4i"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 boot_splash/bg_color=Color(0, 0, 0, 1)
