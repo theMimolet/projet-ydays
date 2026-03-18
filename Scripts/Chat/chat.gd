@@ -24,7 +24,7 @@ const ANIM_WALK_LEFT_ON := "on-marche - gauche"
 const ANIM_WALK_RIGHT_ON := "on-marche - droit"
 const ANIM_WALK_UP := "marche - dos"
 
-@export var isOn: bool = true:
+@export var isOn: bool = false:
 	set(value):
 		isOn = value
 		_update_animation(velocity)
