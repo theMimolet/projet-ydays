@@ -105,6 +105,7 @@ func LoadFromFile(requestedSave: String = "") -> void:
 	var parseResult := json.parse(jsonString)
 	if not parseResult == OK:
 		print("JSON Parse Error: ", json.get_error_message(), " in ", jsonString, " at line ", json.get_error_line())
+		saveFile.close()
 		return
 
 	saveFile.close()
