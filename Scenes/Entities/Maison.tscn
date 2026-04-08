@@ -1,23 +1,3 @@
 [gd_scene format=3 uid="uid://bog3nlg1dammx"]
 
-[ext_resource type="Script" uid="uid://d1e2uqd2hxywn" path="res://Scripts/Interactions/Maison.gd" id="1_uleef"]
-[ext_resource type="Texture2D" uid="uid://bv4m8uw8dnre5" path="res://Spritesheet/Jardin/Maison-03.png" id="2_mi5x7"]
-
 [node name="Maison" type="Node2D" unique_id=446803037]
-
-[node name="CharacterBody2D5" type="CharacterBody2D" parent="." unique_id=1810943017]
-position = Vector2(0, -1)
-scale = Vector2(0.97087413, 0.97087413)
-script = ExtResource("1_uleef")
-
-[node name="Maison03" type="Sprite2D" parent="CharacterBody2D5" unique_id=1699843605]
-position = Vector2(-4.428995, -67.655525)
-scale = Vector2(0.71069974, 0.71069974)
-texture = ExtResource("2_mi5x7")
-
-[node name="DepthPoint" type="Marker2D" parent="CharacterBody2D5" unique_id=1793210043]
-position = Vector2(0, 22)
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CharacterBody2D5" unique_id=1057806703]
-position = Vector2(-51.49998, 10.299996)
-polygon = PackedVector2Array(2.0599976, 0, 89.60997, 0, 95.78996, -16.479994, 120.50995, -16.479988, 120.50995, -46.349983, 51.499977, -42.22998, -14.419994, -45.319977, -26.779991, -47.379982, -32.959988, -30.899986, -31.929989, -16.479988, -2.0599976, -16.479994)
