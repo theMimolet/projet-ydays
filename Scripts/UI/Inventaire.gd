@@ -17,7 +17,7 @@ var drag_preview: TextureRect = null
 const DRAG_PREVIEW_SIZE: Vector2 = Vector2(36, 36)
 
 # Slot d'équipement
-var equipment_slot = null
+var equipment_slot: Node = null
 var equipment_panel: Panel = null
 
 signal inventaire_opened
@@ -240,7 +240,7 @@ func remove_item(item_name: String, quantity: int = 1) -> bool:
 func has_item(item_name: String, quantity: int = 1) -> bool:
 	"""Vérifie si l'inventaire contient l'item en quantité suffisante"""
 	var total : int = 0
-	for slot : Item in slots:
+	for slot : Node in slots:
 		if not slot.is_empty() and slot.item.item_name == item_name:
 			total += slot.quantity
 	return total >= quantity
@@ -406,6 +406,8 @@ func create_collectable_item(item: Item, position: Vector2, quantity: int = 1) -
 	var collectable := Node2D.new()
 	collectable.name = item.item_name + "_dropped"
 	collectable.position = position
+	if item != null and "world_scale" in item and item.world_scale != Vector2.ZERO:
+		collectable.scale = item.world_scale
 	collectable.set_script(load("res://Scripts/Items/CollectableItem.gd"))
 	
 	# Assigner les propriétés
@@ -429,12 +431,15 @@ func create_collectable_item(item: Item, position: Vector2, quantity: int = 1) -
 		# Lancer l'animation après avoir ajouté au parent
 		if animated_sprite.animation != "":
 			animated_sprite.play()
+		
+		_add_drop_light_if_needed(item, animated_sprite)
 	elif item.item_texture != null:
 		var sprite := Sprite2D.new()
 		sprite.name = "Sprite2D"
 		collectable.add_child(sprite)
 		# Assigner la texture après avoir ajouté au parent pour éviter les erreurs
 		sprite.texture = item.item_texture
+		_add_drop_light_if_needed(item, sprite)
 	
 	# Ajouter une collision shape pour l'interaction
 	var static_body := StaticBody2D.new()
@@ -448,10 +453,28 @@ func create_collectable_item(item: Item, position: Vector2, quantity: int = 1) -
 	
 	return collectable
 
+func _add_drop_light_if_needed(item: Item, parent_node: Node) -> void:
+	if item == null or parent_node == null:
+		return
+	if not ("drop_light_texture" in item):
+		return
+	if item.drop_light_texture == null:
+		return
+	
+	var light := PointLight2D.new()
+	light.name = "PointLight2D"
+	light.texture = item.drop_light_texture
+	light.color = item.drop_light_color
+	light.energy = item.drop_light_energy
+	light.texture_scale = item.drop_light_texture_scale
+	light.position = item.drop_light_position
+	light.scale = item.drop_light_scale
+	parent_node.add_child(light)
+
 
 # ============== SLOT D'EQUIPEMENT ==============
 
-func _on_equipment_slot_clicked(slot) -> void:
+func _on_equipment_slot_clicked(slot: Node) -> void:
 	"""Gère le clic sur le slot d'équipement"""
 	if draggedSlot == null and not slot.is_empty():
 		# Commencer le drag depuis le slot d'équipement
@@ -463,7 +486,7 @@ func _on_equipment_slot_clicked(slot) -> void:
 		print("Début du drag depuis équipement: ", slot.item.item_name)
 
 
-func _on_equipment_slot_dropped(source_slot, target_slot) -> void:
+func _on_equipment_slot_dropped(source_slot: Node, target_slot: Node) -> void:
 	"""Gère le drop depuis le slot d'équipement"""
 	if source_slot == null:
 		_cleanup_drag(source_slot)
@@ -477,7 +500,7 @@ func _on_equipment_slot_dropped(source_slot, target_slot) -> void:
 			return
 		
 		# Déséquiper l'arme vers l'inventaire
-		var weapon_to_unequip = source_slot.item
+		var weapon_to_unequip: Item = source_slot.item
 		
 		if target_slot.is_empty():
 			target_slot.set_item(weapon_to_unequip, 1)
@@ -487,7 +510,7 @@ func _on_equipment_slot_dropped(source_slot, target_slot) -> void:
 			# Vérifier si on peut échanger (si c'est une arme)
 			if target_slot.item != null and "item_type" in target_slot.item and target_slot.item.item_type == "weapon":
 				# Échanger les armes
-				var new_weapon = target_slot.item
+				var new_weapon: Item = target_slot.item
 				target_slot.set_item(weapon_to_unequip, 1)
 				source_slot.set_item(new_weapon, 1)
 				_equip_weapon_on_player(new_weapon)
@@ -499,12 +522,12 @@ func _on_equipment_slot_dropped(source_slot, target_slot) -> void:
 	_cleanup_drag(source_slot)
 
 
-func _on_slot_dropped_to_equipment(source_slot, _target_slot) -> void:
+func _on_slot_dropped_to_equipment(source_slot: Node, _target_slot: Node) -> void:
 	"""Gère le drop d'un slot d'inventaire vers le slot d'équipement"""
 	if source_slot == null or source_slot.is_empty():
 		return
 	
-	var item = source_slot.item
+	var item: Item = source_slot.item
 	
 	# Vérifier que c'est une arme
 	if item == null or not "item_type" in item or item.item_type != "weapon":
@@ -521,7 +544,7 @@ func _on_slot_dropped_to_equipment(source_slot, _target_slot) -> void:
 		_equip_weapon_on_player(item)
 	else:
 		# Échanger avec l'arme actuellement équipée
-		var old_weapon = equipment_slot.item
+		var old_weapon: Item = equipment_slot.item
 		equipment_slot.set_item(item, 1)
 		if source_slot.quantity > 1:
 			source_slot.remove_item(1)

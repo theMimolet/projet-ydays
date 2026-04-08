@@ -5,6 +5,8 @@ extends Node2D
 # Quand l'objet est ciblé (le plus proche), le flag view-item.png s'affiche au-dessus pour indiquer qu'on peut le ramasser
 
 const VIEW_ITEM_TEXTURE = preload("res://Spritesheet/items/view-item.png")
+const INDICATOR_OFFSET := Vector2(0, -28)
+const INDICATOR_SCALE := Vector2(0.3, 0.3)
 
 @export var item_resource: Item # Ressource Item à créer dans l'éditeur
 @export var quantity: int = 1 # Quantité à donner
@@ -44,6 +46,18 @@ func _ready() -> void:
 			item_resource.sprite_frames = animated_sprite.sprite_frames
 			if animated_sprite.animation != "":
 				item_resource.animation_name = animated_sprite.animation
+
+	# Capturer l'apparence "dans le monde" (scale + lumière) pour pouvoir re-spawn l'objet après un drop.
+	if item_resource != null:
+		item_resource.world_scale = scale
+		var world_light := _find_first_point_light_2d()
+		if world_light != null and world_light.texture != null:
+			item_resource.drop_light_texture = world_light.texture
+			item_resource.drop_light_color = world_light.color
+			item_resource.drop_light_energy = world_light.energy
+			item_resource.drop_light_texture_scale = world_light.texture_scale
+			item_resource.drop_light_position = world_light.position
+			item_resource.drop_light_scale = world_light.scale
 	
 	# S'assurer que max_stack est au moins 5 si l'item est créé automatiquement
 	# ou si item_name_override est défini (pour permettre le stacking)
@@ -58,11 +72,49 @@ func _ready() -> void:
 	indicator_sprite = Sprite2D.new()
 	indicator_sprite.name = "IndicatorSprite"
 	indicator_sprite.texture = VIEW_ITEM_TEXTURE
-	indicator_sprite.position = Vector2(0, -28) # Au-dessus de l'objet
+	indicator_sprite.set_as_top_level(true)
+	indicator_sprite.global_position = global_position + INDICATOR_OFFSET
 	indicator_sprite.centered = true
-	indicator_sprite.scale = Vector2(0.3, 0.3) # Très petit au-dessus de l'objet
+	indicator_sprite.global_rotation = 0.0
+	indicator_sprite.global_scale = INDICATOR_SCALE
+	indicator_sprite.z_index = 10000
 	indicator_sprite.visible = false
 	add_child(indicator_sprite)
+
+func _process(_delta: float) -> void:
+	_update_indicator_transform()
+
+func _update_indicator_transform() -> void:
+	if indicator_sprite == null or not indicator_sprite.visible:
+		return
+	indicator_sprite.global_position = global_position + INDICATOR_OFFSET
+	indicator_sprite.global_rotation = 0.0
+	indicator_sprite.global_scale = INDICATOR_SCALE
+
+func _find_first_point_light_2d() -> PointLight2D:
+	var direct := get_node_or_null("PointLight2D")
+	if direct is PointLight2D:
+		return direct
+	
+	for child in get_children():
+		if child is PointLight2D:
+			return child
+		if child is Node:
+			var nested := _find_first_point_light_2d_in(child)
+			if nested != null:
+				return nested
+	
+	return null
+
+func _find_first_point_light_2d_in(root: Node) -> PointLight2D:
+	for child in root.get_children():
+		if child is PointLight2D:
+			return child
+		if child is Node:
+			var nested := _find_first_point_light_2d_in(child)
+			if nested != null:
+				return nested
+	return null
 
 func collect() -> bool:
 	"""Tente de collecter l'item. Retourne true si réussi"""
@@ -70,7 +122,7 @@ func collect() -> bool:
 		enable_player_movement()
 		return false
 	
-	var inventaire = get_tree().get_first_node_in_group("Inventaire")
+	var inventaire: Node = get_tree().get_first_node_in_group("Inventaire")
 	if inventaire == null:
 		print("Erreur : Inventaire introuvable")
 		enable_player_movement()
@@ -106,7 +158,7 @@ func enable_player_movement() -> void:
 
 func _enable_player_movement_deferred() -> void:
 	"""Remet canMove à true pour le joueur (appelé en différé)"""
-	var joueur = get_tree().get_first_node_in_group("Joueur")
+	var joueur: Node = get_tree().get_first_node_in_group("Joueur")
 	if joueur == null:
 		joueur = get_tree().current_scene.get_node_or_null("Joueur")
 	if joueur != null and "canMove" in joueur:
@@ -161,6 +213,7 @@ func get_sprite_texture() -> Texture2D:
 func show_indicator() -> void:
 	"""Affiche le flag (view-item) au-dessus de l'objet pour indiquer qu'on peut le ramasser"""
 	if indicator_sprite != null:
+		_update_indicator_transform()
 		indicator_sprite.visible = true
 		is_targeted = true
 

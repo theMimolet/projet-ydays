@@ -12,8 +12,26 @@ var is_following: bool = true
 var canMove: bool = true
 var is_teleporting: bool = false
 
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+
+const ANIM_IDLE_OFF := "off-idle"
+const ANIM_IDLE_ON := "on-idle"
+const ANIM_WALK_DOWN_OFF := "off-marche - bas"
+const ANIM_WALK_LEFT_OFF := "off-marche - gauche"
+const ANIM_WALK_RIGHT_OFF := "off-marche - droit"
+const ANIM_WALK_DOWN_ON := "on-marche - bas"
+const ANIM_WALK_LEFT_ON := "on-marche - gauche"
+const ANIM_WALK_RIGHT_ON := "on-marche - droit"
+const ANIM_WALK_UP := "marche - dos"
+
+@export var isOn: bool = false:
+	set(value):
+		isOn = value
+		_update_animation(velocity)
+
 func _ready() -> void:
 	find_player()
+	_update_animation(Vector2.ZERO)
 
 func find_player() -> void:
 	player = get_tree().get_first_node_in_group("player")
@@ -28,6 +46,7 @@ func find_player() -> void:
 func _physics_process(delta: float) -> void:
 	if not is_following or player == null or not canMove:
 		velocity = Vector2.ZERO
+		_update_animation(Vector2.ZERO)
 		move_and_slide()
 		return
 	
@@ -48,6 +67,7 @@ func _physics_process(delta: float) -> void:
 		velocity = velocity.move_toward(Vector2.ZERO, SPEED * delta)
 	
 	move_and_slide()
+	_update_animation(velocity)
 	update_depth()
 
 func update_depth() -> void:
@@ -59,7 +79,6 @@ func teleport_to_player() -> void:
 		return
 	
 	is_teleporting = true
-	var sprite := get_node_or_null("AnimatedSprite2D")
 	var direction := (player.global_position - global_position).normalized()
 	var teleport_pos := player.global_position - direction * TELEPORT_OFFSET
 	
@@ -77,3 +96,36 @@ func teleport_to_player() -> void:
 		tween.parallel().tween_property(sprite, "scale", Vector2(1.0, 1.0), 0.15)
 	
 	is_teleporting = false
+
+func _update_animation(current_velocity: Vector2) -> void:
+	if sprite == null:
+		return
+	if is_teleporting:
+		return
+
+	var is_moving := current_velocity.length_squared() > 0.001
+	if not is_moving:
+		_play_if_changed(ANIM_IDLE_ON if isOn else ANIM_IDLE_OFF)
+		return
+
+	# Pick a direction based on the dominant axis.
+	var abs_x := absf(current_velocity.x)
+	var abs_y := absf(current_velocity.y)
+	if abs_y >= abs_x:
+		if current_velocity.y < 0.0:
+			_play_if_changed(ANIM_WALK_UP)
+		else:
+			_play_if_changed(ANIM_WALK_DOWN_ON if isOn else ANIM_WALK_DOWN_OFF)
+	else:
+		if current_velocity.x < 0.0:
+			_play_if_changed(ANIM_WALK_LEFT_ON if isOn else ANIM_WALK_LEFT_OFF)
+		else:
+			_play_if_changed(ANIM_WALK_RIGHT_ON if isOn else ANIM_WALK_RIGHT_OFF)
+
+func _play_if_changed(animation_name: String) -> void:
+	if sprite.animation == animation_name and sprite.is_playing():
+		return
+	if sprite.sprite_frames == null or not sprite.sprite_frames.has_animation(animation_name):
+		push_warning("Chat: animation manquante: %s" % animation_name)
+		return
+	sprite.play(animation_name)

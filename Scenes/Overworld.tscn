@@ -11,6 +11,24 @@
 [ext_resource type="Texture2D" uid="uid://dig26biqjjs5y" path="res://Spritesheet/Chat/idle-on/sprite_1.png" id="9_5di4m"]
 [ext_resource type="Texture2D" uid="uid://b3t7kthol4yho" path="res://Spritesheet/Chat/idle-on/sprite_2.png" id="10_kepvy"]
 [ext_resource type="Texture2D" uid="uid://cqweeepofhkin" path="res://Spritesheet/Chat/idle-on/sprite_3.png" id="11_76uc8"]
+[ext_resource type="Texture2D" uid="uid://d3dby0t7r7w5o" path="res://Spritesheet/Chat/marche -dos/sprite_0.png" id="12_kepvy"]
+[ext_resource type="Texture2D" uid="uid://cqne30mne8o2i" path="res://Spritesheet/Chat/marche -dos/sprite_1.png" id="13_76uc8"]
+[ext_resource type="Texture2D" uid="uid://prcm0gshfxj4" path="res://Spritesheet/Chat/marche - droit off/sprite_0.png" id="14_f7aoj"]
+[ext_resource type="Texture2D" uid="uid://b8qgyeb48gvhs" path="res://Spritesheet/Chat/marche - droit off/sprite_1.png" id="15_fka8p"]
+[ext_resource type="Texture2D" uid="uid://co6f1ibrk04e2" path="res://Spritesheet/Chat/marche - gauche off/sprite_0.png" id="16_h6v4y"]
+[ext_resource type="Texture2D" uid="uid://dxj73rfb44tc1" path="res://Spritesheet/Chat/marche - gauche off/sprite_1.png" id="17_f1qia"]
+[ext_resource type="Texture2D" uid="uid://211qcsxh31ok" path="res://Spritesheet/Chat/marche -bas - off/sprite_0.png" id="18_umvct"]
+[ext_resource type="Texture2D" uid="uid://cexhs6riflxef" path="res://Spritesheet/Chat/marche -bas - off/sprite_1.png" id="19_p2q4w"]
+[ext_resource type="Texture2D" uid="uid://dq2wuftw73rly" path="res://Spritesheet/Chat/marche -bas - off/sprite_2.png" id="20_56v6n"]
+[ext_resource type="Texture2D" uid="uid://cvrlwnwqnl2w" path="res://Spritesheet/Chat/marche -bas - off/sprite_3.png" id="21_l8mt4"]
+[ext_resource type="Texture2D" uid="uid://h63v3cjqdhdg" path="res://Spritesheet/Chat/marche droit - on/sprite_0.png" id="22_56v6n"]
+[ext_resource type="Texture2D" uid="uid://ho78kyhbqn7t" path="res://Spritesheet/Chat/marche - bas - on/sprite_0.png" id="22_rrpuu"]
+[ext_resource type="Texture2D" uid="uid://brw87noy4r2mw" path="res://Spritesheet/Chat/marche droit - on/sprite_1.png" id="23_l8mt4"]
+[ext_resource type="Texture2D" uid="uid://baknftowf82r" path="res://Spritesheet/Chat/marche - bas - on/sprite_1.png" id="23_pkq3l"]
+[ext_resource type="Texture2D" uid="uid://uclwrgok40n3" path="res://Spritesheet/Chat/marche - gauche - on/sprite_0.png" id="24_7qh7o"]
+[ext_resource type="Texture2D" uid="uid://s6ltc2xx7s7f" path="res://Spritesheet/Chat/marche - bas - on/sprite_2.png" id="24_t0d7t"]
+[ext_resource type="Texture2D" uid="uid://bu6da3w1na162" path="res://Spritesheet/Chat/marche - bas - on/sprite_3.png" id="25_3u5y8"]
+[ext_resource type="Texture2D" uid="uid://cgcqpvrownq0p" path="res://Spritesheet/Chat/marche - gauche - on/sprite_1.png" id="25_qb14k"]
 
 [sub_resource type="Animation" id="Animation_0thx2"]
 length = 0.001
@@ -69,6 +87,17 @@ _data = {
 animations = [{
 "frames": [{
 "duration": 1.5,
+"texture": ExtResource("12_kepvy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_76uc8")
+}],
+"loop": true,
+"name": &"marche - dos",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.5,
 "texture": ExtResource("4_d6kyl")
 }, {
 "duration": 1.5,
@@ -81,7 +110,46 @@ animations = [{
 "texture": ExtResource("7_vd8s3")
 }],
 "loop": true,
-"name": &"idle-off",
+"name": &"off-idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.5,
+"texture": ExtResource("18_umvct")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_p2q4w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_56v6n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_l8mt4")
+}],
+"loop": true,
+"name": &"off-marche - bas",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.5,
+"texture": ExtResource("14_f7aoj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_fka8p")
+}],
+"loop": true,
+"name": &"off-marche - droit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.5,
+"texture": ExtResource("16_h6v4y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_f1qia")
+}],
+"loop": true,
+"name": &"off-marche - gauche",
 "speed": 5.0
 }, {
 "frames": [{
@@ -98,7 +166,46 @@ animations = [{
 "texture": ExtResource("11_76uc8")
 }],
 "loop": true,
-"name": &"idle-on",
+"name": &"on-idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.5,
+"texture": ExtResource("22_rrpuu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_pkq3l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_t0d7t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_3u5y8")
+}],
+"loop": true,
+"name": &"on-marche - bas",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.5,
+"texture": ExtResource("22_56v6n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_l8mt4")
+}],
+"loop": true,
+"name": &"on-marche - droit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.5,
+"texture": ExtResource("24_7qh7o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_qb14k")
+}],
+"loop": true,
+"name": &"on-marche - gauche",
 "speed": 5.0
 }]
 
@@ -135,9 +242,8 @@ script = ExtResource("3_8lvve")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Chat" unique_id=1330937203]
 position = Vector2(1, 11)
 sprite_frames = SubResource("SpriteFrames_p68c8")
-animation = &"idle-off"
-autoplay = "idle-off"
-frame_progress = 0.16592379
+animation = &"on-marche - bas"
+autoplay = "off-idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Chat" unique_id=99044765]
 position = Vector2(1.5, 24)

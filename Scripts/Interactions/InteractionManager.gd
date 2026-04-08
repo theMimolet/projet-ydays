@@ -7,6 +7,7 @@ const VASE_TILE_COORDS = Vector2i(2, 0)
 const INTERACTION_DISTANCE = 32.0
 
 var last_targeted_item : Node2D = null
+var last_targeted_interactable: Node2D = null
 
 const CELLS_TO_CHECK := [
 	Vector2i(0, 0),   # Case du joueur
@@ -53,6 +54,75 @@ func _find_nearby_node_interactions(player_position: Vector2, group_name: String
 				return node
 	
 	return null
+
+func _find_nearest_node_in_group(player_position: Vector2, group_name: String) -> Node2D:
+	var nodes: Array[Node] = get_tree().get_nodes_in_group(group_name)
+	var nearest: Node2D = null
+	var nearest_distance: float = INTERACTION_DISTANCE
+	
+	for node: Node in nodes:
+		if not (node is Node2D):
+			continue
+		if not node.has_method("interact"):
+			continue
+		# Don't show interaction indicator for already-opened interactables (armoires/coffres).
+		if "is_opened" in node and node.is_opened:
+			continue
+		
+		var distance: float = player_position.distance_to((node as Node2D).global_position)
+		if distance <= INTERACTION_DISTANCE and distance < nearest_distance:
+			nearest = node as Node2D
+			nearest_distance = distance
+	
+	return nearest
+
+func get_nearest_interactable(player_position: Vector2) -> Node2D:
+	var groups := ["Doors", "Coffres", "Armoires"]
+	var nearest: Node2D = null
+	var nearest_distance: float = INTERACTION_DISTANCE
+	
+	for group_name: String in groups:
+		var candidate := _find_nearest_node_in_group(player_position, group_name)
+		if candidate == null:
+			continue
+		var distance: float = player_position.distance_to(candidate.global_position)
+		if distance < nearest_distance:
+			nearest = candidate
+			nearest_distance = distance
+	
+	return nearest
+
+func update_interactable_indicators(player_position: Vector2) -> void:
+	var nearest := get_nearest_interactable(player_position)
+	
+	if last_targeted_interactable != null and last_targeted_interactable != nearest:
+		if last_targeted_interactable.has_method("hide_indicator"):
+			last_targeted_interactable.hide_indicator()
+	
+	if nearest != null:
+		if nearest.has_method("show_indicator"):
+			nearest.show_indicator()
+		last_targeted_interactable = nearest
+	else:
+		if last_targeted_interactable != null:
+			if last_targeted_interactable.has_method("hide_indicator"):
+				last_targeted_interactable.hide_indicator()
+			last_targeted_interactable = null
+
+func update_interaction_indicators(player_position: Vector2) -> void:
+	# Priority: interactables > collectibles (avoid showing two indicators at once)
+	update_interactable_indicators(player_position)
+	if last_targeted_interactable != null:
+		_hide_collectable_indicator()
+	else:
+		update_collectable_indicators(player_position)
+
+func _hide_collectable_indicator() -> void:
+	if last_targeted_item == null:
+		return
+	if last_targeted_item.has_method("hide_indicator"):
+		last_targeted_item.hide_indicator()
+	last_targeted_item = null
 
 func handle_interaction(player_position: Vector2) -> bool:
 	# Vérifier d'abord les interactions basées sur tiles (vases)
@@ -148,7 +218,7 @@ func update_collectable_indicators(player_position: Vector2) -> void:
 func check_collectable_items(player_position: Vector2) -> bool:
 	"""Vérifie et collecte les items collectables proches. Retourne true si un item a été collecté"""
 	# Mettre à jour les indicateurs
-	update_collectable_indicators(player_position)
+	update_interaction_indicators(player_position)
 	
 	# Si l'utilisateur appuie sur F, collecter l'item le plus proche
 	if last_targeted_item != null:

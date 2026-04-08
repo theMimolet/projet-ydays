@@ -8,11 +8,18 @@
 [ext_resource type="Texture2D" uid="uid://dw155bh6gashm" path="res://Spritesheet/Monstres/Garde-Rouge/garde-rouge-idle.png" id="5_2yesy"]
 [ext_resource type="Texture2D" uid="uid://b7w4y45imsatw" path="res://Spritesheet/Monstres/Monstre-Noir/monstre-noir-idle.png" id="6_oynwm"]
 [ext_resource type="Texture2D" uid="uid://dyeougl82rpci" path="res://Spritesheet/Monstres/Garde-Jaune/garde-jaune-idle.png" id="7_2yesy"]
+[ext_resource type="Texture2D" uid="uid://biexbly5snsrk" path="res://Spritesheet/Monstres/Monstre 1-3/sprite_0.png" id="7_27nhb"]
+[ext_resource type="Texture2D" uid="uid://7jnv8tym60g" path="res://Spritesheet/Monstres/Corne/idle/sprite_0.png" id="7_pe8mr"]
 [ext_resource type="Script" uid="uid://cx164losuegqd" path="res://Scripts/Interactions/garde_rouge.gd" id="7_w3ejm"]
+[ext_resource type="Texture2D" uid="uid://cd3vnn2cd3upe" path="res://Spritesheet/Monstres/Monstre 1-3/sprite_1.png" id="8_7m8l0"]
 [ext_resource type="Texture2D" uid="uid://d2g7igioe3hjl" path="res://Spritesheet/Monstres/Garde-Vert/garde-vert-idle.png" id="8_773rk"]
+[ext_resource type="Texture2D" uid="uid://cca07bm30by25" path="res://Spritesheet/Monstres/Corne/idle/sprite_1.png" id="8_xtl6w"]
+[ext_resource type="Texture2D" uid="uid://bak0ysdncxxjt" path="res://Spritesheet/Monstres/Monstre 1-3/sprite_2.png" id="9_4g88j"]
 [ext_resource type="Script" uid="uid://gplmt2s3b2k6" path="res://Scripts/Interactions/garde_vert.gd" id="9_bgtnb"]
 [ext_resource type="Script" uid="uid://3tptfvsxk7aa" path="res://Scripts/Interactions/garde_jaune.gd" id="9_ejb0k"]
+[ext_resource type="Texture2D" uid="uid://blacxp1kd1vyq" path="res://Spritesheet/Monstres/Corne/idle/sprite_2.png" id="9_wgehe"]
 [ext_resource type="Texture2D" uid="uid://by7efkaivrrl7" path="res://Spritesheet/Monstres/Garde-Bleu/garde-bleu-idle.png" id="9_xr16a"]
+[ext_resource type="Texture2D" uid="uid://citeygdk87206" path="res://Spritesheet/Monstres/Corne/idle/sprite_3.png" id="10_27nhb"]
 [ext_resource type="Texture2D" uid="uid://bv2xkflfc38ay" path="res://Spritesheet/Monstres/Mob-Course/mob-course-gauche.png" id="11_bgtnb"]
 [ext_resource type="Script" uid="uid://cqvkvxb0a6j4f" path="res://Scripts/Interactions/garde_bleu.gd" id="11_tpj1h"]
 [ext_resource type="Texture2D" uid="uid://ebywetxyb7td" path="res://Spritesheet/Monstres/Poussin/poussin-idle.png" id="12_tpj1h"]
@@ -101,6 +108,49 @@ animations = [{
 "loop": true,
 "name": &"idle",
 "speed": 3.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6rut1"]
+size = Vector2(22, 25)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2i6vj"]
+animations = [{
+"frames": [{
+"duration": 1.5,
+"texture": ExtResource("7_27nhb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_7m8l0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_4g88j")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xtl6w"]
+size = Vector2(20, 14)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_27nhb"]
+animations = [{
+"frames": [{
+"duration": 2.0,
+"texture": ExtResource("7_pe8mr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_xtl6w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_wgehe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_27nhb")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_773rk"]
@@ -365,6 +415,31 @@ shape = SubResource("RectangleShape2D_bgtnb")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MonstreNoir" unique_id=132088892]
 sprite_frames = SubResource("SpriteFrames_yovro")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="Monstre 1-3" type="CharacterBody2D" parent="." unique_id=1017499254]
+position = Vector2(-132, 6)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Monstre 1-3" unique_id=473548401]
+position = Vector2(-53, -4.5)
+shape = SubResource("RectangleShape2D_6rut1")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Monstre 1-3" unique_id=611858119]
+position = Vector2(-53, -13)
+sprite_frames = SubResource("SpriteFrames_2i6vj")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="Corne" type="CharacterBody2D" parent="." unique_id=1587743479]
+position = Vector2(-132, 6)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Corne" unique_id=1652683402]
+position = Vector2(0, 11)
+shape = SubResource("RectangleShape2D_xtl6w")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Corne" unique_id=84759522]
+sprite_frames = SubResource("SpriteFrames_27nhb")
 animation = &"idle"
 autoplay = "idle"
 

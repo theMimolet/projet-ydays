@@ -1,4 +1,4 @@
-[gd_resource type="Item" script_path="res://Scripts/Items/Item.gd" load_steps=2]
+[gd_resource type="Item" format=3 uid="uid://b4fh2pk4rdlwf"]
 
 [resource]
 item_name = "key_zone1"
@@ -8,4 +8,3 @@ max_stack = 1
 item_type = "misc"
 sprite_frames = null
 animation_name = "default"
-
