@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://bd24fdpyppqhx" path="res://Spritesheet/Jardin/sprite_1.png" id="7_d3dr6"]
 [ext_resource type="Texture2D" uid="uid://bra7gpdwsh762" path="res://Spritesheet/Jardin/sprite_3.png" id="8_ckfm0"]
 [ext_resource type="PackedScene" uid="uid://dtwpnedsbtj8t" path="res://Scenes/RoomSwitcher.tscn" id="9_1qsc1"]
+[ext_resource type="PackedScene" uid="uid://cup422xt4plwo" path="res://Scenes/Entities/arbre_1.tscn" id="12_d3dr6"]
 [ext_resource type="Texture2D" uid="uid://73oxq1kl4b3" path="res://Spritesheet/Jardin/roche_1.png" id="13_ckfm0"]
 [ext_resource type="Texture2D" uid="uid://0bcivcq3p8av" path="res://Spritesheet/Jardin/Maison-04.png" id="14_d3dr6"]
 
@@ -59,7 +60,7 @@ texture = ExtResource("3_fu3vt")
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="VillageEnvironnement/CharacterBody2D" unique_id=709278575]
 position = Vector2(14.195648, 10.29834)
 scale = Vector2(0.94259626, 0.94259626)
-polygon = PackedVector2Array(0.4133911, 0.6054535, 15.863403, 19.145447, -2.6766052, 22.235443, -29.456604, 18.115448, -47.996582, 3.6954498, -50.05658, -11.754532, -38.726593, -23.084534, -23.27658, -31.324524, -5.7666016, -34.414536, 10.713409, -33.38452, 25.133392, -29.264526, 34.40338, -26.17453, 44.70337, -13.814529, 43.67337, 1.6354523, 34.40338, 10.905457, 15.863403, 19.145447)
+polygon = PackedVector2Array(7.6233826, 4.725464, 15.863403, 19.145447, -2.6766052, 22.235443, -29.456604, 18.115448, -47.996582, 3.6954498, -50.05658, -11.754532, -38.726593, -23.084534, -23.27658, -31.324524, -5.7666016, -34.414536, 10.713409, -33.38452, 25.133392, -29.264526, 34.40338, -26.17453, 44.70337, -13.814529, 43.67337, 1.6354523, 34.40338, 10.905457, 15.863403, 19.145447)
 
 [node name="CharacterBody2D2" type="CharacterBody2D" parent="VillageEnvironnement" unique_id=1483689105]
 position = Vector2(-205.89006, 66.009735)
@@ -132,6 +133,9 @@ scale = Vector2(0.97087413, 0.97087413)
 position = Vector2(287.25665, -158.62997)
 scale = Vector2(1.0299996, 1.0299996)
 texture = ExtResource("6_3cehf")
+
+[node name="Arbre1" parent="VillageEnvironnement/CharacterBody2D7" unique_id=1713656411 instance=ExtResource("12_d3dr6")]
+position = Vector2(211.03668, 219.37988)
 
 [node name="CharacterBody2D8" type="CharacterBody2D" parent="VillageEnvironnement" unique_id=82773926]
 position = Vector2(-72, -66)
