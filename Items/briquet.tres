@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=3 format=3 uid="uid://b3bhakspoyos1"]
+[gd_resource type="Resource" format=3 uid="uid://b3bhakspoyos1"]
 
 [ext_resource type="Script" path="res://Scripts/Items/Item.gd" id="1_item"]
 [ext_resource type="Texture2D" path="res://Spritesheet/briquet/briqué.png" id="2_texture"]
