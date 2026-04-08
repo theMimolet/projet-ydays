@@ -137,7 +137,7 @@ shape = SubResource("RectangleShape2D_ksi5g")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1464844206]
 sprite_frames = SubResource("SpriteFrames_3derw")
-animation = &"marche-haut"
+animation = &"marche-bas"
 
 [node name="ArmeSprite" type="Sprite2D" parent="." unique_id=1964767758]
 visible = false
