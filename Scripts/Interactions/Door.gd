@@ -186,4 +186,3 @@ func _enable_open_colliders() -> void:
 			var shape := child as CollisionShape2D
 			if shape != null:
 				shape.disabled = false
-

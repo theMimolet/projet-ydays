@@ -1,14 +1,16 @@
 [gd_scene format=3 uid="uid://cup422xt4plwo"]
 
+[ext_resource type="Script" uid="uid://ber5tqov4as7n" path="res://Scenes/Entities/Arbre.gd" id="1_5dspw"]
 [ext_resource type="Texture2D" uid="uid://ip7y1hb2yx7n" path="res://Spritesheet/Jardin/sprite_0.png" id="1_vlb2j"]
 
 [node name="Arbre1" type="Node2D" unique_id=1713656411]
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=186372012]
 position = Vector2(0, -1)
+script = ExtResource("1_5dspw")
 
-[node name="Sprite0" type="Sprite2D" parent="CharacterBody2D" unique_id=1578341745]
+[node name="Arbre" type="Sprite2D" parent="CharacterBody2D" unique_id=1578341745]
 texture = ExtResource("1_vlb2j")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CharacterBody2D" unique_id=1372432019]
-polygon = PackedVector2Array(-1, 15, -3, 15, -3, 13, -5, 13, -5, 14, -11, 14, -11, 12, -10, 11, -15, 11, -15, 10, -10, 6, -14, 2, -8, -1, -11, -4, -8, -4, -4, -4, -1, -4, 2, -4, 4, -4, 7, -4, 8, -4, 9, -4, 10, -4, 12, -4, 12, -2, 13, 0, 15, 2, 16, 4, 13, 4, 13, 5, 14, 5, 15, 6, 15, 13, 13, 13, 12, 12, 12, 14, 9, 14, 9, 13, 6, 13, 6, 14, 5, 15, 5, 16, -1, 16)
+polygon = PackedVector2Array(-1, 15, -3, 15, -3, 13, -5, 13, -5, 14, -11, 14, -11, 12, -10, 11, -15, 11, -15, 10, -10, 6, -14, 2, 14, 1, 15, 2, 16, 4, 13, 4, 13, 5, 14, 5, 15, 6, 15, 13, 13, 13, 12, 12, 12, 14, 9, 14, 9, 13, 6, 13, 6, 14, 5, 15, 5, 16, -1, 16)

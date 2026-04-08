@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://cy00pimumgy7m"]
+
+[ext_resource type="Script" uid="uid://dc422hro525vi" path="res://Roche.gd" id="1_jb5p4"]
+[ext_resource type="Texture2D" uid="uid://cxbj314iw5i5r" path="res://Spritesheet/Jardin/roche_3.png" id="2_jjhpm"]
+
+[node name="Node2D" type="Node2D" unique_id=268138278]
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=835184326]
+position = Vector2(-1.0000005, -9)
+scale = Vector2(1.5789473, 1.5789474)
+script = ExtResource("1_jb5p4")
+
+[node name="Roche3" type="Sprite2D" parent="CharacterBody2D" unique_id=603101941]
+scale = Vector2(0.99999994, 0.99999994)
+texture = ExtResource("2_jjhpm")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CharacterBody2D" unique_id=26497316]
+scale = Vector2(0.9999999, 0.9999999)
+polygon = PackedVector2Array(-3.166667, 9.500002, -6.9666677, 8.233335, -10.766667, 6.9666677, -15.833335, 5.700001, -15.200002, 3.8000004, -11.400002, 2.5333335, -8.866668, 3.166667, -2.5333335, 3.8000004, 1.9000006, 3.8000004, 7.600002, 3.8000004, 15.200004, 4.433334, 15.200004, 5.700001, 10.766669, 7.6000013, 8.2333355, 8.233335, 3.1666675, 8.233335, 2.533334, 10.133335)

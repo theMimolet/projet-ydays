@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://dmnc3865b03ek"]
+
+[ext_resource type="Texture2D" uid="uid://choj4i82kcvts" path="res://Spritesheet/Jardin/bois_4.png" id="1_urksa"]
+[ext_resource type="Script" uid="uid://ber5tqov4as7n" path="res://Scenes/Entities/Arbre.gd" id="1_xlvwo"]
+
+[node name="Node2D" type="Node2D" unique_id=713236821]
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=1380347913]
+position = Vector2(0, -2)
+script = ExtResource("1_xlvwo")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CharacterBody2D" unique_id=1690080353]
+polygon = PackedVector2Array(-4, 6, -11, 9, -16, 8, -19, 5, -13, 2, -6, 2, -4, 2, 3, 1, 10, 2, 13, 2, 14, 4, 12, 6)
+
+[node name="Bois4" type="Sprite2D" parent="CharacterBody2D" unique_id=925426923]
+texture = ExtResource("1_urksa")
