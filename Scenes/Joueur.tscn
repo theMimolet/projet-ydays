@@ -15,8 +15,6 @@
 [ext_resource type="Texture2D" uid="uid://jymoqtr155wl" path="res://Textures/Vignette-base.webp" id="14_vignette"]
 [ext_resource type="PackedScene" uid="uid://7pav2b7oq5wj" path="res://Scenes/UI/HPBar.tscn" id="14_wgmmy"]
 [ext_resource type="Script" uid="uid://bso8o41186mj5" path="res://Scripts/UI/Inventaire.gd" id="15_algd0"]
-[ext_resource type="PackedScene" uid="uid://bnkogahkkn1a" path="res://Scenes/UI/DevConsole.tscn" id="16_s8008"]
-[ext_resource type="Theme" uid="uid://bugehytmyoyev" path="res://Style/MainUI.tres" id="16_wgmmy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ksi5g"]
 size = Vector2(11, 4)
@@ -140,11 +138,9 @@ shape = SubResource("RectangleShape2D_ksi5g")
 sprite_frames = SubResource("SpriteFrames_3derw")
 animation = &"marche-haut"
 
-[node name="ArmeSprite" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(8, 4)
-rotation = 0.785398
-scale = Vector2(0.5, 0.5)
+[node name="ArmeSprite" type="Sprite2D" parent="." unique_id=1209540]
+rotation = -1.579523
+scale = Vector2(1e-05, 1e-05)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=2047598505]
 zoom = Vector2(2, 2)
@@ -212,6 +208,3 @@ layout_mode = 2
 theme_override_constants/h_separation = 5
 theme_override_constants/v_separation = 5
 columns = 4
-
-[node name="DevConsole" parent="." unique_id=1272832658 instance=ExtResource("16_s8008")]
-visible = false

@@ -124,7 +124,6 @@ texture = ExtResource("1_y6r2r")
 [node name="ChunkSwitcher" type="Area2D" parent="." unique_id=1208768353]
 script = ExtResource("2_t5nnj")
 roomToLoad = "uid://drhfsi6nm5qod"
-playerSpawn = Vector2(-272, 53)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ChunkSwitcher" unique_id=1329458378]
 position = Vector2(0, 91.5)

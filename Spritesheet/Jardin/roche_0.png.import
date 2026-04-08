@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dlt7c8myqomd4"
-path="res://.godot/imported/EnvironnementVillage.webp-8b6dc3f3ba3a99f4b289a28e211594bc.ctex"
+uid="uid://nljyccxrdjba"
+path="res://.godot/imported/roche_0.png-2d154dbe299036599406e90b31323504.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scenes/Rooms/Map/EnvironnementVillage.webp"
-dest_files=["res://.godot/imported/EnvironnementVillage.webp-8b6dc3f3ba3a99f4b289a28e211594bc.ctex"]
+source_file="res://Spritesheet/Jardin/roche_0.png"
+dest_files=["res://.godot/imported/roche_0.png-2d154dbe299036599406e90b31323504.ctex"]
 
 [params]
 

@@ -28,7 +28,7 @@ signal ennemi_hp_changed(current_hp: int, max_hp: int)
 @onready var ennemi_sprite: TextureRect = $AreneContainer/ZoneEnnemi/EnnemiSprite
 @onready var label_ennemi: Label = $AreneContainer/ZoneEnnemi/LabelEnnemi
 @onready var modal_victoire: Panel = $ModalVictoire
-@onready var btn_suivre: Button = $ModalVictoire/VBox/BtnSuivre
+@onready var btn_suivre: Button = $ModalVictoire/Center/Card/Margin/VBox/Actions/BtnSuivre
 @onready var weapon_select_menu: Panel = $WeaponSelectMenu
 @onready var arme_sprite_combat: TextureRect = $AreneContainer/ZoneJoueur/JoueurSprite/ArmeSpriteCombat
 
@@ -82,8 +82,8 @@ func _charger_donnees_combat() -> void:
 	if data.has("joueur_max_hp"):
 		joueur_max_hp = data["joueur_max_hp"]
 	
-	# Arme équipée du joueur
-	if data.has("arme_equipee") and data["arme_equipee"] != null:
+	# Arme équipée du joueur (null = à mains nues)
+	if data.has("arme_equipee"):
 		arme_equipee = data["arme_equipee"]
 	
 	# Armes disponibles dans l'inventaire
@@ -137,9 +137,6 @@ func terminer_combat(victoire: bool) -> void:
 func _on_attaque_pressed() -> void:
 	if not combat_actif:
 		return
-	if not arme_equipee:
-		push_warning("CombatController: Aucune arme équipée!")
-		return
 	btn_attaque.disabled = true
 	qte_system.lancer_qte()
 
@@ -157,13 +154,15 @@ func _on_qte_failed() -> void:
 
 
 func _effectuer_attaque_joueur() -> void:
-	if not arme_equipee:
-		btn_attaque.disabled = false
-		return
-	
-	var resultat: Dictionary = arme_equipee.get_degats_avec_critique()
-	var degats: int = resultat["degats"]
-	var critique: bool = resultat["critique"]
+	var degats: int
+	var critique: bool = false
+	if arme_equipee != null and arme_equipee.has_method("get_degats_avec_critique"):
+		var resultat: Dictionary = arme_equipee.get_degats_avec_critique()
+		degats = resultat["degats"]
+		critique = resultat["critique"]
+	else:
+		# À mains nues : 2 à 3 dégâts
+		degats = randi_range(2, 3)
 	
 	# Infliger les dégâts à l'ennemi
 	ennemi_hp = max(0, ennemi_hp - degats)
@@ -276,7 +275,7 @@ func _update_arme_actuelle_display() -> void:
 		return
 	
 	if arme_equipee == null:
-		label_arme_actuelle.text = "Aucune arme"
+		label_arme_actuelle.text = "À mains nues (2-3 dmg)"
 		return
 	
 	var nom_arme: String = ""

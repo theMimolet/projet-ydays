@@ -332,7 +332,7 @@ tile_set = SubResource("TileSet_7wwei")
 
 [node name="ChunkSwitcher" parent="." unique_id=1222449282 instance=ExtResource("2_45roa")]
 position = Vector2(39.005, -197.98)
-roomToLoad = "uid://lsuq4yhka3a3"
+roomToLoad = "Test1"
 spawnPointName = "Test2"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ChunkSwitcher" unique_id=1135885181]

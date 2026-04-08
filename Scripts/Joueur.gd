@@ -45,6 +45,8 @@ signal stamina_changed(new_stamina: int)
 func _ready() -> void:
 	if Dialogic.timeline_ended.connect(_on_timeline_ended) != OK:
 		print("Erreur : impossible de se connecter au signal timeline_ended de Dialogic")
+	if Dialogic.timeline_started.connect(_on_timeline_started) != OK:
+		print("Erreur : impossible de se connecter au signal timeline_started de Dialogic")
 	
 	# Initialiser les HP et émettre le signal
 	currentHP = MAX_HP
@@ -57,6 +59,15 @@ func is_inventory_open() -> bool:
 	"""Vérifie si l'inventaire est ouvert"""
 	if inventory != null and "is_open" in inventory:
 		return inventory.is_open
+	return false
+
+func _is_movement_blocked() -> bool:
+	"""True si un dialogue est ouvert ou la console de dev est ouverte."""
+	if Dialogic.current_timeline != null:
+		return true
+	var cons: Node = get_node_or_null("/root/DevConsole")
+	if cons != null and "is_open" in cons and cons.is_open:
+		return true
 	return false
 
 func Mouvement() -> void :
@@ -80,6 +91,9 @@ func Mouvement() -> void :
 	velocity = input_direction * base_speed
 
 func _input(event: InputEvent) -> void:
+	# Ne pas réagir aux actions si un dialogue ou la console est ouverte
+	if _is_movement_blocked():
+		return
 	# Ne pas gérer les interactions si l'inventaire est ouvert
 	if not is_inventory_open():
 		if event.is_action_pressed("Interact"):
@@ -121,7 +135,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		staminaRegenTimer = 0.0
 	
-	if canMove :
+	if canMove and not _is_movement_blocked():
 		Mouvement()
 		Animate()
 	else :
@@ -162,6 +176,9 @@ func paralysePlayer(yes : bool) -> void :
 		canMove = false
 	else : 
 		canMove = true
+
+func _on_timeline_started() -> void:
+	canMove = false
 
 func _on_timeline_ended() -> void:
 	canMove = true
