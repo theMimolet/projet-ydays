@@ -11,6 +11,7 @@ class_name Item
 
 # Optional: world-drop visuals captured from CollectableItem on pickup.
 @export var world_scale: Vector2 = Vector2.ONE
+@export var inventory_icon_scale: Vector2 = Vector2.ONE
 @export var drop_light_texture: Texture2D = null
 @export var drop_light_color: Color = Color.WHITE
 @export var drop_light_energy: float = 1.0

@@ -142,9 +142,27 @@ func update_display() -> void:
 	if item != null and item.item_texture != null:
 		item_texture.texture = item.item_texture
 		item_texture.visible = true
+		var icon_scale := 1.0
+		if "inventory_icon_scale" in item and item.inventory_icon_scale != Vector2.ZERO:
+			icon_scale = clamp(item.inventory_icon_scale.x, 0.1, 1.5)
+		# Garder l'icône centrée en ajustant les marges du TextureRect
+		var base_margin := 2.0
+		var inner_size := 36.0
+		var extra_margin := (inner_size * (1.0 - icon_scale)) / 2.0
+		var final_margin := base_margin + extra_margin
+		item_texture.offset_left = final_margin
+		item_texture.offset_top = final_margin
+		item_texture.offset_right = -final_margin
+		item_texture.offset_bottom = -final_margin
+		item_texture.scale = Vector2.ONE
 	else:
 		item_texture.texture = null
 		item_texture.visible = false
+		item_texture.offset_left = 2.0
+		item_texture.offset_top = 2.0
+		item_texture.offset_right = -2.0
+		item_texture.offset_bottom = -2.0
+		item_texture.scale = Vector2.ONE
 	
 	# Afficher la quantité si > 1
 	if quantity > 1:
