@@ -2,21 +2,59 @@ extends Sprite2D
 
 const ARMOIRE_FERMEE_TEXTURE := preload("res://Spritesheet/Armoire/sprite_0.webp")
 const ARMOIRE_OUVERTE_TEXTURE := preload("res://Spritesheet/Armoire/sprite_1.webp")
+const VIEW_ITEM_TEXTURE := preload("res://Spritesheet/items/view-item.png")
+const INDICATOR_OFFSET := Vector2(0, -28)
+const INDICATOR_SCALE := Vector2(0.3, 0.3)
 
 var is_opened: bool = false
 var key_node: Node2D = null
+var _indicator_sprite: Sprite2D = null
 
 func _ready() -> void:
 	add_to_group("Armoires")
 	if texture == null:
 		texture = ARMOIRE_FERMEE_TEXTURE
+	_setup_indicator()
 	_update_key_state()
+
+func _setup_indicator() -> void:
+	_indicator_sprite = Sprite2D.new()
+	_indicator_sprite.name = "IndicatorSprite"
+	_indicator_sprite.texture = VIEW_ITEM_TEXTURE
+	_indicator_sprite.set_as_top_level(true)
+	_indicator_sprite.global_position = global_position + INDICATOR_OFFSET
+	_indicator_sprite.centered = true
+	_indicator_sprite.global_rotation = 0.0
+	_indicator_sprite.global_scale = INDICATOR_SCALE
+	_indicator_sprite.z_index = 10000
+	_indicator_sprite.visible = false
+	add_child(_indicator_sprite)
+
+func show_indicator() -> void:
+	if _indicator_sprite != null:
+		_update_indicator_transform()
+		_indicator_sprite.visible = true
+
+func hide_indicator() -> void:
+	if _indicator_sprite != null:
+		_indicator_sprite.visible = false
+
+func _process(_delta: float) -> void:
+	_update_indicator_transform()
+
+func _update_indicator_transform() -> void:
+	if _indicator_sprite == null or not _indicator_sprite.visible:
+		return
+	_indicator_sprite.global_position = global_position + INDICATOR_OFFSET
+	_indicator_sprite.global_rotation = 0.0
+	_indicator_sprite.global_scale = INDICATOR_SCALE
 
 func interact() -> void:
 	if is_opened:
 		return
 	texture = ARMOIRE_OUVERTE_TEXTURE
 	is_opened = true
+	hide_indicator()
 	_update_key_state()
 	enable_player_movement()
 

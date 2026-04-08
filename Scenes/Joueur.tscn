@@ -139,7 +139,7 @@ shape = SubResource("RectangleShape2D_ksi5g")
 sprite_frames = SubResource("SpriteFrames_3derw")
 animation = &"marche-bas"
 
-[node name="ArmeSprite" type="Sprite2D" parent="." unique_id=1309665084]
+[node name="ArmeSprite" type="Sprite2D" parent="." unique_id=1964767758]
 visible = false
 position = Vector2(8, 4)
 rotation = 0.785398
@@ -150,7 +150,6 @@ zoom = Vector2(2, 2)
 
 [node name="VignetteLayer" type="CanvasLayer" parent="Camera2D" unique_id=1783042377]
 layer = 100
-visible = false
 
 [node name="Vignette" type="TextureRect" parent="Camera2D/VignetteLayer" unique_id=1863427510]
 anchors_preset = 15
