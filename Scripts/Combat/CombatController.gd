@@ -13,7 +13,10 @@ signal ennemi_hp_changed(current_hp: int, max_hp: int)
 @export var arme_equipee: Resource
 @export var joueur_max_hp: int = 100
 @export var ennemi_max_hp: int = 50
-@export var ennemi_attack: int = 10
+@export_subgroup("Dégâts ennemis (tour par tour)")
+@export_range(0, 999, 1) var ennemi_attack: int = 10
+@export_range(0, 999, 1) var ennemi_attack_min: int = 8
+@export_range(0, 999, 1) var ennemi_attack_max: int = 12
 
 @onready var btn_attaque: Button = $UI/BtnAttaque
 @onready var btn_armes: Button = $UI/BtnArmes
@@ -100,6 +103,10 @@ func _charger_donnees_combat() -> void:
 		ennemi_max_hp = data["monster_max_hp"] if data.has("monster_max_hp") else data["monster_hp"]
 	if data.has("monster_attack"):
 		ennemi_attack = data["monster_attack"]
+	if data.has("monster_attack_min"):
+		ennemi_attack_min = data["monster_attack_min"]
+	if data.has("monster_attack_max"):
+		ennemi_attack_max = data["monster_attack_max"]
 	if data.has("monster_name") and label_ennemi:
 		label_ennemi.text = data["monster_name"]
 	if data.has("monster_texture") and ennemi_sprite:
@@ -185,7 +192,21 @@ func _effectuer_attaque_ennemi() -> void:
 	if not combat_actif:
 		return
 	
-	var degats := ennemi_attack
+	var min_attack := ennemi_attack_min
+	var max_attack := ennemi_attack_max
+	if min_attack <= 0 and max_attack <= 0:
+		min_attack = ennemi_attack
+		max_attack = ennemi_attack
+	elif min_attack <= 0:
+		min_attack = max_attack
+	elif max_attack <= 0:
+		max_attack = min_attack
+	elif max_attack < min_attack:
+		var tmp := min_attack
+		min_attack = max_attack
+		max_attack = tmp
+	
+	var degats := randi_range(min_attack, max_attack)
 	infliger_degats_joueur(degats)
 	
 	_afficher_resultat("L'ennemi inflige %d dégâts !" % degats, Color.ORANGE_RED)
