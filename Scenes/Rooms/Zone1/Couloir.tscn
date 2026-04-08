@@ -15,6 +15,8 @@
 [ext_resource type="PackedScene" uid="uid://dtwpnedsbtj8t" path="res://Scenes/RoomSwitcher.tscn" id="11_roomswitcher"]
 [ext_resource type="Texture2D" uid="uid://b0igypedar1ji" path="res://Spritesheet/Porte/sprite_3.png" id="12_nf8g4"]
 [ext_resource type="Texture2D" uid="uid://qhjshbditm2q" path="res://Spritesheet/Torche/sprite_torche_eteint.png" id="15_nf8g4"]
+[ext_resource type="Script" uid="uid://byjoq7ur7en6q" path="res://Scripts/Interactions/Torche.gd" id="16_torche"]
+[ext_resource type="Script" uid="uid://cy4rl72bwq2j8" path="res://Scripts/Cinematiques/CinematiqueCouloir.gd" id="17_cinematique"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i2x2y"]
 size = Vector2(22, 14)
@@ -380,6 +382,8 @@ shape = SubResource("RectangleShape2D_door_switch")
 [node name="RoomSwitcher" parent="DoorCouloir" unique_id=2100000004 instance=ExtResource("11_roomswitcher")]
 monitoring = false
 monitorable = false
+roomToLoad = "uid://df4e3pfy58kpw"
+spawnPointName = "Couloir"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DoorCouloir/RoomSwitcher" unique_id=2100000005]
 shape = SubResource("RectangleShape2D_door_switch")
@@ -412,10 +416,19 @@ debug_color = Color(0.93673784, 1.8193425e-05, 0.63304937, 0.41960785)
 [node name="SpriteTorcheEteint" type="Sprite2D" parent="." unique_id=191027085]
 position = Vector2(33, -58)
 texture = ExtResource("15_nf8g4")
+script = ExtResource("16_torche")
 
 [node name="SpriteTorcheEteint2" type="Sprite2D" parent="." unique_id=217535437]
 position = Vector2(111, -59)
 texture = ExtResource("15_nf8g4")
+script = ExtResource("16_torche")
+
+[node name="CinematiqueCouloir" type="Node2D" parent="." unique_id=1374845183]
+script = ExtResource("17_cinematique")
+intro_timeline = "timeline_intro"
+post_combat_timeline = "timeline_post_intro"
+rabiacci_combat_hp = 15
+rabiacci_damage_max = 10
 
 [node name="ChunkSwitcher2" type="Area2D" parent="." unique_id=581860280]
 position = Vector2(0, 157)
