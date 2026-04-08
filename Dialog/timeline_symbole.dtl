@@ -1,6 +1,6 @@
 [style name="Dialogue"]
 join  center
-Curiosini: Un rocher immense avec un symbole de croix gravé en son centre
+Un rocher immense avec un symbole de croix gravé en son centre
 - Toucher le symbole
 	Rien ne se passe.
 - Ne pas toucher

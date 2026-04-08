@@ -5,6 +5,10 @@ extends Node2D
 @export var spawn_point_name : String = "InitialSpawn"
 @export var is_open : bool = false
 
+@export_category("Visuel")
+@export var closed_texture: Texture2D = null
+@export var open_texture: Texture2D = null
+
 @export var dialog_no_key_timeline : String = "porte_sans_clef"
 @export var dialog_with_key_timeline : String = "porte_avec_clef"
 
@@ -16,20 +20,35 @@ func update_visual_state() -> void:
 	var sprite := get_node_or_null("DoorSprite")
 	if sprite is Sprite2D:
 		if is_open:
-			print("Door is open - updating visual state")
+			if open_texture != null:
+				sprite.texture = open_texture
 		else:
-			print("Door is closed - updating visual state")
+			# Si aucune texture "fermée" n'est fournie, on garde la texture existante
+			if closed_texture != null:
+				sprite.texture = closed_texture
+	
+	_update_room_switcher_state()
+
+func _update_room_switcher_state() -> void:
+	# Optionnel : si la porte a un enfant RoomSwitcher (Area2D), on l'active uniquement quand la porte est ouverte.
+	var rs := get_node_or_null("RoomSwitcher")
+	if rs is Area2D:
+		(rs as Area2D).monitoring = is_open
+		(rs as Area2D).monitorable = is_open
+		for c in (rs as Area2D).get_children():
+			if c is CollisionShape2D:
+				(c as CollisionShape2D).disabled = not is_open
 
 func interact() -> void:
 	if is_open:
 		_perform_room_change()
 		return
 	
-	var inventaire = get_tree().get_first_node_in_group("Inventaire")
+	var inventaire: Node = get_tree().get_first_node_in_group("Inventaire")
 	if inventaire == null:
 		return
 	
-	var joueur = get_tree().get_first_node_in_group("Joueur")
+	var joueur: Node = get_tree().get_first_node_in_group("Joueur")
 	
 	# Cas 1 : le joueur n'a pas la clé -> simple description de la porte
 	if not inventaire.has_item(required_item_name, 1):
@@ -52,7 +71,7 @@ func use_key_and_open() -> void:
 	if is_open:
 		return
 	
-	var inventaire = get_tree().get_first_node_in_group("Inventaire")
+	var inventaire: Node = get_tree().get_first_node_in_group("Inventaire")
 	if inventaire == null:
 		return
 	
@@ -80,4 +99,3 @@ func _perform_room_change() -> void:
 	
 	if room_manager != null and room_manager.has_method("roomChange"):
 		room_manager.roomChange(room_to_load, spawn_point_name)
-

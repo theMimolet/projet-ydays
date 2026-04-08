@@ -314,11 +314,6 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="LabelInstructions" type="Label" parent="QTESystem/PanelQTE/VBox" unique_id=2051148348]
-layout_mode = 2
-text = "Appuie sur les touches dans l'ordre !"
-horizontal_alignment = 1
-
 [node name="ContainerTouches" type="HBoxContainer" parent="QTESystem" unique_id=177420074]
 layout_mode = 1
 anchors_preset = 8
@@ -347,7 +342,6 @@ grow_horizontal = 2
 horizontal_alignment = 1
 
 [node name="ModalVictoire" type="Panel" parent="." unique_id=561699106]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -357,7 +351,6 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="Dimmer" type="ColorRect" parent="ModalVictoire" unique_id=649565782]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -392,7 +385,7 @@ alignment = 1
 
 [node name="LabelVictoire" type="Label" parent="ModalVictoire/Center/Card/Margin/VBox" unique_id=306719386]
 layout_mode = 2
-text = "Victoire"
+text = "Victoire !"
 horizontal_alignment = 1
 vertical_alignment = 1
 

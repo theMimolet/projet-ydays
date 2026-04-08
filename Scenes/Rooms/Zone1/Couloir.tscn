@@ -10,6 +10,10 @@
 [ext_resource type="Texture2D" uid="uid://d2g7igioe3hjl" path="res://Spritesheet/Monstres/Garde-Vert/garde-vert-idle.png" id="7_nf8g4"]
 [ext_resource type="Script" uid="uid://cqvkvxb0a6j4f" path="res://Scripts/Interactions/garde_bleu.gd" id="8_4n104"]
 [ext_resource type="Texture2D" uid="uid://by7efkaivrrl7" path="res://Spritesheet/Monstres/Garde-Bleu/garde-bleu-idle.png" id="9_110hl"]
+[ext_resource type="Script" uid="uid://tcqfo61gtyfq" path="res://Scripts/Interactions/Door.gd" id="10_door"]
+[ext_resource type="Texture2D" uid="uid://i3e80hltn54o" path="res://Spritesheet/Porte/sprite_0.png" id="11_dxiqs"]
+[ext_resource type="PackedScene" uid="uid://dtwpnedsbtj8t" path="res://Scenes/RoomSwitcher.tscn" id="11_roomswitcher"]
+[ext_resource type="Texture2D" uid="uid://b0igypedar1ji" path="res://Spritesheet/Porte/sprite_3.png" id="12_nf8g4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i2x2y"]
 size = Vector2(22, 14)
@@ -159,6 +163,9 @@ size = Vector2(2.9999924, 90)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_riwp6"]
 size = Vector2(76, 68)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_door_switch"]
+size = Vector2(24, 24)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uoaph"]
 size = Vector2(72, 18)
@@ -351,8 +358,34 @@ shape = SubResource("RectangleShape2D_tldjq")
 position = Vector2(-346, 56)
 shape = SubResource("RectangleShape2D_riwp6")
 
+[node name="Couloir_vers_jardin" type="Node2D" parent="." unique_id=1135196099]
+position = Vector2(72, -33)
+
 [node name="Room1" type="Node2D" parent="." unique_id=273959893]
 position = Vector2(-272, -53)
+
+[node name="DoorCouloir" type="Node2D" parent="." unique_id=2100000000]
+position = Vector2(71.25, -69)
+script = ExtResource("10_door")
+room_to_load = "uid://df4e3pfy58kpw"
+spawn_point_name = "Couloir"
+closed_texture = ExtResource("11_dxiqs")
+open_texture = ExtResource("12_nf8g4")
+
+[node name="DoorSprite" type="Sprite2D" parent="DoorCouloir" unique_id=2100000001]
+
+[node name="StaticBody2D_Door" type="StaticBody2D" parent="DoorCouloir" unique_id=2100000002]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DoorCouloir/StaticBody2D_Door" unique_id=2100000003]
+shape = SubResource("RectangleShape2D_door_switch")
+
+[node name="RoomSwitcher" parent="DoorCouloir" unique_id=2100000004 instance=ExtResource("11_roomswitcher")]
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DoorCouloir/RoomSwitcher" unique_id=2100000005]
+shape = SubResource("RectangleShape2D_door_switch")
+disabled = true
 
 [node name="ChunkSwitcher" type="Area2D" parent="." unique_id=1205335799]
 script = ExtResource("2_dqgav")
@@ -364,10 +397,11 @@ shape = SubResource("RectangleShape2D_uoaph")
 debug_color = Color(0.93673784, 1.8193425e-05, 0.63304937, 0.41960785)
 
 [node name="ChunkSwitcher2" type="Area2D" parent="." unique_id=1671094315]
+visible = false
 position = Vector2(71.00001, -42)
 rotation = 0.7853982
 script = ExtResource("2_dqgav")
-roomToLoad = "uid://bnaxhtmt0lk42"
+roomToLoad = "uid://df4e3pfy58kpw"
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="ChunkSwitcher2" unique_id=1268668109]
 rotation = 0.7853982

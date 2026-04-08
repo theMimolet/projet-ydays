@@ -10,15 +10,11 @@
 [ext_resource type="Texture2D" uid="uid://bd24fdpyppqhx" path="res://Spritesheet/Jardin/sprite_1.png" id="7_d3dr6"]
 [ext_resource type="Texture2D" uid="uid://bra7gpdwsh762" path="res://Spritesheet/Jardin/sprite_3.png" id="8_ckfm0"]
 [ext_resource type="PackedScene" uid="uid://dtwpnedsbtj8t" path="res://Scenes/RoomSwitcher.tscn" id="9_1qsc1"]
-[ext_resource type="Texture2D" uid="uid://nljyccxrdjba" path="res://Spritesheet/Jardin/roche_0.png" id="11_3cehf"]
-[ext_resource type="Script" uid="uid://cfa506s6i6uxc" path="res://Scripts/roche_bizarre.gd" id="11_d3dr6"]
 [ext_resource type="Texture2D" uid="uid://73oxq1kl4b3" path="res://Spritesheet/Jardin/roche_1.png" id="13_ckfm0"]
 [ext_resource type="Texture2D" uid="uid://0bcivcq3p8av" path="res://Spritesheet/Jardin/Maison-04.png" id="14_d3dr6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fu3vt"]
 size = Vector2(96, 34)
-
-[sub_resource type="GDScript" id="GDScript_ih1ky"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uyj8a"]
 size = Vector2(83, 68)
@@ -133,19 +129,6 @@ texture = ExtResource("2_1qsc1")
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="VillageEnvironnement/CharacterBody2D8" unique_id=5027544]
 position = Vector2(-115.98048, 215.11555)
 polygon = PackedVector2Array(-1.5527153, 1.1743469, 4.627283, 40.31433, -20.092709, 41.34433, -20.092709, 27.954315, -43.7827, 28.984314, -41.722702, 23.83432, -32.452705, 7.3543396, -41.722702, -2.9456482, -42.7527, -28.695648, -43.7827, -47.235657, -46.872696, -54.44565, -40.692703, -61.65564, -29.362705, -65.775635, -4.6427145, -65.775635, 0.50728416, -61.65564, 13.89728, -61.65564, 23.167276, -66.80563, 44.797264, -66.80563, 72.60726, -52.38565, 73.63726, -41.055634, 64.36726, -25.605652, 72.60726, -3.975647, 73.63726, 27.954315, 49.947266, 27.954315, 49.947266, 41.34433, 5.657282, 40.31433)
-
-[node name="CharacterBody2D3" type="CharacterBody2D" parent="VillageEnvironnement" unique_id=1183712679]
-position = Vector2(-266.729, -326.83435)
-script = ExtResource("11_d3dr6")
-
-[node name="Roche0" type="Sprite2D" parent="VillageEnvironnement/CharacterBody2D3" unique_id=2039921626]
-position = Vector2(21.72902, -19.16565)
-texture = ExtResource("11_3cehf")
-script = SubResource("GDScript_ih1ky")
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="VillageEnvironnement/CharacterBody2D3" unique_id=237185136]
-position = Vector2(22.729004, -7.1656494)
-polygon = PackedVector2Array(8, 0, 0, 0, -6, 0, -11, -4, -16, -6, -15, -15, -8, -22, 0, -26, 6, -22, 12, -20, 14, -15, 16, -11, 17, -6, 12, 0)
 
 [node name="CharacterBody2D9" type="CharacterBody2D" parent="VillageEnvironnement" unique_id=2138343673]
 position = Vector2(-173.20186, -340.17224)
