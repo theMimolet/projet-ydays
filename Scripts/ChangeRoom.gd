@@ -14,7 +14,7 @@ func _ready() -> void:
 	if FileAccess.file_exists("user://savegame.save"):
 		SaveSystem.LoadFromFile()
 	else:
-		RoomLoadToCoords("res://Scenes/Rooms/Zone1/Room1.tscn", 0.0, 0.0)
+		RoomLoadToCoords("res://Scenes/Rooms/Test1.tscn", 0.0, 0.0)
 
 func AreRoomsLoaded() -> bool:
 	print(rooms.get_child_count() > 0)

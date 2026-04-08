@@ -10,6 +10,7 @@ var quantity : int = 0
 var slot_index : int = -1
 var is_dragging : bool = false
 var is_selected : bool = false
+var selection_border: Panel = null
 
 signal slot_clicked(slot : Node)
 signal slot_drag_started(slot : Node)
@@ -19,9 +20,30 @@ signal slot_right_clicked(slot : Node)
 func _ready() -> void:
 	# Style du slot
 	custom_minimum_size = Vector2(40, 40)
+	_setup_selection_border()
 	
 	# Initialiser l'affichage
 	update_display()
+
+func _setup_selection_border() -> void:
+	selection_border = Panel.new()
+	selection_border.name = "SelectionBorder"
+	selection_border.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	selection_border.set_anchors_preset(Control.PRESET_FULL_RECT)
+	selection_border.offset_left = 0
+	selection_border.offset_top = 0
+	selection_border.offset_right = 0
+	selection_border.offset_bottom = 0
+	selection_border.z_index = 10
+	
+	var border_style := StyleBoxFlat.new()
+	border_style.bg_color = Color(0, 0, 0, 0)
+	border_style.border_color = Color(1.0, 0.72, 0.2, 1.0)
+	border_style.set_border_width_all(2)
+	border_style.set_corner_radius_all(2)
+	selection_border.add_theme_stylebox_override("panel", border_style)
+	selection_border.visible = false
+	add_child(selection_border)
 
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
@@ -142,11 +164,14 @@ func set_selected(selected: bool) -> void:
 	_apply_visual_state()
 
 func _apply_visual_state() -> void:
+	if selection_border != null:
+		selection_border.visible = is_selected
+	
 	if is_dragging:
 		modulate = Color(1, 1, 1, 0.5)
 		return
 	if is_selected:
-		modulate = Color(0.75, 0.95, 1.0, 1)
+		modulate = Color(1, 1, 1, 1)
 		return
 	modulate = Color(1, 1, 1, 1)
 

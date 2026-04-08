@@ -6,9 +6,10 @@ const INVENTORY_SIZE : int = 16  # Nombre de slots d'inventaire
 
 @onready var inventairePanel : Panel = $InventairePanel
 @onready var inventaireContainer : GridContainer = inventairePanel.find_child("InventaireContainer")
-@onready var buttonCombiner: Button = inventairePanel.find_child("ButtonCombiner")
-@onready var buttonValider: Button = inventairePanel.find_child("ButtonValider")
-@onready var buttonAnnuler: Button = inventairePanel.find_child("ButtonAnnuler")
+@onready var combinePanel: Panel = find_child("CombinePanel")
+@onready var buttonCombiner: Button = find_child("ButtonCombiner")
+@onready var buttonValider: Button = find_child("ButtonValider")
+@onready var buttonAnnuler: Button = find_child("ButtonAnnuler")
 
 @onready var joueur : CharacterBody2D = $".."
 var isOpen : bool = false
@@ -25,6 +26,7 @@ var equipment_panel: Panel = null
 
 var isCombineMode: bool = false
 var selectedCombineSlots: Array[Node] = []
+@export var combineRecipes: Resource = preload("res://Data/recipes/combine_recipes.tres")
 
 signal inventaire_opened
 signal inventaire_closed
@@ -51,6 +53,8 @@ func _ready() -> void:
 	
 	# Cacher l'inventaire au départ
 	inventairePanel.visible = false
+	if combinePanel != null:
+		combinePanel.visible = false
 	isOpen = false
 
 	_setup_combine_buttons()
@@ -62,12 +66,36 @@ func _ready() -> void:
 func _setup_combine_buttons() -> void:
 	if buttonCombiner != null:
 		buttonCombiner.pressed.connect(_on_button_combiner_pressed)
+		_apply_compact_button_style(buttonCombiner)
 	if buttonValider != null:
 		buttonValider.pressed.connect(_on_button_valider_pressed)
+		_apply_compact_button_style(buttonValider)
 	if buttonAnnuler != null:
 		buttonAnnuler.pressed.connect(_on_button_annuler_pressed)
+		_apply_compact_button_style(buttonAnnuler)
 	if buttonCombiner == null or buttonValider == null or buttonAnnuler == null:
 		push_warning("Inventaire: Combine buttons not found in scene tree")
+
+func _apply_compact_button_style(button: Button) -> void:
+	if button == null:
+		return
+	button.custom_minimum_size = Vector2(64, 18)
+	button.add_theme_font_size_override("font_size", 10)
+	
+	var normal_style := StyleBoxFlat.new()
+	normal_style.bg_color = Color(0.2, 0.2, 0.2, 1.0)
+	normal_style.border_color = Color(0.4, 0.4, 0.4, 1.0)
+	normal_style.set_border_width_all(1)
+	normal_style.content_margin_left = 4
+	normal_style.content_margin_right = 4
+	normal_style.content_margin_top = 2
+	normal_style.content_margin_bottom = 2
+	
+	button.add_theme_stylebox_override("normal", normal_style)
+	button.add_theme_stylebox_override("hover", normal_style)
+	button.add_theme_stylebox_override("pressed", normal_style)
+	button.add_theme_stylebox_override("focus", normal_style)
+	button.add_theme_stylebox_override("disabled", normal_style)
 
 func create_inventory_slots() -> void:
 	"""Crée tous les slots d'inventaire"""
@@ -89,6 +117,8 @@ func create_inventory_slots() -> void:
 func toggle_inventaire() -> void:
 	isOpen = !isOpen
 	inventairePanel.visible = isOpen
+	if combinePanel != null:
+		combinePanel.visible = isOpen
 	if controles_hint != null:
 		controles_hint.visible = isOpen
 	if not isOpen and isCombineMode:
@@ -122,13 +152,14 @@ func _toggle_slot_selected(slot: Node) -> void:
 		selectedCombineSlots.append(slot)
 		if slot.has_method("set_selected"):
 			slot.set_selected(true)
+	_update_combine_ui()
 
 func _update_combine_ui() -> void:
 	if buttonCombiner != null:
 		buttonCombiner.disabled = isCombineMode
 	if buttonValider != null:
 		buttonValider.visible = isCombineMode
-		buttonValider.disabled = not isCombineMode
+		buttonValider.disabled = not isCombineMode or selectedCombineSlots.size() < 2
 	if buttonAnnuler != null:
 		buttonAnnuler.visible = isCombineMode
 		buttonAnnuler.disabled = not isCombineMode
@@ -144,8 +175,84 @@ func _on_button_valider_pressed() -> void:
 	if selectedCombineSlots.size() < 2:
 		print("Sélectionne au moins 2 items")
 		return
-	print("combinaison impossible")
+	if combineRecipes == null:
+		print("Aucune ressource de recettes assignée")
+		return
+	var selectedCounts := _build_selected_counts()
+	var recipe: Resource = combineRecipes.find_matching_recipe(selectedCounts)
+	if recipe == null:
+		print("Aucune recette ne correspond à la sélection")
+		return
+	if recipe.result_item == null:
+		print("Recette invalide: item résultat manquant")
+		return
+	if recipe.result_quantity <= 0:
+		print("Recette invalide: quantité résultat <= 0")
+		return
+	var success := _apply_recipe(recipe)
+	if not success:
+		print("Combinaison impossible (inventaire plein ou erreur de données)")
+		return
+	print("Combinaison réussie: ", recipe.result_item.item_name, " x", recipe.result_quantity)
 	_exit_combine_mode()
+
+func _build_selected_counts() -> Dictionary:
+	var counts: Dictionary = {}
+	for slot: Node in selectedCombineSlots:
+		if slot == null or slot.is_empty():
+			continue
+		var item_name: String = str(slot.item.item_name)
+		if not counts.has(item_name):
+			counts[item_name] = 0
+		counts[item_name] = int(counts[item_name]) + 1
+	return counts
+
+func _snapshot_inventory_slots() -> Array[Dictionary]:
+	var snapshot: Array[Dictionary] = []
+	for slot: Node in slots:
+		snapshot.append({
+			"slot": slot,
+			"item": slot.item,
+			"quantity": slot.quantity,
+		})
+	return snapshot
+
+func _restore_inventory_slots(snapshot: Array[Dictionary]) -> void:
+	for state in snapshot:
+		var slot: Node = state["slot"]
+		var saved_item: Item = state["item"]
+		var saved_quantity: int = state["quantity"]
+		if saved_item == null or saved_quantity <= 0:
+			slot.clear_slot()
+		else:
+			slot.set_item(saved_item, saved_quantity)
+
+func _apply_recipe(recipe: Resource) -> bool:
+	var snapshot := _snapshot_inventory_slots()
+	var remaining: Dictionary = recipe.ingredients.duplicate(true)
+	
+	for slot: Node in selectedCombineSlots:
+		if slot == null or slot.is_empty():
+			continue
+		var item_name: String = str(slot.item.item_name)
+		if not remaining.has(item_name):
+			continue
+		var needed: int = int(remaining[item_name])
+		if needed <= 0:
+			continue
+		slot.remove_item(1)
+		remaining[item_name] = needed - 1
+	
+	for key: Variant in remaining.keys():
+		if int(remaining[key]) > 0:
+			_restore_inventory_slots(snapshot)
+			return false
+	
+	if not add_item(recipe.result_item, recipe.result_quantity):
+		_restore_inventory_slots(snapshot)
+		return false
+	
+	return true
 
 func _setup_equipment_slot() -> void:
 	"""Crée le panneau d'équipement à gauche de l'inventaire"""
