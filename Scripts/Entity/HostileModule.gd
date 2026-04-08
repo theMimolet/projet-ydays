@@ -16,6 +16,10 @@ extends Node2D
 @export var monster_damage_min: int = 5
 @export var monster_damage_max: int = 10
 
+## Dialogue d'introduction au combat (optionnel, laisser vide pour aucun dialogue)
+@export_category("Dialogue")
+@export var combat_intro_dialogue: String = ""
+
 ## Stats de mouvement
 @export_category("Mouvement")
 @export var baseSpeed: float = 40.0
@@ -166,6 +170,7 @@ func _on_touche_body_entered(body: Node2D) -> void:
 		"monster_attack_min": monster_damage_min,
 		"monster_attack_max": monster_damage_max,
 		"monster_name": monster_name,
+		"combat_intro_dialogue": combat_intro_dialogue,
 	}
 
 	var parent_node := get_parent()

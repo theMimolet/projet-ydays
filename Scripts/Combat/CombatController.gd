@@ -40,6 +40,7 @@ var monster_id: String = ""
 var armes_inventaire: Array = []
 ## Liste complète des armes disponibles pour tout le combat (inventaire + arme équipée au départ)
 var armes_disponibles_combat: Array = []
+var combat_intro_dialogue: String = ""
 
 
 func _ready() -> void:
@@ -111,6 +112,9 @@ func _charger_donnees_combat() -> void:
 	if data.has("monster_name") and label_ennemi:
 		label_ennemi.text = data["monster_name"]
 	
+	if data.has("combat_intro_dialogue"):
+		combat_intro_dialogue = data["combat_intro_dialogue"]
+	
 	if data.has("monster_sprite_frames") and ennemi_sprite:
 		_setup_ennemi_animated_sprite(
 			data["monster_sprite_frames"],
@@ -126,6 +130,15 @@ func demarrer_combat(arme: Resource = null) -> void:
 	combat_actif = true
 	_cacher_resultat()
 	combat_started.emit()
+	
+	if combat_intro_dialogue != "":
+		btn_attaque.disabled = true
+		btn_armes.disabled = true
+		Dialogic.start(combat_intro_dialogue)
+		await Dialogic.timeline_ended
+		if combat_actif:
+			btn_attaque.disabled = false
+			btn_armes.disabled = false
 
 
 func terminer_combat(victoire: bool) -> void:

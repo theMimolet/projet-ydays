@@ -78,6 +78,7 @@ position = Vector2(29.5, -10)
 shape = SubResource("RectangleShape2D_6uwhf")
 
 [node name="Test" parent="." unique_id=683536570 instance=ExtResource("3_lbh5t")]
+visible = false
 position = Vector2(0, 47)
 
 [connection signal="body_entered" from="ChunkSwitcher" to="ChunkSwitcher" method="_on_body_entered"]
