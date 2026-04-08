@@ -33,10 +33,10 @@ func _get_depth_y() -> float:
 		
 		var half_height := 0.0
 		if shape is RectangleShape2D:
-			half_height = (shape as RectangleShape2D).size.y * 0.5
+			half_height = (shape as RectangleShape2D).size.y * 0.3
 		elif shape is CapsuleShape2D:
 			var cap := shape as CapsuleShape2D
-			half_height = cap.height * 0.5 + cap.radius
+			half_height = cap.height * 0.3 + cap.radius
 		elif shape is CircleShape2D:
 			half_height = (shape as CircleShape2D).radius
 		

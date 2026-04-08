@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://73oxq1kl4b3" path="res://Spritesheet/Jardin/roche_1.png" id="13_ckfm0"]
 [ext_resource type="Texture2D" uid="uid://0bcivcq3p8av" path="res://Spritesheet/Jardin/Maison-04.png" id="14_d3dr6"]
 [ext_resource type="PackedScene" uid="uid://cnrumklvfaii6" path="res://Scenes/Entities/arbre_2.tscn" id="15_ckfm0"]
+[ext_resource type="Script" uid="uid://5a4frjwcufpo" path="res://Scenes/Entities/pentacle.gd" id="15_gnbau"]
 [ext_resource type="PackedScene" uid="uid://csc2ek72pp5xe" path="res://Scenes/Entities/Roche_1.tscn" id="16_gnbau"]
 [ext_resource type="Script" uid="uid://lxoqbmkw36uj" path="res://Scenes/Entities/easter_egg.gd" id="17_gagcu"]
 [ext_resource type="PackedScene" uid="uid://cy00pimumgy7m" path="res://Scenes/Entities/roche_3.tscn" id="17_pg6xv"]
@@ -46,7 +47,7 @@ shape = SubResource("RectangleShape2D_fu3vt")
 position = Vector2(0, -42)
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="VillageEnvironnement" unique_id=1882945000]
-position = Vector2(-12.022888, 25.804886)
+position = Vector2(-12, 14)
 scale = Vector2(1.03, 1.03)
 script = ExtResource("4_fu3vt")
 
@@ -280,6 +281,7 @@ position = Vector2(21, -121)
 
 [node name="Node2D2" parent="." unique_id=787139747 instance=ExtResource("16_gnbau")]
 position = Vector2(190, -93)
+script = ExtResource("15_gnbau")
 
 [node name="Node2D3" parent="." unique_id=268138278 instance=ExtResource("17_pg6xv")]
 position = Vector2(-30, -70)
