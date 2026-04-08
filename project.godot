@@ -41,6 +41,7 @@ gdscript/warnings/untyped_declaration=1
 
 directories/dch_directory={}
 directories/dtl_directory={
+"easter_master_sword": "res://Dialog/easter_master_sword.dtl",
 "porte_avec_clef": "res://Dialog/porte_avec_clef.dtl",
 "porte_sans_clef": "res://Dialog/porte_sans_clef.dtl",
 "timeline-test": "res://Dialog/timeline-test.dtl",

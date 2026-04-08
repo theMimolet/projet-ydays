@@ -5,7 +5,7 @@ Cette fontaine permet de sauvegarder. Voulez vous sauvegarder ?
 	do SaveSystem.SaveToFile()
 	Partie sauvegardée
 - Non
+join  center
 
 
 [end_timeline]
-join  center

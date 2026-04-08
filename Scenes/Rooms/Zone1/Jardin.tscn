@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://0bcivcq3p8av" path="res://Spritesheet/Jardin/Maison-04.png" id="14_d3dr6"]
 [ext_resource type="PackedScene" uid="uid://cnrumklvfaii6" path="res://Scenes/Entities/arbre_2.tscn" id="15_ckfm0"]
 [ext_resource type="PackedScene" uid="uid://csc2ek72pp5xe" path="res://Scenes/Entities/Roche_1.tscn" id="16_gnbau"]
+[ext_resource type="Script" uid="uid://lxoqbmkw36uj" path="res://Scenes/Entities/easter_egg.gd" id="17_gagcu"]
 [ext_resource type="PackedScene" uid="uid://cy00pimumgy7m" path="res://Scenes/Entities/roche_3.tscn" id="17_pg6xv"]
 [ext_resource type="PackedScene" uid="uid://duqxtt4saqdoy" path="res://Scenes/Entities/roche_2.tscn" id="18_bwpbj"]
 
@@ -415,9 +416,10 @@ position = Vector2(535, -167)
 [node name="Arbre55" parent="." unique_id=1010984341 instance=ExtResource("12_d3dr6")]
 position = Vector2(558, -155)
 
-[node name="Node2D5" parent="." unique_id=977510401 instance=ExtResource("16_gnbau")]
-position = Vector2(601, -179)
-
 [node name="Arbre56" parent="." unique_id=876790750 instance=ExtResource("12_d3dr6")]
 position = Vector2(399, 80)
 scale = Vector2(1.3626345, 1.3626345)
+
+[node name="Node2D5" parent="." unique_id=977510401 instance=ExtResource("16_gnbau")]
+position = Vector2(601, -179)
+script = ExtResource("17_gagcu")
