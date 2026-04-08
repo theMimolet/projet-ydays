@@ -16,6 +16,20 @@ var inventory_data: Array = []  # Array de dictionnaires {item: Resource, quanti
 var equipped_weapon: Resource = null
 var player_hp_saved: int = -1  # -1 = pas sauvegardé
 
+# Flags persistants par room (ex: "couloir_torches_allumees", "rabiacci_vaincu")
+var room_flags: Dictionary = {}
+# Événement post-combat à exécuter au retour dans la scène (ex: dialogue final)
+var pending_post_combat_event: String = ""
+
+
+func set_flag(flag_name: String, value: bool = true) -> void:
+	room_flags[flag_name] = value
+
+
+func get_flag(flag_name: String) -> bool:
+	return room_flags.get(flag_name, false)
+
+
 func _ready() -> void:
 	pass
 
