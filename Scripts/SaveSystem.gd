@@ -95,6 +95,9 @@ func LoadFromFile(requestedSave: String = "") -> void:
 		return
 
 	var saveFile := FileAccess.open("user://" + requestedSave + ".save", FileAccess.READ)
+	if saveFile == null:
+		push_error("N'a pas pu ouvrir le fichier de sauvegarde!")
+		return
 	var jsonString := saveFile.get_line()
 	var json := JSON.new()
 
