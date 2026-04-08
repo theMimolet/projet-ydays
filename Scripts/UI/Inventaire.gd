@@ -6,10 +6,14 @@ const INVENTORY_SIZE : int = 16  # Nombre de slots d'inventaire
 
 @onready var inventairePanel : Panel = $InventairePanel
 @onready var inventaireContainer : GridContainer = inventairePanel.find_child("InventaireContainer")
+@onready var combinePanel: Panel = find_child("CombinePanel")
+@onready var buttonCombiner: Button = find_child("ButtonCombiner")
+@onready var buttonValider: Button = find_child("ButtonValider")
+@onready var buttonAnnuler: Button = find_child("ButtonAnnuler")
 
 @onready var joueur : CharacterBody2D = $".."
 var isOpen : bool = false
-var slots : Array = []
+var slots : Array[Node] = []
 var draggedSlot : Node = null
 
 var controles_hint: Control = null
@@ -19,6 +23,10 @@ const DRAG_PREVIEW_SIZE: Vector2 = Vector2(36, 36)
 # Slot d'équipement
 var equipment_slot: Node = null
 var equipment_panel: Panel = null
+
+var isCombineMode: bool = false
+var selectedCombineSlots: Array[Node] = []
+@export var combineRecipes: Resource = preload("res://Data/recipes/combine_recipes.tres")
 
 signal inventaire_opened
 signal inventaire_closed
@@ -45,13 +53,53 @@ func _ready() -> void:
 	
 	# Cacher l'inventaire au départ
 	inventairePanel.visible = false
+	if combinePanel != null:
+		combinePanel.visible = false
 	isOpen = false
+
+	_setup_combine_buttons()
+	_update_combine_ui()
 	
 	# Restaurer l'inventaire depuis Global si des données sont sauvegardées
 	call_deferred("_restore_from_global")
 
+func _setup_combine_buttons() -> void:
+	if buttonCombiner != null:
+		buttonCombiner.pressed.connect(_on_button_combiner_pressed)
+		_apply_compact_button_style(buttonCombiner)
+	if buttonValider != null:
+		buttonValider.pressed.connect(_on_button_valider_pressed)
+		_apply_compact_button_style(buttonValider)
+	if buttonAnnuler != null:
+		buttonAnnuler.pressed.connect(_on_button_annuler_pressed)
+		_apply_compact_button_style(buttonAnnuler)
+	if buttonCombiner == null or buttonValider == null or buttonAnnuler == null:
+		push_warning("Inventaire: Combine buttons not found in scene tree")
+
+func _apply_compact_button_style(button: Button) -> void:
+	if button == null:
+		return
+	button.custom_minimum_size = Vector2(64, 18)
+	button.add_theme_font_size_override("font_size", 10)
+	
+	var normal_style := StyleBoxFlat.new()
+	normal_style.bg_color = Color(0.2, 0.2, 0.2, 1.0)
+	normal_style.border_color = Color(0.4, 0.4, 0.4, 1.0)
+	normal_style.set_border_width_all(1)
+	normal_style.content_margin_left = 4
+	normal_style.content_margin_right = 4
+	normal_style.content_margin_top = 2
+	normal_style.content_margin_bottom = 2
+	
+	button.add_theme_stylebox_override("normal", normal_style)
+	button.add_theme_stylebox_override("hover", normal_style)
+	button.add_theme_stylebox_override("pressed", normal_style)
+	button.add_theme_stylebox_override("focus", normal_style)
+	button.add_theme_stylebox_override("disabled", normal_style)
+
 func create_inventory_slots() -> void:
 	"""Crée tous les slots d'inventaire"""
+	slots.clear()
 	for i in range(INVENTORY_SIZE):
 		var slot : Node = SLOT_SCENE.instantiate()
 		slot.slot_index = i
@@ -62,6 +110,15 @@ func create_inventory_slots() -> void:
 		inventaireContainer.add_child(slot)
 		slots.append(slot)
 
+func _ensure_slots() -> void:
+	"""Reconstruit le tableau slots si il a été corrompu (ex: après changement de scène)"""
+	if slots.size() == INVENTORY_SIZE and slots.all(func(s: Variant) -> bool: return s is Node):
+		return
+	slots.clear()
+	for child in inventaireContainer.get_children():
+		if child.has_method("is_empty"):
+			slots.append(child)
+
 #func _input(event: InputEvent) -> void:
 #	if event.is_action_pressed("Inventory"):
 #		if event.keycode == KEY_TAB:
@@ -70,8 +127,142 @@ func create_inventory_slots() -> void:
 func toggle_inventaire() -> void:
 	isOpen = !isOpen
 	inventairePanel.visible = isOpen
+	if combinePanel != null:
+		combinePanel.visible = isOpen
 	if controles_hint != null:
 		controles_hint.visible = isOpen
+	if not isOpen and isCombineMode:
+		_exit_combine_mode()
+
+func _enter_combine_mode() -> void:
+	isCombineMode = true
+	_clear_combine_selection()
+	_update_combine_ui()
+
+func _exit_combine_mode() -> void:
+	isCombineMode = false
+	_clear_combine_selection()
+	_update_combine_ui()
+
+func _clear_combine_selection() -> void:
+	for slot in selectedCombineSlots:
+		if slot != null and slot.has_method("set_selected"):
+			slot.set_selected(false)
+	selectedCombineSlots.clear()
+
+func _toggle_slot_selected(slot: Node) -> void:
+	if slot == null or slot.is_empty():
+		return
+	var isAlreadySelected := slot in selectedCombineSlots
+	if isAlreadySelected:
+		selectedCombineSlots.erase(slot)
+		if slot.has_method("set_selected"):
+			slot.set_selected(false)
+	else:
+		selectedCombineSlots.append(slot)
+		if slot.has_method("set_selected"):
+			slot.set_selected(true)
+	_update_combine_ui()
+
+func _update_combine_ui() -> void:
+	if buttonCombiner != null:
+		buttonCombiner.disabled = isCombineMode
+	if buttonValider != null:
+		buttonValider.visible = isCombineMode
+		buttonValider.disabled = not isCombineMode or selectedCombineSlots.size() < 2
+	if buttonAnnuler != null:
+		buttonAnnuler.visible = isCombineMode
+		buttonAnnuler.disabled = not isCombineMode
+
+func _on_button_combiner_pressed() -> void:
+	if isOpen:
+		_enter_combine_mode()
+
+func _on_button_annuler_pressed() -> void:
+	_exit_combine_mode()
+
+func _on_button_valider_pressed() -> void:
+	if selectedCombineSlots.size() < 2:
+		print("Sélectionne au moins 2 items")
+		return
+	if combineRecipes == null:
+		print("Aucune ressource de recettes assignée")
+		return
+	var selectedCounts := _build_selected_counts()
+	var recipe: Resource = combineRecipes.find_matching_recipe(selectedCounts)
+	if recipe == null:
+		print("Aucune recette ne correspond à la sélection")
+		return
+	if recipe.result_item == null:
+		print("Recette invalide: item résultat manquant")
+		return
+	if recipe.result_quantity <= 0:
+		print("Recette invalide: quantité résultat <= 0")
+		return
+	var success := _apply_recipe(recipe)
+	if not success:
+		print("Combinaison impossible (inventaire plein ou erreur de données)")
+		return
+	print("Combinaison réussie: ", recipe.result_item.item_name, " x", recipe.result_quantity)
+	_exit_combine_mode()
+
+func _build_selected_counts() -> Dictionary:
+	var counts: Dictionary = {}
+	for slot: Node in selectedCombineSlots:
+		if slot == null or slot.is_empty():
+			continue
+		var item_name: String = str(slot.item.item_name)
+		if not counts.has(item_name):
+			counts[item_name] = 0
+		counts[item_name] = int(counts[item_name]) + 1
+	return counts
+
+func _snapshot_inventory_slots() -> Array[Dictionary]:
+	var snapshot: Array[Dictionary] = []
+	for slot: Node in slots:
+		snapshot.append({
+			"slot": slot,
+			"item": slot.item,
+			"quantity": slot.quantity,
+		})
+	return snapshot
+
+func _restore_inventory_slots(snapshot: Array[Dictionary]) -> void:
+	for state in snapshot:
+		var slot: Node = state["slot"]
+		var saved_item: Item = state["item"]
+		var saved_quantity: int = state["quantity"]
+		if saved_item == null or saved_quantity <= 0:
+			slot.clear_slot()
+		else:
+			slot.set_item(saved_item, saved_quantity)
+
+func _apply_recipe(recipe: Resource) -> bool:
+	var snapshot := _snapshot_inventory_slots()
+	var remaining: Dictionary = recipe.ingredients.duplicate(true)
+	
+	for slot: Node in selectedCombineSlots:
+		if slot == null or slot.is_empty():
+			continue
+		var item_name: String = str(slot.item.item_name)
+		if not remaining.has(item_name):
+			continue
+		var needed: int = int(remaining[item_name])
+		if needed <= 0:
+			continue
+		slot.remove_item(1)
+		remaining[item_name] = needed - 1
+	
+	for key: Variant in remaining.keys():
+		if int(remaining[key]) > 0:
+			_restore_inventory_slots(snapshot)
+			return false
+	
+	if not add_item(recipe.result_item, recipe.result_quantity):
+		_restore_inventory_slots(snapshot)
+		return false
+	
+	return true
 
 func _setup_equipment_slot() -> void:
 	"""Crée le panneau d'équipement à gauche de l'inventaire"""
@@ -196,10 +387,11 @@ func close_inventaire() -> void:
 
 # ============== GESTION DES ITEMS ==============
 
-func add_item(item : Item, quantity: int = 1) -> bool:
+func add_item(item : Resource, quantity: int = 1) -> bool:
 	"""Ajoute un item à l'inventaire. Retourne true si réussi"""
+	_ensure_slots()
 	# Chercher un slot avec le même item qui peut encore en contenir
-	for slot : Node in slots:
+	for slot in slots:
 		if not slot.is_empty() and slot.item.item_name == item.item_name:
 			var remaining: int = slot.item.max_stack - slot.quantity
 			if remaining > 0:
@@ -211,7 +403,7 @@ func add_item(item : Item, quantity: int = 1) -> bool:
 					return true
 
 	# Chercher un slot vide
-	for slot : Node in slots:
+	for slot in slots:
 		if slot.is_empty():
 			var to_add: int = min(quantity, item.max_stack)
 			slot.set_item(item, to_add)
@@ -227,7 +419,7 @@ func remove_item(item_name: String, quantity: int = 1) -> bool:
 	"""Retire un item de l'inventaire. Retourne true si réussi"""
 	var remaining: int = quantity
 	
-	for slot : Node in slots:
+	for slot in slots:
 		if not slot.is_empty() and slot.item.item_name == item_name:
 			var to_remove: int = min(remaining, slot.quantity)
 			slot.remove_item(to_remove)
@@ -240,7 +432,7 @@ func remove_item(item_name: String, quantity: int = 1) -> bool:
 func has_item(item_name: String, quantity: int = 1) -> bool:
 	"""Vérifie si l'inventaire contient l'item en quantité suffisante"""
 	var total : int = 0
-	for slot : Node in slots:
+	for slot in slots:
 		if not slot.is_empty() and slot.item.item_name == item_name:
 			total += slot.quantity
 	return total >= quantity
@@ -248,7 +440,7 @@ func has_item(item_name: String, quantity: int = 1) -> bool:
 func get_item_count(item_name: String) -> int:
 	"""Retourne le nombre total d'un item dans l'inventaire"""
 	var total : int = 0
-	for slot : Node in slots:
+	for slot in slots:
 		if not slot.is_empty() and slot.item.item_name == item_name:
 			total += slot.quantity
 	return total
@@ -257,6 +449,9 @@ func get_item_count(item_name: String) -> int:
 
 func _on_slot_clicked(slot : Node) -> void:
 	"""Gère le clic sur un slot"""
+	if isCombineMode:
+		_toggle_slot_selected(slot)
+		return
 	if draggedSlot == null and not slot.is_empty():
 		# Vérifier si Shift est pressé pour le split
 		if Input.is_key_pressed(KEY_SHIFT) and slot.quantity > 1:
@@ -280,6 +475,9 @@ func _on_slot_clicked(slot : Node) -> void:
 
 func _on_slot_dropped(source_slot : Node, target_slot : Node) -> void:
 	"""Gère le drop d'un slot vers un autre"""
+	if isCombineMode:
+		_cleanup_drag(source_slot)
+		return
 	if source_slot == null or target_slot == null:
 		_cleanup_drag(source_slot)
 		return
@@ -337,7 +535,7 @@ func _find_nearest_empty_slot(reference_slot : Node) -> Node:
 	var ref_index: int = reference_slot.slot_index
 	var ref_pos: Vector2 = _get_slot_position_in_container(ref_index)
 	
-	for slot : Node in slots:
+	for slot in slots:
 		if slot.is_empty():
 			var slot_pos: Vector2 = _get_slot_position_in_container(slot.slot_index)
 			var distance: float = ref_pos.distance_to(slot_pos)
@@ -369,6 +567,8 @@ func _get_slot_position_in_container(slot_index: int) -> Vector2:
 
 func _on_slot_right_clicked(slot : Node) -> void:
 	"""Gère le clic droit sur un slot pour drop l'item sur la map"""
+	if isCombineMode:
+		return
 	if slot.is_empty():
 		return
 	
@@ -476,6 +676,8 @@ func _add_drop_light_if_needed(item: Item, parent_node: Node) -> void:
 
 func _on_equipment_slot_clicked(slot: Node) -> void:
 	"""Gère le clic sur le slot d'équipement"""
+	if isCombineMode:
+		return
 	if draggedSlot == null and not slot.is_empty():
 		# Commencer le drag depuis le slot d'équipement
 		draggedSlot = slot
@@ -488,6 +690,9 @@ func _on_equipment_slot_clicked(slot: Node) -> void:
 
 func _on_equipment_slot_dropped(source_slot: Node, target_slot: Node) -> void:
 	"""Gère le drop depuis le slot d'équipement"""
+	if isCombineMode:
+		_cleanup_drag(source_slot)
+		return
 	if source_slot == null:
 		_cleanup_drag(source_slot)
 		return
@@ -524,6 +729,8 @@ func _on_equipment_slot_dropped(source_slot: Node, target_slot: Node) -> void:
 
 func _on_slot_dropped_to_equipment(source_slot: Node, _target_slot: Node) -> void:
 	"""Gère le drop d'un slot d'inventaire vers le slot d'équipement"""
+	if isCombineMode:
+		return
 	if source_slot == null or source_slot.is_empty():
 		return
 	

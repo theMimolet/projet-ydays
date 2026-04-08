@@ -18,10 +18,27 @@ func getSave() -> Dictionary:
 		"player_pos_x" : joueur.position.x,
 		"player_pos_y" : joueur.position.y,
 		"current_health" : joueur.currentHP,
-		"current_inventory" : joueur.inventory.slots,
+		"current_inventory" : _serialize_inventory(joueur.inventory),
 		"current_scene" : Global.currentRoom
 	}
 	return save_dict
+
+
+func _serialize_inventory(inventaire: Node) -> Array:
+	"""Sérialise le contenu des slots (pas les nodes eux-mêmes)"""
+	var data: Array = []
+	if inventaire == null or not "slots" in inventaire:
+		return data
+	for slot in inventaire.slots:
+		if slot is Object and slot.has_method("is_empty") and not slot.is_empty():
+			data.append({
+				"item_name": slot.item.item_name if "item_name" in slot.item else "",
+				"quantity": slot.quantity,
+				"slot_index": slot.slot_index if "slot_index" in slot else -1,
+			})
+		else:
+			data.append(null)
+	return data
 
 func SaveToFile() -> void:
 	var save_file := FileAccess.open("user://savegame.save", FileAccess.WRITE)
@@ -68,7 +85,10 @@ func ApplyData(node_data : Dictionary) -> void :
 	var joueur: Node = get_tree().get_first_node_in_group("Joueur")
 	var RoomManager: Node = get_tree().get_first_node_in_group("RoomManager")
 	joueur.currentHP = node_data["current_health"]
-	joueur.inventory.slots = node_data["current_inventory"]
+	# Ne plus écraser slots — la restauration d'inventaire complet nécessite
+	# un système de sérialisation des ressources Item (à implémenter plus tard).
+	# Pour l'instant on ne restaure pas l'inventaire depuis le fichier de sauvegarde
+	# afin de ne pas corrompre le tableau de slots.
 	if RoomManager.AreRoomsLoaded() : 
 		RoomManager.RoomChangeCoords(node_data["current_scene"], node_data["player_pos_x"], node_data["player_pos_y"])
 	else : 

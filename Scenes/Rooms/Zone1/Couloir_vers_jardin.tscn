@@ -27,8 +27,8 @@ position = Vector2(-4, 143)
 [node name="ChunkSwitcher2" type="Area2D" parent="." unique_id=1370746157]
 position = Vector2(4, 17)
 script = ExtResource("2_8xl3b")
-roomToLoad = "uid://s1w0gr0l2n64"
-spawnPointName = "Jardin_sud"
+roomToLoad = "uid://drhfsi6nm5qod"
+spawnPointName = "Couloir_vers_jardin"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ChunkSwitcher2" unique_id=442162493]
 position = Vector2(-1, 17)

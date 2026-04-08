@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://i3e80hltn54o" path="res://Spritesheet/Porte/sprite_0.png" id="11_dxiqs"]
 [ext_resource type="PackedScene" uid="uid://dtwpnedsbtj8t" path="res://Scenes/RoomSwitcher.tscn" id="11_roomswitcher"]
 [ext_resource type="Texture2D" uid="uid://b0igypedar1ji" path="res://Spritesheet/Porte/sprite_3.png" id="12_nf8g4"]
+[ext_resource type="Texture2D" uid="uid://qhjshbditm2q" path="res://Spritesheet/Torche/sprite_torche_eteint.png" id="15_nf8g4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i2x2y"]
 size = Vector2(22, 14)
@@ -153,7 +154,7 @@ size = Vector2(19, 396)
 size = Vector2(18, 168)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tldjq"]
-size = Vector2(16, 68)
+size = Vector2(16, 72)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_arfx5"]
 size = Vector2(43, 8)
@@ -346,7 +347,7 @@ shape = SubResource("RectangleShape2D_tldjq")
 [node name="StaticBody2D2" type="StaticBody2D" parent="Colliders" unique_id=149758167]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/StaticBody2D2" unique_id=1873617953]
-position = Vector2(-392, -12)
+position = Vector2(-392, -14)
 shape = SubResource("RectangleShape2D_tldjq")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Colliders" unique_id=2051329165]
@@ -408,5 +409,25 @@ position = Vector2(-2, 2)
 shape = SubResource("RectangleShape2D_uoaph")
 debug_color = Color(0.93673784, 1.8193425e-05, 0.63304937, 0.41960785)
 
+[node name="SpriteTorcheEteint" type="Sprite2D" parent="." unique_id=191027085]
+position = Vector2(33, -58)
+texture = ExtResource("15_nf8g4")
+
+[node name="SpriteTorcheEteint2" type="Sprite2D" parent="." unique_id=217535437]
+position = Vector2(111, -59)
+texture = ExtResource("15_nf8g4")
+
+[node name="ChunkSwitcher2" type="Area2D" parent="." unique_id=581860280]
+position = Vector2(0, 157)
+script = ExtResource("2_dqgav")
+roomToLoad = "uid://cenwwmjs8xrdg"
+spawnPointName = "Couloir"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ChunkSwitcher2" unique_id=1122561364]
+position = Vector2(-272, -80)
+shape = SubResource("RectangleShape2D_uoaph")
+debug_color = Color(0.93673784, 1.8193425e-05, 0.63304937, 0.41960785)
+
 [connection signal="body_entered" from="ChunkSwitcher" to="ChunkSwitcher" method="_on_body_entered"]
 [connection signal="body_entered" from="ChunkSwitcherRoom2" to="ChunkSwitcherRoom2" method="_on_body_entered"]
+[connection signal="body_entered" from="ChunkSwitcher2" to="ChunkSwitcher2" method="_on_body_entered"]

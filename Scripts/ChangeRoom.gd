@@ -11,10 +11,14 @@ var isLoading : bool = false
 @onready var chat : Node2D = $"../Chat" 
 
 func _ready() -> void:
-	if FileAccess.file_exists("user://savegame.save"):
-		SaveSystem.LoadFromFile()
-	else:
-		RoomLoadToCoords("res://Scenes/Rooms/Zone1/Jardin.tscn", 0.0, 0.0)
+	# Retour de combat : charger la room où le joueur était + sa position exacte
+	if Global.player_return_position != Vector2.ZERO and Global.currentRoom != "":
+		var pos := Global.player_return_position
+		Global.player_return_position = Vector2.ZERO
+		RoomLoadToCoords(Global.currentRoom, pos.x, pos.y)
+		return
+	
+	RoomLoadToCoords("res://Scenes/Rooms/Zone1/Couloir.tscn", 0.0, 0.0)
 
 func AreRoomsLoaded() -> bool:
 	print(rooms.get_child_count() > 0)

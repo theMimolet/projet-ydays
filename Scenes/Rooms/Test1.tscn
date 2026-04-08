@@ -4,11 +4,11 @@
 [ext_resource type="PackedScene" uid="uid://dtwpnedsbtj8t" path="res://Scenes/RoomSwitcher.tscn" id="2_ljmtj"]
 [ext_resource type="PackedScene" uid="uid://cqmqkjfkawmgy" path="res://Scenes/Entities/Overworld/OWTest.tscn" id="4_430hh"]
 [ext_resource type="Script" uid="uid://bt8sfngqeu8gg" path="res://Scripts/Interactions/Coffre.gd" id="4_o5rc3"]
-[ext_resource type="Script" uid="uid://bt8sfngqeu8gg" path="res://Scripts/Interactions/Coffre.gd" id="4_o5rc3"]
 [ext_resource type="Texture2D" uid="uid://0xkmm505a4o1" path="res://Spritesheet/Torche/sprite_torche.png" id="5_430hh"]
 [ext_resource type="Script" uid="uid://dbk8n27v523gi" path="res://Scripts/Items/CollectableItem.gd" id="5_ftqpf"]
 [ext_resource type="Script" uid="uid://dnll4e7su4a43" path="res://Scripts/DamageArea.gd" id="6_damage"]
-[ext_resource type="Script" uid="uid://weqsau6b8m2t" path="res://Scripts/Entity/HostileModule.gd" id="8_yto7a"]
+[ext_resource type="Texture2D" uid="uid://wp0i44itgihj" path="res://Spritesheet/briquet/silex.png" id="8_d7sbv"]
+[ext_resource type="Texture2D" uid="uid://bug0mcjhscsab" path="res://Spritesheet/briquet/fer.png" id="9_eihsg"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_o5rc3"]
 
@@ -90,6 +90,11 @@ animations = [{
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_damage"]
 size = Vector2(50, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jmmq1"]
+size = Vector2(16, 15)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vnkex"]
 
 [node name="Test1" type="Node2D" unique_id=415643160]
 
@@ -181,10 +186,27 @@ offset_right = 25.0
 offset_bottom = 25.0
 color = Color(1, 0, 0, 0.5)
 
-[node name="ChunkSwitcher2" parent="." unique_id=1489420599 instance=ExtResource("2_ljmtj")]
-position = Vector2(124, 163)
-roomToLoad = "uid://s1w0gr0l2n64"
-spawnPointName = "Jardin_Sud"
+[node name="Silex" type="Sprite2D" parent="." unique_id=1799100659]
+position = Vector2(-51, 43)
+scale = Vector2(0.36, 0.36)
+texture = ExtResource("8_d7sbv")
+script = ExtResource("5_ftqpf")
+item_name_override = "Silex"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ChunkSwitcher2" unique_id=1736414772]
-shape = SubResource("RectangleShape2D_q8n12")
+[node name="StaticBody2D" type="StaticBody2D" parent="Silex" unique_id=1437148033]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Silex/StaticBody2D" unique_id=646413382]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_jmmq1")
+
+[node name="Fer" type="Sprite2D" parent="." unique_id=1208722579]
+position = Vector2(-30.52, 42.99)
+scale = Vector2(0.345, 0.345)
+texture = ExtResource("9_eihsg")
+script = ExtResource("5_ftqpf")
+item_name_override = "Fer"
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Fer" unique_id=444496670]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Fer/StaticBody2D" unique_id=2110693894]
+shape = SubResource("CircleShape2D_vnkex")

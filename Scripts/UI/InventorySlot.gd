@@ -9,6 +9,8 @@ var item : Item
 var quantity : int = 0
 var slot_index : int = -1
 var is_dragging : bool = false
+var is_selected : bool = false
+var selection_border: Panel = null
 
 signal slot_clicked(slot : Node)
 signal slot_drag_started(slot : Node)
@@ -18,9 +20,30 @@ signal slot_right_clicked(slot : Node)
 func _ready() -> void:
 	# Style du slot
 	custom_minimum_size = Vector2(40, 40)
+	_setup_selection_border()
 	
 	# Initialiser l'affichage
 	update_display()
+
+func _setup_selection_border() -> void:
+	selection_border = Panel.new()
+	selection_border.name = "SelectionBorder"
+	selection_border.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	selection_border.set_anchors_preset(Control.PRESET_FULL_RECT)
+	selection_border.offset_left = 0
+	selection_border.offset_top = 0
+	selection_border.offset_right = 0
+	selection_border.offset_bottom = 0
+	selection_border.z_index = 10
+	
+	var border_style := StyleBoxFlat.new()
+	border_style.bg_color = Color(0, 0, 0, 0)
+	border_style.border_color = Color(1.0, 0.72, 0.2, 1.0)
+	border_style.set_border_width_all(2)
+	border_style.set_corner_radius_all(2)
+	selection_border.add_theme_stylebox_override("panel", border_style)
+	selection_border.visible = false
+	add_child(selection_border)
 
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
@@ -119,9 +142,27 @@ func update_display() -> void:
 	if item != null and item.item_texture != null:
 		item_texture.texture = item.item_texture
 		item_texture.visible = true
+		var icon_scale := 1.0
+		if "inventory_icon_scale" in item and item.inventory_icon_scale != Vector2.ZERO:
+			icon_scale = clamp(item.inventory_icon_scale.x, 0.1, 1.5)
+		# Garder l'icône centrée en ajustant les marges du TextureRect
+		var base_margin := 2.0
+		var inner_size := 36.0
+		var extra_margin := (inner_size * (1.0 - icon_scale)) / 2.0
+		var final_margin := base_margin + extra_margin
+		item_texture.offset_left = final_margin
+		item_texture.offset_top = final_margin
+		item_texture.offset_right = -final_margin
+		item_texture.offset_bottom = -final_margin
+		item_texture.scale = Vector2.ONE
 	else:
 		item_texture.texture = null
 		item_texture.visible = false
+		item_texture.offset_left = 2.0
+		item_texture.offset_top = 2.0
+		item_texture.offset_right = -2.0
+		item_texture.offset_bottom = -2.0
+		item_texture.scale = Vector2.ONE
 	
 	# Afficher la quantité si > 1
 	if quantity > 1:
@@ -134,10 +175,23 @@ func update_display() -> void:
 func set_dragging(dragging: bool) -> void:
 	"""Active ou désactive l'état de drag pour le feedback visuel"""
 	is_dragging = dragging
-	if dragging:
+	_apply_visual_state()
+
+func set_selected(selected: bool) -> void:
+	is_selected = selected
+	_apply_visual_state()
+
+func _apply_visual_state() -> void:
+	if selection_border != null:
+		selection_border.visible = is_selected
+	
+	if is_dragging:
 		modulate = Color(1, 1, 1, 0.5)
-	else:
+		return
+	if is_selected:
 		modulate = Color(1, 1, 1, 1)
+		return
+	modulate = Color(1, 1, 1, 1)
 
 func split_stack() -> bool:
 	"""Divise une pile en retirant 1 item. Retourne true si réussi"""

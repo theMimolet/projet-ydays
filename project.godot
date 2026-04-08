@@ -39,14 +39,22 @@ gdscript/warnings/untyped_declaration=1
 
 [dialogic]
 
-directories/dch_directory={}
+directories/dch_directory={
+"Curiosini": "res://Spritesheet/Monstres/Garde-Bleu/Curiosini.dch",
+"Garde-Jaune/Curiosini": "res://Spritesheet/Monstres/Garde-Jaune/Curiosini.dch",
+"Mefianzo": "res://Spritesheet/Monstres/Garde-Vert/Mefianzo.dch",
+"Rabiacci": "res://Spritesheet/Monstres/Garde-Rouge/Rabiacci.dch",
+"Tristan": "res://Spritesheet/Monstres/Garde-Bleu/Tristan.dch"
+}
 directories/dtl_directory={
+"easter_master_sword": "res://Dialog/easter_master_sword.dtl",
 "porte_avec_clef": "res://Dialog/porte_avec_clef.dtl",
 "porte_sans_clef": "res://Dialog/porte_sans_clef.dtl",
 "timeline-test": "res://Dialog/timeline-test.dtl",
 "timeline_chevalier": "res://Dialog/timeline_chevalier.dtl",
 "timeline_colere": "res://Dialog/timeline_colere.dtl",
 "timeline_curieux": "res://Dialog/timeline_curieux.dtl",
+"timeline_intro": "res://Dialog/timeline_intro.dtl",
 "timeline_save": "res://Dialog/timeline_save.dtl",
 "timeline_symbole": "res://Dialog/timeline_symbole.dtl",
 "timeline_triste": "res://Dialog/timeline_triste.dtl"

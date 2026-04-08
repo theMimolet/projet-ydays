@@ -7,14 +7,16 @@
 [ext_resource type="Texture2D" uid="uid://bgisnbtex0k1t" path="res://Spritesheet/Jardin/etang2.png" id="7_3cehf"]
 [ext_resource type="Texture2D" uid="uid://bra7gpdwsh762" path="res://Spritesheet/Jardin/sprite_3.png" id="8_ckfm0"]
 [ext_resource type="PackedScene" uid="uid://dtwpnedsbtj8t" path="res://Scenes/RoomSwitcher.tscn" id="9_1qsc1"]
-[ext_resource type="PackedScene" uid="uid://bog3nlg1dammx" path="res://Scenes/Entities/Maison.tscn" id="9_uyj8a"]
+[ext_resource type="PackedScene" path="res://Scenes/Entities/Maison.tscn" id="9_uyj8a"]
 [ext_resource type="PackedScene" uid="uid://dde6b0rh2u83i" path="res://Scenes/Entities/Maisons/Maison01.tscn" id="10_maison01_scene"]
 [ext_resource type="PackedScene" path="res://Scenes/Entities/Maisons/Maison03.tscn" id="11_maison03_scene"]
 [ext_resource type="PackedScene" uid="uid://cup422xt4plwo" path="res://Scenes/Entities/arbre_1.tscn" id="12_d3dr6"]
 [ext_resource type="PackedScene" uid="uid://8d20kg4hipsm" path="res://Scenes/Entities/Maisons/Maison04.tscn" id="12_maison04_scene"]
 [ext_resource type="Texture2D" uid="uid://73oxq1kl4b3" path="res://Spritesheet/Jardin/roche_1.png" id="13_ckfm0"]
 [ext_resource type="PackedScene" uid="uid://cnrumklvfaii6" path="res://Scenes/Entities/arbre_2.tscn" id="15_ckfm0"]
-[ext_resource type="PackedScene" uid="uid://d0o0ydtuevgo5" path="res://Scenes/Entities/Roche_1.tscn" id="16_gnbau"]
+[ext_resource type="Script" uid="uid://5a4frjwcufpo" path="res://Scenes/Entities/pentacle.gd" id="15_gnbau"]
+[ext_resource type="PackedScene" uid="uid://csc2ek72pp5xe" path="res://Scenes/Entities/Roche_1.tscn" id="16_gnbau"]
+[ext_resource type="Script" uid="uid://lxoqbmkw36uj" path="res://Scenes/Entities/easter_egg.gd" id="17_gagcu"]
 [ext_resource type="PackedScene" uid="uid://cy00pimumgy7m" path="res://Scenes/Entities/roche_3.tscn" id="17_pg6xv"]
 [ext_resource type="PackedScene" uid="uid://duqxtt4saqdoy" path="res://Scenes/Entities/roche_2.tscn" id="18_bwpbj"]
 
@@ -36,8 +38,8 @@ texture = ExtResource("8_ckfm0")
 
 [node name="ChunkSwitcher" parent="VillageEnvironnement" unique_id=1937074679 instance=ExtResource("9_1qsc1")]
 position = Vector2(-1, 376)
-roomToLoad = "uid://cepwe66vv24ij"
-spawnPointName = "Test2"
+roomToLoad = "uid://df4e3pfy58kpw"
+spawnPointName = "Couloir2"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="VillageEnvironnement/ChunkSwitcher" unique_id=1784471208]
 shape = SubResource("RectangleShape2D_fu3vt")
@@ -46,7 +48,7 @@ shape = SubResource("RectangleShape2D_fu3vt")
 position = Vector2(0, -42)
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="VillageEnvironnement" unique_id=1882945000]
-position = Vector2(-12.022888, 25.804886)
+position = Vector2(-12, 14)
 scale = Vector2(1.03, 1.03)
 script = ExtResource("4_fu3vt")
 
@@ -192,6 +194,30 @@ texture = ExtResource("13_ckfm0")
 position = Vector2(26.999985, -406)
 scale = Vector2(0.445, 0.44500005)
 
+[node name="Arbre1" parent="VillageEnvironnement" unique_id=1713656411 instance=ExtResource("12_d3dr6")]
+position = Vector2(129, 221)
+
+[node name="Arbre2" parent="VillageEnvironnement" unique_id=1781163069 instance=ExtResource("15_ckfm0")]
+position = Vector2(125, 240)
+
+[node name="Arbre3" parent="VillageEnvironnement" unique_id=335841838 instance=ExtResource("15_ckfm0")]
+position = Vector2(158, 209)
+
+[node name="Arbre4" parent="VillageEnvironnement" unique_id=445046312 instance=ExtResource("15_ckfm0")]
+position = Vector2(153, 228)
+
+[node name="Arbre5" parent="VillageEnvironnement" unique_id=1752220076 instance=ExtResource("15_ckfm0")]
+position = Vector2(156, 246)
+
+[node name="Arbre6" parent="VillageEnvironnement" unique_id=2144598342 instance=ExtResource("15_ckfm0")]
+position = Vector2(180, 228)
+
+[node name="Arbre7" parent="VillageEnvironnement" unique_id=413736098 instance=ExtResource("15_ckfm0")]
+position = Vector2(198, 202)
+
+[node name="Arbre8" parent="VillageEnvironnement" unique_id=1501535055 instance=ExtResource("12_d3dr6")]
+position = Vector2(191, 244)
+
 [node name="Arbre1" parent="." unique_id=178246711 instance=ExtResource("12_d3dr6")]
 position = Vector2(-44, -227)
 
@@ -239,6 +265,7 @@ position = Vector2(21, -121)
 
 [node name="Node2D2" parent="." unique_id=787139747 instance=ExtResource("16_gnbau")]
 position = Vector2(190, -93)
+script = ExtResource("15_gnbau")
 
 [node name="Node2D3" parent="." unique_id=268138278 instance=ExtResource("17_pg6xv")]
 position = Vector2(-30, -70)
@@ -294,7 +321,7 @@ position = Vector2(-3, 233)
 [node name="Arbre30" parent="." unique_id=1053189962 instance=ExtResource("12_d3dr6")]
 position = Vector2(-24, 258)
 
-[node name="Arbre31" parent="." unique_id=1713656411 instance=ExtResource("12_d3dr6")]
+[node name="Arbre31" parent="." unique_id=228096140 instance=ExtResource("12_d3dr6")]
 position = Vector2(12, 262)
 
 [node name="Arbre32" parent="." unique_id=150864329 instance=ExtResource("12_d3dr6")]
@@ -375,9 +402,10 @@ position = Vector2(535, -167)
 [node name="Arbre55" parent="." unique_id=1010984341 instance=ExtResource("12_d3dr6")]
 position = Vector2(558, -155)
 
-[node name="Node2D5" parent="." unique_id=977510401 instance=ExtResource("16_gnbau")]
-position = Vector2(601, -179)
-
 [node name="Arbre56" parent="." unique_id=876790750 instance=ExtResource("12_d3dr6")]
 position = Vector2(399, 80)
 scale = Vector2(1.3626345, 1.3626345)
+
+[node name="Node2D5" parent="." unique_id=977510401 instance=ExtResource("16_gnbau")]
+position = Vector2(601, -179)
+script = ExtResource("17_gagcu")

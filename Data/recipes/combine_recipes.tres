@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="CombineRecipes" format=3 uid="uid://dnjmt0b8paiq3"]
+
+[ext_resource type="Script" uid="uid://b54ewwo40n640" path="res://Scripts/Items/CombineRecipes.gd" id="1_combine_recipes"]
+[ext_resource type="Script" uid="uid://djls8iddh1gbp" path="res://Scripts/Items/CombineRecipe.gd" id="2_combine_recipe"]
+[ext_resource type="Resource" uid="uid://b7p0jkgqxlbhq" path="res://Resources/Armes/BloodSword.tres" id="3_result_item"]
+[ext_resource type="Resource" path="res://Items/briquet.tres" id="4_result_briquet"]
+
+[sub_resource type="Resource" id="Recipe_dague_key_bloodsword"]
+script = ExtResource("2_combine_recipe")
+ingredients = {
+"Dague": 1,
+"key_zone1": 1
+}
+result_item = ExtResource("3_result_item")
+
+[sub_resource type="Resource" id="Recipe_fer_silex_briquet"]
+script = ExtResource("2_combine_recipe")
+ingredients = {
+"Fer": 1,
+"Silex": 1
+}
+result_item = ExtResource("4_result_briquet")
+
+[resource]
+script = ExtResource("1_combine_recipes")
+recipes = Array[Resource]([SubResource("Recipe_dague_key_bloodsword"), SubResource("Recipe_fer_silex_briquet")])

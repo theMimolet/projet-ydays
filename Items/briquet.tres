@@ -1,0 +1,16 @@
+[gd_resource type="Resource" format=3 uid="uid://b3bhakspoyos1"]
+
+[ext_resource type="Script" path="res://Scripts/Items/Item.gd" id="1_item"]
+[ext_resource type="Texture2D" path="res://Spritesheet/briquet/briqué.png" id="2_texture"]
+
+[resource]
+script = ExtResource("1_item")
+item_name = "briqué"
+item_description = "Un briqué fabriqué avec du fer et du silex."
+item_texture = ExtResource("2_texture")
+max_stack = 1
+item_type = "misc"
+sprite_frames = null
+animation_name = "default"
+world_scale = Vector2(0.35, 0.35)
+inventory_icon_scale = Vector2(0.7, 0.7)

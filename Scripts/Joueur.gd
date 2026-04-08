@@ -325,19 +325,22 @@ func _try_restore_combat_position() -> void:
 	if Global.player_return_position == Vector2.ZERO:
 		return
 	
-	# Se cacher pendant le chargement
 	visible = false
 	
-	# Attendre que le RoomManager ait fini de charger
+	# Attendre que le RoomManager ait fini de charger (s'il existe et charge)
 	var room_manager := get_tree().get_first_node_in_group("RoomManager")
 	if room_manager and room_manager.has_signal("loaded"):
-		await room_manager.loaded
+		if "isLoading" in room_manager and room_manager.isLoading:
+			await room_manager.loaded
+		else:
+			# Attendre quelques frames pour que la scène se stabilise
+			await get_tree().process_frame
+			await get_tree().process_frame
 	else:
 		await get_tree().process_frame
+		await get_tree().process_frame
 	
-	# Restaurer la position immédiatement
 	global_position = Global.player_return_position
 	Global.player_return_position = Vector2.ZERO
 	
-	# Redevenir visible
 	visible = true
