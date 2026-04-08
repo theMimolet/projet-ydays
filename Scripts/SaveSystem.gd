@@ -41,9 +41,14 @@ func GetNextGenericSaveName(prefix: String = "Partie") -> String:
 	return saveName
 
 func DeleteSave(requestedSave: String) -> void:
-	var filePath := "user://" + requestedSave + ".save"
+	var fileName := requestedSave + ".save"
+	var filePath := "user://" + fileName
 	if FileAccess.file_exists(filePath):
-		var err: int = DirAccess.remove_absolute(filePath)
+		var dir := DirAccess.open("user://")
+		if dir == null:
+			push_error("Impossible d'ouvrir le répertoire de sauvegarde!")
+			return
+		var err: int = dir.remove(fileName)
 		if err != OK:
 			push_error("Erreur lors de la suppression du fichier de sauvegarde: %s" % filePath)
 		else:
