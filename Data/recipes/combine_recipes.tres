@@ -1,9 +1,9 @@
 [gd_resource type="Resource" script_class="CombineRecipes" format=3 uid="uid://dnjmt0b8paiq3"]
 
-[ext_resource type="Script" uid="uid://b54ewwo40n640" path="res://Scripts/Items/CombineRecipes.gd" id="1_combine_recipes"]
-[ext_resource type="Script" uid="uid://djls8iddh1gbp" path="res://Scripts/Items/CombineRecipe.gd" id="2_combine_recipe"]
+[ext_resource type="Script" path="res://Scripts/Items/CombineRecipes.gd" id="1_combine_recipes"]
+[ext_resource type="Script" path="res://Scripts/Items/CombineRecipe.gd" id="2_combine_recipe"]
 [ext_resource type="Resource" uid="uid://b7p0jkgqxlbhq" path="res://Resources/Armes/BloodSword.tres" id="3_result_item"]
-[ext_resource type="Resource" path="res://Items/briquet.tres" id="4_result_briquet"]
+[ext_resource type="Resource" uid="uid://b3bhakspoyos1" path="res://Items/briquet.tres" id="4_result_briquet"]
 
 [sub_resource type="Resource" id="Recipe_dague_key_bloodsword"]
 script = ExtResource("2_combine_recipe")

@@ -420,7 +420,7 @@ texture = ExtResource("15_nf8g4")
 [node name="ChunkSwitcher2" type="Area2D" parent="." unique_id=581860280]
 position = Vector2(0, 157)
 script = ExtResource("2_dqgav")
-roomToLoad = "uid://cenwwmjs8xrdg"
+roomToLoad = "uid://b55o33fr41l31"
 spawnPointName = "Couloir"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ChunkSwitcher2" unique_id=1122561364]
