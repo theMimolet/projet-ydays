@@ -172,4 +172,19 @@ position = Vector2(-272, -80)
 shape = SubResource("RectangleShape2D_uoaph")
 debug_color = Color(0.93673784, 1.8193425e-05, 0.63304937, 0.41960785)
 
+[node name="Room2" type="Node2D" parent="." unique_id=273959894]
+position = Vector2(-271, 41)
+
+[node name="ChunkSwitcherRoom2" type="Area2D" parent="." unique_id=1205335800]
+position = Vector2(-270, 79)
+script = ExtResource("2_dqgav")
+roomToLoad = "uid://b55o33fr41l31"
+spawnPointName = "Couloir"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ChunkSwitcherRoom2" unique_id=1481545368]
+position = Vector2(-2, 2)
+shape = SubResource("RectangleShape2D_uoaph")
+debug_color = Color(0.93673784, 1.8193425e-05, 0.63304937, 0.41960785)
+
 [connection signal="body_entered" from="ChunkSwitcher" to="ChunkSwitcher" method="_on_body_entered"]
+[connection signal="body_entered" from="ChunkSwitcherRoom2" to="ChunkSwitcherRoom2" method="_on_body_entered"]
