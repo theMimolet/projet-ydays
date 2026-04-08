@@ -1,12 +1,14 @@
-[gd_scene format=4 uid="uid://lsuq4yhka3a3"]
+[gd_scene format=4 uid="uid://cepwe66vv24ij"]
 
 [ext_resource type="Texture2D" uid="uid://ckchfryvhfo0n" path="res://Tilesets/proto_tiles.png" id="1_ixoji"]
 [ext_resource type="PackedScene" uid="uid://dtwpnedsbtj8t" path="res://Scenes/RoomSwitcher.tscn" id="2_ljmtj"]
 [ext_resource type="PackedScene" uid="uid://cqmqkjfkawmgy" path="res://Scenes/Entities/Overworld/OWTest.tscn" id="4_430hh"]
-[ext_resource type="Script" path="res://Scripts/Interactions/Coffre.gd" id="4_o5rc3"]
+[ext_resource type="Script" uid="uid://bt8sfngqeu8gg" path="res://Scripts/Interactions/Coffre.gd" id="4_o5rc3"]
+[ext_resource type="Script" uid="uid://bt8sfngqeu8gg" path="res://Scripts/Interactions/Coffre.gd" id="4_o5rc3"]
 [ext_resource type="Texture2D" uid="uid://0xkmm505a4o1" path="res://Spritesheet/Torche/sprite_torche.png" id="5_430hh"]
 [ext_resource type="Script" uid="uid://dbk8n27v523gi" path="res://Scripts/Items/CollectableItem.gd" id="5_ftqpf"]
-[ext_resource type="Script" path="res://Scripts/DamageArea.gd" id="6_damage"]
+[ext_resource type="Script" uid="uid://dnll4e7su4a43" path="res://Scripts/DamageArea.gd" id="6_damage"]
+[ext_resource type="Script" uid="uid://weqsau6b8m2t" path="res://Scripts/Entity/HostileModule.gd" id="8_yto7a"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_o5rc3"]
 
@@ -96,7 +98,7 @@ tile_map_data = PackedByteArray("AAD8/wgAAQABAAAAAAAFAAgAAQABAAAAAAAOAPv/AQABAAA
 tile_set = SubResource("TileSet_7wwei")
 
 [node name="ChunkSwitcher" parent="." unique_id=1401503915 instance=ExtResource("2_ljmtj")]
-position = Vector2(-33, 226)
+position = Vector2(-33, 225)
 roomToLoad = "uid://brwifbbdn3ob3"
 spawnPointName = "Test1"
 
@@ -119,7 +121,7 @@ script = ExtResource("4_o5rc3")
 shape = SubResource("RectangleShape2D_ljmtj")
 
 [node name="Test" parent="." unique_id=1041784991 instance=ExtResource("4_430hh")]
-position = Vector2(177, -72)
+position = Vector2(178, -73)
 
 [node name="Torche" type="Sprite2D" parent="." unique_id=187896]
 position = Vector2(391, -116)
@@ -178,3 +180,11 @@ offset_top = -25.0
 offset_right = 25.0
 offset_bottom = 25.0
 color = Color(1, 0, 0, 0.5)
+
+[node name="ChunkSwitcher2" parent="." unique_id=1489420599 instance=ExtResource("2_ljmtj")]
+position = Vector2(124, 163)
+roomToLoad = "uid://s1w0gr0l2n64"
+spawnPointName = "Jardin_Sud"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ChunkSwitcher2" unique_id=1736414772]
+shape = SubResource("RectangleShape2D_q8n12")

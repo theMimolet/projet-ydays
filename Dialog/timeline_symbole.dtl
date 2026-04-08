@@ -1,0 +1,10 @@
+[style name="Dialogue"]
+join  center
+Un rocher immense avec un symbole de croix gravé en son centre
+- Toucher le symbole
+	Rien ne se passe.
+- Ne pas toucher
+
+
+[end_timeline]
+join  center

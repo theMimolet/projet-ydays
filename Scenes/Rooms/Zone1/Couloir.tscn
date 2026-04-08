@@ -2,6 +2,146 @@
 
 [ext_resource type="Texture2D" uid="uid://c4fo1vgo0kcmf" path="res://Scenes/Rooms/Map/Environnement_1_YDAYS_1.webp" id="1_42vvc"]
 [ext_resource type="Script" uid="uid://cs3wfgxf0axj4" path="res://Scripts/RoomSwitcher.gd" id="2_dqgav"]
+[ext_resource type="Script" uid="uid://cx164losuegqd" path="res://Scripts/Interactions/garde_rouge.gd" id="2_mbhj5"]
+[ext_resource type="Texture2D" uid="uid://dw155bh6gashm" path="res://Spritesheet/Monstres/Garde-Rouge/garde-rouge-idle.png" id="3_ohb61"]
+[ext_resource type="Script" uid="uid://3tptfvsxk7aa" path="res://Scripts/Interactions/garde_jaune.gd" id="4_hlf35"]
+[ext_resource type="Texture2D" uid="uid://dyeougl82rpci" path="res://Spritesheet/Monstres/Garde-Jaune/garde-jaune-idle.png" id="5_yllow"]
+[ext_resource type="Script" uid="uid://gplmt2s3b2k6" path="res://Scripts/Interactions/garde_vert.gd" id="6_dxiqs"]
+[ext_resource type="Texture2D" uid="uid://d2g7igioe3hjl" path="res://Spritesheet/Monstres/Garde-Vert/garde-vert-idle.png" id="7_nf8g4"]
+[ext_resource type="Script" uid="uid://cqvkvxb0a6j4f" path="res://Scripts/Interactions/garde_bleu.gd" id="8_4n104"]
+[ext_resource type="Texture2D" uid="uid://by7efkaivrrl7" path="res://Spritesheet/Monstres/Garde-Bleu/garde-bleu-idle.png" id="9_110hl"]
+[ext_resource type="Script" uid="uid://tcqfo61gtyfq" path="res://Scripts/Interactions/Door.gd" id="10_door"]
+[ext_resource type="Texture2D" uid="uid://i3e80hltn54o" path="res://Spritesheet/Porte/sprite_0.png" id="11_dxiqs"]
+[ext_resource type="PackedScene" uid="uid://dtwpnedsbtj8t" path="res://Scenes/RoomSwitcher.tscn" id="11_roomswitcher"]
+[ext_resource type="Texture2D" uid="uid://b0igypedar1ji" path="res://Spritesheet/Porte/sprite_3.png" id="12_nf8g4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i2x2y"]
+size = Vector2(22, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ftqpf"]
+atlas = ExtResource("3_ohb61")
+region = Rect2(96, 0, 48, 43)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5s5wa"]
+atlas = ExtResource("3_ohb61")
+region = Rect2(48, 0, 48, 43)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yto7a"]
+atlas = ExtResource("3_ohb61")
+region = Rect2(0, 0, 48, 43)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jq8oe"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ftqpf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5s5wa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yto7a")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 3.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oynwm"]
+atlas = ExtResource("5_yllow")
+region = Rect2(0, 0, 48, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_773rk"]
+atlas = ExtResource("5_yllow")
+region = Rect2(48, 0, 48, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xr16a"]
+atlas = ExtResource("5_yllow")
+region = Rect2(96, 0, 48, 44)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3gi2l"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oynwm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_773rk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xr16a")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 3.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b56q8"]
+size = Vector2(20, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bgtnb"]
+atlas = ExtResource("7_nf8g4")
+region = Rect2(0, 0, 48, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yovro"]
+atlas = ExtResource("7_nf8g4")
+region = Rect2(48, 0, 48, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hh6fh"]
+atlas = ExtResource("7_nf8g4")
+region = Rect2(96, 0, 48, 44)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jcy81"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bgtnb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yovro")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hh6fh")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 3.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gm8vu"]
+size = Vector2(20, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cs0nj"]
+atlas = ExtResource("9_110hl")
+region = Rect2(0, 0, 48, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pe8mr"]
+atlas = ExtResource("9_110hl")
+region = Rect2(48, 0, 48, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xtl6w"]
+atlas = ExtResource("9_110hl")
+region = Rect2(96, 0, 48, 44)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fjk2s"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cs0nj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pe8mr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xtl6w")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 3.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i5yeb"]
+size = Vector2(22, 13)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_42vvc"]
 size = Vector2(50.5, 240)
@@ -24,6 +164,9 @@ size = Vector2(2.9999924, 90)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_riwp6"]
 size = Vector2(76, 68)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_door_switch"]
+size = Vector2(24, 24)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uoaph"]
 size = Vector2(72, 18)
 
@@ -31,6 +174,58 @@ size = Vector2(72, 18)
 
 [node name="Environnement1Ydays1" type="Sprite2D" parent="." unique_id=1851106250]
 texture = ExtResource("1_42vvc")
+
+[node name="Garde Rouge" type="CharacterBody2D" parent="Environnement1Ydays1" unique_id=1068216210]
+position = Vector2(-319, -1)
+script = ExtResource("2_mbhj5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Environnement1Ydays1/Garde Rouge" unique_id=498633946]
+position = Vector2(-1, 13)
+shape = SubResource("RectangleShape2D_i2x2y")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Environnement1Ydays1/Garde Rouge" unique_id=850164520]
+sprite_frames = SubResource("SpriteFrames_jq8oe")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="Garde Jaune" type="CharacterBody2D" parent="Environnement1Ydays1" unique_id=1677950926]
+position = Vector2(-340, -55)
+script = ExtResource("4_hlf35")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Environnement1Ydays1/Garde Jaune" unique_id=1147287368]
+sprite_frames = SubResource("SpriteFrames_3gi2l")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Environnement1Ydays1/Garde Jaune" unique_id=1137233853]
+position = Vector2(-1, 14)
+shape = SubResource("RectangleShape2D_b56q8")
+
+[node name="Garde Vert" type="CharacterBody2D" parent="Environnement1Ydays1" unique_id=1572217775]
+position = Vector2(-198, -1)
+script = ExtResource("6_dxiqs")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Environnement1Ydays1/Garde Vert" unique_id=605759744]
+sprite_frames = SubResource("SpriteFrames_jcy81")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Environnement1Ydays1/Garde Vert" unique_id=578362839]
+position = Vector2(-1, 15)
+shape = SubResource("RectangleShape2D_gm8vu")
+
+[node name="Garde Bleu" type="CharacterBody2D" parent="Environnement1Ydays1" unique_id=1308341515]
+position = Vector2(-159, -48)
+script = ExtResource("8_4n104")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Environnement1Ydays1/Garde Bleu" unique_id=1875772684]
+sprite_frames = SubResource("SpriteFrames_fjk2s")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Environnement1Ydays1/Garde Bleu" unique_id=15794729]
+position = Vector2(-2, 13.5)
+shape = SubResource("RectangleShape2D_i5yeb")
 
 [node name="Colliders" type="Node2D" parent="." unique_id=333400230]
 
@@ -160,8 +355,34 @@ shape = SubResource("RectangleShape2D_tldjq")
 position = Vector2(-346, 56)
 shape = SubResource("RectangleShape2D_riwp6")
 
+[node name="Couloir_vers_jardin" type="Node2D" parent="." unique_id=1135196099]
+position = Vector2(72, -33)
+
 [node name="Room1" type="Node2D" parent="." unique_id=273959893]
 position = Vector2(-272, -53)
+
+[node name="DoorCouloir" type="Node2D" parent="." unique_id=2100000000]
+position = Vector2(71.25, -69)
+script = ExtResource("10_door")
+room_to_load = "uid://df4e3pfy58kpw"
+spawn_point_name = "Couloir"
+closed_texture = ExtResource("11_dxiqs")
+open_texture = ExtResource("12_nf8g4")
+
+[node name="DoorSprite" type="Sprite2D" parent="DoorCouloir" unique_id=2100000001]
+
+[node name="StaticBody2D_Door" type="StaticBody2D" parent="DoorCouloir" unique_id=2100000002]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DoorCouloir/StaticBody2D_Door" unique_id=2100000003]
+shape = SubResource("RectangleShape2D_door_switch")
+
+[node name="RoomSwitcher" parent="DoorCouloir" unique_id=2100000004 instance=ExtResource("11_roomswitcher")]
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DoorCouloir/RoomSwitcher" unique_id=2100000005]
+shape = SubResource("RectangleShape2D_door_switch")
+disabled = true
 
 [node name="ChunkSwitcher" type="Area2D" parent="." unique_id=1205335799]
 script = ExtResource("2_dqgav")
@@ -176,6 +397,7 @@ debug_color = Color(0.93673784, 1.8193425e-05, 0.63304937, 0.41960785)
 position = Vector2(-271, 41)
 
 [node name="ChunkSwitcherRoom2" type="Area2D" parent="." unique_id=1205335800]
+visible = false
 position = Vector2(-270, 79)
 script = ExtResource("2_dqgav")
 roomToLoad = "uid://b55o33fr41l31"

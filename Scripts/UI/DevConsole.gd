@@ -52,17 +52,24 @@ func _ready() -> void:
 	input_line.text_submitted.connect(_on_command_submitted)
 
 func _input(event: InputEvent) -> void:
-	# Ouvrir/Fermer la console avec F10
-	if event is InputEventKey and event.pressed and event.keycode == KEY_F10:
+	# Quand la console est ouverte, F10 peut être consommé par le LineEdit : on le gère ici pour fermer
+	if is_open and event is InputEventKey and event.pressed and event.keycode == KEY_F10:
+		toggle_console()
+		get_viewport().set_input_as_handled()
+		return
+
+func _unhandled_input(event: InputEvent) -> void:
+	# Ouvrir la console avec F10 (unhandled = pas bloqué par d'autres UI ou focus)
+	if not is_open and event is InputEventKey and event.pressed and event.keycode == KEY_F10:
 		toggle_console()
 		get_viewport().set_input_as_handled()
 		return
 	
-	# Si la console n'est pas ouverte, ignorer
+	# Si la console n'est pas ouverte, ignorer le reste
 	if not is_open:
 		return
 	
-	# Gestion de l'historique avec flèches haut/bas
+	# Gestion de l'historique avec flèches haut/bas et TAB
 	if event is InputEventKey and event.pressed:
 		if event.keycode == KEY_UP:
 			_navigate_history(-1)
@@ -234,5 +241,6 @@ func _register_commands() -> void:
 	
 	# Armes
 	registry.register_command("give_weapon", ConsoleCommands.cmd_give_weapon, "Donne une arme", 1, 1, "give_weapon <dague|epee1|epee2|epee3|bloodsword>")
+	registry.register_command("give_all_weapons", ConsoleCommands.cmd_give_all_weapons, "Donne toutes les armes", 0, 0, "give_all_weapons")
 	registry.register_command("equip_weapon", ConsoleCommands.cmd_equip_weapon, "Equipe une arme", 1, 1, "equip_weapon <dague|epee1|epee2|epee3|bloodsword>")
 	registry.register_command("list_weapons", ConsoleCommands.cmd_list_weapons, "Liste les armes", 0, 0, "list_weapons")

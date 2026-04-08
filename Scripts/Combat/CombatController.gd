@@ -13,7 +13,10 @@ signal ennemi_hp_changed(current_hp: int, max_hp: int)
 @export var arme_equipee: Resource
 @export var joueur_max_hp: int = 100
 @export var ennemi_max_hp: int = 50
-@export var ennemi_attack: int = 10
+@export_subgroup("Dégâts ennemis (tour par tour)")
+@export_range(0, 999, 1) var ennemi_attack: int = 10
+@export_range(0, 999, 1) var ennemi_attack_min: int = 8
+@export_range(0, 999, 1) var ennemi_attack_max: int = 12
 
 @onready var btn_attaque: Button = $UI/BtnAttaque
 @onready var btn_armes: Button = $UI/BtnArmes
@@ -25,7 +28,7 @@ signal ennemi_hp_changed(current_hp: int, max_hp: int)
 @onready var ennemi_sprite: TextureRect = $AreneContainer/ZoneEnnemi/EnnemiSprite
 @onready var label_ennemi: Label = $AreneContainer/ZoneEnnemi/LabelEnnemi
 @onready var modal_victoire: Panel = $ModalVictoire
-@onready var btn_suivre: Button = $ModalVictoire/VBox/BtnSuivre
+@onready var btn_suivre: Button = $ModalVictoire/Center/Card/Margin/VBox/Actions/BtnSuivre
 @onready var weapon_select_menu: Panel = $WeaponSelectMenu
 @onready var arme_sprite_combat: TextureRect = $AreneContainer/ZoneJoueur/JoueurSprite/ArmeSpriteCombat
 
@@ -79,8 +82,8 @@ func _charger_donnees_combat() -> void:
 	if data.has("joueur_max_hp"):
 		joueur_max_hp = data["joueur_max_hp"]
 	
-	# Arme équipée du joueur
-	if data.has("arme_equipee") and data["arme_equipee"] != null:
+	# Arme équipée du joueur (null = à mains nues)
+	if data.has("arme_equipee"):
 		arme_equipee = data["arme_equipee"]
 	
 	# Armes disponibles dans l'inventaire
@@ -100,6 +103,10 @@ func _charger_donnees_combat() -> void:
 		ennemi_max_hp = data["monster_max_hp"] if data.has("monster_max_hp") else data["monster_hp"]
 	if data.has("monster_attack"):
 		ennemi_attack = data["monster_attack"]
+	if data.has("monster_attack_min"):
+		ennemi_attack_min = data["monster_attack_min"]
+	if data.has("monster_attack_max"):
+		ennemi_attack_max = data["monster_attack_max"]
 	if data.has("monster_name") and label_ennemi:
 		label_ennemi.text = data["monster_name"]
 	if data.has("monster_texture") and ennemi_sprite:
@@ -130,9 +137,6 @@ func terminer_combat(victoire: bool) -> void:
 func _on_attaque_pressed() -> void:
 	if not combat_actif:
 		return
-	if not arme_equipee:
-		push_warning("CombatController: Aucune arme équipée!")
-		return
 	btn_attaque.disabled = true
 	qte_system.lancer_qte()
 
@@ -150,13 +154,15 @@ func _on_qte_failed() -> void:
 
 
 func _effectuer_attaque_joueur() -> void:
-	if not arme_equipee:
-		btn_attaque.disabled = false
-		return
-	
-	var resultat: Dictionary = arme_equipee.get_degats_avec_critique()
-	var degats: int = resultat["degats"]
-	var critique: bool = resultat["critique"]
+	var degats: int
+	var critique: bool = false
+	if arme_equipee != null and arme_equipee.has_method("get_degats_avec_critique"):
+		var resultat: Dictionary = arme_equipee.get_degats_avec_critique()
+		degats = resultat["degats"]
+		critique = resultat["critique"]
+	else:
+		# À mains nues : 2 à 3 dégâts
+		degats = randi_range(2, 3)
 	
 	# Infliger les dégâts à l'ennemi
 	ennemi_hp = max(0, ennemi_hp - degats)
@@ -186,7 +192,21 @@ func _effectuer_attaque_ennemi() -> void:
 	if not combat_actif:
 		return
 	
-	var degats := ennemi_attack
+	var min_attack := ennemi_attack_min
+	var max_attack := ennemi_attack_max
+	if min_attack <= 0 and max_attack <= 0:
+		min_attack = ennemi_attack
+		max_attack = ennemi_attack
+	elif min_attack <= 0:
+		min_attack = max_attack
+	elif max_attack <= 0:
+		max_attack = min_attack
+	elif max_attack < min_attack:
+		var tmp := min_attack
+		min_attack = max_attack
+		max_attack = tmp
+	
+	var degats := randi_range(min_attack, max_attack)
 	infliger_degats_joueur(degats)
 	
 	_afficher_resultat("L'ennemi inflige %d dégâts !" % degats, Color.ORANGE_RED)
@@ -255,7 +275,7 @@ func _update_arme_actuelle_display() -> void:
 		return
 	
 	if arme_equipee == null:
-		label_arme_actuelle.text = "Aucune arme"
+		label_arme_actuelle.text = "À mains nues (2-3 dmg)"
 		return
 	
 	var nom_arme: String = ""

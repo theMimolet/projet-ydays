@@ -154,6 +154,11 @@ func handle_interaction(player_position: Vector2) -> bool:
 	if door != null:
 		door.interact()
 	
+	# Vérifier les interactions basées sur nodes (fontaines)
+	var fontaine := _find_nearby_node_interactions(player_position, "Fontaines")
+	if fontaine != null:
+		fontaine.interact()
+	
 	# Vérifier les items collectables proches
 	var item_collected : bool = check_collectable_items(player_position)
 	if item_collected:
