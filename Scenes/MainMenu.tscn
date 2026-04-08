@@ -173,34 +173,6 @@ layout_mode = 2
 size_flags_horizontal = 6
 theme_override_constants/separation = 10
 
-[node name="Button" type="Button" parent="MenuContainer/Saves/SaveScroll/SaveList" unique_id=947544391]
-layout_mode = 2
-text = "Test"
-
-[node name="Button2" type="Button" parent="MenuContainer/Saves/SaveScroll/SaveList" unique_id=1132612317]
-layout_mode = 2
-text = "Test 2"
-
-[node name="Button3" type="Button" parent="MenuContainer/Saves/SaveScroll/SaveList" unique_id=673597236]
-layout_mode = 2
-text = "Test 3"
-
-[node name="Button4" type="Button" parent="MenuContainer/Saves/SaveScroll/SaveList" unique_id=1670204646]
-layout_mode = 2
-text = "Test 3"
-
-[node name="Button5" type="Button" parent="MenuContainer/Saves/SaveScroll/SaveList" unique_id=1769649106]
-layout_mode = 2
-text = "Test 3"
-
-[node name="Button6" type="Button" parent="MenuContainer/Saves/SaveScroll/SaveList" unique_id=2096385546]
-layout_mode = 2
-text = "Test 3"
-
-[node name="Button7" type="Button" parent="MenuContainer/Saves/SaveScroll/SaveList" unique_id=1836233285]
-layout_mode = 2
-text = "Test 3"
-
 [node name="Return" type="Button" parent="MenuContainer/Saves" unique_id=5906792]
 layout_mode = 2
 theme = ExtResource("3_8saeu")
