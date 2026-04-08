@@ -205,6 +205,35 @@ text = "INVENTAIRE"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="ActionsContainer" type="HBoxContainer" parent="Inventaire/InventairePanel/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="ButtonCombiner" type="Button" parent="Inventaire/InventairePanel/VBoxContainer/ActionsContainer"]
+layout_mode = 2
+text = "Combiner"
+custom_minimum_size = Vector2(60, 18)
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 10
+
+[node name="ButtonValider" type="Button" parent="Inventaire/InventairePanel/VBoxContainer/ActionsContainer"]
+layout_mode = 2
+text = "Valider"
+disabled = true
+visible = false
+custom_minimum_size = Vector2(52, 18)
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 10
+
+[node name="ButtonAnnuler" type="Button" parent="Inventaire/InventairePanel/VBoxContainer/ActionsContainer"]
+layout_mode = 2
+text = "Annuler"
+disabled = true
+visible = false
+custom_minimum_size = Vector2(56, 18)
+size_flags_horizontal = 0
+theme_override_font_sizes/font_size = 10
+
 [node name="InventaireContainer" type="GridContainer" parent="Inventaire/InventairePanel/VBoxContainer" unique_id=599248343]
 layout_mode = 2
 theme_override_constants/h_separation = 5

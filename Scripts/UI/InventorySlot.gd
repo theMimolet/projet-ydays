@@ -9,6 +9,7 @@ var item : Item
 var quantity : int = 0
 var slot_index : int = -1
 var is_dragging : bool = false
+var is_selected : bool = false
 
 signal slot_clicked(slot : Node)
 signal slot_drag_started(slot : Node)
@@ -134,10 +135,20 @@ func update_display() -> void:
 func set_dragging(dragging: bool) -> void:
 	"""Active ou désactive l'état de drag pour le feedback visuel"""
 	is_dragging = dragging
-	if dragging:
+	_apply_visual_state()
+
+func set_selected(selected: bool) -> void:
+	is_selected = selected
+	_apply_visual_state()
+
+func _apply_visual_state() -> void:
+	if is_dragging:
 		modulate = Color(1, 1, 1, 0.5)
-	else:
-		modulate = Color(1, 1, 1, 1)
+		return
+	if is_selected:
+		modulate = Color(0.75, 0.95, 1.0, 1)
+		return
+	modulate = Color(1, 1, 1, 1)
 
 func split_stack() -> bool:
 	"""Divise une pile en retirant 1 item. Retourne true si réussi"""

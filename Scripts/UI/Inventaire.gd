@@ -6,6 +6,9 @@ const INVENTORY_SIZE : int = 16  # Nombre de slots d'inventaire
 
 @onready var inventairePanel : Panel = $InventairePanel
 @onready var inventaireContainer : GridContainer = inventairePanel.find_child("InventaireContainer")
+@onready var buttonCombiner: Button = inventairePanel.find_child("ButtonCombiner")
+@onready var buttonValider: Button = inventairePanel.find_child("ButtonValider")
+@onready var buttonAnnuler: Button = inventairePanel.find_child("ButtonAnnuler")
 
 @onready var joueur : CharacterBody2D = $".."
 var isOpen : bool = false
@@ -19,6 +22,9 @@ const DRAG_PREVIEW_SIZE: Vector2 = Vector2(36, 36)
 # Slot d'équipement
 var equipment_slot: Node = null
 var equipment_panel: Panel = null
+
+var isCombineMode: bool = false
+var selectedCombineSlots: Array[Node] = []
 
 signal inventaire_opened
 signal inventaire_closed
@@ -46,9 +52,22 @@ func _ready() -> void:
 	# Cacher l'inventaire au départ
 	inventairePanel.visible = false
 	isOpen = false
+
+	_setup_combine_buttons()
+	_update_combine_ui()
 	
 	# Restaurer l'inventaire depuis Global si des données sont sauvegardées
 	call_deferred("_restore_from_global")
+
+func _setup_combine_buttons() -> void:
+	if buttonCombiner != null:
+		buttonCombiner.pressed.connect(_on_button_combiner_pressed)
+	if buttonValider != null:
+		buttonValider.pressed.connect(_on_button_valider_pressed)
+	if buttonAnnuler != null:
+		buttonAnnuler.pressed.connect(_on_button_annuler_pressed)
+	if buttonCombiner == null or buttonValider == null or buttonAnnuler == null:
+		push_warning("Inventaire: Combine buttons not found in scene tree")
 
 func create_inventory_slots() -> void:
 	"""Crée tous les slots d'inventaire"""
@@ -72,6 +91,61 @@ func toggle_inventaire() -> void:
 	inventairePanel.visible = isOpen
 	if controles_hint != null:
 		controles_hint.visible = isOpen
+	if not isOpen and isCombineMode:
+		_exit_combine_mode()
+
+func _enter_combine_mode() -> void:
+	isCombineMode = true
+	_clear_combine_selection()
+	_update_combine_ui()
+
+func _exit_combine_mode() -> void:
+	isCombineMode = false
+	_clear_combine_selection()
+	_update_combine_ui()
+
+func _clear_combine_selection() -> void:
+	for slot in selectedCombineSlots:
+		if slot != null and slot.has_method("set_selected"):
+			slot.set_selected(false)
+	selectedCombineSlots.clear()
+
+func _toggle_slot_selected(slot: Node) -> void:
+	if slot == null or slot.is_empty():
+		return
+	var isAlreadySelected := slot in selectedCombineSlots
+	if isAlreadySelected:
+		selectedCombineSlots.erase(slot)
+		if slot.has_method("set_selected"):
+			slot.set_selected(false)
+	else:
+		selectedCombineSlots.append(slot)
+		if slot.has_method("set_selected"):
+			slot.set_selected(true)
+
+func _update_combine_ui() -> void:
+	if buttonCombiner != null:
+		buttonCombiner.disabled = isCombineMode
+	if buttonValider != null:
+		buttonValider.visible = isCombineMode
+		buttonValider.disabled = not isCombineMode
+	if buttonAnnuler != null:
+		buttonAnnuler.visible = isCombineMode
+		buttonAnnuler.disabled = not isCombineMode
+
+func _on_button_combiner_pressed() -> void:
+	if isOpen:
+		_enter_combine_mode()
+
+func _on_button_annuler_pressed() -> void:
+	_exit_combine_mode()
+
+func _on_button_valider_pressed() -> void:
+	if selectedCombineSlots.size() < 2:
+		print("Sélectionne au moins 2 items")
+		return
+	print("combinaison impossible")
+	_exit_combine_mode()
 
 func _setup_equipment_slot() -> void:
 	"""Crée le panneau d'équipement à gauche de l'inventaire"""
@@ -257,6 +331,9 @@ func get_item_count(item_name: String) -> int:
 
 func _on_slot_clicked(slot : Node) -> void:
 	"""Gère le clic sur un slot"""
+	if isCombineMode:
+		_toggle_slot_selected(slot)
+		return
 	if draggedSlot == null and not slot.is_empty():
 		# Vérifier si Shift est pressé pour le split
 		if Input.is_key_pressed(KEY_SHIFT) and slot.quantity > 1:
@@ -280,6 +357,9 @@ func _on_slot_clicked(slot : Node) -> void:
 
 func _on_slot_dropped(source_slot : Node, target_slot : Node) -> void:
 	"""Gère le drop d'un slot vers un autre"""
+	if isCombineMode:
+		_cleanup_drag(source_slot)
+		return
 	if source_slot == null or target_slot == null:
 		_cleanup_drag(source_slot)
 		return
@@ -369,6 +449,8 @@ func _get_slot_position_in_container(slot_index: int) -> Vector2:
 
 func _on_slot_right_clicked(slot : Node) -> void:
 	"""Gère le clic droit sur un slot pour drop l'item sur la map"""
+	if isCombineMode:
+		return
 	if slot.is_empty():
 		return
 	
@@ -476,6 +558,8 @@ func _add_drop_light_if_needed(item: Item, parent_node: Node) -> void:
 
 func _on_equipment_slot_clicked(slot: Node) -> void:
 	"""Gère le clic sur le slot d'équipement"""
+	if isCombineMode:
+		return
 	if draggedSlot == null and not slot.is_empty():
 		# Commencer le drag depuis le slot d'équipement
 		draggedSlot = slot
@@ -488,6 +572,9 @@ func _on_equipment_slot_clicked(slot: Node) -> void:
 
 func _on_equipment_slot_dropped(source_slot: Node, target_slot: Node) -> void:
 	"""Gère le drop depuis le slot d'équipement"""
+	if isCombineMode:
+		_cleanup_drag(source_slot)
+		return
 	if source_slot == null:
 		_cleanup_drag(source_slot)
 		return
@@ -524,6 +611,8 @@ func _on_equipment_slot_dropped(source_slot: Node, target_slot: Node) -> void:
 
 func _on_slot_dropped_to_equipment(source_slot: Node, _target_slot: Node) -> void:
 	"""Gère le drop d'un slot d'inventaire vers le slot d'équipement"""
+	if isCombineMode:
+		return
 	if source_slot == null or source_slot.is_empty():
 		return
 	
