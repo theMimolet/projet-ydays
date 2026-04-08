@@ -6,6 +6,8 @@ const OVERWORLD_SCENE := "res://Scenes/Overworld.tscn"
 
 @onready var save_list: VBoxContainer = $MenuContainer/Saves/SaveScroll/SaveList
 
+var focused_save_name: String = ""
+
 func _ready() -> void:
 	super._ready()
 	GameSettings.window_mode_changed.connect(OnFullscreenChanged)
@@ -68,13 +70,40 @@ func _refresh_save_buttons() -> void:
 		var save_button := Button.new()
 		save_button.text = save_name
 		save_button.theme = $MenuContainer/Main/Jouer.theme
+		save_button.focus_mode = Control.FOCUS_ALL
 		save_button.pressed.connect(_on_save_button_pressed.bind(save_name))
+		save_button.focus_entered.connect(_on_save_button_focus_entered.bind(save_name))
+		save_button.focus_exited.connect(_on_save_button_focus_exited)
+		save_button.mouse_entered.connect(_on_save_button_mouse_entered.bind(save_name))
+		save_button.mouse_exited.connect(_on_save_button_mouse_exited)
 		save_list.add_child(save_button)
 
 func _on_save_button_pressed(save_name: String) -> void:
 	Global.pending_save_to_load = save_name
 	get_tree().change_scene_to_file(OVERWORLD_SCENE)
 
+func _on_save_button_focus_entered(save_name: String) -> void:
+	focused_save_name = save_name
+
+func _on_save_button_focus_exited() -> void:
+	focused_save_name = ""
+
+func _on_save_button_mouse_entered(save_name: String) -> void:
+	focused_save_name = save_name
+
+func _on_save_button_mouse_exited() -> void:
+	focused_save_name = ""
+
 
 func _on_jouer_pressed() -> void:
 	switch_to(menuState.PLAY)
+
+func _input(event: InputEvent) -> void:
+	if current_index != menuState.SAVES:
+		return
+
+	if event.is_action_pressed("Menu_Remove") and focused_save_name != "":
+		SaveSystem.DeleteSave(focused_save_name)
+		focused_save_name = ""
+		_refresh_save_buttons()
+		get_viewport().set_input_as_handled()
