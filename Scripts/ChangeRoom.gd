@@ -11,7 +11,13 @@ var isLoading: bool = false
 @onready var chat: Node2D = $"../Chat"
 
 func _ready() -> void:
-	if FileAccess.file_exists("user://quicksave.save"):
+	if Global.pending_save_to_load != "":
+		var pending_save: String = Global.pending_save_to_load
+		Global.pending_save_to_load = ""
+		SaveSystem.LoadFromFile(pending_save)
+	elif Global.pending_new_game_save != "":
+		RoomLoadToCoords("res://Scenes/Rooms/Zone1/Room1.tscn", 0.0, 0.0)
+	elif FileAccess.file_exists("user://quicksave.save"):
 		SaveSystem.LoadFromFile("quicksave")
 	else:
 		RoomLoadToCoords("res://Scenes/Rooms/Zone1/Room1.tscn", 0.0, 0.0)
@@ -104,6 +110,10 @@ func _on_animateur_animation_finished(anim_name: StringName) -> void:
 			emit_signal("unloadFinished")
 		"fade-in":
 			joueur.paralysePlayer(false)
+			if Global.pending_new_game_save != "":
+				var new_game_save: String = Global.pending_new_game_save
+				Global.pending_new_game_save = ""
+				SaveSystem.SaveToFile(new_game_save)
 			emit_signal("loaded")
 			if chat != null:
 				chat.canMove = true

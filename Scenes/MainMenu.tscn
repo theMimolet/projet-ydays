@@ -137,22 +137,40 @@ layout_mode = 2
 theme = ExtResource("3_8saeu")
 text = "Retour"
 
-[node name="PlayList" type="VBoxContainer" parent="MenuContainer" unique_id=885985616]
+[node name="Play" type="VBoxContainer" parent="MenuContainer" unique_id=885985616]
 layout_mode = 2
 theme_override_constants/separation = 20
 alignment = 1
 
-[node name="NewGame" type="Button" parent="MenuContainer/PlayList" unique_id=1582110259]
+[node name="NewGame" type="Button" parent="MenuContainer/Play" unique_id=1582110259]
 layout_mode = 2
 theme = ExtResource("3_8saeu")
 text = "Nouvelle partie"
 
-[node name="LoadGame" type="Button" parent="MenuContainer/PlayList" unique_id=1444091700]
+[node name="LoadGame" type="Button" parent="MenuContainer/Play" unique_id=1444091700]
 layout_mode = 2
 theme = ExtResource("3_8saeu")
 text = "Reprendre une partie"
 
-[node name="Return" type="Button" parent="MenuContainer/PlayList" unique_id=1200681076]
+[node name="Return" type="Button" parent="MenuContainer/Play" unique_id=1200681076]
+layout_mode = 2
+theme = ExtResource("3_8saeu")
+text = "Retour"
+
+[node name="Saves" type="VBoxContainer" parent="MenuContainer" unique_id=2094181449]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="SaveScroll" type="ScrollContainer" parent="MenuContainer/Saves" unique_id=1451037328]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+
+[node name="SaveList" type="VBoxContainer" parent="MenuContainer/Saves/SaveScroll" unique_id=1181903821]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Return" type="Button" parent="MenuContainer/Saves" unique_id=5906792]
 layout_mode = 2
 theme = ExtResource("3_8saeu")
 text = "Retour"
@@ -167,4 +185,7 @@ autoplay = true
 [connection signal="pressed" from="MenuContainer/Main/Quitter" to="." method="_on_quitter_pressed"]
 [connection signal="pressed" from="MenuContainer/Options/Fullscreen" to="." method="_on_fullscreen_pressed"]
 [connection signal="pressed" from="MenuContainer/Options/Return" to="." method="_on_return_pressed"]
-[connection signal="pressed" from="MenuContainer/PlayList/Return" to="." method="_on_return_pressed"]
+[connection signal="pressed" from="MenuContainer/Play/NewGame" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="MenuContainer/Play/LoadGame" to="." method="_on_load_game_pressed"]
+[connection signal="pressed" from="MenuContainer/Play/Return" to="." method="_on_return_pressed"]
+[connection signal="pressed" from="MenuContainer/Saves/Return" to="." method="_on_save_return_pressed"]

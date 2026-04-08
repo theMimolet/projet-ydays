@@ -1,4 +1,3 @@
-# SwitcherBase.gd - Your brilliant logic, now universal!
 class_name SwitcherBase
 extends Node
 
@@ -10,13 +9,13 @@ var default_index: int = 0
 func _ready() -> void:
 	if not switcher_container:
 		auto_find_container()
-	
+
 	setup_switcher()
 	switch_to(default_index)
 	connect_signals()
 
 # Try to find the container automatically
-func auto_find_container() -> void :
+func auto_find_container() -> void:
 	# Look for common container names
 	switcher_container = find_child("MenuContainer") # For menus
 	if not switcher_container:
@@ -25,18 +24,18 @@ func auto_find_container() -> void :
 		switcher_container = find_child("Container") # Generic
 
 # Override in child classes
-func setup_switcher() -> void :
+func setup_switcher() -> void:
 	pass
 
 # Override in child classes
-func connect_signals() -> void :
+func connect_signals() -> void:
 	pass
 
 func switch_to(index: int) -> void:
 	if not switcher_container:
 		push_error("No switcher container found!")
 		return
-		
+
 	var child_index := 0
 	for child in switcher_container.get_children():
 		if child_index == index:

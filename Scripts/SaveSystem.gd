@@ -12,7 +12,7 @@ func _input(event: InputEvent) -> void:
 		LoadFromFile("quicksave")
 	if event.is_action_pressed("Debug_List"):
 		print("Fichiers de sauvegarde:")
-		for save in ListSaves():
+		for save: String in ListSaves():
 			print(" - ", save)
 
 func ListSaves() -> Array:
@@ -29,6 +29,16 @@ func ListSaves() -> Array:
 		fileName = dir.get_next()
 	dir.list_dir_end()
 	return saves
+
+func GetNextGenericSaveName(prefix: String = "Partie") -> String:
+	var index: int = 1
+	var saveName: String = "%s %d" % [prefix, index]
+
+	while FileAccess.file_exists("user://%s.save" % saveName):
+		index += 1
+		saveName = "%s %d" % [prefix, index]
+
+	return saveName
 
 func DeleteSave(requestedSave: String) -> void:
 	var filePath := "user://" + requestedSave + ".save"
