@@ -54,7 +54,8 @@ func _refresh_save_buttons() -> void:
 		return
 
 	for child in save_list.get_children():
-		child.queue_free()
+		save_list.remove_child(child)
+		child.free()
 
 	var saves := SaveSystem.ListSaves()
 	saves.sort()
