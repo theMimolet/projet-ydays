@@ -1,7 +1,8 @@
-[gd_scene format=3 uid="uid://b55o33fr41l31"]
+[gd_scene format=3 uid="uid://cenwwmjs8xrdg"]
 
 [ext_resource type="Texture2D" uid="uid://xd485l1c45oj" path="res://Scenes/Rooms/Map/Environnement_1_YDAYS_2.webp" id="1_5ck8n"]
 [ext_resource type="Script" uid="uid://cs3wfgxf0axj4" path="res://Scripts/RoomSwitcher.gd" id="2_roomswitcher"]
+[ext_resource type="PackedScene" uid="uid://cqmqkjfkawmgy" path="res://Scenes/Entities/Overworld/OWTest.tscn" id="3_lbh5t"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7kv67"]
 size = Vector2(72, 20)
@@ -31,7 +32,7 @@ shape = SubResource("RectangleShape2D_7kv67")
 texture = ExtResource("1_5ck8n")
 
 [node name="Couloir" type="Node2D" parent="." unique_id=1551550129]
-position = Vector2(66, -127)
+position = Vector2(0, -53)
 
 [node name="ChunkSwitcher" type="Area2D" parent="." unique_id=1208768354]
 position = Vector2(0, -11)
@@ -75,5 +76,8 @@ position = Vector2(61, -59)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D5" unique_id=1148653672]
 position = Vector2(29.5, -10)
 shape = SubResource("RectangleShape2D_6uwhf")
+
+[node name="Test" parent="." unique_id=683536570 instance=ExtResource("3_lbh5t")]
+position = Vector2(0, 47)
 
 [connection signal="body_entered" from="ChunkSwitcher" to="ChunkSwitcher" method="_on_body_entered"]

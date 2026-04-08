@@ -26,6 +26,7 @@ signal ennemi_hp_changed(current_hp: int, max_hp: int)
 @onready var hp_joueur_sprite: AnimatedSprite2D = $AreneContainer/ZoneJoueur/HPJoueurContainer/HPJoueur
 @onready var hp_ennemi_sprite: AnimatedSprite2D = $AreneContainer/ZoneEnnemi/HPEnnemiContainer/HPEnnemi
 @onready var ennemi_sprite: TextureRect = $AreneContainer/ZoneEnnemi/EnnemiSprite
+var ennemi_animated_sprite: AnimatedSprite2D = null
 @onready var label_ennemi: Label = $AreneContainer/ZoneEnnemi/LabelEnnemi
 @onready var modal_victoire: Panel = $ModalVictoire
 @onready var btn_suivre: Button = $ModalVictoire/Center/Card/Margin/VBox/Actions/BtnSuivre
@@ -109,7 +110,13 @@ func _charger_donnees_combat() -> void:
 		ennemi_attack_max = data["monster_attack_max"]
 	if data.has("monster_name") and label_ennemi:
 		label_ennemi.text = data["monster_name"]
-	if data.has("monster_texture") and ennemi_sprite:
+	
+	if data.has("monster_sprite_frames") and ennemi_sprite:
+		_setup_ennemi_animated_sprite(
+			data["monster_sprite_frames"],
+			data.get("monster_animation", "default")
+		)
+	elif data.has("monster_texture") and ennemi_sprite:
 		ennemi_sprite.texture = data["monster_texture"]
 
 
@@ -293,6 +300,22 @@ func _update_arme_actuelle_display() -> void:
 		degats = arme_equipee.combat_data.get_description_degats()
 	
 	label_arme_actuelle.text = "%s (%s dmg)" % [nom_arme, degats]
+
+
+func _setup_ennemi_animated_sprite(frames: SpriteFrames, anim_name: String) -> void:
+	ennemi_sprite.visible = false
+	
+	ennemi_animated_sprite = AnimatedSprite2D.new()
+	ennemi_animated_sprite.sprite_frames = frames
+	if frames.has_animation(anim_name):
+		ennemi_animated_sprite.animation = anim_name
+	ennemi_animated_sprite.autoplay = anim_name
+	ennemi_animated_sprite.scale = Vector2(2, 2)
+	
+	var parent := ennemi_sprite.get_parent()
+	parent.add_child(ennemi_animated_sprite)
+	ennemi_animated_sprite.position = ennemi_sprite.position + ennemi_sprite.size / 2
+	ennemi_animated_sprite.play()
 
 
 func _update_arme_sprite_combat() -> void:

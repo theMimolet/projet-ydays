@@ -314,6 +314,12 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
+[node name="LabelInstructions" type="Label" parent="QTESystem/PanelQTE/VBox"]
+layout_mode = 2
+visible = false
+text = "Appuyez sur les touches !"
+horizontal_alignment = 1
+
 [node name="ContainerTouches" type="HBoxContainer" parent="QTESystem" unique_id=177420074]
 layout_mode = 1
 anchors_preset = 8

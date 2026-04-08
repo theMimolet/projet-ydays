@@ -118,7 +118,7 @@ func _get_armes_from_inventaire() -> Array:
 		return armes
 	
 	for slot in inventaire.slots:
-		if slot.has_method("is_empty") and not slot.is_empty():
+		if slot is Object and slot.has_method("is_empty") and not slot.is_empty():
 			var item = slot.item
 			if item != null and "item_type" in item and item.item_type == "weapon":
 				if item not in armes:
@@ -137,7 +137,7 @@ func save_inventory() -> void:
 	
 	if "slots" in inventaire:
 		for slot in inventaire.slots:
-			if slot.has_method("is_empty") and not slot.is_empty():
+			if slot is Object and slot.has_method("is_empty") and not slot.is_empty():
 				inventory_data.append({
 					"item": slot.item,
 					"quantity": slot.quantity
@@ -163,7 +163,7 @@ func restore_inventory() -> void:
 	# Vider les slots actuels
 	if "slots" in inventaire:
 		for slot in inventaire.slots:
-			if slot.has_method("clear_slot"):
+			if slot is Object and slot.has_method("clear_slot"):
 				slot.clear_slot()
 	
 	# Restaurer les items

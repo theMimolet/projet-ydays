@@ -9,7 +9,7 @@ const INVENTORY_SIZE : int = 16  # Nombre de slots d'inventaire
 
 @onready var joueur : CharacterBody2D = $".."
 var isOpen : bool = false
-var slots : Array = []
+var slots : Array[Node] = []
 var draggedSlot : Node = null
 
 var controles_hint: Control = null
@@ -52,6 +52,7 @@ func _ready() -> void:
 
 func create_inventory_slots() -> void:
 	"""Crée tous les slots d'inventaire"""
+	slots.clear()
 	for i in range(INVENTORY_SIZE):
 		var slot : Node = SLOT_SCENE.instantiate()
 		slot.slot_index = i
@@ -61,6 +62,15 @@ func create_inventory_slots() -> void:
 		slot.slot_right_clicked.connect(_on_slot_right_clicked)
 		inventaireContainer.add_child(slot)
 		slots.append(slot)
+
+func _ensure_slots() -> void:
+	"""Reconstruit le tableau slots si il a été corrompu (ex: après changement de scène)"""
+	if slots.size() == INVENTORY_SIZE and slots.all(func(s: Variant) -> bool: return s is Node):
+		return
+	slots.clear()
+	for child in inventaireContainer.get_children():
+		if child.has_method("is_empty"):
+			slots.append(child)
 
 #func _input(event: InputEvent) -> void:
 #	if event.is_action_pressed("Inventory"):
@@ -196,10 +206,11 @@ func close_inventaire() -> void:
 
 # ============== GESTION DES ITEMS ==============
 
-func add_item(item : Item, quantity: int = 1) -> bool:
+func add_item(item : Resource, quantity: int = 1) -> bool:
 	"""Ajoute un item à l'inventaire. Retourne true si réussi"""
+	_ensure_slots()
 	# Chercher un slot avec le même item qui peut encore en contenir
-	for slot : Node in slots:
+	for slot in slots:
 		if not slot.is_empty() and slot.item.item_name == item.item_name:
 			var remaining: int = slot.item.max_stack - slot.quantity
 			if remaining > 0:
@@ -211,7 +222,7 @@ func add_item(item : Item, quantity: int = 1) -> bool:
 					return true
 
 	# Chercher un slot vide
-	for slot : Node in slots:
+	for slot in slots:
 		if slot.is_empty():
 			var to_add: int = min(quantity, item.max_stack)
 			slot.set_item(item, to_add)
@@ -227,7 +238,7 @@ func remove_item(item_name: String, quantity: int = 1) -> bool:
 	"""Retire un item de l'inventaire. Retourne true si réussi"""
 	var remaining: int = quantity
 	
-	for slot : Node in slots:
+	for slot in slots:
 		if not slot.is_empty() and slot.item.item_name == item_name:
 			var to_remove: int = min(remaining, slot.quantity)
 			slot.remove_item(to_remove)
@@ -240,7 +251,7 @@ func remove_item(item_name: String, quantity: int = 1) -> bool:
 func has_item(item_name: String, quantity: int = 1) -> bool:
 	"""Vérifie si l'inventaire contient l'item en quantité suffisante"""
 	var total : int = 0
-	for slot : Node in slots:
+	for slot in slots:
 		if not slot.is_empty() and slot.item.item_name == item_name:
 			total += slot.quantity
 	return total >= quantity
@@ -248,7 +259,7 @@ func has_item(item_name: String, quantity: int = 1) -> bool:
 func get_item_count(item_name: String) -> int:
 	"""Retourne le nombre total d'un item dans l'inventaire"""
 	var total : int = 0
-	for slot : Node in slots:
+	for slot in slots:
 		if not slot.is_empty() and slot.item.item_name == item_name:
 			total += slot.quantity
 	return total
@@ -337,7 +348,7 @@ func _find_nearest_empty_slot(reference_slot : Node) -> Node:
 	var ref_index: int = reference_slot.slot_index
 	var ref_pos: Vector2 = _get_slot_position_in_container(ref_index)
 	
-	for slot : Node in slots:
+	for slot in slots:
 		if slot.is_empty():
 			var slot_pos: Vector2 = _get_slot_position_in_container(slot.slot_index)
 			var distance: float = ref_pos.distance_to(slot_pos)

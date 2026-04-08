@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://bgisnbtex0k1t" path="res://Spritesheet/Jardin/etang2.png" id="7_3cehf"]
 [ext_resource type="Texture2D" uid="uid://bra7gpdwsh762" path="res://Spritesheet/Jardin/sprite_3.png" id="8_ckfm0"]
 [ext_resource type="PackedScene" uid="uid://dtwpnedsbtj8t" path="res://Scenes/RoomSwitcher.tscn" id="9_1qsc1"]
-[ext_resource type="PackedScene" uid="uid://bog3nlg1dammx" path="res://Scenes/Entities/Maison.tscn" id="9_uyj8a"]
+[ext_resource type="PackedScene" path="res://Scenes/Entities/Maison.tscn" id="9_uyj8a"]
 [ext_resource type="PackedScene" uid="uid://cup422xt4plwo" path="res://Scenes/Entities/arbre_1.tscn" id="12_d3dr6"]
 [ext_resource type="Texture2D" uid="uid://73oxq1kl4b3" path="res://Spritesheet/Jardin/roche_1.png" id="13_ckfm0"]
 [ext_resource type="Texture2D" uid="uid://0bcivcq3p8av" path="res://Spritesheet/Jardin/Maison-04.png" id="14_d3dr6"]
@@ -37,8 +37,8 @@ texture = ExtResource("8_ckfm0")
 
 [node name="ChunkSwitcher" parent="VillageEnvironnement" unique_id=1937074679 instance=ExtResource("9_1qsc1")]
 position = Vector2(-1, 376)
-roomToLoad = "uid://cepwe66vv24ij"
-spawnPointName = "Test2"
+roomToLoad = "uid://df4e3pfy58kpw"
+spawnPointName = "Couloir2"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="VillageEnvironnement/ChunkSwitcher" unique_id=1784471208]
 shape = SubResource("RectangleShape2D_fu3vt")
@@ -224,6 +224,30 @@ texture = ExtResource("14_d3dr6")
 position = Vector2(51.685394, 47.19101)
 polygon = PackedVector2Array(4.494385, -4.4944153, 17.97754, -13.483154, 67.41565, -13.483154, 110.112305, -33.707886, 141.573, -17.97754, 148.31458, -2.247223, 177.52808, 8.98877, 184.26965, 26.966248, 186.51685, 44.943787, 188.76404, 49.43817, 175.28088, 51.685364, 175.28088, 182.02246, 47.190918, 182.02246, 47.190918, 152.80896, 2.2471924, 152.80896, 2.2471924, 51.685364, 13.483154, 58.42694, 20.224731, 51.685364, 20.224731, 35.955017, 2.2471924, 29.21344, 2.2471924, 17.977478, -2.2471924, 17.977478, -2.2471924, -2.247223)
 
+[node name="Arbre1" parent="VillageEnvironnement" unique_id=1713656411 instance=ExtResource("12_d3dr6")]
+position = Vector2(129, 221)
+
+[node name="Arbre2" parent="VillageEnvironnement" unique_id=1781163069 instance=ExtResource("15_ckfm0")]
+position = Vector2(125, 240)
+
+[node name="Arbre3" parent="VillageEnvironnement" unique_id=335841838 instance=ExtResource("15_ckfm0")]
+position = Vector2(158, 209)
+
+[node name="Arbre4" parent="VillageEnvironnement" unique_id=445046312 instance=ExtResource("15_ckfm0")]
+position = Vector2(153, 228)
+
+[node name="Arbre5" parent="VillageEnvironnement" unique_id=1752220076 instance=ExtResource("15_ckfm0")]
+position = Vector2(156, 246)
+
+[node name="Arbre6" parent="VillageEnvironnement" unique_id=2144598342 instance=ExtResource("15_ckfm0")]
+position = Vector2(180, 228)
+
+[node name="Arbre7" parent="VillageEnvironnement" unique_id=413736098 instance=ExtResource("15_ckfm0")]
+position = Vector2(198, 202)
+
+[node name="Arbre8" parent="VillageEnvironnement" unique_id=1501535055 instance=ExtResource("12_d3dr6")]
+position = Vector2(191, 244)
+
 [node name="Arbre1" parent="." unique_id=178246711 instance=ExtResource("12_d3dr6")]
 position = Vector2(-44, -227)
 
@@ -327,7 +351,7 @@ position = Vector2(-3, 233)
 [node name="Arbre30" parent="." unique_id=1053189962 instance=ExtResource("12_d3dr6")]
 position = Vector2(-24, 258)
 
-[node name="Arbre31" parent="." unique_id=1713656411 instance=ExtResource("12_d3dr6")]
+[node name="Arbre31" parent="." unique_id=228096140 instance=ExtResource("12_d3dr6")]
 position = Vector2(12, 262)
 
 [node name="Arbre32" parent="." unique_id=150864329 instance=ExtResource("12_d3dr6")]
