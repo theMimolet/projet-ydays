@@ -5,6 +5,7 @@ var pending_save_to_load: String = ""
 var pending_new_game_save: String = ""
 
 var pending_door: Node = null
+var pending_sparkle: Node = null
 
 # Données de combat (remplies avant transition vers CombatView)
 var combat_data: Dictionary = {}
@@ -18,14 +19,18 @@ var inventory_data: Array = [] # Array de dictionnaires {item: Resource, quantit
 var equipped_weapon: Resource = null
 var player_hp_saved: int = -1 # -1 = pas sauvegardé
 
+var progress: Dictionary = {
+	"zone1_armoire_ouverte": false,
+	"zone1_clef_trouvee": false,
+	"zone1_porte_ouverte": false,
+}
+
 func _ready() -> void:
 	pass
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventKey and event.pressed:
-		if event.keycode == KEY_R and (event.ctrl_pressed or event.meta_pressed):
+	if event.is_action_pressed("ResetScene"):
 			reset_scene()
-
 
 func reset_scene() -> void:
 	get_tree().reload_current_scene()
@@ -37,6 +42,17 @@ func use_key_on_pending_door() -> void:
 	if pending_door != null and pending_door.is_inside_tree() and pending_door.has_method("use_key_and_open"):
 		pending_door.use_key_and_open()
 	pending_door = null
+
+func set_pending_sparkle(sparkle: Node) -> void:
+	pending_sparkle = sparkle
+
+func confirm_pending_sparkle_save() -> void:
+	if pending_sparkle != null and pending_sparkle.is_inside_tree() and pending_sparkle.has_method("save_game"):
+		pending_sparkle.save_game()
+	pending_sparkle = null
+
+func cancel_pending_sparkle_save() -> void:
+	pending_sparkle = null
 
 
 ## Démarre un combat avec les données du monstre

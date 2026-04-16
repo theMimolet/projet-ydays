@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://c4fo1vgo0kcmf" path="res://Scenes/Rooms/Map/Environnement_1_YDAYS_1.webp" id="1_42vvc"]
 [ext_resource type="Script" uid="uid://cs3wfgxf0axj4" path="res://Scripts/RoomSwitcher.gd" id="2_dqgav"]
+[ext_resource type="PackedScene" uid="uid://chto1tn0qj6p6" path="res://Scenes/Entities/Overworld/Sparkle.tscn" id="3_43psv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_42vvc"]
 size = Vector2(50.5, 240)
@@ -171,5 +172,9 @@ roomToLoad = "uid://dof6jbjjwnxl7"
 position = Vector2(-272, -80)
 shape = SubResource("RectangleShape2D_uoaph")
 debug_color = Color(0.93673784, 1.8193425e-05, 0.63304937, 0.41960785)
+
+[node name="Sparkle" parent="." unique_id=1732643078 instance=ExtResource("3_43psv")]
+position = Vector2(-350, -32)
+timeline = "timeline_sparkle_save"
 
 [connection signal="body_entered" from="ChunkSwitcher" to="ChunkSwitcher" method="_on_body_entered"]

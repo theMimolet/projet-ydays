@@ -1,15 +1,13 @@
-extends CharacterBody2D
+extends Node2D
 
-var dialogue_timeline: String = "timeline-test"
+const DEFAULT_TIMELINE: String = "timeline-test"
+@export var timeline: String = ""
 var has_interacted: bool = false
 var player: CharacterBody2D
 
 func _ready() -> void:
 	add_to_group("PNJ")
-	
-	# S'assurer que le PNJ ne bouge pas
-	velocity = Vector2.ZERO
-	
+
 	find_player()
 
 func find_player() -> void:
@@ -26,16 +24,14 @@ func update_depth() -> void:
 	const BASE_OFFSET := 1000
 	z_index = BASE_OFFSET + int(global_position.y)
 
-func interact(timeline: String = "") -> void:
+func interact(dialogue_override: String = "") -> void:
 	if not has_interacted:
 		has_interacted = true
-	
+
 	# Utiliser la timeline passée en paramètre, ou celle par défaut du PNJ
-	var timeline_to_use: String = timeline if timeline != "" else dialogue_timeline
-	
+	var timeline_to_use: String = dialogue_override if dialogue_override != "" else timeline
+	if timeline_to_use == "":
+		timeline_to_use = DEFAULT_TIMELINE
+
 	# Lancer le dialogue Dialogic
 	Dialogic.start(timeline_to_use)
-	
-	# Bloquer le mouvement du joueur pendant le dialogue
-	if player != null and "canMove" in player:
-		player.canMove = false
