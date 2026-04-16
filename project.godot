@@ -15,13 +15,13 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="Unlost"
-config/version="dev-26.04.08"
+config/version="dev-26.04.16"
 run/main_scene="uid://dulehm44jbn4i"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/stretch_mode=0
 boot_splash/image="uid://n4ar6xlgkstd"
-config/icon="res://Textures/icon.svg"
+config/icon="uid://catynbo4vtkua"
 
 [autoload]
 
