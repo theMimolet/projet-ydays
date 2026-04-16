@@ -137,7 +137,7 @@ func ApplyData(nodeData: Dictionary) -> void:
 	var joueur: Node = get_tree().get_first_node_in_group("Joueur")
 	var RoomManager: Node = get_tree().get_first_node_in_group("RoomManager")
 	joueur.currentHP = nodeData["current_health"]
-  # Ne plus écraser slots — la restauration d'inventaire complet nécessite
+	# Ne plus écraser slots — la restauration d'inventaire complet nécessite
 	# un système de sérialisation des ressources Item (à implémenter plus tard).
 	# Pour l'instant on ne restaure pas l'inventaire depuis le fichier de sauvegarde
 	# afin de ne pas corrompre le tableau de slots.
