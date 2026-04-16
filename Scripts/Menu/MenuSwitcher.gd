@@ -1,7 +1,6 @@
-# MenuSwitcher.gd - For menu panels
 class_name MenuSwitcher
 extends SwitcherBase
 
-func _ready() -> void :
+func _ready() -> void:
 	switcher_container = find_child("MenuContainer")
 	super._ready()

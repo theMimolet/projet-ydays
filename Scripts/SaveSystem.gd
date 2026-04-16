@@ -2,27 +2,70 @@ extends Node
 
 # Viens de https://docs.godotengine.org/en/stable/tutorials/io/saving_games.html
 
-var tempSave : Dictionary
+var tempSave: Dictionary
+@export var defaultName: String = "quicksave"
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("Debug_Save"):
 		SaveToFile()
 	if event.is_action_pressed("Debug_Load"):
-		LoadLite()
+		LoadFromFile("quicksave")
+	if event.is_action_pressed("Debug_List"):
+		print("Fichiers de sauvegarde:")
+		for save: String in ListSaves():
+			print(" - ", save)
+
+func ListSaves() -> Array:
+	var saves := []
+	var dir := DirAccess.open("user://")
+	if dir == null:
+		push_error("Impossible d'ouvrir le répertoire de sauvegarde!")
+		return saves
+	dir.list_dir_begin()
+	var fileName := dir.get_next()
+	while fileName != "":
+		if fileName.ends_with(".save"):
+			saves.append(fileName.substr(0, fileName.length() - 5)) # Remove .save extension
+		fileName = dir.get_next()
+	dir.list_dir_end()
+	return saves
+
+func GetNextGenericSaveName(prefix: String = "Partie") -> String:
+	var index: int = 1
+	var saveName: String = "%s %d" % [prefix, index]
+
+	while FileAccess.file_exists("user://%s.save" % saveName):
+		index += 1
+		saveName = "%s %d" % [prefix, index]
+
+	return saveName
+
+func DeleteSave(requestedSave: String) -> void:
+	var fileName := requestedSave + ".save"
+	var filePath := "user://" + fileName
+	if FileAccess.file_exists(filePath):
+		var dir := DirAccess.open("user://")
+		if dir == null:
+			push_error("Impossible d'ouvrir le répertoire de sauvegarde!")
+			return
+		var err: int = dir.remove(fileName)
+		if err != OK:
+			push_error("Erreur lors de la suppression du fichier de sauvegarde: %s" % filePath)
+		else:
+			print("Fichier de sauvegarde supprimé: ", requestedSave)
+	else:
+		print("Aucun fichier de sauvegarde trouvé avec le nom: ", requestedSave)
 
 func getSave() -> Dictionary:
-	
 	var joueur: CharacterBody2D = get_tree().get_first_node_in_group("Joueur")
-	
-	var save_dict := {
-		"player_pos_x" : joueur.position.x,
-		"player_pos_y" : joueur.position.y,
-		"current_health" : joueur.currentHP,
+	var saveDict := {
+		"player_pos_x": joueur.position.x,
+		"player_pos_y": joueur.position.y,
+		"current_health": joueur.currentHP,
 		"current_inventory" : _serialize_inventory(joueur.inventory),
-		"current_scene" : Global.currentRoom
+		"current_scene": Global.currentRoom
 	}
-	return save_dict
-
+	return saveDict
 
 func _serialize_inventory(inventaire: Node) -> Array:
 	"""Sérialise le contenu des slots (pas les nodes eux-mêmes)"""
@@ -39,58 +82,67 @@ func _serialize_inventory(inventaire: Node) -> Array:
 		else:
 			data.append(null)
 	return data
-
-func SaveToFile() -> void:
-	var save_file := FileAccess.open("user://savegame.save", FileAccess.WRITE)
-	if save_file == null:
-		push_error("Could not open save file!")
+    
+func SaveToFile(requestedSave: String = "") -> void:
+	if requestedSave == "":
+		requestedSave = defaultName
+	var saveFile := FileAccess.open("user://" + requestedSave + ".save", FileAccess.WRITE)
+	if saveFile == null:
+		push_error("N'a pas pu ouvrir le fichier de sauvegarde!")
 		return
-	var data : Dictionary = getSave()
+	var data: Dictionary = getSave()
 	print("Données récupérées")
-	var json_string := JSON.stringify(data)
-	save_file.store_line(json_string)
-	save_file.close()
+	var jsonString := JSON.stringify(data)
+	saveFile.store_line(jsonString)
+	saveFile.close()
 	print("Fichier de sauvegarde créé")
 
-func SaveLite() -> void: 
+func SaveLite() -> void:
 	tempSave = getSave()
 	print("Sauvegarde légère effectuée")
 
-func LoadFromFile() -> void:
-	print("Chargement en cours")
-	if not FileAccess.file_exists("user://savegame.save"):
+func LoadFromFile(requestedSave: String = "") -> void:
+	print("Chargement en cours...")
+	if requestedSave == "":
+		requestedSave = defaultName
+	if not FileAccess.file_exists("user://" + requestedSave + ".save"):
+		print("Aucun fichier de sauvegarde trouvé avec le nom: ", requestedSave)
 		return
 
-	var save_file := FileAccess.open("user://savegame.save", FileAccess.READ)
-	var json_string := save_file.get_line()
+	var saveFile := FileAccess.open("user://" + requestedSave + ".save", FileAccess.READ)
+	if saveFile == null:
+		push_error("N'a pas pu ouvrir le fichier de sauvegarde!")
+		return
+	var jsonString := saveFile.get_line()
 	var json := JSON.new()
 
 	# Check if there is any error while parsing the JSON string, skip in case of failure.
-	var parse_result := json.parse(json_string)
-	if not parse_result == OK:
-		print("JSON Parse Error: ", json.get_error_message(), " in ", json_string, " at line ", json.get_error_line())
+	var parseResult := json.parse(jsonString)
+	if not parseResult == OK:
+		print("JSON Parse Error: ", json.get_error_message(), " in ", jsonString, " at line ", json.get_error_line())
+		saveFile.close()
 		return
 
-	save_file.close()
+	saveFile.close()
 	print("Fichier de sauvegarde récupéré")
 
-	var node_data : Dictionary = json.data
-	
-	ApplyData(node_data)
+	var nodeData: Dictionary = json.data
 
-func LoadLite() -> void : 
+	ApplyData(nodeData)
+
+func LoadLite() -> void:
 	ApplyData(tempSave)
 
-func ApplyData(node_data : Dictionary) -> void : 
+func ApplyData(nodeData: Dictionary) -> void:
 	var joueur: Node = get_tree().get_first_node_in_group("Joueur")
 	var RoomManager: Node = get_tree().get_first_node_in_group("RoomManager")
-	joueur.currentHP = node_data["current_health"]
-	# Ne plus écraser slots — la restauration d'inventaire complet nécessite
+	joueur.currentHP = nodeData["current_health"]
+  # Ne plus écraser slots — la restauration d'inventaire complet nécessite
 	# un système de sérialisation des ressources Item (à implémenter plus tard).
 	# Pour l'instant on ne restaure pas l'inventaire depuis le fichier de sauvegarde
 	# afin de ne pas corrompre le tableau de slots.
-	if RoomManager.AreRoomsLoaded() : 
-		RoomManager.RoomChangeCoords(node_data["current_scene"], node_data["player_pos_x"], node_data["player_pos_y"])
-	else : 
-		RoomManager.RoomLoadToCoords(node_data["current_scene"], node_data["player_pos_x"], node_data["player_pos_y"])
+	if RoomManager.AreRoomsLoaded():
+		RoomManager.RoomChangeCoords(nodeData["current_scene"], nodeData["player_pos_x"], nodeData["player_pos_y"])
+	else:
+		RoomManager.RoomLoadToCoords(nodeData["current_scene"], nodeData["player_pos_x"], nodeData["player_pos_y"])
 	print("Chargement effectué")
