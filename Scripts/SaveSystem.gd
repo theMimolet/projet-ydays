@@ -183,9 +183,9 @@ func ApplyData(nodeData: Dictionary) -> void:
 	# Pour l'instant on ne restaure pas l'inventaire depuis le fichier de sauvegarde
 	# afin de ne pas corrompre le tableau de slots.
 
-  # joueur.inventory.slots = nodeData["current_inventory"]
+	# joueur.inventory.slots = nodeData["current_inventory"]
 
-  if RoomManager.AreRoomsLoaded():
+	if RoomManager.AreRoomsLoaded():
 		RoomManager.RoomChangeCoords(nodeData["current_scene"], nodeData["player_pos_x"], nodeData["player_pos_y"])
 	else:
 		RoomManager.RoomLoadToCoords(nodeData["current_scene"], nodeData["player_pos_x"], nodeData["player_pos_y"])
