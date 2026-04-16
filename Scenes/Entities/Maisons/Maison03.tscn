@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://maison03_scene"]
+[gd_scene format=3]
 
 [ext_resource type="Script" path="res://Scripts/Interactions/Maison.gd" id="1_maison_script"]
 [ext_resource type="Texture2D" uid="uid://bv4m8uw8dnre5" path="res://Spritesheet/Jardin/Maison-03.png" id="2_maison_tex"]
