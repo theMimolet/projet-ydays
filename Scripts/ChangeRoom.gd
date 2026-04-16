@@ -94,7 +94,7 @@ func RoomLoadToSpawnPoint(room: String, spawnPoint: String) -> void:
 
 	var spawnNode: Node2D = null
 	spawnNode = rooms.find_child(spawnPoint, true, false) # Cherche récursivement si un node avec le nom recherché existe
-  # Note de Samuel : il n'y a pas de positions locales aux rooms, on a toujours utilisé des positions globales
+	# Note de Samuel : il n'y a pas de positions locales aux rooms, on a toujours utilisé des positions globales
 	if spawnNode != null:
 		joueur.position = spawnNode.position
 	else:
