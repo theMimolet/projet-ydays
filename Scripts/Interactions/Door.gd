@@ -116,9 +116,9 @@ func _perform_room_change() -> void:
 		return
 
 	# Tenter de récupérer le gestionnaire de rooms
-	var room_manager := get_tree().current_scene.get_node_or_null("RoomLoadToSpawnPoint")
+	var room_manager := get_tree().current_scene.get_node_or_null("RoomManager")
 	if room_manager == null:
-		room_manager = get_tree().get_first_node_in_group("RoomLoadToSpawnPoint")
+		room_manager = get_tree().get_first_node_in_group("RoomManager")
 
 	if room_manager != null and room_manager.has_method("RoomLoadToSpawnPoint"):
 		room_manager.RoomLoadToSpawnPoint(room_to_load, spawn_point_name)
