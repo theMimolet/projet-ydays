@@ -1,0 +1,139 @@
+[gd_scene format=3 uid="uid://c8j6i5o3wiip6"]
+
+[ext_resource type="Texture2D" uid="uid://77l8u1ckhc4t" path="res://Spritesheet/Interieur_maison/Maisoninterieur_Environnement_1_YDAYS-02.png" id="1_77xqg"]
+[ext_resource type="Texture2D" uid="uid://0xkmm505a4o1" path="res://Spritesheet/Torche/sprite_torche.png" id="2_8eqjs"]
+[ext_resource type="Texture2D" uid="uid://i3e80hltn54o" path="res://Spritesheet/Porte/sprite_0.png" id="3_qqjl5"]
+[ext_resource type="Texture2D" uid="uid://cn1chvdt157y2" path="res://Spritesheet/Armoire/sprite_0.webp" id="4_qqjl5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2c700"]
+size = Vector2(10, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ftqpf"]
+atlas = ExtResource("2_8eqjs")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5s5wa"]
+atlas = ExtResource("2_8eqjs")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yto7a"]
+atlas = ExtResource("2_8eqjs")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d7sbv"]
+atlas = ExtResource("2_8eqjs")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eihsg"]
+atlas = ExtResource("2_8eqjs")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qrvef"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ftqpf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5s5wa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yto7a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d7sbv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eihsg")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8eqjs"]
+size = Vector2(145, 29)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qqjl5"]
+size = Vector2(32, 165)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xmy8t"]
+size = Vector2(20, 153)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8ekuu"]
+size = Vector2(170.47305, 1317.2805)
+
+[node name="Interieur1" type="Node2D" unique_id=962898587]
+
+[node name="MaisoninterieurEnvironnement1Ydays02" type="Sprite2D" parent="." unique_id=1268697064]
+position = Vector2(-2.8873436, 12.250008)
+scale = Vector2(0.23533332, 0.23533334)
+texture = ExtResource("1_77xqg")
+
+[node name="Torche3" type="Sprite2D" parent="MaisoninterieurEnvironnement1Ydays02" unique_id=284649249]
+position = Vector2(143.99722, 262.39368)
+scale = Vector2(3.0989077, 3.0989077)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="MaisoninterieurEnvironnement1Ydays02/Torche3" unique_id=1749384527]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MaisoninterieurEnvironnement1Ydays02/Torche3/StaticBody2D" unique_id=661408569]
+shape = SubResource("RectangleShape2D_2c700")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MaisoninterieurEnvironnement1Ydays02/Torche3" unique_id=1872522851]
+sprite_frames = SubResource("SpriteFrames_qrvef")
+autoplay = "default"
+
+[node name="Murs" type="Node2D" parent="." unique_id=805913404]
+position = Vector2(-2.8873436, 12.250008)
+scale = Vector2(0.23533332, 0.23533334)
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="Murs" unique_id=1959656413]
+position = Vector2(143.99722, 355.87814)
+scale = Vector2(4.2492924, 4.249292)
+
+[node name="Mur" type="CollisionShape2D" parent="Murs/StaticBody2D4" unique_id=611381274]
+position = Vector2(62.5, 2.5)
+shape = SubResource("RectangleShape2D_8eqjs")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="Murs" unique_id=716501206]
+position = Vector2(-671.8669, 355.87814)
+scale = Vector2(4.2492924, 4.249292)
+
+[node name="Mur" type="CollisionShape2D" parent="Murs/StaticBody2D2" unique_id=1708799046]
+position = Vector2(62.5, 2.5)
+shape = SubResource("RectangleShape2D_8eqjs")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Murs" unique_id=1325988067]
+position = Vector2(12.269167, -52.05386)
+scale = Vector2(4.2492924, 4.249292)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Murs/StaticBody2D" unique_id=835801030]
+position = Vector2(-160, 28.5)
+shape = SubResource("RectangleShape2D_qqjl5")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="Murs" unique_id=933564447]
+position = Vector2(16.51846, -52.05386)
+scale = Vector2(4.2492924, 4.249292)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Murs/StaticBody2D3" unique_id=961090564]
+position = Vector2(148, 31)
+shape = SubResource("RectangleShape2D_xmy8t")
+
+[node name="StaticBody2D8" type="StaticBody2D" parent="Murs" unique_id=106447944]
+scale = Vector2(1.0000001, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Murs/StaticBody2D8" unique_id=1181408741]
+position = Vector2(-0.47860622, -289.76346)
+rotation = 1.5707964
+scale = Vector2(1, 1.0000002)
+shape = SubResource("RectangleShape2D_8ekuu")
+
+[node name="Sprite0" type="Sprite2D" parent="Murs" unique_id=100929716]
+position = Vector2(-445.9065, -269.51563)
+scale = Vector2(2.8017006, 2.8017006)
+texture = ExtResource("3_qqjl5")
+
+[node name="Sprite1" type="Sprite2D" parent="Murs" unique_id=1665353230]
+position = Vector2(415.9519, -247.52129)
+scale = Vector2(5.634561, 5.634561)
+texture = ExtResource("4_qqjl5")

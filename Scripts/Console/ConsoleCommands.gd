@@ -196,6 +196,47 @@ static func cmd_give_weapon(args: Array) -> String:
 	return "[color=red]Erreur: Inventaire invalide[/color]"
 
 
+static func cmd_give_all_weapons(_args: Array) -> String:
+	"""Donne toutes les armes au joueur en une fois"""
+	var weapon_paths: Array[String] = [
+		"res://Resources/Armes/Dague.tres",
+		"res://Resources/Armes/Epee1.tres",
+		"res://Resources/Armes/Epee2.tres",
+		"res://Resources/Armes/Epee3.tres",
+		"res://Resources/Armes/BloodSword.tres",
+	]
+	
+	var inventaire: Node = _get_tree().get_first_node_in_group("Inventaire")
+	if inventaire == null:
+		return "[color=red]Erreur: Inventaire introuvable[/color]"
+	
+	if not inventaire.has_method("add_item"):
+		return "[color=red]Erreur: Inventaire invalide[/color]"
+	
+	var added: PackedStringArray = []
+	var failed: PackedStringArray = []
+	
+	for weapon_path in weapon_paths:
+		if not ResourceLoader.exists(weapon_path):
+			failed.append(weapon_path.get_file())
+			continue
+		var weapon: Resource = load(weapon_path)
+		if weapon == null:
+			failed.append(weapon_path.get_file())
+			continue
+		var success: bool = inventaire.add_item(weapon, 1)
+		if success:
+			var nom: String = weapon.item_name if "item_name" in weapon else weapon_path.get_file().get_basename()
+			added.append(nom)
+		else:
+			failed.append(weapon_path.get_file())
+	
+	var result: String = "[color=green]Armes ajoutées: " + ", ".join(added) + "[/color]"
+	if failed.size() > 0:
+		result += "\n[color=orange]Non ajoutées (fichier absent ou inventaire plein): " + ", ".join(failed) + "[/color]"
+	return result
+
+
 static func cmd_equip_weapon(args: Array) -> String:
 	"""Equipe directement une arme sur le joueur (dague, epee1, epee2, epee3, bloodsword)"""
 	var weapon_name: String = args[0].to_lower()

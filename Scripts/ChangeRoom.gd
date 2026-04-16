@@ -11,6 +11,13 @@ var isLoading: bool = false
 @onready var chat: Node2D = $"../Chat"
 
 func _ready() -> void:
+	# Retour de combat : charger la room où le joueur était + sa position exacte
+	if Global.player_return_position != Vector2.ZERO and Global.currentRoom != "":
+		var pos := Global.player_return_position
+		Global.player_return_position = Vector2.ZERO
+		RoomLoadToCoords(Global.currentRoom, pos.x, pos.y)
+		return
+	
 	if Global.pending_save_to_load != "":
 		var pending_save: String = Global.pending_save_to_load
 		Global.pending_save_to_load = ""
@@ -87,6 +94,7 @@ func RoomLoadToSpawnPoint(room: String, spawnPoint: String) -> void:
 
 	var spawnNode: Node2D = null
 	spawnNode = rooms.find_child(spawnPoint, true, false) # Cherche récursivement si un node avec le nom recherché existe
+	# Note de Samuel : il n'y a pas de positions locales aux rooms, on a toujours utilisé des positions globales
 	if spawnNode != null:
 		joueur.position = spawnNode.position
 	else:
@@ -97,7 +105,8 @@ func RoomLoadToSpawnPoint(room: String, spawnPoint: String) -> void:
 
 func RoomLoadToCoords(room: String, targetX: float, targetY: float) -> void:
 	if not await RoomToLoad(room): return
-	joueur.position = Vector2(targetX, targetY)
+	# Interpréter les coords comme des coordonnées globales (cohérent avec les spawnpoints)
+	joueur.global_position = Vector2(targetX, targetY)
 	FinishRoomLoad()
 
 func _on_animateur_animation_finished(anim_name: StringName) -> void:
@@ -118,3 +127,14 @@ func _on_animateur_animation_finished(anim_name: StringName) -> void:
 			if chat != null:
 				chat.canMove = true
 			isLoading = false
+
+
+# ============== ALIAS / COMPAT ==============
+# Certaines scènes/scripts (portes, console) appellent encore roomChange(...).
+# On redirige vers les méthodes actuelles pour éviter des comportements différents "dans l'autre sens".
+
+func roomChange(newRoom: String, spawnPoint: String = "InitialSpawn") -> void:
+	RoomChangeSpawnPoint(newRoom, spawnPoint)
+
+func roomChangeCoords(newRoom: String, targetX: float, targetY: float) -> void:
+	RoomChangeCoords(newRoom, targetX, targetY)

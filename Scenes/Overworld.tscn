@@ -242,7 +242,7 @@ script = ExtResource("3_8lvve")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Chat" unique_id=1330937203]
 position = Vector2(1, 11)
 sprite_frames = SubResource("SpriteFrames_p68c8")
-animation = &"on-marche - bas"
+animation = &"off-idle"
 autoplay = "off-idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Chat" unique_id=99044765]

@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://df4e3pfy58kpw"]
+
+[ext_resource type="Texture2D" uid="uid://rplcjdnp8vuf" path="res://Scenes/Rooms/Map/Environnement_1_YDAYS_4.webp" id="1_8n5no"]
+[ext_resource type="Script" uid="uid://cs3wfgxf0axj4" path="res://Scripts/RoomSwitcher.gd" id="2_8xl3b"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_djs2b"]
+size = Vector2(74, 18)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8n5no"]
+size = Vector2(16, 390)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8xl3b"]
+size = Vector2(105, 20)
+
+[node name="Node2D" type="Node2D" unique_id=1328303760]
+
+[node name="Environnement1Ydays4" type="Sprite2D" parent="." unique_id=87024102]
+position = Vector2(3, -142)
+texture = ExtResource("1_8n5no")
+
+[node name="Couloir2" type="Node2D" parent="Environnement1Ydays4" unique_id=910926356]
+position = Vector2(-1, -159)
+
+[node name="Couloir" type="Node2D" parent="Environnement1Ydays4" unique_id=1190106946]
+position = Vector2(-4, 143)
+
+[node name="ChunkSwitcher2" type="Area2D" parent="." unique_id=1370746157]
+position = Vector2(4, 17)
+script = ExtResource("2_8xl3b")
+roomToLoad = "uid://drhfsi6nm5qod"
+spawnPointName = "Couloir_vers_jardin"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ChunkSwitcher2" unique_id=442162493]
+position = Vector2(-1, 17)
+shape = SubResource("RectangleShape2D_djs2b")
+debug_color = Color(0.93673784, 1.8193425e-05, 0.63304937, 0.41960785)
+
+[node name="ChunkSwitcher" type="Area2D" parent="." unique_id=808794058]
+position = Vector2(3, -340)
+script = ExtResource("2_8xl3b")
+roomToLoad = "uid://s1w0gr0l2n64"
+spawnPointName = "Jardin_Sud"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ChunkSwitcher" unique_id=850706337]
+position = Vector2(-1, 17)
+shape = SubResource("RectangleShape2D_djs2b")
+debug_color = Color(0.93673784, 1.8193425e-05, 0.63304937, 0.41960785)
+
+[node name="StaticBody2D7" type="StaticBody2D" parent="." unique_id=1657723750]
+position = Vector2(3, -142)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D7" unique_id=969589414]
+position = Vector2(-45, 0)
+shape = SubResource("RectangleShape2D_8n5no")
+
+[node name="StaticBody2D6" type="StaticBody2D" parent="." unique_id=316048163]
+position = Vector2(3, -142)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D6" unique_id=1998329233]
+position = Vector2(44, -1)
+shape = SubResource("RectangleShape2D_8n5no")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="." unique_id=872516207]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2" unique_id=22308411]
+position = Vector2(3, -340)
+shape = SubResource("RectangleShape2D_8xl3b")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1579251471]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=818936415]
+position = Vector2(2.5, 45)
+shape = SubResource("RectangleShape2D_8xl3b")
+
+[connection signal="body_entered" from="ChunkSwitcher2" to="ChunkSwitcher2" method="_on_body_entered"]
+[connection signal="body_entered" from="ChunkSwitcher" to="ChunkSwitcher" method="_on_body_entered"]
