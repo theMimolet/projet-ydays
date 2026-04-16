@@ -13,6 +13,7 @@ const INDICATOR_SCALE := Vector2(0.3, 0.3)
 @export var collectable: bool = true # Si false, l'item ne peut pas être collecté
 @export var can_collect: bool = true # Si false, l'item ne peut pas être collecté (contrôle logique externe)
 @export var item_name_override: String = "" # Nom personnalisé pour l'item (pour le stacking)
+@export var progress_key_on_collect: String = "" # Si défini, met Global.progress[key] = true à la collecte
 
 var is_collected: bool = false
 var indicator_sprite: Sprite2D = null
@@ -144,6 +145,8 @@ func collect() -> bool:
 	
 	if success:
 		is_collected = true
+		if progress_key_on_collect != "":
+			Global.progress[progress_key_on_collect] = true
 		print("Item collecté : ", item_resource.item_name, " (x", quantity, ")")
 		# Cacher ou supprimer l'objet du monde
 		queue_free()

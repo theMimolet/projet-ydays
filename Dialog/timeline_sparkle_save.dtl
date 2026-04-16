@@ -1,0 +1,10 @@
+[style name="Dialogue"]
+Narrateur: Voulez-vous sauvegarder ?
+- Oui
+	do Global.confirm_pending_sparkle_save()
+	Narrateur: Sauvegarde effectuee.
+- Non
+	do Global.cancel_pending_sparkle_save()
+	Narrateur: D'accord.
+
+[end_timeline]

@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://chto1tn0qj6p6"]
 
+[ext_resource type="Script" uid="uid://x13akggplkv6" path="res://Scripts/Entity/sparkle.gd" id="1_p52ea"]
 [ext_resource type="Texture2D" uid="uid://um47ndrst1dc" path="res://Spritesheet/Etincelle/etincelle-spritesheet.png" id="1_wq7m2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_p52ea"]
@@ -35,10 +36,13 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
-"speed": 5.0
+"speed": 7.0
 }]
 
 [node name="Sparkle" type="Node2D" unique_id=1732643078]
+script = ExtResource("1_p52ea")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=41020641]
+scale = Vector2(0.6, 0.6)
 sprite_frames = SubResource("SpriteFrames_bwjh0")
+frame_progress = 0.81890416

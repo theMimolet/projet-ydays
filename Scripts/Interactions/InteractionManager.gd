@@ -6,19 +6,28 @@ const Vase = preload("res://Scripts/Interactions/Vase.gd")
 const VASE_TILE_COORDS = Vector2i(2, 0)
 const INTERACTION_DISTANCE = 32.0
 
-var last_targeted_item : Node2D = null
+var last_targeted_item: Node2D = null
 var last_targeted_interactable: Node2D = null
 
+func _is_dialogue_running() -> bool:
+	return Dialogic != null and Dialogic.current_timeline != null
+
+func _continue_dialogue_if_running() -> bool:
+	if not _is_dialogue_running():
+		return false
+	Dialogic.Inputs.handle_input()
+	return true
+
 const CELLS_TO_CHECK := [
-	Vector2i(0, 0),   # Case du joueur
+	Vector2i(0, 0), # Case du joueur
 	Vector2i(-1, -1), # Haut-Gauche
-	Vector2i(0, -1),  # Haut
+	Vector2i(0, -1), # Haut
 	Vector2i(1, -1), # Haut-Droite
-	Vector2i(-1, 0),  # Gauche
-	Vector2i(1, 0),   # Droite
-	Vector2i(-1, 1),  # Bas-Gauche
-	Vector2i(0, 1),   # Bas
-	Vector2i(1, 1),   # Bas-Droite
+	Vector2i(-1, 0), # Gauche
+	Vector2i(1, 0), # Droite
+	Vector2i(-1, 1), # Bas-Gauche
+	Vector2i(0, 1), # Bas
+	Vector2i(1, 1), # Bas-Droite
 ]
 
 func _get_tilemap() -> TileMapLayer:
@@ -31,35 +40,35 @@ func _find_vase_cell(player_position: Vector2) -> Vector2i:
 	var tilemap := _get_tilemap()
 	if tilemap == null:
 		return Vector2i(-1, -1)
-	
+
 	var player_cell: Vector2i = tilemap.local_to_map(tilemap.to_local(player_position))
-	
+
 	for offset: Vector2i in CELLS_TO_CHECK:
 		var cell: Vector2i = player_cell + offset
 		if tilemap.get_cell_source_id(cell) == -1:
 			continue
-		
+
 		if tilemap.get_cell_atlas_coords(cell) == VASE_TILE_COORDS:
 			return cell
-	
+
 	return Vector2i(-1, -1)
 
 func _find_nearby_node_interactions(player_position: Vector2, group_name: String) -> Node:
 	var nodes: Array[Node] = get_tree().get_nodes_in_group(group_name)
-	
+
 	for node: Node in nodes:
 		if node.has_method("interact"):
 			var distance: float = player_position.distance_to(node.global_position)
 			if distance <= INTERACTION_DISTANCE:
 				return node
-	
+
 	return null
 
 func _find_nearest_node_in_group(player_position: Vector2, group_name: String) -> Node2D:
 	var nodes: Array[Node] = get_tree().get_nodes_in_group(group_name)
 	var nearest: Node2D = null
 	var nearest_distance: float = INTERACTION_DISTANCE
-	
+
 	for node: Node in nodes:
 		if not (node is Node2D):
 			continue
@@ -68,19 +77,19 @@ func _find_nearest_node_in_group(player_position: Vector2, group_name: String) -
 		# Don't show interaction indicator for already-opened interactables (armoires/coffres).
 		if "is_opened" in node and node.is_opened:
 			continue
-		
+
 		var distance: float = player_position.distance_to((node as Node2D).global_position)
 		if distance <= INTERACTION_DISTANCE and distance < nearest_distance:
 			nearest = node as Node2D
 			nearest_distance = distance
-	
+
 	return nearest
 
 func get_nearest_interactable(player_position: Vector2) -> Node2D:
 	var groups := ["Doors", "Coffres", "Armoires", "Torches"]
 	var nearest: Node2D = null
 	var nearest_distance: float = INTERACTION_DISTANCE
-	
+
 	for group_name: String in groups:
 		var candidate := _find_nearest_node_in_group(player_position, group_name)
 		if candidate == null:
@@ -89,16 +98,16 @@ func get_nearest_interactable(player_position: Vector2) -> Node2D:
 		if distance < nearest_distance:
 			nearest = candidate
 			nearest_distance = distance
-	
+
 	return nearest
 
 func update_interactable_indicators(player_position: Vector2) -> void:
 	var nearest := get_nearest_interactable(player_position)
-	
+
 	if last_targeted_interactable != null and last_targeted_interactable != nearest:
 		if last_targeted_interactable.has_method("hide_indicator"):
 			last_targeted_interactable.hide_indicator()
-	
+
 	if nearest != null:
 		if nearest.has_method("show_indicator"):
 			nearest.show_indicator()
@@ -125,22 +134,26 @@ func _hide_collectable_indicator() -> void:
 	last_targeted_item = null
 
 func handle_interaction(player_position: Vector2) -> bool:
+	# Pendant un dialogue actif, F doit continuer le dialogue, pas relancer une interaction.
+	if _continue_dialogue_if_running():
+		return true
+
 	# Vérifier d'abord les interactions basées sur tiles (vases)
 	var vase_cell := _find_vase_cell(player_position)
 	if vase_cell != Vector2i(-1, -1):
 		Vase.interact(vase_cell)
 		return true
-	
+
 	# Vérifier les interactions basées sur nodes (PNJ)
 	var pnj := _find_nearby_node_interactions(player_position, "PNJ")
 	if pnj != null:
 		pnj.interact()
-		return true  # Les PNJ bloquent le mouvement pendant le dialogue
+		return true # Les PNJ bloquent le mouvement pendant le dialogue
 	# Vérifier les interactions basées sur nodes (coffres)
 	var coffre := _find_nearby_node_interactions(player_position, "Coffres")
 	if coffre != null:
 		coffre.interact()
-	
+
 	# Vérifier les interactions basées sur nodes (armoires)
 	var armoire := _find_nearby_node_interactions(player_position, "Armoires")
 	if armoire != null:
@@ -148,7 +161,7 @@ func handle_interaction(player_position: Vector2) -> bool:
 		if "is_opened" in armoire and not armoire.is_opened:
 			armoire.interact()
 			return true
-	
+
 	# Vérifier les interactions basées sur nodes (portes)
 	var door := _find_nearby_node_interactions(player_position, "Doors")
 	if door != null:
@@ -166,10 +179,10 @@ func handle_interaction(player_position: Vector2) -> bool:
 		return true
 	
 	# Vérifier les items collectables proches
-	var item_collected : bool = check_collectable_items(player_position)
+	var item_collected: bool = check_collectable_items(player_position)
 	if item_collected:
-		return true  # Les items collectables bloquent le mouvement pendant la collecte
-	
+		return true # Les items collectables bloquent le mouvement pendant la collecte
+
 	# Les coffres ne bloquent pas le mouvement
 	return false
 
@@ -177,39 +190,39 @@ func check_vase_collision(player_position: Vector2) -> void:
 	var vase_cell := _find_vase_cell(player_position)
 	if vase_cell == Vector2i(-1, -1):
 		return
-	
+
 	var tilemap := _get_tilemap()
 	if tilemap == null:
 		return
-	
+
 	# Casser le vase en supprimant le tile
 	tilemap.erase_cell(vase_cell)
 
 func get_nearest_collectable(player_position: Vector2) -> Node2D:
 	"""Retourne l'objet collectable le plus proche du joueur, ou null si aucun"""
-	var collectables : Array = get_tree().get_nodes_in_group("CollectableItems")
-	var nearest : Node2D = null
+	var collectables: Array = get_tree().get_nodes_in_group("CollectableItems")
+	var nearest: Node2D = null
 	const COLLECTION_DISTANCE = 32.0
-	var nearest_distance : float = COLLECTION_DISTANCE
-	
-	for collectable : Node in collectables:
+	var nearest_distance: float = COLLECTION_DISTANCE
+
+	for collectable: Node in collectables:
 		if collectable.has_method("can_be_collected") and collectable.can_be_collected():
-			var distance : float = player_position.distance_to(collectable.global_position)
+			var distance: float = player_position.distance_to(collectable.global_position)
 			if distance <= COLLECTION_DISTANCE and distance < nearest_distance:
 				nearest = collectable as Node2D
 				nearest_distance = distance
-	
+
 	return nearest
 
 func update_collectable_indicators(player_position: Vector2) -> void:
 	"""Met à jour les indicateurs visuels des objets collectables proches"""
-	var nearest : Node2D = get_nearest_collectable(player_position)
-	
+	var nearest: Node2D = get_nearest_collectable(player_position)
+
 	# Cacher l'indicateur de l'item précédent
 	if last_targeted_item != null and last_targeted_item != nearest:
 		if last_targeted_item.has_method("hide_indicator"):
 			last_targeted_item.hide_indicator()
-	
+
 	# Afficher l'indicateur du nouvel item
 	if nearest != null:
 		if nearest.has_method("show_indicator"):
@@ -225,11 +238,11 @@ func check_collectable_items(player_position: Vector2) -> bool:
 	"""Vérifie et collecte les items collectables proches. Retourne true si un item a été collecté"""
 	# Mettre à jour les indicateurs
 	update_interaction_indicators(player_position)
-	
+
 	# Si l'utilisateur appuie sur F, collecter l'item le plus proche
 	if last_targeted_item != null:
 		if last_targeted_item.has_method("collect") and last_targeted_item.has_method("can_be_collected"):
 			if last_targeted_item.can_be_collected():
 				return last_targeted_item.collect()
-	
+
 	return false

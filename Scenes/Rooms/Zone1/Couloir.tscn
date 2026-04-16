@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://c4fo1vgo0kcmf" path="res://Scenes/Rooms/Map/Environnement_1_YDAYS_1.webp" id="1_42vvc"]
 [ext_resource type="Script" uid="uid://cs3wfgxf0axj4" path="res://Scripts/RoomSwitcher.gd" id="2_dqgav"]
+[ext_resource type="PackedScene" uid="uid://chto1tn0qj6p6" path="res://Scenes/Entities/Overworld/Sparkle.tscn" id="3_43psv"]
 [ext_resource type="Script" uid="uid://cx164losuegqd" path="res://Scripts/Interactions/garde_rouge.gd" id="2_mbhj5"]
 [ext_resource type="Texture2D" uid="uid://dw155bh6gashm" path="res://Spritesheet/Monstres/Garde-Rouge/garde-rouge-idle.png" id="3_ohb61"]
 [ext_resource type="Script" uid="uid://3tptfvsxk7aa" path="res://Scripts/Interactions/garde_jaune.gd" id="4_hlf35"]
@@ -397,6 +398,10 @@ roomToLoad = "uid://dof6jbjjwnxl7"
 position = Vector2(-272, -80)
 shape = SubResource("RectangleShape2D_uoaph")
 debug_color = Color(0.93673784, 1.8193425e-05, 0.63304937, 0.41960785)
+
+[node name="Sparkle" parent="." unique_id=1732643078 instance=ExtResource("3_43psv")]
+position = Vector2(-350, -32)
+timeline = "timeline_sparkle_save"
 
 [node name="Room2" type="Node2D" parent="." unique_id=273959894]
 position = Vector2(-271, 41)

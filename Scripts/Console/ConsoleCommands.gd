@@ -321,7 +321,7 @@ static func cmd_set_room(args: Array) -> String:
 	
 	var roomManager : Node = _get_tree().get_first_node_in_group("RoomManager")
 	
-	roomManager.roomChange(cheminScene, requestedSpawn)
+	roomManager.RoomLoadToSpawnPoint(cheminScene, requestedSpawn)
 	
 	return "[color=green] Chargement de "+requestedRoom+"...[/color]"
 

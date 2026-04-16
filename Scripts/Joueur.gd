@@ -1,21 +1,21 @@
 extends CharacterBody2D
 
-var base_speed : float = 40.0  # Vitesse de base (modifiable)
+var base_speed: float = 40.0 # Vitesse de base (modifiable)
 
-@onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
-@onready var inventory : Node = $Inventaire
-@onready var arme_sprite : Sprite2D = $ArmeSprite
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var inventory: Node = $Inventaire
+@onready var arme_sprite: Sprite2D = $ArmeSprite
 
-@export var canMove : bool = true
-var isMoving : bool
+@export var canMove: bool = true
+var isMoving: bool
 
 # Système d'arme équipée
 var arme_equipee: Resource = null
 signal arme_changed(arme: Resource)
 
 # Système de points de vie
-const MAX_HP : int = 100
-var currentHP : int = MAX_HP
+const MAX_HP: int = 100
+var currentHP: int = MAX_HP
 signal hp_changed(new_hp: int, max_hp: int)
 signal player_died
 
@@ -24,21 +24,21 @@ const DASH_SPEED = 200.0
 const DASH_DURATION = 0.2
 const DASH_COOLDOWN = 0.5
 const DASH_STAMINA_COST = 1
-var canDash : bool = true
-var isDashing : bool = false
-var dashTimer : float = 0.0
-var dashCooldownTimer : float = 0.0
-var dashDirection : Vector2 = Vector2.ZERO
+var canDash: bool = true
+var isDashing: bool = false
+var dashTimer: float = 0.0
+var dashCooldownTimer: float = 0.0
+var dashDirection: Vector2 = Vector2.ZERO
 
 # Système Stamina
-var stamina : int = STAMINA_MAX
-var staminaRegenTimer : float = 0.0
+var stamina: int = STAMINA_MAX
+var staminaRegenTimer: float = 0.0
 const STAMINA_MAX = 3
 const STAMINA_REGEN_RATE = 0.5
 const STAMINA_REGEN_DELAY = 1.0
 
 enum playerDirections {BAS, HAUT, GAUCHE, DROITE}
-var currentPlayerDirections : playerDirections
+var currentPlayerDirections: playerDirections
 
 signal stamina_changed(new_stamina: int)
 
@@ -75,18 +75,18 @@ func Mouvement() -> void :
 		velocity = dashDirection * DASH_SPEED
 		return
 	
-	var input_direction : Vector2 = Input.get_vector("Gauche", "Droite", "Haut", "Bas")
-	if input_direction != Vector2(0,0) : 
+	var input_direction: Vector2 = Input.get_vector("Gauche", "Droite", "Haut", "Bas")
+	if input_direction != Vector2(0, 0):
 		isMoving = true
-	else :
+	else:
 		isMoving = false
 	if input_direction.x > 0:
 		currentPlayerDirections = playerDirections.DROITE
-	elif  input_direction.x < 0 :
+	elif input_direction.x < 0:
 		currentPlayerDirections = playerDirections.GAUCHE
-	elif  input_direction.y > 0:
+	elif input_direction.y > 0:
 		currentPlayerDirections = playerDirections.BAS
-	elif  input_direction.y < 0:
+	elif input_direction.y < 0:
 		currentPlayerDirections = playerDirections.HAUT
 	velocity = input_direction * base_speed
 
@@ -97,12 +97,12 @@ func _input(event: InputEvent) -> void:
 	# Ne pas gérer les interactions si l'inventaire est ouvert
 	if not is_inventory_open():
 		if event.is_action_pressed("Interact"):
-			var interaction_found : bool = InteractionManager.handle_interaction(global_position)
+			var interaction_found: bool = InteractionManager.handle_interaction(global_position)
 			if interaction_found:
 				canMove = false
-	
+
 	if event.is_action_pressed("Dash") and canMove and not isDashing and dashCooldownTimer <= 0.0 and canDash and stamina >= DASH_STAMINA_COST:
-		var input_direction : Vector2 = Input.get_vector("Gauche", "Droite", "Haut", "Bas")
+		var input_direction: Vector2 = Input.get_vector("Gauche", "Droite", "Haut", "Bas")
 		if input_direction != Vector2.ZERO:
 			isDashing = true
 			dashDirection = input_direction.normalized()
@@ -111,9 +111,11 @@ func _input(event: InputEvent) -> void:
 			consume_stamina(DASH_STAMINA_COST)
 
 func _physics_process(delta: float) -> void:
+	if _is_dialogue_running():
+		canMove = false
 
 	# ============== MOUVEMENTS ==============
-	
+
 	# Gestion du dash
 	if isDashing:
 		dashTimer -= delta
@@ -138,7 +140,7 @@ func _physics_process(delta: float) -> void:
 	if canMove and not _is_movement_blocked():
 		Mouvement()
 		Animate()
-	else :
+	else:
 		velocity = Vector2(0, 0)
 		sprite.stop()
 
@@ -148,33 +150,36 @@ func _physics_process(delta: float) -> void:
 	# Mettre à jour les indicateurs (interactables + collectables)
 	InteractionManager.update_interaction_indicators(global_position)
 
+func _is_dialogue_running() -> bool:
+	return Dialogic != null and Dialogic.current_timeline != null
+
 func update_depth() -> void:
 	const BASE_OFFSET := 1000
 	z_index = BASE_OFFSET + int(global_position.y)
 
-func Animate() -> void : 
-	var currentAnimation : String
-	var currentFace : String
-	if isMoving :
+func Animate() -> void:
+	var currentAnimation: String
+	var currentFace: String
+	if isMoving:
 		currentAnimation = "marche"
-	else : 
+	else:
 		currentAnimation = "idle"
-	match currentPlayerDirections :
-		0 : 
+	match currentPlayerDirections:
+		0:
 			currentFace = "bas"
-		1 : 
+		1:
 			currentFace = "haut"
-		2 : 
+		2:
 			currentFace = "gauche"
-		3 : 
+		3:
 			currentFace = "droite"
 	sprite.play(currentAnimation + "-" + currentFace)
 	_update_arme_position()
 	
-func paralysePlayer(yes : bool) -> void :
+func paralysePlayer(yes: bool) -> void:
 	if yes:
 		canMove = false
-	else : 
+	else:
 		canMove = true
 
 func _on_timeline_started() -> void:
@@ -303,11 +308,11 @@ func get_hp_percentage() -> float:
 
 func set_speed(value: float) -> void:
 	"""Définit la vitesse de base du joueur"""
-	base_speed = max(0.0, value)  # Empêcher les valeurs négatives
+	base_speed = max(0.0, value) # Empêcher les valeurs négatives
 
 func add_speed(value: float) -> void:
 	"""Ajoute à la vitesse de base du joueur"""
-	base_speed = max(0.0, base_speed + value)  # Empêcher les valeurs négatives
+	base_speed = max(0.0, base_speed + value) # Empêcher les valeurs négatives
 
 func get_speed() -> float:
 	"""Retourne la vitesse actuelle du joueur"""

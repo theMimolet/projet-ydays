@@ -1,25 +1,29 @@
 extends Node2D
 
-@export var required_item_name : String = "key_zone1"
-@export_file("*.tscn") var room_to_load : String
-@export var spawn_point_name : String = "InitialSpawn"
-@export var is_open : bool = false
+@export var required_item_name: String = "key_zone1"
+@export_file("*.tscn") var room_to_load: String
+@export var spawn_point_name: String = "InitialSpawn"
+@export var is_open: bool = false
 
 @export_category("Visuel")
 @export var closed_texture: Texture2D = null
 @export var open_texture: Texture2D = null
 
-@export var dialog_no_key_timeline : String = "porte_sans_clef"
-@export var dialog_with_key_timeline : String = "porte_avec_clef"
+@export var dialog_no_key_timeline: String = "porte_sans_clef"
+@export var dialog_with_key_timeline: String = "porte_avec_clef"
 
-@export var open_animation_name : String = "idle"
-@export var open_colliders_root_path : NodePath = NodePath(".")
-@export var open_colliders_names : Array[String] = ["Opened1", "Opened2"]
+@export var open_animation_name: String = "idle"
+@export var open_colliders_root_path: NodePath = NodePath(".")
+@export var open_colliders_names: Array[String] = ["Opened1", "Opened2"]
 
 var _has_played_open_animation := false
 
+@export var progress_key: String = "zone1_porte_ouverte"
+
 func _ready() -> void:
 	add_to_group("Doors")
+	if Global.progress.get(progress_key, false):
+		is_open = true
 	update_visual_state()
 
 func update_visual_state(play_open_animation := false) -> void:
@@ -60,13 +64,13 @@ func interact() -> void:
 	if is_open:
 		_perform_room_change()
 		return
-	
-	var inventaire = get_tree().get_first_node_in_group("Inventaire")
+
+	var inventaire: Node = get_tree().get_first_node_in_group("Inventaire")
 	if inventaire == null:
 		return
-	
-	var joueur = get_tree().get_first_node_in_group("Joueur")
-	
+
+	var joueur: Node = get_tree().get_first_node_in_group("Joueur")
+
 	# Cas 1 : le joueur n'a pas la clé -> simple description de la porte
 	if not inventaire.has_item(required_item_name, 1):
 		if dialog_no_key_timeline != "":
@@ -74,11 +78,11 @@ func interact() -> void:
 			if joueur != null and "canMove" in joueur:
 				joueur.canMove = false
 		return
-	
+
 	# Cas 2 : le joueur a la clé -> dialogue \"voulez-vous utiliser la clef ?\"
 	# La logique réelle d'utilisation de la clé se fait dans use_key_and_open(),
 	# appelée depuis le timeline via Global.use_key_on_pending_door().
-	Global.set_pending_door(self)
+	Global.set_pending_door(self )
 	if dialog_with_key_timeline != "":
 		Dialogic.start(dialog_with_key_timeline)
 		if joueur != null and "canMove" in joueur:
@@ -87,35 +91,37 @@ func interact() -> void:
 func use_key_and_open() -> void:
 	if is_open:
 		return
-	
-	var inventaire = get_tree().get_first_node_in_group("Inventaire")
+
+	var inventaire: Node = get_tree().get_first_node_in_group("Inventaire")
 	if inventaire == null:
 		return
-	
+
 	if not inventaire.has_item(required_item_name, 1):
 		return
-	
+
 	inventaire.remove_item(required_item_name, 1)
 	is_open = true
 	update_visual_state(true)
-	
+
 	var static_body := get_node_or_null("StaticBody2D_Door")
 	if static_body is StaticBody2D:
 		static_body.queue_free()
-	
+
+	Global.progress[progress_key] = true
+
 	_perform_room_change()
 
 func _perform_room_change() -> void:
 	if room_to_load == "":
 		return
-	
+
 	# Tenter de récupérer le gestionnaire de rooms
-	var room_manager := get_tree().current_scene.get_node_or_null("ChangeRoom")
+	var room_manager := get_tree().current_scene.get_node_or_null("RoomManager")
 	if room_manager == null:
-		room_manager = get_tree().get_first_node_in_group("ChangeRoom")
-	
-	if room_manager != null and room_manager.has_method("roomChange"):
-		room_manager.roomChange(room_to_load, spawn_point_name)
+		room_manager = get_tree().get_first_node_in_group("RoomManager")
+
+	if room_manager != null and room_manager.has_method("RoomLoadToSpawnPoint"):
+		room_manager.RoomLoadToSpawnPoint(room_to_load, spawn_point_name)
 
 func _get_door_visual_node() -> Node:
 	# Prefer AnimatedSprite2D when present (open animation support).

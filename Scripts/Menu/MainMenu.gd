@@ -57,8 +57,7 @@ func _refresh_save_buttons() -> void:
 		save_list.remove_child(child)
 		child.free()
 
-	var saves := SaveSystem.ListSaves()
-	saves.sort()
+	var saves := SaveSystem.ListSavesMostRecentFirst()
 
 	if saves.is_empty():
 		var empty_label := Label.new()
@@ -103,7 +102,7 @@ func _input(event: InputEvent) -> void:
 	if current_index != menuState.SAVES:
 		return
 
-	if event.is_action_pressed("Menu_Remove") and focused_save_name != "":
+	if event.is_action_pressed("MenuRemove") and focused_save_name != "":
 		SaveSystem.DeleteSave(focused_save_name)
 		focused_save_name = ""
 		_refresh_save_buttons()
