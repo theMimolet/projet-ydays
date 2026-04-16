@@ -5,6 +5,10 @@ extends Node2D
 @export var spawn_point_name: String = "InitialSpawn"
 @export var is_open: bool = false
 
+@export_category("Visuel")
+@export var closed_texture: Texture2D = null
+@export var open_texture: Texture2D = null
+
 @export var dialog_no_key_timeline: String = "porte_sans_clef"
 @export var dialog_with_key_timeline: String = "porte_avec_clef"
 
@@ -23,12 +27,38 @@ func _ready() -> void:
 	update_visual_state()
 
 func update_visual_state(play_open_animation := false) -> void:
-	var sprite := _get_door_visual_node()
+	var visual_node := _get_door_visual_node()
+	if visual_node == null:
+		return
+
+	_update_texture_if_sprite2d(visual_node)
+	_update_room_switcher_state()
+
+	if play_open_animation and is_open and not _has_played_open_animation:
+		_play_open_animation_once(visual_node)
+
+func _update_texture_if_sprite2d(visual_node: Node) -> void:
+	var sprite := visual_node as Sprite2D
 	if sprite == null:
 		return
 
-	if play_open_animation and is_open and not _has_played_open_animation:
-		_play_open_animation_once(sprite)
+	if is_open:
+		if open_texture != null:
+			sprite.texture = open_texture
+	else:
+		# If no "closed" texture is provided, keep current texture.
+		if closed_texture != null:
+			sprite.texture = closed_texture
+
+func _update_room_switcher_state() -> void:
+	# If the door has a child Area2D (RoomSwitcher), enable it only when open.
+	var rs := get_node_or_null("RoomSwitcher")
+	if rs is Area2D:
+		(rs as Area2D).monitoring = is_open
+		(rs as Area2D).monitorable = is_open
+		for c in (rs as Area2D).get_children():
+			if c is CollisionShape2D:
+				(c as CollisionShape2D).disabled = not is_open
 
 func interact() -> void:
 	if is_open:
@@ -94,12 +124,12 @@ func _perform_room_change() -> void:
 		room_manager.RoomLoadToSpawnPoint(room_to_load, spawn_point_name)
 
 func _get_door_visual_node() -> Node:
-	# Room1.tscn uses "AnimatedSprite2D" for the door visuals.
+	# Prefer AnimatedSprite2D when present (open animation support).
 	var animated := get_node_or_null("AnimatedSprite2D")
 	if animated is AnimatedSprite2D:
 		return animated
 
-	# Fallback for older door scenes if you named it differently.
+	# Fallback: most scenes use Sprite2D named "DoorSprite".
 	return get_node_or_null("DoorSprite")
 
 func _play_open_animation_once(visual_node: Node) -> void:

@@ -45,6 +45,8 @@ signal stamina_changed(new_stamina: int)
 func _ready() -> void:
 	if Dialogic.timeline_ended.connect(_on_timeline_ended) != OK:
 		print("Erreur : impossible de se connecter au signal timeline_ended de Dialogic")
+	if Dialogic.timeline_started.connect(_on_timeline_started) != OK:
+		print("Erreur : impossible de se connecter au signal timeline_started de Dialogic")
 	
 	# Initialiser les HP et émettre le signal
 	currentHP = MAX_HP
@@ -59,7 +61,16 @@ func is_inventory_open() -> bool:
 		return inventory.is_open
 	return false
 
-func Mouvement() -> void:
+func _is_movement_blocked() -> bool:
+	"""True si un dialogue est ouvert ou la console de dev est ouverte."""
+	if Dialogic.current_timeline != null:
+		return true
+	var cons: Node = get_node_or_null("/root/DevConsole")
+	if cons != null and "is_open" in cons and cons.is_open:
+		return true
+	return false
+
+func Mouvement() -> void :
 	if isDashing:
 		velocity = dashDirection * DASH_SPEED
 		return
@@ -80,6 +91,9 @@ func Mouvement() -> void:
 	velocity = input_direction * base_speed
 
 func _input(event: InputEvent) -> void:
+	# Ne pas réagir aux actions si un dialogue ou la console est ouverte
+	if _is_movement_blocked():
+		return
 	# Ne pas gérer les interactions si l'inventaire est ouvert
 	if not is_inventory_open():
 		if event.is_action_pressed("Interact"):
@@ -123,7 +137,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		staminaRegenTimer = 0.0
 	
-	if canMove:
+	if canMove and not _is_movement_blocked():
 		Mouvement()
 		Animate()
 	else:
@@ -167,6 +181,9 @@ func paralysePlayer(yes: bool) -> void:
 		canMove = false
 	else:
 		canMove = true
+
+func _on_timeline_started() -> void:
+	canMove = false
 
 func _on_timeline_ended() -> void:
 	canMove = true
@@ -313,19 +330,22 @@ func _try_restore_combat_position() -> void:
 	if Global.player_return_position == Vector2.ZERO:
 		return
 	
-	# Se cacher pendant le chargement
 	visible = false
 	
-	# Attendre que le RoomManager ait fini de charger
+	# Attendre que le RoomManager ait fini de charger (s'il existe et charge)
 	var room_manager := get_tree().get_first_node_in_group("RoomManager")
 	if room_manager and room_manager.has_signal("loaded"):
-		await room_manager.loaded
+		if "isLoading" in room_manager and room_manager.isLoading:
+			await room_manager.loaded
+		else:
+			# Attendre quelques frames pour que la scène se stabilise
+			await get_tree().process_frame
+			await get_tree().process_frame
 	else:
 		await get_tree().process_frame
+		await get_tree().process_frame
 	
-	# Restaurer la position immédiatement
 	global_position = Global.player_return_position
 	Global.player_return_position = Vector2.ZERO
 	
-	# Redevenir visible
 	visible = true

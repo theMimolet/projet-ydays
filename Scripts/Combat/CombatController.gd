@@ -13,7 +13,10 @@ signal ennemi_hp_changed(current_hp: int, max_hp: int)
 @export var arme_equipee: Resource
 @export var joueur_max_hp: int = 100
 @export var ennemi_max_hp: int = 50
-@export var ennemi_attack: int = 10
+@export_subgroup("Dégâts ennemis (tour par tour)")
+@export_range(0, 999, 1) var ennemi_attack: int = 10
+@export_range(0, 999, 1) var ennemi_attack_min: int = 8
+@export_range(0, 999, 1) var ennemi_attack_max: int = 12
 
 @onready var btn_attaque: Button = $UI/BtnAttaque
 @onready var btn_armes: Button = $UI/BtnArmes
@@ -23,9 +26,10 @@ signal ennemi_hp_changed(current_hp: int, max_hp: int)
 @onready var hp_joueur_sprite: AnimatedSprite2D = $AreneContainer/ZoneJoueur/HPJoueurContainer/HPJoueur
 @onready var hp_ennemi_sprite: AnimatedSprite2D = $AreneContainer/ZoneEnnemi/HPEnnemiContainer/HPEnnemi
 @onready var ennemi_sprite: TextureRect = $AreneContainer/ZoneEnnemi/EnnemiSprite
+var ennemi_animated_sprite: AnimatedSprite2D = null
 @onready var label_ennemi: Label = $AreneContainer/ZoneEnnemi/LabelEnnemi
 @onready var modal_victoire: Panel = $ModalVictoire
-@onready var btn_suivre: Button = $ModalVictoire/VBox/BtnSuivre
+@onready var btn_suivre: Button = $ModalVictoire/Center/Card/Margin/VBox/Actions/BtnSuivre
 @onready var weapon_select_menu: Panel = $WeaponSelectMenu
 @onready var arme_sprite_combat: TextureRect = $AreneContainer/ZoneJoueur/JoueurSprite/ArmeSpriteCombat
 
@@ -36,6 +40,7 @@ var monster_id: String = ""
 var armes_inventaire: Array = []
 ## Liste complète des armes disponibles pour tout le combat (inventaire + arme équipée au départ)
 var armes_disponibles_combat: Array = []
+var combat_intro_dialogue: String = ""
 
 
 func _ready() -> void:
@@ -79,8 +84,8 @@ func _charger_donnees_combat() -> void:
 	if data.has("joueur_max_hp"):
 		joueur_max_hp = data["joueur_max_hp"]
 	
-	# Arme équipée du joueur
-	if data.has("arme_equipee") and data["arme_equipee"] != null:
+	# Arme équipée du joueur (null = à mains nues)
+	if data.has("arme_equipee"):
 		arme_equipee = data["arme_equipee"]
 	
 	# Armes disponibles dans l'inventaire
@@ -100,9 +105,22 @@ func _charger_donnees_combat() -> void:
 		ennemi_max_hp = data["monster_max_hp"] if data.has("monster_max_hp") else data["monster_hp"]
 	if data.has("monster_attack"):
 		ennemi_attack = data["monster_attack"]
+	if data.has("monster_attack_min"):
+		ennemi_attack_min = data["monster_attack_min"]
+	if data.has("monster_attack_max"):
+		ennemi_attack_max = data["monster_attack_max"]
 	if data.has("monster_name") and label_ennemi:
 		label_ennemi.text = data["monster_name"]
-	if data.has("monster_texture") and ennemi_sprite:
+	
+	if data.has("combat_intro_dialogue"):
+		combat_intro_dialogue = data["combat_intro_dialogue"]
+	
+	if data.has("monster_sprite_frames") and ennemi_sprite:
+		_setup_ennemi_animated_sprite(
+			data["monster_sprite_frames"],
+			data.get("monster_animation", "default")
+		)
+	elif data.has("monster_texture") and ennemi_sprite:
 		ennemi_sprite.texture = data["monster_texture"]
 
 
@@ -112,6 +130,15 @@ func demarrer_combat(arme: Resource = null) -> void:
 	combat_actif = true
 	_cacher_resultat()
 	combat_started.emit()
+	
+	if combat_intro_dialogue != "":
+		btn_attaque.disabled = true
+		btn_armes.disabled = true
+		Dialogic.start(combat_intro_dialogue)
+		await Dialogic.timeline_ended
+		if combat_actif:
+			btn_attaque.disabled = false
+			btn_armes.disabled = false
 
 
 func terminer_combat(victoire: bool) -> void:
@@ -130,9 +157,6 @@ func terminer_combat(victoire: bool) -> void:
 func _on_attaque_pressed() -> void:
 	if not combat_actif:
 		return
-	if not arme_equipee:
-		push_warning("CombatController: Aucune arme équipée!")
-		return
 	btn_attaque.disabled = true
 	qte_system.lancer_qte()
 
@@ -150,13 +174,15 @@ func _on_qte_failed() -> void:
 
 
 func _effectuer_attaque_joueur() -> void:
-	if not arme_equipee:
-		btn_attaque.disabled = false
-		return
-	
-	var resultat: Dictionary = arme_equipee.get_degats_avec_critique()
-	var degats: int = resultat["degats"]
-	var critique: bool = resultat["critique"]
+	var degats: int
+	var critique: bool = false
+	if arme_equipee != null and arme_equipee.has_method("get_degats_avec_critique"):
+		var resultat: Dictionary = arme_equipee.get_degats_avec_critique()
+		degats = resultat["degats"]
+		critique = resultat["critique"]
+	else:
+		# À mains nues : 2 à 3 dégâts
+		degats = randi_range(2, 3)
 	
 	# Infliger les dégâts à l'ennemi
 	ennemi_hp = max(0, ennemi_hp - degats)
@@ -186,7 +212,21 @@ func _effectuer_attaque_ennemi() -> void:
 	if not combat_actif:
 		return
 	
-	var degats := ennemi_attack
+	var min_attack := ennemi_attack_min
+	var max_attack := ennemi_attack_max
+	if min_attack <= 0 and max_attack <= 0:
+		min_attack = ennemi_attack
+		max_attack = ennemi_attack
+	elif min_attack <= 0:
+		min_attack = max_attack
+	elif max_attack <= 0:
+		max_attack = min_attack
+	elif max_attack < min_attack:
+		var tmp := min_attack
+		min_attack = max_attack
+		max_attack = tmp
+	
+	var degats := randi_range(min_attack, max_attack)
 	infliger_degats_joueur(degats)
 	
 	_afficher_resultat("L'ennemi inflige %d dégâts !" % degats, Color.ORANGE_RED)
@@ -255,7 +295,7 @@ func _update_arme_actuelle_display() -> void:
 		return
 	
 	if arme_equipee == null:
-		label_arme_actuelle.text = "Aucune arme"
+		label_arme_actuelle.text = "À mains nues (2-3 dmg)"
 		return
 	
 	var nom_arme: String = ""
@@ -273,6 +313,22 @@ func _update_arme_actuelle_display() -> void:
 		degats = arme_equipee.combat_data.get_description_degats()
 	
 	label_arme_actuelle.text = "%s (%s dmg)" % [nom_arme, degats]
+
+
+func _setup_ennemi_animated_sprite(frames: SpriteFrames, anim_name: String) -> void:
+	ennemi_sprite.visible = false
+	
+	ennemi_animated_sprite = AnimatedSprite2D.new()
+	ennemi_animated_sprite.sprite_frames = frames
+	if frames.has_animation(anim_name):
+		ennemi_animated_sprite.animation = anim_name
+	ennemi_animated_sprite.autoplay = anim_name
+	ennemi_animated_sprite.scale = Vector2(2, 2)
+	
+	var parent := ennemi_sprite.get_parent()
+	parent.add_child(ennemi_animated_sprite)
+	ennemi_animated_sprite.position = ennemi_sprite.position + ennemi_sprite.size / 2
+	ennemi_animated_sprite.play()
 
 
 func _update_arme_sprite_combat() -> void:

@@ -1,0 +1,411 @@
+[gd_scene format=3 uid="uid://s1w0gr0l2n64"]
+
+[ext_resource type="Texture2D" uid="uid://l4y5h6kcx6we" path="res://Spritesheet/Jardin/Village_Environnement.png" id="1_rlsop"]
+[ext_resource type="Texture2D" uid="uid://dylinn17jxyya" path="res://Spritesheet/Jardin/Fontaine.png" id="3_fu3vt"]
+[ext_resource type="Script" uid="uid://camd4f4r2b3vn" path="res://Scripts/Interactions/Fontaine.gd" id="4_fu3vt"]
+[ext_resource type="Texture2D" uid="uid://dd55s5pbq1skr" path="res://Spritesheet/Jardin/etang.png" id="4_jfngy"]
+[ext_resource type="Texture2D" uid="uid://bgisnbtex0k1t" path="res://Spritesheet/Jardin/etang2.png" id="7_3cehf"]
+[ext_resource type="Texture2D" uid="uid://bra7gpdwsh762" path="res://Spritesheet/Jardin/sprite_3.png" id="8_ckfm0"]
+[ext_resource type="PackedScene" uid="uid://dtwpnedsbtj8t" path="res://Scenes/RoomSwitcher.tscn" id="9_1qsc1"]
+[ext_resource type="PackedScene" path="res://Scenes/Entities/Maison.tscn" id="9_uyj8a"]
+[ext_resource type="PackedScene" uid="uid://dde6b0rh2u83i" path="res://Scenes/Entities/Maisons/Maison01.tscn" id="10_maison01_scene"]
+[ext_resource type="PackedScene" path="res://Scenes/Entities/Maisons/Maison03.tscn" id="11_maison03_scene"]
+[ext_resource type="PackedScene" uid="uid://cup422xt4plwo" path="res://Scenes/Entities/arbre_1.tscn" id="12_d3dr6"]
+[ext_resource type="PackedScene" uid="uid://8d20kg4hipsm" path="res://Scenes/Entities/Maisons/Maison04.tscn" id="12_maison04_scene"]
+[ext_resource type="Texture2D" uid="uid://73oxq1kl4b3" path="res://Spritesheet/Jardin/roche_1.png" id="13_ckfm0"]
+[ext_resource type="PackedScene" uid="uid://cnrumklvfaii6" path="res://Scenes/Entities/arbre_2.tscn" id="15_ckfm0"]
+[ext_resource type="Script" uid="uid://5a4frjwcufpo" path="res://Scenes/Entities/pentacle.gd" id="15_gnbau"]
+[ext_resource type="PackedScene" uid="uid://csc2ek72pp5xe" path="res://Scenes/Entities/Roche_1.tscn" id="16_gnbau"]
+[ext_resource type="Script" uid="uid://lxoqbmkw36uj" path="res://Scenes/Entities/easter_egg.gd" id="17_gagcu"]
+[ext_resource type="PackedScene" uid="uid://cy00pimumgy7m" path="res://Scenes/Entities/roche_3.tscn" id="17_pg6xv"]
+[ext_resource type="PackedScene" uid="uid://duqxtt4saqdoy" path="res://Scenes/Entities/roche_2.tscn" id="18_bwpbj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fu3vt"]
+size = Vector2(96, 34)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uyj8a"]
+size = Vector2(83, 68)
+
+[node name="Jardin" type="Node2D" unique_id=1468081673]
+
+[node name="VillageEnvironnement" type="Sprite2D" parent="." unique_id=314554491]
+position = Vector2(336, 152)
+texture = ExtResource("1_rlsop")
+
+[node name="Sprite3" type="Sprite2D" parent="VillageEnvironnement" unique_id=1396436649]
+position = Vector2(-77, -233)
+texture = ExtResource("8_ckfm0")
+
+[node name="ChunkSwitcher" parent="VillageEnvironnement" unique_id=1937074679 instance=ExtResource("9_1qsc1")]
+position = Vector2(-1, 376)
+roomToLoad = "uid://df4e3pfy58kpw"
+spawnPointName = "Couloir2"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VillageEnvironnement/ChunkSwitcher" unique_id=1784471208]
+shape = SubResource("RectangleShape2D_fu3vt")
+
+[node name="Jardin_Sud" type="Node2D" parent="VillageEnvironnement/ChunkSwitcher" unique_id=946614377]
+position = Vector2(0, -42)
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="VillageEnvironnement" unique_id=1882945000]
+position = Vector2(-12, 14)
+scale = Vector2(1.03, 1.03)
+script = ExtResource("4_fu3vt")
+
+[node name="Fontaine" type="Sprite2D" parent="VillageEnvironnement/CharacterBody2D" unique_id=360104497]
+z_index = 283
+position = Vector2(11.672698, -15.344547)
+scale = Vector2(0.97087383, 0.97087383)
+texture = ExtResource("3_fu3vt")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="VillageEnvironnement/CharacterBody2D" unique_id=709278575]
+position = Vector2(14.195648, 10.29834)
+scale = Vector2(0.94259626, 0.94259626)
+polygon = PackedVector2Array(7.6233826, 4.725464, 15.863403, 19.145447, -2.6766052, 22.235443, -29.456604, 18.115448, -47.996582, 3.6954498, -50.05658, -11.754532, -38.726593, -23.084534, -23.27658, -31.324524, -5.7666016, -34.414536, 10.713409, -33.38452, 25.133392, -29.264526, 34.40338, -26.17453, 44.70337, -13.814529, 43.67337, 1.6354523, 34.40338, 10.905457, 15.863403, 19.145447)
+
+[node name="Maison01_B" parent="VillageEnvironnement" unique_id=691535093 instance=ExtResource("10_maison01_scene")]
+position = Vector2(-205.89006, 66.009735)
+scale = Vector2(0.97087413, 0.97087413)
+
+[node name="CharacterBody2D13" type="CharacterBody2D" parent="VillageEnvironnement" unique_id=41576298]
+position = Vector2(-54, -261)
+scale = Vector2(0.94259655, 0.94259655)
+
+[node name="Etang" type="Sprite2D" parent="VillageEnvironnement/CharacterBody2D13" unique_id=684503280]
+position = Vector2(309.78256, 57.28856)
+rotation = -0.024367511
+scale = Vector2(0.619236, 0.6771381)
+texture = ExtResource("7_3cehf")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="VillageEnvironnement/CharacterBody2D13" unique_id=2009451100]
+position = Vector2(218.54523, 75.32384)
+scale = Vector2(1.6198449, 1.3096764)
+polygon = PackedVector2Array(7.2043457, -32.40187, -0.65493774, -9.720556, -15.063599, -5.6703205, -23.57779, 12.150709, -22.659973, 32.95999, -17.68335, 38.882256, 12.359985, 38.109985, 25.542603, 31.591833, 28.817322, 26.731552, 36.021637, 24.30141, 58.70999, 23.690002, 78.59265, 34.021973, 88.41675, 38.882256, 99.55069, 39.692303, 110.029724, 38.882256, 114.61429, 35.642067, 119.85379, 21.061224, 130.33282, 17.01099, 134.26245, 8.100473, 136.8822, -5.6703205, 135.57233, -22.681307, 127.71307, -34.83201, 111.99454, -47.792763, 95.62106, -46.98271, 68.11365, -39.69229, 62.874115, -51.842995, 34.056824, -51.842995, 18.993225, -45.362617)
+
+[node name="CharacterBody2D4" type="CharacterBody2D" parent="VillageEnvironnement" unique_id=1974862096]
+position = Vector2(-205.89006, 66.009735)
+scale = Vector2(0.97087413, 0.97087413)
+
+[node name="Etang" type="Sprite2D" parent="VillageEnvironnement/CharacterBody2D4" unique_id=1478081975]
+position = Vector2(335.66663, 48.39995)
+scale = Vector2(4.2590485, 4.2590485)
+texture = ExtResource("4_jfngy")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="VillageEnvironnement/CharacterBody2D4" unique_id=1350863573]
+position = Vector2(285.1967, 45.309956)
+polygon = PackedVector2Array(0, 0, -1.0299988, 7.2099915, -14.419983, 7.2099915, -21.629974, 16.480011, -22.659973, 32.95999, -17.50998, 37.079987, 12.359985, 38.109985, 25.75, 28.839996, 57.679993, 28.839996, 58.70999, 23.690002, 72.099976, 23.690002, 76.21997, 19.570007, 84.45996, 14.420013, 89.609985, 2.0599976, 78.27997, -13.389984, 66.94998, -16.479996, 58.70999, -14.419983, 58.70999, -21.62999, 24.720001, -21.62999, 16.480011, -17.509995, 8.23999, -13.389984, 4.119995, -2.0599976)
+
+[node name="CharacterBody2D6" type="CharacterBody2D" parent="VillageEnvironnement" unique_id=1270155253]
+position = Vector2(-205.89006, 66.009735)
+scale = Vector2(0.97087413, 0.97087413)
+
+[node name="CharacterBody2D7" type="CharacterBody2D" parent="VillageEnvironnement" unique_id=159159538]
+position = Vector2(-205.89006, 66.009735)
+scale = Vector2(0.97087413, 0.97087413)
+
+[node name="Maison03" parent="VillageEnvironnement" unique_id=1416346443 instance=ExtResource("11_maison03_scene")]
+position = Vector2(-216, -51)
+scale = Vector2(0.97087413, 0.97087413)
+
+[node name="Maison01_A" parent="VillageEnvironnement" unique_id=2035784013 instance=ExtResource("10_maison01_scene")]
+position = Vector2(-72, -66)
+scale = Vector2(0.97087413, 0.97087413)
+
+[node name="Maison" parent="VillageEnvironnement" unique_id=446803037 instance=ExtResource("9_uyj8a")]
+visible = false
+position = Vector2(-16, -55)
+
+[node name="CharacterBody2D9" type="CharacterBody2D" parent="VillageEnvironnement" unique_id=2138343673]
+position = Vector2(-173.20186, -340.17224)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="VillageEnvironnement/CharacterBody2D9" unique_id=1387587352]
+position = Vector2(0.20185852, -7.8277435)
+polygon = PackedVector2Array(-1, -1.0000153, -6, -4.0000153, -15, 2.9999847, -13, 8.999985, 3, 11.999985, 11, 4.9999847, 17, -4.0000153, 17, -10.000015, 13, -15.000015, 8, -14.000015, -6, -4.0000153)
+
+[node name="Roche1" type="Sprite2D" parent="VillageEnvironnement/CharacterBody2D9" unique_id=814795832]
+position = Vector2(0.20185852, -8.827759)
+texture = ExtResource("13_ckfm0")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="VillageEnvironnement" unique_id=1322656018]
+position = Vector2(76, 373)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VillageEnvironnement/StaticBody2D" unique_id=2051108315]
+position = Vector2(1.5, -7)
+shape = SubResource("RectangleShape2D_uyj8a")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="VillageEnvironnement" unique_id=212322568]
+position = Vector2(-78, 374)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VillageEnvironnement/StaticBody2D2" unique_id=952007370]
+position = Vector2(1.5, -7)
+shape = SubResource("RectangleShape2D_uyj8a")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="VillageEnvironnement" unique_id=1313980237]
+position = Vector2(-18, 406)
+scale = Vector2(18.916414, -0.38577172)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VillageEnvironnement/StaticBody2D3" unique_id=977856867]
+position = Vector2(1.5, -7)
+shape = SubResource("RectangleShape2D_uyj8a")
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="VillageEnvironnement" unique_id=1656469996]
+position = Vector2(-24, -415.99994)
+scale = Vector2(18.916414, -0.38577172)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VillageEnvironnement/StaticBody2D4" unique_id=2131954236]
+position = Vector2(1.5, -7)
+shape = SubResource("RectangleShape2D_uyj8a")
+
+[node name="StaticBody2D5" type="StaticBody2D" parent="VillageEnvironnement" unique_id=824238121]
+position = Vector2(-407.99997, -214)
+rotation = 1.5707964
+scale = Vector2(18.916414, -0.38577172)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VillageEnvironnement/StaticBody2D5" unique_id=2038769800]
+position = Vector2(1.5, -7)
+shape = SubResource("RectangleShape2D_uyj8a")
+
+[node name="StaticBody2D6" type="StaticBody2D" parent="VillageEnvironnement" unique_id=1716668851]
+position = Vector2(409.99997, -148)
+rotation = 1.5707964
+scale = Vector2(18.916414, -0.38577172)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VillageEnvironnement/StaticBody2D6" unique_id=1434887762]
+position = Vector2(1.5, -7)
+shape = SubResource("RectangleShape2D_uyj8a")
+
+[node name="Maison04_A" parent="VillageEnvironnement" unique_id=1344105326 instance=ExtResource("12_maison04_scene")]
+position = Vector2(188, 55)
+scale = Vector2(0.445, 0.44500005)
+
+[node name="CharacterBody2D10" type="CharacterBody2D" parent="VillageEnvironnement" unique_id=508445877]
+position = Vector2(110, -37)
+scale = Vector2(1.5972395, 1.5972395)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="VillageEnvironnement/CharacterBody2D10" unique_id=1027643655]
+position = Vector2(0.20185852, -7.8277435)
+polygon = PackedVector2Array(-1, -1.0000153, -6, -4.0000153, -15, 2.9999847, -13, 8.999985, 3, 11.999985, 11, 4.9999847, 17, -4.0000153, 17, -10.000015, 13, -15.000015, 8, -14.000015, -6, -4.0000153)
+
+[node name="Roche1" type="Sprite2D" parent="VillageEnvironnement/CharacterBody2D10" unique_id=1658365742]
+position = Vector2(0.20185852, -8.827759)
+texture = ExtResource("13_ckfm0")
+
+[node name="Maison04_B" parent="VillageEnvironnement" unique_id=1760133302 instance=ExtResource("12_maison04_scene")]
+position = Vector2(26.999985, -406)
+scale = Vector2(0.445, 0.44500005)
+
+[node name="Arbre1" parent="VillageEnvironnement" unique_id=1713656411 instance=ExtResource("12_d3dr6")]
+position = Vector2(129, 221)
+
+[node name="Arbre2" parent="VillageEnvironnement" unique_id=1781163069 instance=ExtResource("15_ckfm0")]
+position = Vector2(125, 240)
+
+[node name="Arbre3" parent="VillageEnvironnement" unique_id=335841838 instance=ExtResource("15_ckfm0")]
+position = Vector2(158, 209)
+
+[node name="Arbre4" parent="VillageEnvironnement" unique_id=445046312 instance=ExtResource("15_ckfm0")]
+position = Vector2(153, 228)
+
+[node name="Arbre5" parent="VillageEnvironnement" unique_id=1752220076 instance=ExtResource("15_ckfm0")]
+position = Vector2(156, 246)
+
+[node name="Arbre6" parent="VillageEnvironnement" unique_id=2144598342 instance=ExtResource("15_ckfm0")]
+position = Vector2(180, 228)
+
+[node name="Arbre7" parent="VillageEnvironnement" unique_id=413736098 instance=ExtResource("15_ckfm0")]
+position = Vector2(198, 202)
+
+[node name="Arbre8" parent="VillageEnvironnement" unique_id=1501535055 instance=ExtResource("12_d3dr6")]
+position = Vector2(191, 244)
+
+[node name="Arbre1" parent="." unique_id=178246711 instance=ExtResource("12_d3dr6")]
+position = Vector2(-44, -227)
+
+[node name="Arbre3" parent="." unique_id=1782369903 instance=ExtResource("12_d3dr6")]
+position = Vector2(-19, -242)
+
+[node name="Arbre4" parent="." unique_id=1017349147 instance=ExtResource("12_d3dr6")]
+position = Vector2(-7, -207)
+
+[node name="Arbre6" parent="." unique_id=943075709 instance=ExtResource("12_d3dr6")]
+position = Vector2(13, -231)
+
+[node name="Arbre7" parent="." unique_id=1186125847 instance=ExtResource("12_d3dr6")]
+position = Vector2(38, -246)
+
+[node name="Arbre5" parent="." unique_id=938042366 instance=ExtResource("12_d3dr6")]
+position = Vector2(11, -240)
+
+[node name="Arbre8" parent="." unique_id=1269904717 instance=ExtResource("15_ckfm0")]
+position = Vector2(42, -229)
+
+[node name="Arbre9" parent="." unique_id=901174281 instance=ExtResource("15_ckfm0")]
+position = Vector2(75, -218)
+
+[node name="Arbre10" parent="." unique_id=1198976489 instance=ExtResource("15_ckfm0")]
+position = Vector2(21, -192)
+
+[node name="Node2D" parent="." unique_id=673002143 instance=ExtResource("16_gnbau")]
+position = Vector2(-16, -151)
+
+[node name="Arbre11" parent="." unique_id=232067615 instance=ExtResource("15_ckfm0")]
+position = Vector2(63, -187)
+
+[node name="Arbre12" parent="." unique_id=1183273185 instance=ExtResource("12_d3dr6")]
+position = Vector2(47, -152)
+
+[node name="Arbre13" parent="." unique_id=1397115014 instance=ExtResource("12_d3dr6")]
+position = Vector2(-38, -186)
+
+[node name="Arbre14" parent="." unique_id=2133497901 instance=ExtResource("12_d3dr6")]
+position = Vector2(128, -123)
+
+[node name="Arbre15" parent="." unique_id=825985355 instance=ExtResource("15_ckfm0")]
+position = Vector2(21, -121)
+
+[node name="Node2D2" parent="." unique_id=787139747 instance=ExtResource("16_gnbau")]
+position = Vector2(190, -93)
+script = ExtResource("15_gnbau")
+
+[node name="Node2D3" parent="." unique_id=268138278 instance=ExtResource("17_pg6xv")]
+position = Vector2(-30, -70)
+
+[node name="Roche" parent="." unique_id=1639993944 instance=ExtResource("18_bwpbj")]
+position = Vector2(128, -56)
+
+[node name="Arbre16" parent="." unique_id=1580794444 instance=ExtResource("12_d3dr6")]
+position = Vector2(58, -83)
+
+[node name="Arbre17" parent="." unique_id=758393351 instance=ExtResource("12_d3dr6")]
+position = Vector2(31, -98)
+
+[node name="Arbre18" parent="." unique_id=948694625 instance=ExtResource("15_ckfm0")]
+position = Vector2(-42, -110)
+
+[node name="Arbre19" parent="." unique_id=1130527461 instance=ExtResource("15_ckfm0")]
+position = Vector2(113, -85)
+
+[node name="Arbre20" parent="." unique_id=1391593156 instance=ExtResource("15_ckfm0")]
+position = Vector2(101, -197)
+
+[node name="Arbre21" parent="." unique_id=879037441 instance=ExtResource("12_d3dr6")]
+position = Vector2(118, -169)
+
+[node name="Arbre22" parent="." unique_id=2016619809 instance=ExtResource("15_ckfm0")]
+position = Vector2(111, -228)
+
+[node name="Node2D4" parent="." unique_id=1843075906 instance=ExtResource("17_pg6xv")]
+position = Vector2(223, -155)
+
+[node name="Arbre23" parent="." unique_id=1718153876 instance=ExtResource("15_ckfm0")]
+position = Vector2(193, -172)
+
+[node name="Arbre24" parent="." unique_id=51445371 instance=ExtResource("12_d3dr6")]
+position = Vector2(184, -142)
+
+[node name="Arbre25" parent="." unique_id=2084605747 instance=ExtResource("15_ckfm0")]
+position = Vector2(223, -129)
+
+[node name="Arbre26" parent="." unique_id=1130210444 instance=ExtResource("15_ckfm0")]
+position = Vector2(163, -242)
+
+[node name="Arbre27" parent="." unique_id=1296383194 instance=ExtResource("12_d3dr6")]
+position = Vector2(215, -226)
+
+[node name="Arbre28" parent="." unique_id=190377253 instance=ExtResource("12_d3dr6")]
+position = Vector2(-32, 233)
+
+[node name="Arbre29" parent="." unique_id=447001376 instance=ExtResource("12_d3dr6")]
+position = Vector2(-3, 233)
+
+[node name="Arbre30" parent="." unique_id=1053189962 instance=ExtResource("12_d3dr6")]
+position = Vector2(-24, 258)
+
+[node name="Arbre31" parent="." unique_id=228096140 instance=ExtResource("12_d3dr6")]
+position = Vector2(12, 262)
+
+[node name="Arbre32" parent="." unique_id=150864329 instance=ExtResource("12_d3dr6")]
+position = Vector2(-19, 275)
+
+[node name="Arbre33" parent="." unique_id=464014026 instance=ExtResource("12_d3dr6")]
+position = Vector2(-46, 274)
+
+[node name="Arbre34" parent="." unique_id=1023519002 instance=ExtResource("12_d3dr6")]
+position = Vector2(6, 280)
+
+[node name="Arbre35" parent="." unique_id=1386106925 instance=ExtResource("12_d3dr6")]
+position = Vector2(-27, 306)
+
+[node name="Arbre36" parent="." unique_id=445834172 instance=ExtResource("12_d3dr6")]
+position = Vector2(10, 301)
+
+[node name="Arbre37" parent="." unique_id=2033690867 instance=ExtResource("12_d3dr6")]
+position = Vector2(31, 238)
+
+[node name="Arbre38" parent="." unique_id=1129555936 instance=ExtResource("12_d3dr6")]
+position = Vector2(51, 265)
+
+[node name="Roche2" parent="." unique_id=1981464120 instance=ExtResource("18_bwpbj")]
+position = Vector2(31, 281)
+
+[node name="Arbre39" parent="." unique_id=793524161 instance=ExtResource("12_d3dr6")]
+position = Vector2(50, 291)
+
+[node name="Arbre40" parent="." unique_id=433860968 instance=ExtResource("12_d3dr6")]
+position = Vector2(38, 310)
+
+[node name="Arbre41" parent="." unique_id=30484100 instance=ExtResource("12_d3dr6")]
+position = Vector2(60, 234)
+
+[node name="Arbre42" parent="." unique_id=443379950 instance=ExtResource("12_d3dr6")]
+position = Vector2(81, 262)
+
+[node name="Arbre43" parent="." unique_id=792744230 instance=ExtResource("12_d3dr6")]
+position = Vector2(32, 331)
+
+[node name="Arbre44" parent="." unique_id=1264957684 instance=ExtResource("12_d3dr6")]
+position = Vector2(65, 324)
+
+[node name="Arbre45" parent="." unique_id=576545638 instance=ExtResource("12_d3dr6")]
+position = Vector2(85, 297)
+
+[node name="Arbre2" parent="." unique_id=1031700751 instance=ExtResource("12_d3dr6")]
+position = Vector2(599, -228)
+
+[node name="Arbre46" parent="." unique_id=1383510702 instance=ExtResource("12_d3dr6")]
+position = Vector2(567, -219)
+
+[node name="Arbre47" parent="." unique_id=2041353689 instance=ExtResource("12_d3dr6")]
+position = Vector2(542, -208)
+
+[node name="Arbre48" parent="." unique_id=316429317 instance=ExtResource("12_d3dr6")]
+position = Vector2(526, -186)
+
+[node name="Arbre49" parent="." unique_id=962856734 instance=ExtResource("12_d3dr6")]
+position = Vector2(631, -219)
+
+[node name="Arbre50" parent="." unique_id=748644232 instance=ExtResource("12_d3dr6")]
+position = Vector2(652, -208)
+
+[node name="Arbre51" parent="." unique_id=240891415 instance=ExtResource("12_d3dr6")]
+position = Vector2(672, -190)
+
+[node name="Arbre52" parent="." unique_id=1283567967 instance=ExtResource("12_d3dr6")]
+position = Vector2(656, -167)
+
+[node name="Arbre53" parent="." unique_id=1791512541 instance=ExtResource("12_d3dr6")]
+position = Vector2(636, -153)
+
+[node name="Arbre54" parent="." unique_id=1542512667 instance=ExtResource("12_d3dr6")]
+position = Vector2(535, -167)
+
+[node name="Arbre55" parent="." unique_id=1010984341 instance=ExtResource("12_d3dr6")]
+position = Vector2(558, -155)
+
+[node name="Arbre56" parent="." unique_id=876790750 instance=ExtResource("12_d3dr6")]
+position = Vector2(399, 80)
+scale = Vector2(1.3626345, 1.3626345)
+
+[node name="Node2D5" parent="." unique_id=977510401 instance=ExtResource("16_gnbau")]
+position = Vector2(601, -179)
+script = ExtResource("17_gagcu")

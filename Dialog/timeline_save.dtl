@@ -1,0 +1,11 @@
+[style name="Dialogue"]
+join  center
+Cette fontaine permet de sauvegarder. Voulez vous sauvegarder ?
+- Oui
+	do SaveSystem.SaveToFile()
+	Partie sauvegardée
+- Non
+join  center
+
+
+[end_timeline]

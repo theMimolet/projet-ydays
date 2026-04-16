@@ -86,7 +86,7 @@ func _find_nearest_node_in_group(player_position: Vector2, group_name: String) -
 	return nearest
 
 func get_nearest_interactable(player_position: Vector2) -> Node2D:
-	var groups := ["Doors", "Coffres", "Armoires"]
+	var groups := ["Doors", "Coffres", "Armoires", "Torches"]
 	var nearest: Node2D = null
 	var nearest_distance: float = INTERACTION_DISTANCE
 
@@ -166,7 +166,18 @@ func handle_interaction(player_position: Vector2) -> bool:
 	var door := _find_nearby_node_interactions(player_position, "Doors")
 	if door != null:
 		door.interact()
-
+	
+	# Vérifier les interactions basées sur nodes (fontaines)
+	var fontaine := _find_nearby_node_interactions(player_position, "Fontaines")
+	if fontaine != null:
+		fontaine.interact()
+	
+	# Vérifier les interactions basées sur nodes (torches)
+	var torche := _find_nearby_node_interactions(player_position, "Torches")
+	if torche != null:
+		torche.interact()
+		return true
+	
 	# Vérifier les items collectables proches
 	var item_collected: bool = check_collectable_items(player_position)
 	if item_collected:

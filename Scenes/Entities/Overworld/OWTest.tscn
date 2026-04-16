@@ -1,8 +1,10 @@
 [gd_scene format=3 uid="uid://cqmqkjfkawmgy"]
 
 [ext_resource type="PackedScene" uid="uid://c37g8d2neou34" path="res://Scenes/Entities/Overworld/OWHostileModule.tscn" id="1_2p4ad"]
-[ext_resource type="Texture2D" uid="uid://b7w4y45imsatw" path="res://Spritesheet/Monstres/Monstre-Noir/monstre-noir-idle.png" id="2_ofonb"]
+[ext_resource type="Texture2D" uid="uid://biexbly5snsrk" path="res://Spritesheet/Monstres/Monstre 1-3/sprite_0.png" id="2_vv5rl"]
+[ext_resource type="Texture2D" uid="uid://cd3vnn2cd3upe" path="res://Spritesheet/Monstres/Monstre 1-3/sprite_1.png" id="3_840sr"]
 [ext_resource type="Texture2D" uid="uid://kxhsjvkw5rtc" path="res://Spritesheet/Monstres/OeilDetection/sprite_0.png" id="3_ofonb"]
+[ext_resource type="Texture2D" uid="uid://bak0ysdncxxjt" path="res://Spritesheet/Monstres/Monstre 1-3/sprite_2.png" id="4_1oh4o"]
 [ext_resource type="Texture2D" uid="uid://cpjabpscj8mm8" path="res://Spritesheet/Monstres/OeilDetection/sprite_1.png" id="4_3o8nb"]
 [ext_resource type="Texture2D" uid="uid://c57xqeotswtpj" path="res://Spritesheet/Monstres/OeilDetection/sprite_2.png" id="5_vv5rl"]
 [ext_resource type="Texture2D" uid="uid://cniexldfgmpgi" path="res://Spritesheet/Monstres/OeilDetection/sprite_3.png" id="6_840sr"]
@@ -10,6 +12,23 @@
 [ext_resource type="Script" uid="uid://bjp0v3aj1ejh0" path="res://Scripts/Entity/DetectionEye.gd" id="8_fp7je"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_medu7"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fp7je"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_vv5rl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_840sr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_1oh4o")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_hp7ao"]
 animations = [{
@@ -44,14 +63,16 @@ motion_mode = 1
 shape = SubResource("CircleShape2D_medu7")
 
 [node name="HostileModule" parent="." unique_id=481882914 instance=ExtResource("1_2p4ad")]
+monster_name = "CouilleViolette"
 
-[node name="Sprite" type="Sprite2D" parent="." unique_id=1423693503]
-position = Vector2(3.5762787e-07, 1.1920929e-07)
-scale = Vector2(0.15625, 0.15625)
-texture = ExtResource("2_ofonb")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1183947867]
+position = Vector2(3.5762787e-07, -0.31249988)
+scale = Vector2(0.99, 0.99)
+sprite_frames = SubResource("SpriteFrames_fp7je")
+autoplay = "default"
 
 [node name="Eye" type="AnimatedSprite2D" parent="." unique_id=317241171]
-position = Vector2(-1.1920929e-07, -27)
+position = Vector2(0, -26)
 sprite_frames = SubResource("SpriteFrames_hp7ao")
 frame = 1
 script = ExtResource("8_fp7je")

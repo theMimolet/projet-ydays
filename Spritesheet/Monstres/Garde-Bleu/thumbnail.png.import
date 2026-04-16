@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dlt7c8myqomd4"
-path="res://.godot/imported/EnvironnementVillage.webp-8b6dc3f3ba3a99f4b289a28e211594bc.ctex"
+uid="uid://br3tmrm61k4e6"
+path="res://.godot/imported/thumbnail.png-c9047353d55e5a5937861f3399020ac1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Scenes/Rooms/Map/EnvironnementVillage.webp"
-dest_files=["res://.godot/imported/EnvironnementVillage.webp-8b6dc3f3ba3a99f4b289a28e211594bc.ctex"]
+source_file="res://Spritesheet/Monstres/Garde-Bleu/thumbnail.png"
+dest_files=["res://.godot/imported/thumbnail.png-c9047353d55e5a5937861f3399020ac1.ctex"]
 
 [params]
 

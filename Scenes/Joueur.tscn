@@ -139,11 +139,9 @@ shape = SubResource("RectangleShape2D_ksi5g")
 sprite_frames = SubResource("SpriteFrames_3derw")
 animation = &"marche-bas"
 
-[node name="ArmeSprite" type="Sprite2D" parent="." unique_id=1964767758]
-visible = false
-position = Vector2(8, 4)
-rotation = 0.785398
-scale = Vector2(0.5, 0.5)
+[node name="ArmeSprite" type="Sprite2D" parent="." unique_id=1209540]
+rotation = -1.579523
+scale = Vector2(1e-05, 1e-05)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=2047598505]
 zoom = Vector2(2, 2)
@@ -184,31 +182,81 @@ offset_bottom = 100.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Inventaire/InventairePanel" unique_id=220950151]
+[node name="TitreLabel" type="Label" parent="Inventaire/InventairePanel" unique_id=975050336]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 4.0
+offset_bottom = 24.0
+grow_horizontal = 2
+text = "INVENTAIRE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InventaireContainer" type="GridContainer" parent="Inventaire/InventairePanel" unique_id=599248343]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -32.5
-offset_top = -10.5
-offset_right = 32.5
-offset_bottom = 10.5
+offset_left = -87.5
+offset_top = -78.0
+offset_right = 87.5
+offset_bottom = 97.0
 grow_horizontal = 2
 grow_vertical = 2
-alignment = 1
-
-[node name="TitreLabel" type="Label" parent="Inventaire/InventairePanel/VBoxContainer" unique_id=975050336]
-layout_mode = 2
-text = "INVENTAIRE"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="InventaireContainer" type="GridContainer" parent="Inventaire/InventairePanel/VBoxContainer" unique_id=599248343]
-layout_mode = 2
 theme_override_constants/h_separation = 5
 theme_override_constants/v_separation = 5
 columns = 4
+
+[node name="CombinePanel" type="Panel" parent="Inventaire" unique_id=903623898]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 165.0
+offset_top = -50.0
+offset_right = 265.0
+offset_bottom = 58.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ActionsContainer" type="VBoxContainer" parent="Inventaire/CombinePanel" unique_id=910299546]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = 6.0
+offset_right = -6.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="ButtonCombiner" type="Button" parent="Inventaire/CombinePanel/ActionsContainer" unique_id=660557800]
+custom_minimum_size = Vector2(64, 18)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Combiner"
+
+[node name="ButtonValider" type="Button" parent="Inventaire/CombinePanel/ActionsContainer" unique_id=605257299]
+visible = false
+custom_minimum_size = Vector2(64, 18)
+layout_mode = 2
+size_flags_horizontal = 4
+disabled = true
+text = "Valider"
+
+[node name="ButtonAnnuler" type="Button" parent="Inventaire/CombinePanel/ActionsContainer" unique_id=1585866013]
+visible = false
+custom_minimum_size = Vector2(64, 18)
+layout_mode = 2
+size_flags_horizontal = 4
+disabled = true
+text = "Annuler"
 
 [node name="DevConsole" parent="." unique_id=1272832658 instance=ExtResource("16_s8008")]

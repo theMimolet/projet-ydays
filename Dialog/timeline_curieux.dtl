@@ -1,16 +1,16 @@
 [style name="Dialogue"]
 join  center
-Curiosini: Woaaaaaaaah, tu es enfin réveillé !!! Comment tu te sens ? Comment tu t’appelles ?
-Curiosini: C’est quoi tes premières initiatives ?
-Curiosini: Oups pardon ça doit être beaucoup de question d’un coup
-Curiosini: En tout cas je suis content de te savoir enfin parmi nous, ça faisait trop longtemps qu’on attendait
-Curiosini: Et ne fait pas trop attention aux autres, ils sont tous un peu de mauvaise humeur.
-Curiosini: En même temps je peux pas leur en vouloir, ça fait 12 ans depuis la catastrophe.
-Curiosini: Et tout ce qu’on a fait c’est être bloquer dans cette pièce.
+Garde-Jaune/Curiosini: Woaaaaaaaah, tu es enfin réveillé !!! Comment tu te sens ? Comment tu t’appelles ?
+Garde-Jaune/Curiosini: C’est quoi tes premières initiatives ?
+Garde-Jaune/Curiosini: Oups pardon ça doit être beaucoup de question d’un coup
+Garde-Jaune/Curiosini: En tout cas je suis content de te savoir enfin parmi nous, ça faisait trop longtemps qu’on attendait
+Garde-Jaune/Curiosini: Et ne fait pas trop attention aux autres, ils sont tous un peu de mauvaise humeur.
+Garde-Jaune/Curiosini: En même temps je peux pas leur en vouloir, ça fait 12 ans depuis la catastrophe.
+Garde-Jaune/Curiosini: Et tout ce qu’on a fait c’est être bloquer dans cette pièce.
 - Où sommes nous ?
-	Curiosini: J'en sais pas plus que toi.
+	Garde-Jaune/Curiosini: J'en sais pas plus que toi.
 - Ne rien dire.
-	Curiosini: Fait attention à Rabiacci, il est de mauvais poil aujourd'hui.
+	Garde-Jaune/Curiosini: Fait attention à Rabiacci, il est de mauvais poil aujourd'hui.
 
 
 [end_timeline]

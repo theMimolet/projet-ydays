@@ -51,6 +51,9 @@ func _ready() -> void:
 	# Capturer l'apparence "dans le monde" (scale + lumière) pour pouvoir re-spawn l'objet après un drop.
 	if item_resource != null:
 		item_resource.world_scale = scale
+		# Harmoniser la taille d'icône inventaire pour ces matériaux.
+		if item_resource.item_name == "Fer" or item_resource.item_name == "Silex" or item_resource.item_name == "briqué":
+			item_resource.inventory_icon_scale = Vector2(0.7, 0.7)
 		var world_light := _find_first_point_light_2d()
 		if world_light != null and world_light.texture != null:
 			item_resource.drop_light_texture = world_light.texture
@@ -176,6 +179,18 @@ func can_be_collected() -> bool:
 
 func get_sprite_texture() -> Texture2D:
 	"""Récupère le sprite de l'objet (Sprite2D, AnimatedSprite2D, ou TextureRect)"""
+	# Cas 1: le script est directement sur un Sprite2D
+	if "texture" in self and self.texture != null:
+		return self.texture
+	
+	# Cas 2: le script est directement sur un AnimatedSprite2D
+	if "sprite_frames" in self and self.sprite_frames != null:
+		var self_anim_name : String = "default"
+		if "animation" in self and self.animation != "":
+			self_anim_name = self.animation
+		if self.sprite_frames.has_animation(self_anim_name) and self.sprite_frames.get_frame_count(self_anim_name) > 0:
+			return self.sprite_frames.get_frame_texture(self_anim_name, 0)
+
 	# Chercher un AnimatedSprite2D (priorité car souvent plus visible)
 	var animated_sprite := get_node_or_null("AnimatedSprite2D")
 	if animated_sprite != null and animated_sprite.sprite_frames != null:
