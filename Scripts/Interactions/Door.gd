@@ -120,8 +120,8 @@ func _perform_room_change() -> void:
 	if room_manager == null:
 		room_manager = get_tree().get_first_node_in_group("RoomManager")
 
-	if room_manager != null and room_manager.has_method("RoomLoadToSpawnPoint"):
-		room_manager.RoomLoadToSpawnPoint(room_to_load, spawn_point_name)
+	if room_manager != null and room_manager.has_method("RoomChangeSpawnPoint"):
+		room_manager.RoomChangeSpawnPoint(room_to_load, spawn_point_name)
 
 func _get_door_visual_node() -> Node:
 	# Prefer AnimatedSprite2D when present (open animation support).

@@ -26,8 +26,8 @@ func _on_quitter_pressed() -> void:
 	get_tree().quit()
 
 func _on_fullscreen_pressed() -> void:
-	GameSettings.toggleFullscreen()
-	OnFullscreenChanged(GameSettings.isFullscreen())
+	GameSettings.ToggleFullscreen()
+	OnFullscreenChanged(GameSettings.IsFullscreen())
 
 func OnFullscreenChanged(isFullscreen: bool) -> void:
 	if isFullscreen:

@@ -1,7 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://Scripts/Interactions/Maison.gd" id="1_maison_script"]
-[ext_resource type="Texture2D" uid="uid://bv4m8uw8dnre5" path="res://Spritesheet/Jardin/Maison-03.png" id="2_maison_tex"]
+[ext_resource type="Texture2D" uid="uid://bv4m8uw8dnre5" path="res://Sprites/Jardin/Maison-03.png" id="2_maison_tex"]
 
 [node name="Maison03" type="CharacterBody2D"]
 script = ExtResource("1_maison_script")

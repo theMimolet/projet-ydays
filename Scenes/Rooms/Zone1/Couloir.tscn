@@ -2,21 +2,18 @@
 
 [ext_resource type="Texture2D" uid="uid://c4fo1vgo0kcmf" path="res://Scenes/Rooms/Map/Environnement_1_YDAYS_1.webp" id="1_42vvc"]
 [ext_resource type="Script" uid="uid://cs3wfgxf0axj4" path="res://Scripts/RoomSwitcher.gd" id="2_dqgav"]
+[ext_resource type="Script" uid="uid://cjpunc0862ksu" path="res://Scripts/Interactions/PNJ.gd" id="2_nf8g4"]
 [ext_resource type="PackedScene" uid="uid://chto1tn0qj6p6" path="res://Scenes/Entities/Overworld/Sparkle.tscn" id="3_43psv"]
-[ext_resource type="Script" uid="uid://cx164losuegqd" path="res://Scripts/Interactions/garde_rouge.gd" id="2_mbhj5"]
-[ext_resource type="Texture2D" uid="uid://dw155bh6gashm" path="res://Spritesheet/Monstres/Garde-Rouge/garde-rouge-idle.png" id="3_ohb61"]
-[ext_resource type="Script" uid="uid://3tptfvsxk7aa" path="res://Scripts/Interactions/garde_jaune.gd" id="4_hlf35"]
-[ext_resource type="Texture2D" uid="uid://dyeougl82rpci" path="res://Spritesheet/Monstres/Garde-Jaune/garde-jaune-idle.png" id="5_yllow"]
-[ext_resource type="Script" uid="uid://gplmt2s3b2k6" path="res://Scripts/Interactions/garde_vert.gd" id="6_dxiqs"]
-[ext_resource type="Texture2D" uid="uid://d2g7igioe3hjl" path="res://Spritesheet/Monstres/Garde-Vert/garde-vert-idle.png" id="7_nf8g4"]
-[ext_resource type="Script" uid="uid://cqvkvxb0a6j4f" path="res://Scripts/Interactions/garde_bleu.gd" id="8_4n104"]
-[ext_resource type="Texture2D" uid="uid://by7efkaivrrl7" path="res://Spritesheet/Monstres/Garde-Bleu/garde-bleu-idle.png" id="9_110hl"]
+[ext_resource type="Texture2D" uid="uid://dw155bh6gashm" path="res://Sprites/Monstres/Garde-Rouge/garde-rouge-idle.png" id="3_ohb61"]
+[ext_resource type="Texture2D" uid="uid://dyeougl82rpci" path="res://Sprites/Monstres/Garde-Jaune/garde-jaune-idle.png" id="5_yllow"]
+[ext_resource type="Texture2D" uid="uid://d2g7igioe3hjl" path="res://Sprites/Monstres/Garde-Vert/garde-vert-idle.png" id="7_nf8g4"]
+[ext_resource type="Texture2D" uid="uid://by7efkaivrrl7" path="res://Sprites/Monstres/Garde-Bleu/garde-bleu-idle.png" id="9_110hl"]
 [ext_resource type="Script" uid="uid://tcqfo61gtyfq" path="res://Scripts/Interactions/Door.gd" id="10_door"]
-[ext_resource type="Texture2D" uid="uid://i3e80hltn54o" path="res://Spritesheet/Porte/sprite_0.png" id="11_dxiqs"]
+[ext_resource type="Texture2D" uid="uid://i3e80hltn54o" path="res://Sprites/Porte/sprite_0.png" id="11_dxiqs"]
 [ext_resource type="PackedScene" uid="uid://dtwpnedsbtj8t" path="res://Scenes/RoomSwitcher.tscn" id="11_roomswitcher"]
-[ext_resource type="Texture2D" uid="uid://b0igypedar1ji" path="res://Spritesheet/Porte/sprite_3.png" id="12_nf8g4"]
-[ext_resource type="Texture2D" uid="uid://qhjshbditm2q" path="res://Spritesheet/Torche/sprite_torche_eteint.png" id="15_nf8g4"]
-[ext_resource type="Script" uid="uid://byjoq7ur7en6q" path="res://Scripts/Interactions/Torche.gd" id="16_torche"]
+[ext_resource type="Texture2D" uid="uid://b0igypedar1ji" path="res://Sprites/Porte/sprite_3.png" id="12_nf8g4"]
+[ext_resource type="Texture2D" uid="uid://qhjshbditm2q" path="res://Sprites/Torche/sprite_torche_eteint.png" id="15_nf8g4"]
+[ext_resource type="Script" path="res://Scripts/Interactions/Torche.gd" id="16_torche"]
 [ext_resource type="Script" uid="uid://cy4rl72bwq2j8" path="res://Scripts/Cinematiques/CinematiqueCouloir.gd" id="17_cinematique"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i2x2y"]
@@ -181,7 +178,8 @@ texture = ExtResource("1_42vvc")
 
 [node name="Garde Rouge" type="CharacterBody2D" parent="Environnement1Ydays1" unique_id=1068216210]
 position = Vector2(-319, -1)
-script = ExtResource("2_mbhj5")
+script = ExtResource("2_nf8g4")
+timeline = "timeline_colere"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Environnement1Ydays1/Garde Rouge" unique_id=498633946]
 position = Vector2(-1, 13)
@@ -194,7 +192,8 @@ autoplay = "idle"
 
 [node name="Garde Jaune" type="CharacterBody2D" parent="Environnement1Ydays1" unique_id=1677950926]
 position = Vector2(-340, -55)
-script = ExtResource("4_hlf35")
+script = ExtResource("2_nf8g4")
+timeline = "timeline_curieux"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Environnement1Ydays1/Garde Jaune" unique_id=1147287368]
 sprite_frames = SubResource("SpriteFrames_3gi2l")
@@ -207,7 +206,8 @@ shape = SubResource("RectangleShape2D_b56q8")
 
 [node name="Garde Vert" type="CharacterBody2D" parent="Environnement1Ydays1" unique_id=1572217775]
 position = Vector2(-198, -1)
-script = ExtResource("6_dxiqs")
+script = ExtResource("2_nf8g4")
+timeline = "timeline_chevalier"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Environnement1Ydays1/Garde Vert" unique_id=605759744]
 sprite_frames = SubResource("SpriteFrames_jcy81")
@@ -220,7 +220,8 @@ shape = SubResource("RectangleShape2D_gm8vu")
 
 [node name="Garde Bleu" type="CharacterBody2D" parent="Environnement1Ydays1" unique_id=1308341515]
 position = Vector2(-159, -48)
-script = ExtResource("8_4n104")
+script = ExtResource("2_nf8g4")
+timeline = "timeline_triste"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Environnement1Ydays1/Garde Bleu" unique_id=1875772684]
 sprite_frames = SubResource("SpriteFrames_fjk2s")

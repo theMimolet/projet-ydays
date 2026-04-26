@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://c8j6i5o3wiip6"]
 
-[ext_resource type="Texture2D" uid="uid://77l8u1ckhc4t" path="res://Spritesheet/Interieur_maison/Maisoninterieur_Environnement_1_YDAYS-02.png" id="1_77xqg"]
-[ext_resource type="Texture2D" uid="uid://0xkmm505a4o1" path="res://Spritesheet/Torche/sprite_torche.png" id="2_8eqjs"]
-[ext_resource type="Texture2D" uid="uid://i3e80hltn54o" path="res://Spritesheet/Porte/sprite_0.png" id="3_qqjl5"]
-[ext_resource type="Texture2D" uid="uid://cn1chvdt157y2" path="res://Spritesheet/Armoire/sprite_0.webp" id="4_qqjl5"]
+[ext_resource type="Texture2D" uid="uid://77l8u1ckhc4t" path="res://Sprites/Interieur_maison/Maisoninterieur_Environnement_1_YDAYS-02.png" id="1_77xqg"]
+[ext_resource type="Texture2D" uid="uid://0xkmm505a4o1" path="res://Sprites/Torche/sprite_torche.png" id="2_8eqjs"]
+[ext_resource type="Texture2D" uid="uid://i3e80hltn54o" path="res://Sprites/Porte/sprite_0.png" id="3_qqjl5"]
+[ext_resource type="Texture2D" uid="uid://cn1chvdt157y2" path="res://Sprites/Armoire/sprite_0.webp" id="4_qqjl5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2c700"]
 size = Vector2(10, 20)

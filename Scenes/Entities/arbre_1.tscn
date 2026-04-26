@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cup422xt4plwo"]
 
-[ext_resource type="Script" uid="uid://ber5tqov4as7n" path="res://Scenes/Entities/Arbre.gd" id="1_5dspw"]
-[ext_resource type="Texture2D" uid="uid://ip7y1hb2yx7n" path="res://Spritesheet/Jardin/sprite_0.png" id="1_vlb2j"]
+[ext_resource type="Script" uid="uid://ber5tqov4as7n" path="res://Scripts/Arbre.gd" id="1_5dspw"]
+[ext_resource type="Texture2D" uid="uid://ip7y1hb2yx7n" path="res://Sprites/Jardin/sprite_0.png" id="1_vlb2j"]
 
 [node name="Arbre1" type="Node2D" unique_id=1713656411]
 

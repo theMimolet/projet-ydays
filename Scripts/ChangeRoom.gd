@@ -30,7 +30,6 @@ func _ready() -> void:
 		RoomLoadToCoords("res://Scenes/Rooms/Zone1/Room1.tscn", 0.0, 0.0)
 
 func AreRoomsLoaded() -> bool:
-	print(rooms.get_child_count() > 0)
 	return rooms.get_child_count() > 0
 
 func RoomChangeSpawnPoint(newRoom: String, spawnPoint: String) -> void:
@@ -54,6 +53,8 @@ func RoomUnload() -> void:
 	$Animateur.play("fade-out")
 	if chat != null:
 		chat.canMove = false
+	# Arrêter les timers et signaux des anciennes rooms
+	_cleanup_old_rooms()
 
 func RoomToLoad(room: String) -> bool:
 	$Animateur.play("RESET") # Écran noir
@@ -113,9 +114,11 @@ func _on_animateur_animation_finished(anim_name: StringName) -> void:
 	match anim_name:
 		"fade-out":
 			$Animateur.play("RESET")
+			# Décharger complètement les anciennes rooms
 			for child in rooms.get_children():
-				child.queue_free()
-				child = null
+				_free_node_recursive(child)
+			# S'assurer que tout est bien nettoyé
+			await get_tree().process_frame
 			emit_signal("unloadFinished")
 		"fade-in":
 			joueur.paralysePlayer(false)
@@ -128,13 +131,41 @@ func _on_animateur_animation_finished(anim_name: StringName) -> void:
 				chat.canMove = true
 			isLoading = false
 
+# ============== UTILITAIRES DE NETTOYAGE ==============
 
-# ============== ALIAS / COMPAT ==============
-# Certaines scènes/scripts (portes, console) appellent encore roomChange(...).
-# On redirige vers les méthodes actuelles pour éviter des comportements différents "dans l'autre sens".
+func _cleanup_old_rooms() -> void:
+	"""Arrête les timers et déconnecte les signaux des nodes en attente de suppression"""
+	for child in rooms.get_children():
+		_disconnect_node_signals(child)
 
-func roomChange(newRoom: String, spawnPoint: String = "InitialSpawn") -> void:
-	RoomChangeSpawnPoint(newRoom, spawnPoint)
+func _disconnect_node_signals(node: Node) -> void:
+	"""Arrête les processus actifs d'un node (timers, animations, etc.)"""
+	if not is_instance_valid(node):
+		return
 
-func roomChangeCoords(newRoom: String, targetX: float, targetY: float) -> void:
-	RoomChangeCoords(newRoom, targetX, targetY)
+	# Arrêter les timers
+	if node is Timer:
+		node.stop()
+
+	# Arrêter les animations
+	if node is AnimatedSprite2D:
+		node.stop()
+
+	# Récursif pour les enfants
+	for child in node.get_children():
+		_disconnect_node_signals(child)
+
+func _free_node_recursive(node: Node) -> void:
+	"""Supprime complètement un node et tous ses enfants"""
+	if not is_instance_valid(node):
+		return
+
+	# Nettoyer les signaux d'abord
+	_disconnect_node_signals(node)
+
+	# Supprimer les enfants d'abord
+	for child in node.get_children():
+		_free_node_recursive(child)
+
+	# Enfin, libérer le node lui-même
+	node.queue_free()

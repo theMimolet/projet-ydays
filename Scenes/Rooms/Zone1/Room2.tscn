@@ -2,11 +2,11 @@
 
 [ext_resource type="Texture2D" uid="uid://xd485l1c45oj" path="res://Scenes/Rooms/Map/Environnement_1_YDAYS_2.webp" id="1_5ck8n"]
 [ext_resource type="Script" uid="uid://cs3wfgxf0axj4" path="res://Scripts/RoomSwitcher.gd" id="2_roomswitcher"]
-[ext_resource type="Texture2D" uid="uid://wp0i44itgihj" path="res://Spritesheet/briquet/silex.png" id="3_7kv67"]
+[ext_resource type="Texture2D" uid="uid://wp0i44itgihj" path="res://Sprites/briquet/silex.png" id="3_7kv67"]
 [ext_resource type="Script" uid="uid://dbk8n27v523gi" path="res://Scripts/Items/CollectableItem.gd" id="4_mm348"]
-[ext_resource type="Texture2D" uid="uid://bug0mcjhscsab" path="res://Spritesheet/briquet/fer.png" id="5_s2efy"]
-[ext_resource type="Texture2D" uid="uid://bo58lyiy2c4x0" path="res://Objects 1.png" id="6_mm348"]
-[ext_resource type="Texture2D" uid="uid://bjp6j33bqug5s" path="res://Objects 2.png" id="7_s2efy"]
+[ext_resource type="Texture2D" uid="uid://bug0mcjhscsab" path="res://Sprites/briquet/fer.png" id="5_s2efy"]
+[ext_resource type="Texture2D" uid="uid://bo58lyiy2c4x0" path="res://Sprites/Objects 1.png" id="6_mm348"]
+[ext_resource type="Texture2D" uid="uid://bjp6j33bqug5s" path="res://Sprites/Objects 2.png" id="7_s2efy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7kv67"]
 size = Vector2(72, 20)

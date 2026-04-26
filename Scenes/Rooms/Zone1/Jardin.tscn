@@ -1,22 +1,21 @@
 [gd_scene format=3 uid="uid://s1w0gr0l2n64"]
 
-[ext_resource type="Texture2D" uid="uid://l4y5h6kcx6we" path="res://Spritesheet/Jardin/Village_Environnement.png" id="1_rlsop"]
-[ext_resource type="Texture2D" uid="uid://dylinn17jxyya" path="res://Spritesheet/Jardin/Fontaine.png" id="3_fu3vt"]
+[ext_resource type="Texture2D" uid="uid://l4y5h6kcx6we" path="res://Sprites/Jardin/Village_Environnement.png" id="1_rlsop"]
+[ext_resource type="Texture2D" uid="uid://dylinn17jxyya" path="res://Sprites/Jardin/Fontaine.png" id="3_fu3vt"]
 [ext_resource type="Script" uid="uid://camd4f4r2b3vn" path="res://Scripts/Interactions/Fontaine.gd" id="4_fu3vt"]
-[ext_resource type="Texture2D" uid="uid://dd55s5pbq1skr" path="res://Spritesheet/Jardin/etang.png" id="4_jfngy"]
-[ext_resource type="Texture2D" uid="uid://bgisnbtex0k1t" path="res://Spritesheet/Jardin/etang2.png" id="7_3cehf"]
-[ext_resource type="Texture2D" uid="uid://bra7gpdwsh762" path="res://Spritesheet/Jardin/sprite_3.png" id="8_ckfm0"]
+[ext_resource type="Texture2D" uid="uid://dd55s5pbq1skr" path="res://Sprites/Jardin/etang.png" id="4_jfngy"]
+[ext_resource type="Texture2D" uid="uid://bgisnbtex0k1t" path="res://Sprites/Jardin/etang2.png" id="7_3cehf"]
+[ext_resource type="Texture2D" uid="uid://bra7gpdwsh762" path="res://Sprites/Jardin/sprite_3.png" id="8_ckfm0"]
 [ext_resource type="PackedScene" uid="uid://dtwpnedsbtj8t" path="res://Scenes/RoomSwitcher.tscn" id="9_1qsc1"]
-[ext_resource type="PackedScene" path="res://Scenes/Entities/Maison.tscn" id="9_uyj8a"]
+[ext_resource type="PackedScene" uid="uid://bog3nlg1dammx" path="res://Scenes/Entities/Maison.tscn" id="9_uyj8a"]
 [ext_resource type="PackedScene" uid="uid://dde6b0rh2u83i" path="res://Scenes/Entities/Maisons/Maison01.tscn" id="10_maison01_scene"]
 [ext_resource type="PackedScene" path="res://Scenes/Entities/Maisons/Maison03.tscn" id="11_maison03_scene"]
 [ext_resource type="PackedScene" uid="uid://cup422xt4plwo" path="res://Scenes/Entities/arbre_1.tscn" id="12_d3dr6"]
 [ext_resource type="PackedScene" uid="uid://8d20kg4hipsm" path="res://Scenes/Entities/Maisons/Maison04.tscn" id="12_maison04_scene"]
-[ext_resource type="Texture2D" uid="uid://73oxq1kl4b3" path="res://Spritesheet/Jardin/roche_1.png" id="13_ckfm0"]
+[ext_resource type="Texture2D" uid="uid://73oxq1kl4b3" path="res://Sprites/Jardin/roche_1.png" id="13_ckfm0"]
 [ext_resource type="PackedScene" uid="uid://cnrumklvfaii6" path="res://Scenes/Entities/arbre_2.tscn" id="15_ckfm0"]
-[ext_resource type="Script" uid="uid://5a4frjwcufpo" path="res://Scenes/Entities/pentacle.gd" id="15_gnbau"]
+[ext_resource type="Script" path="res://Scripts/pentacle.gd" id="15_gnbau"]
 [ext_resource type="PackedScene" uid="uid://csc2ek72pp5xe" path="res://Scenes/Entities/Roche_1.tscn" id="16_gnbau"]
-[ext_resource type="Script" uid="uid://lxoqbmkw36uj" path="res://Scenes/Entities/easter_egg.gd" id="17_gagcu"]
 [ext_resource type="PackedScene" uid="uid://cy00pimumgy7m" path="res://Scenes/Entities/roche_3.tscn" id="17_pg6xv"]
 [ext_resource type="PackedScene" uid="uid://duqxtt4saqdoy" path="res://Scenes/Entities/roche_2.tscn" id="18_bwpbj"]
 
@@ -408,4 +407,4 @@ scale = Vector2(1.3626345, 1.3626345)
 
 [node name="Node2D5" parent="." unique_id=977510401 instance=ExtResource("16_gnbau")]
 position = Vector2(601, -179)
-script = ExtResource("17_gagcu")
+script = ExtResource("15_gnbau")

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://csc2ek72pp5xe"]
 
-[ext_resource type="Script" uid="uid://dc422hro525vi" path="res://Roche.gd" id="1_apth2"]
-[ext_resource type="Texture2D" uid="uid://nljyccxrdjba" path="res://Spritesheet/Jardin/roche_0.png" id="2_ld0hh"]
+[ext_resource type="Script" uid="uid://dc422hro525vi" path="res://Scripts/Roche.gd" id="1_apth2"]
+[ext_resource type="Texture2D" uid="uid://nljyccxrdjba" path="res://Sprites/Jardin/roche_0.png" id="2_ld0hh"]
 
 [node name="Node2D" type="Node2D" unique_id=673002143]
 

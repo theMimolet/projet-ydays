@@ -12,17 +12,14 @@ size = Vector2(16, 390)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8xl3b"]
 size = Vector2(105, 20)
 
-[node name="Node2D" type="Node2D" unique_id=1328303760]
+[node name="Node2D2" type="Node2D" unique_id=1328303760]
 
 [node name="Environnement1Ydays4" type="Sprite2D" parent="." unique_id=87024102]
 position = Vector2(3, -142)
 texture = ExtResource("1_8n5no")
 
 [node name="Couloir2" type="Node2D" parent="Environnement1Ydays4" unique_id=910926356]
-position = Vector2(-1, -159)
-
-[node name="Couloir" type="Node2D" parent="Environnement1Ydays4" unique_id=1190106946]
-position = Vector2(-4, 143)
+position = Vector2(-2, -138)
 
 [node name="ChunkSwitcher2" type="Area2D" parent="." unique_id=1370746157]
 position = Vector2(4, 17)
@@ -71,6 +68,9 @@ shape = SubResource("RectangleShape2D_8xl3b")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=818936415]
 position = Vector2(2.5, 45)
 shape = SubResource("RectangleShape2D_8xl3b")
+
+[node name="Couloir" type="Node2D" parent="." unique_id=1190106946]
+position = Vector2(1, -10)
 
 [connection signal="body_entered" from="ChunkSwitcher2" to="ChunkSwitcher2" method="_on_body_entered"]
 [connection signal="body_entered" from="ChunkSwitcher" to="ChunkSwitcher" method="_on_body_entered"]

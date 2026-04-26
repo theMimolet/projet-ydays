@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="Weapon" format=3]
 
 [ext_resource type="Script" uid="uid://bxauyhj4q6588" path="res://Scripts/Items/WeaponInCombat.gd" id="1_combat"]
-[ext_resource type="Script" path="res://Scripts/Items/Weapon.gd" id="2_weapon"]
-[ext_resource type="Texture2D" uid="uid://b3ou6qbij7ms2" path="res://Spritesheet/Armes/sprite_sword2.png" id="3_texture"]
+[ext_resource type="Script" uid="uid://s8x8nqfldpl8" path="res://Scripts/Items/Weapon.gd" id="2_weapon"]
+[ext_resource type="Texture2D" uid="uid://b3ou6qbij7ms2" path="res://Sprites/Armes/sprite_sword2.png" id="3_texture"]
 
 [sub_resource type="Resource" id="Resource_combat"]
 script = ExtResource("1_combat")

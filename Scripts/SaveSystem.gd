@@ -98,7 +98,7 @@ func getSave() -> Dictionary:
 		"player_pos_x": joueur.position.x,
 		"player_pos_y": joueur.position.y,
 		"current_health": joueur.currentHP,
-		"current_inventory" : _serialize_inventory(joueur.inventory),
+		"current_inventory": _serialize_inventory(joueur.inventory),
 		"current_scene": Global.currentRoom,
 		"progress": Global.progress
 	}
@@ -119,7 +119,7 @@ func _serialize_inventory(inventaire: Node) -> Array:
 		else:
 			data.append(null)
 	return data
-    
+
 func SaveToFile(requestedSave: String = "") -> void:
 	if requestedSave == "":
 		requestedSave = defaultName

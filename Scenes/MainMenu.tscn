@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://b7bt07dxp5o5q" path="res://Scripts/Menu/MainMenu.gd" id="1_ghw46"]
 [ext_resource type="Theme" uid="uid://bugehytmyoyev" path="res://Style/MainUI.tres" id="3_8saeu"]
 [ext_resource type="Texture2D" uid="uid://n4ar6xlgkstd" path="res://Textures/LogoBig.png" id="3_ghw46"]
-[ext_resource type="Texture2D" uid="uid://d1xjic7utprd7" path="res://Spritesheet/Torche/light.png" id="4_ghw46"]
+[ext_resource type="Texture2D" uid="uid://d1xjic7utprd7" path="res://Sprites/Torche/light.png" id="4_ghw46"]
 [ext_resource type="AudioStream" uid="uid://c4gduagy8d6fk" path="res://Music/main_menu.mp3" id="5_df05h"]
 
 [sub_resource type="Gradient" id="Gradient_ghw46"]

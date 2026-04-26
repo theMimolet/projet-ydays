@@ -99,7 +99,7 @@ func _find_first_point_light_2d() -> PointLight2D:
 	var direct := get_node_or_null("PointLight2D")
 	if direct is PointLight2D:
 		return direct
-	
+
 	for child in get_children():
 		if child is PointLight2D:
 			return child
@@ -185,7 +185,7 @@ func get_sprite_texture() -> Texture2D:
 	
 	# Cas 2: le script est directement sur un AnimatedSprite2D
 	if "sprite_frames" in self and self.sprite_frames != null:
-		var self_anim_name : String = "default"
+		var self_anim_name: String = "default"
 		if "animation" in self and self.animation != "":
 			self_anim_name = self.animation
 		if self.sprite_frames.has_animation(self_anim_name) and self.sprite_frames.get_frame_count(self_anim_name) > 0:

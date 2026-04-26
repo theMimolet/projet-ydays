@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://ccgsl7418eydt"]
 
 [ext_resource type="Script" uid="uid://brpajj631m6er" path="res://Scripts/UI/StaminaBar.gd" id="1_stamina"]
-[ext_resource type="Texture2D" uid="uid://csdsghcmmw5i8" path="res://Spritesheet/stamina/1.png" id="2_stamina1"]
-[ext_resource type="Texture2D" uid="uid://bmtrg7vhnkrdt" path="res://Spritesheet/stamina/2.png" id="3_682e8"]
-[ext_resource type="Texture2D" uid="uid://de2wcgjtiot2k" path="res://Spritesheet/stamina/3.png" id="4_xfjoq"]
-[ext_resource type="Texture2D" uid="uid://bcnuensj5o8rt" path="res://Spritesheet/stamina/4.png" id="5_he3nn"]
+[ext_resource type="Texture2D" uid="uid://csdsghcmmw5i8" path="res://Sprites/stamina/1.png" id="2_stamina1"]
+[ext_resource type="Texture2D" uid="uid://bmtrg7vhnkrdt" path="res://Sprites/stamina/2.png" id="3_682e8"]
+[ext_resource type="Texture2D" uid="uid://de2wcgjtiot2k" path="res://Sprites/stamina/3.png" id="4_xfjoq"]
+[ext_resource type="Texture2D" uid="uid://bcnuensj5o8rt" path="res://Sprites/stamina/4.png" id="5_he3nn"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_qdpiv"]
 animations = [{

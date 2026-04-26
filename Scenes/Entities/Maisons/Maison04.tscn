@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://8d20kg4hipsm"]
 
-[ext_resource type="Script" uid="uid://d1e2uqd2hxywn" path="res://Scripts/Interactions/Maison.gd" id="1_maison_script"]
-[ext_resource type="Texture2D" uid="uid://0bcivcq3p8av" path="res://Spritesheet/Jardin/Maison-04.png" id="2_maison_tex"]
+[ext_resource type="Script" path="res://Scripts/Interactions/Maison.gd" id="1_maison_script"]
+[ext_resource type="Texture2D" uid="uid://0bcivcq3p8av" path="res://Sprites/Jardin/Maison-04.png" id="2_maison_tex"]
 
 [node name="Maison04" type="CharacterBody2D" unique_id=2143158341]
 script = ExtResource("1_maison_script")
