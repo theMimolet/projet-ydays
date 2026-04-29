@@ -48,7 +48,7 @@ func _build_torch_frames() -> SpriteFrames:
 	frames.set_animation_speed(&"default", 5.0)
 	frames.set_animation_loop(&"default", true)
 	for i: int in range(5):
-		var tex: Texture2D = load("res://Spritesheet/Torche/sprite_torche%d.png" % i)
+		var tex: Texture2D = load("res://Sprites/Torche/sprite_torche%d.png" % i)
 		if tex != null:
 			frames.add_frame(&"default", tex)
 	return frames

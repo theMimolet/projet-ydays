@@ -60,7 +60,6 @@ directories/dtl_directory={
 "timeline_intro": "res://Dialog/timeline_intro.dtl",
 "timeline_post_intro": "res://Dialog/timeline_post_intro.dtl",
 "timeline_save": "res://Dialog/timeline_save.dtl",
-"timeline_sparkle_save": "res://Dialog/timeline_sparkle_save.dtl",
 "timeline_symbole": "res://Dialog/timeline_symbole.dtl",
 "timeline_triste": "res://Dialog/timeline_triste.dtl"
 }

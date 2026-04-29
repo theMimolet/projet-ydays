@@ -4,7 +4,7 @@ extends Node2D
 # Quand le joueur interagit avec (F), l'item est automatiquement ajouté à l'inventaire
 # Quand l'objet est ciblé (le plus proche), le flag view-item.png s'affiche au-dessus pour indiquer qu'on peut le ramasser
 
-const VIEW_ITEM_TEXTURE = preload("res://Spritesheet/items/view-item.png")
+const VIEW_ITEM_TEXTURE = preload("res://Sprites/items/view-item.png")
 const INDICATOR_OFFSET := Vector2(0, -28)
 const INDICATOR_SCALE := Vector2(0.3, 0.3)
 

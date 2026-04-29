@@ -5,7 +5,7 @@ var pending_save_to_load: String = ""
 var pending_new_game_save: String = ""
 
 var pending_door: Node = null
-var pending_sparkle: Node = null
+var current_sparkle: Node = null
 
 # Données de combat (remplies avant transition vers CombatView)
 var combat_data: Dictionary = {}
@@ -56,17 +56,6 @@ func use_key_on_pending_door() -> void:
 	if pending_door != null and pending_door.is_inside_tree() and pending_door.has_method("use_key_and_open"):
 		pending_door.use_key_and_open()
 	pending_door = null
-
-func set_pending_sparkle(sparkle: Node) -> void:
-	pending_sparkle = sparkle
-
-func confirm_pending_sparkle_save() -> void:
-	if pending_sparkle != null and pending_sparkle.is_inside_tree() and pending_sparkle.has_method("save_game"):
-		pending_sparkle.save_game()
-	pending_sparkle = null
-
-func cancel_pending_sparkle_save() -> void:
-	pending_sparkle = null
 
 
 ## Démarre un combat avec les données du monstre
