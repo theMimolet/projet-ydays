@@ -11,20 +11,23 @@ var isLoading: bool = false
 @onready var chat: Node2D = $"../Chat"
 
 func _ready() -> void:
-	# Retour de combat : recharger la bonne room avant restauration de la position joueur.
-	if Global.player_return_position != Vector2.ZERO:
-		# Cas spécifique du combat tutoriel du couloir.
-		if Global.pending_post_combat_event == "rabiacci_couloir":
-			RoomLoadToSpawnPoint("res://Scenes/Rooms/Zone1/Couloir.tscn", "CinematiqueCouloir")
-			return
-
-		# Cas général : recharger la dernière room connue.
-		if Global.currentRoom != "":
-			RoomLoadToCoords(Global.currentRoom, 0.0, 0.0)
-			return
-
-	# Démarrage standard d'une nouvelle partie.
-	RoomLoadToSpawnPoint("res://Scenes/Rooms/Zone1/Room1.tscn", "Room1")
+	# Retour de combat : charger la room où le joueur était + sa position exacte
+	if Global.player_return_position != Vector2.ZERO and Global.currentRoom != "":
+		var pos := Global.player_return_position
+		Global.player_return_position = Vector2.ZERO
+		RoomLoadToCoords(Global.currentRoom, pos.x, pos.y)
+		return
+	
+	if Global.pending_save_to_load != "":
+		var pending_save: String = Global.pending_save_to_load
+		Global.pending_save_to_load = ""
+		SaveSystem.LoadFromFile(pending_save)
+	elif Global.pending_new_game_save != "":
+		RoomLoadToCoords("res://Scenes/Rooms/Zone1/Room1.tscn", 0.0, 0.0)
+	elif FileAccess.file_exists("user://quicksave.save"):
+		SaveSystem.LoadFromFile("quicksave")
+	else:
+		RoomLoadToCoords("res://Scenes/Rooms/Zone1/Room1.tscn", 0.0, 0.0)
 
 func AreRoomsLoaded() -> bool:
 	return rooms.get_child_count() > 0

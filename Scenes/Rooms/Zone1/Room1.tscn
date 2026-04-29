@@ -7,7 +7,7 @@
 [ext_resource type="Item" uid="uid://b4fh2pk4rdlwf" path="res://Items/KeyZone1.tres" id="4_key"]
 [ext_resource type="Texture2D" uid="uid://dna8ovg5p2qdy" path="res://Sprites/Cle/sprite_0 (1).webp" id="5_6qopq"]
 [ext_resource type="Texture2D" uid="uid://jtdedkd8sg6a" path="res://Sprites/Porte/Vue arriere/sprite_1.webp" id="5_c8s71"]
-[ext_resource type="Script" uid="uid://tcqfo61gtyfq" path="res://Scripts/Interactions/Door.gd" id="5_door"]
+[ext_resource type="Script" uid="uid://kpfedx8s0l2i" path="res://Scripts/Interactions/Room1Door.gd" id="5_door"]
 [ext_resource type="Script" uid="uid://cleremmooj2fa" path="res://Scripts/Interactions/Armoire.gd" id="6_armoire"]
 [ext_resource type="Texture2D" uid="uid://d0vr78hb2v84u" path="res://Sprites/Cle/sprite_1 (1).webp" id="6_eyu58"]
 [ext_resource type="Texture2D" uid="uid://bto5if5teo0nk" path="res://Sprites/Porte/Vue arriere/sprite_2.webp" id="6_unx2d"]
