@@ -7,6 +7,10 @@ var pending_new_game_save: String = ""
 var pending_door: Node = null
 var current_sparkle: Node = null
 
+# Maison (jardin) : données temporaires avant entrée (dialogue -> Oui)
+var pending_maison_room_path: String = ""
+var pending_maison_return_spawn: String = ""
+
 # Données de combat (remplies avant transition vers CombatView)
 var combat_data: Dictionary = {}
 # Liste des monstres tués (par leur ID unique)
@@ -56,6 +60,39 @@ func use_key_on_pending_door() -> void:
 	if pending_door != null and pending_door.is_inside_tree() and pending_door.has_method("use_key_and_open"):
 		pending_door.use_key_and_open()
 	pending_door = null
+
+func enter_maison_03() -> void:
+	var room_manager := get_tree().get_first_node_in_group("RoomManager")
+	if room_manager == null:
+		return
+
+	var room_path := 'res://Scenes/Rooms/Maisons-jardin/Maison03.tscn'
+
+	# Maison03 intérieur n'a pas de spawnpoint dédié pour l'instant,
+	if room_manager.has_method('RoomChangeCoords'):
+		room_manager.RoomChangeCoords(room_path, 0.0, 30.0)
+	elif room_manager.has_method('RoomChangeSpawnPoint'):
+		room_manager.RoomChangeSpawnPoint(room_path, '')
+
+
+func set_pending_maison(room_path: String, return_spawn: String) -> void:
+	pending_maison_room_path = room_path
+	pending_maison_return_spawn = return_spawn
+
+
+func enter_pending_maison() -> void:
+	var room_manager := get_tree().get_first_node_in_group("RoomManager")
+	if room_manager == null:
+		return
+
+	if pending_maison_room_path == "":
+		push_warning("enter_pending_maison() appelé sans pending_maison_room_path")
+		return
+
+	if room_manager.has_method("RoomChangeCoords"):
+		room_manager.RoomChangeCoords(pending_maison_room_path, 0.0, 30.0)
+	elif room_manager.has_method("RoomChangeSpawnPoint"):
+		room_manager.RoomChangeSpawnPoint(pending_maison_room_path, "")
 
 
 ## Démarre un combat avec les données du monstre
