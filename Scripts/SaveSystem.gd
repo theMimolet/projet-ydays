@@ -175,8 +175,14 @@ func ApplyData(nodeData: Dictionary) -> void:
 	var RoomManager: Node = get_tree().get_first_node_in_group("RoomManager")
 	joueur.currentHP = nodeData["current_health"]
 	if nodeData.has("progress") and nodeData["progress"] is Dictionary:
-		for key: String in Global.progress.keys():
-			Global.progress[key] = nodeData["progress"].get(key, Global.progress[key])
+		var loaded_progress: Dictionary = nodeData["progress"]
+		# Met à jour les clés existantes avec des valeurs sauvegardées (fallback sur valeurs courantes).
+		for key in Global.progress.keys():
+			Global.progress[key] = loaded_progress.get(key, Global.progress[key])
+		# Ajoute aussi les nouvelles clés (ex: progress_key de coffres) si elles n'existent pas encore.
+		for key in loaded_progress.keys():
+			if not Global.progress.has(key):
+				Global.progress[key] = loaded_progress[key]
 
 	# Ne plus écraser slots — la restauration d'inventaire complet nécessite
 	# un système de sérialisation des ressources Item (à implémenter plus tard).
