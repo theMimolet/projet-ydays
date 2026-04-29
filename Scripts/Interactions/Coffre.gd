@@ -1,12 +1,12 @@
 extends Sprite2D
 
-const COFFRE_FERME_TEXTURE = preload("res://Spritesheet/Coffre/sprite_coffre0.png")
-const COFFRE_OUVERT_TEXTURE = preload("res://Spritesheet/Coffre/sprite_coffre2.png")
-const VIEW_ITEM_TEXTURE := preload("res://Spritesheet/items/view-item.png")
+const COFFRE_FERME_TEXTURE = preload("res://Sprites/Coffre/sprite_coffre0.png")
+const COFFRE_OUVERT_TEXTURE = preload("res://Sprites/Coffre/sprite_coffre2.png")
+const VIEW_ITEM_TEXTURE := preload("res://Sprites/items/view-item.png")
 const INDICATOR_OFFSET := Vector2(0, -28)
 const INDICATOR_SCALE := Vector2(0.3, 0.3)
 
-var is_opened : bool = false
+var is_opened: bool = false
 var _indicator_sprite: Sprite2D = null
 
 func _ready() -> void:

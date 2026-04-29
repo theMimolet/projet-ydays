@@ -41,6 +41,7 @@ animations = [{
 
 [node name="Sparkle" type="Node2D" unique_id=1732643078]
 script = ExtResource("1_p52ea")
+save_prompt_timeline = "timeline_save"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=41020641]
 scale = Vector2(0.6, 0.6)

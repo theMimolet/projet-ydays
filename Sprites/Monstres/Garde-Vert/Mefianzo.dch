@@ -19,7 +19,7 @@
 &"portraits": {
 "New portrait": {
 "export_overrides": {
-"image": "\"res://Spritesheet/Monstres/Garde-Vert/thumbnail.png\""
+"image": "\"res://Sprites/Monstres/Garde-Vert/thumbnail.png\""
 },
 "mirror": false,
 "offset": Vector2(0, 0),

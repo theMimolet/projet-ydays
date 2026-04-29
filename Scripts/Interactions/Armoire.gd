@@ -1,8 +1,8 @@
 extends Sprite2D
 
-const ARMOIRE_FERMEE_TEXTURE := preload("res://Spritesheet/Armoire/sprite_0.webp")
-const ARMOIRE_OUVERTE_TEXTURE := preload("res://Spritesheet/Armoire/sprite_1.webp")
-const VIEW_ITEM_TEXTURE := preload("res://Spritesheet/items/view-item.png")
+const ARMOIRE_FERMEE_TEXTURE := preload("res://Sprites/Armoire/sprite_0.webp")
+const ARMOIRE_OUVERTE_TEXTURE := preload("res://Sprites/Armoire/sprite_1.webp")
+const VIEW_ITEM_TEXTURE := preload("res://Sprites/items/view-item.png")
 const INDICATOR_OFFSET := Vector2(0, -28)
 const INDICATOR_SCALE := Vector2(0.3, 0.3)
 

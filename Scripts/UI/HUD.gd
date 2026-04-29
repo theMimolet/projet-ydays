@@ -4,18 +4,18 @@ extends CanvasLayer
 @onready var hp_container: Control = $HPContainer
 
 const HP_TEXTURES := [
-	"res://Spritesheet/HP/sprite_noirceur0.png",  # 100 HP
-	"res://Spritesheet/HP/sprite_noirceur1.png",  # 90 HP
-	"res://Spritesheet/HP/sprite_noirceur2.png",  # 80 HP
-	"res://Spritesheet/HP/sprite_noirceur3.png",  # 65 HP
-	"res://Spritesheet/HP/sprite_noirceur4.png",  # 50 HP
-	"res://Spritesheet/HP/sprite_noirceur5.png",  # 40 HP
-	"res://Spritesheet/HP/sprite_noirceur6.png",  # 25 HP
-	"res://Spritesheet/HP/sprite_noirceur7.png",  # 10 HP
-	"res://Spritesheet/HP/sprite_noirceur8.png"   # 0 HP
+	"res://Sprites/HP/sprite_noirceur0.png", # 100 HP
+	"res://Sprites/HP/sprite_noirceur1.png", # 90 HP
+	"res://Sprites/HP/sprite_noirceur2.png", # 80 HP
+	"res://Sprites/HP/sprite_noirceur3.png", # 65 HP
+	"res://Sprites/HP/sprite_noirceur4.png", # 50 HP
+	"res://Sprites/HP/sprite_noirceur5.png", # 40 HP
+	"res://Sprites/HP/sprite_noirceur6.png", # 25 HP
+	"res://Sprites/HP/sprite_noirceur7.png", # 10 HP
+	"res://Sprites/HP/sprite_noirceur8.png" # 0 HP
 ]
 
-var joueur : Node = null
+var joueur: Node = null
 
 func _ready() -> void:
 	if hp_container != null:
@@ -43,26 +43,26 @@ func _on_hp_changed(new_hp: int, max_hp: int) -> void:
 		return
 	
 	# Déterminer l'index du sprite selon les paliers (comme dans Joueur.gd)
-	var sprite_index : int = 0
+	var sprite_index: int = 0
 	
 	if new_hp >= 100:
-		sprite_index = 0  # sprite0
+		sprite_index = 0 # sprite0
 	elif new_hp >= 90:
-		sprite_index = 1  # sprite1
+		sprite_index = 1 # sprite1
 	elif new_hp >= 80:
-		sprite_index = 2  # sprite2
+		sprite_index = 2 # sprite2
 	elif new_hp >= 65:
-		sprite_index = 3  # sprite3
+		sprite_index = 3 # sprite3
 	elif new_hp >= 50:
-		sprite_index = 4  # sprite4
+		sprite_index = 4 # sprite4
 	elif new_hp >= 40:
-		sprite_index = 5  # sprite5
+		sprite_index = 5 # sprite5
 	elif new_hp >= 25:
-		sprite_index = 6  # sprite6
+		sprite_index = 6 # sprite6
 	elif new_hp >= 10:
-		sprite_index = 7  # sprite7
+		sprite_index = 7 # sprite7
 	else:
-		sprite_index = 8  # sprite8 (0 HP)
+		sprite_index = 8 # sprite8 (0 HP)
 	
 	# Charger et appliquer le sprite
 	if sprite_index >= 0 and sprite_index < HP_TEXTURES.size():

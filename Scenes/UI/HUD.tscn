@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://br5r3ljdk8cs8"]
 
 [ext_resource type="Script" path="res://Scripts/UI/HUD.gd" id="1_hud"]
-[ext_resource type="Texture2D" path="res://Spritesheet/HP/sprite_noirceur0.png" id="2_hp0"]
+[ext_resource type="Texture2D" path="res://Sprites/HP/sprite_noirceur0.png" id="2_hp0"]
 
 [node name="HUD" type="CanvasLayer"]
 layer = 110
