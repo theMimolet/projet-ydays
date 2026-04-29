@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://bqokn6oi5erk0"]
+
+[ext_resource type="Texture2D" uid="uid://77l8u1ckhc4t" path="res://Sprites/Interieur_maison/Maisoninterieur_Environnement_1_YDAYS-02.png" id="1_hfffn"]
+[ext_resource type="Script" uid="uid://cs3wfgxf0axj4" path="res://Scripts/RoomSwitcher.gd" id="2_4yyjk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g3tvy"]
+size = Vector2(306, 34)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r126k"]
+size = Vector2(14, 134.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1baso"]
+size = Vector2(116, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4yyjk"]
+size = Vector2(50, 5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g4drr"]
+size = Vector2(47, 9)
+
+[node name="Maison01_A" type="Node2D" unique_id=1494679365]
+
+[node name="MaisoninterieurEnvironnement1Ydays02" type="Sprite2D" parent="." unique_id=1417946358]
+position = Vector2(0.4999919, -1.04904175e-05)
+scale = Vector2(0.23313342, 0.23733333)
+texture = ExtResource("1_hfffn")
+
+[node name="Collider" type="Node2D" parent="." unique_id=122151301]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Collider" unique_id=1269104799]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collider/StaticBody2D" unique_id=75913739]
+position = Vector2(0, -66)
+shape = SubResource("RectangleShape2D_g3tvy")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="Collider" unique_id=195582777]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collider/StaticBody2D3" unique_id=30819915]
+position = Vector2(-146, 17.75)
+shape = SubResource("RectangleShape2D_r126k")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="Collider" unique_id=1353758198]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collider/StaticBody2D2" unique_id=1927217037]
+position = Vector2(148, 18)
+shape = SubResource("RectangleShape2D_r126k")
+
+[node name="StaticBody2D5" type="StaticBody2D" parent="Collider" unique_id=544637604]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collider/StaticBody2D5" unique_id=552031272]
+position = Vector2(-81, 81)
+shape = SubResource("RectangleShape2D_1baso")
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="Collider" unique_id=1954505786]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collider/StaticBody2D4" unique_id=1645620258]
+position = Vector2(82, 81)
+shape = SubResource("RectangleShape2D_1baso")
+
+[node name="StaticBody2D6" type="StaticBody2D" parent="Collider" unique_id=1322661564]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collider/StaticBody2D6" unique_id=2066898669]
+position = Vector2(1, 91.5)
+shape = SubResource("RectangleShape2D_4yyjk")
+
+[node name="ChunkSwitcher" type="Area2D" parent="." unique_id=1378571480]
+script = ExtResource("2_4yyjk")
+roomToLoad = "uid://s1w0gr0l2n64"
+spawnPointName = "Maison01_A_Spawn"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ChunkSwitcher" unique_id=590037373]
+position = Vector2(0.5, 84.5)
+shape = SubResource("RectangleShape2D_g4drr")
+debug_color = Color(0.74492735, 0, 0.3955188, 0.41960785)
+
+[connection signal="body_entered" from="ChunkSwitcher" to="ChunkSwitcher" method="_on_body_entered"]

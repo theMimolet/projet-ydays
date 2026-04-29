@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://s1w0gr0l2n64"]
 
+[ext_resource type="AudioStream" uid="uid://dqt4tjndatu3g" path="res://Music/ambient_village.mp3" id="1_bwpbj"]
 [ext_resource type="Texture2D" uid="uid://l4y5h6kcx6we" path="res://Sprites/Jardin/Village_Environnement.png" id="1_rlsop"]
 [ext_resource type="Texture2D" uid="uid://ddjkpr6kxg8pg" path="res://Sprites/Jardin/Maison-01.png" id="2_1qsc1"]
 [ext_resource type="Texture2D" uid="uid://dylinn17jxyya" path="res://Sprites/Jardin/Fontaine.png" id="3_fu3vt"]
@@ -9,6 +10,9 @@
 [ext_resource type="Texture2D" uid="uid://cotn4rjxr3286" path="res://Sprites/Jardin/sprite_02.png" id="6_3cehf"]
 [ext_resource type="Texture2D" uid="uid://bd24fdpyppqhx" path="res://Sprites/Jardin/sprite_1.png" id="7_d3dr6"]
 [ext_resource type="Texture2D" uid="uid://cxbj314iw5i5r" path="res://Sprites/Jardin/roche_3.png" id="8_ckfm0"]
+[ext_resource type="Script" path="res://Scripts/Interactions/DialogueInteractable.gd" id="4_pg6xv"]
+[ext_resource type="Texture2D" uid="uid://bgisnbtex0k1t" path="res://Sprites/Jardin/etang2.png" id="7_3cehf"]
+[ext_resource type="Texture2D" uid="uid://bra7gpdwsh762" path="res://Sprites/Jardin/sprite_3.png" id="8_ckfm0"]
 [ext_resource type="PackedScene" uid="uid://dtwpnedsbtj8t" path="res://Scenes/RoomSwitcher.tscn" id="9_1qsc1"]
 [ext_resource type="Texture2D" uid="uid://nljyccxrdjba" path="res://Sprites/Jardin/roche_0.png" id="11_3cehf"]
 [ext_resource type="Script" uid="uid://cfa506s6i6uxc" path="res://Scripts/roche_bizarre.gd" id="11_d3dr6"]
@@ -42,6 +46,30 @@ scale = Vector2(0.97087413, 0.97087413)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CharacterBody2D" unique_id=73358839]
 polygon = PackedVector2Array(22.659988, -26.779999, 28.839989, -9.27002, 23.689987, 13.389984, 0, 13.389984, -21.629993, 6.1799927, -22.659992, -7.210022, -38.109985, 4.119995, -56.64998, -4.1200256, -52.529984, -21.630005, -42.7527, -28.695648, -35.01999, -47.380005, -25.749992, -52.53, -16.479996, -49.440002, -14.419996, -40.170013, -8.239998, -35.01999, -1.0300026, -44.29001)
+[node name="BGMusic" type="AudioStreamPlayer" parent="." unique_id=1477993529]
+stream = ExtResource("1_bwpbj")
+volume_db = -5.0
+autoplay = true
+
+[node name="Maison03_Spawn" type="Node2D" parent="." unique_id=1517734739]
+position = Vector2(112, 126)
+scale = Vector2(0.97087413, 0.97087413)
+
+[node name="Maison01_A_Spawn" type="Node2D" parent="." unique_id=1230453555]
+position = Vector2(192, 355)
+scale = Vector2(0.97087413, 0.97087413)
+
+[node name="Maison01_B_Spawn" type="Node2D" parent="." unique_id=1121068285]
+position = Vector2(39, 503)
+scale = Vector2(0.97087413, 0.97087413)
+
+[node name="Maison04_A_Spawn" type="Node2D" parent="." unique_id=424891641]
+position = Vector2(577, 110.99999)
+scale = Vector2(0.97087413, 0.97087413)
+
+[node name="Maison04_B_Spawn" type="Node2D" parent="." unique_id=1848732737]
+position = Vector2(435, -140)
+scale = Vector2(0.97087413, 0.97087413)
 
 [node name="VillageEnvironnement" type="Sprite2D" parent="." unique_id=314554491]
 position = Vector2(336, 152)
@@ -85,6 +113,9 @@ polygon = PackedVector2Array(0.4133911, 0.6054535, 15.863403, 19.145447, -2.6766
 [node name="CharacterBody2D2" type="CharacterBody2D" parent="VillageEnvironnement" unique_id=1483689105]
 position = Vector2(-205.89006, 66.009735)
 scale = Vector2(0.97087413, 0.97087413)
+interior_room_path = "res://Scenes/Rooms/Maisons-jardin/Maison01_B.tscn"
+return_spawn_point_name = "Maison01_B_Spawn"
+dialogue_timeline = "timeline_maison01_b"
 
 [node name="Maison01" type="Sprite2D" parent="VillageEnvironnement/CharacterBody2D2" unique_id=520093371]
 position = Vector2(-102.08319, 205.98988)
@@ -133,6 +164,9 @@ texture = ExtResource("7_d3dr6")
 [node name="CharacterBody2D7" type="CharacterBody2D" parent="VillageEnvironnement" unique_id=159159538]
 position = Vector2(-205.89006, 66.009735)
 scale = Vector2(0.97087413, 0.97087413)
+interior_room_path = "res://Scenes/Rooms/Maisons-jardin/Maison03.tscn"
+return_spawn_point_name = "Maison03_Spawn"
+dialogue_timeline = "timeline_maison03"
 
 [node name="Sprite2" type="Sprite2D" parent="VillageEnvironnement/CharacterBody2D7" unique_id=24015879]
 position = Vector2(287.25665, -158.62997)
@@ -142,6 +176,9 @@ texture = ExtResource("6_3cehf")
 [node name="CharacterBody2D8" type="CharacterBody2D" parent="VillageEnvironnement" unique_id=82773926]
 position = Vector2(-72, -66)
 scale = Vector2(0.97087413, 0.97087413)
+interior_room_path = "res://Scenes/Rooms/Maisons-jardin/Maison01_A.tscn"
+return_spawn_point_name = "Maison01_A_Spawn"
+dialogue_timeline = "timeline_maison01_a"
 
 [node name="Maison01" type="Sprite2D" parent="VillageEnvironnement/CharacterBody2D8" unique_id=1304060753]
 position = Vector2(-102.08319, 205.98988)
@@ -247,6 +284,9 @@ shape = SubResource("RectangleShape2D_uyj8a")
 [node name="CharacterBody2D11" type="CharacterBody2D" parent="VillageEnvironnement" unique_id=279089531]
 position = Vector2(188, 55)
 scale = Vector2(0.445, 0.44500005)
+interior_room_path = "res://Scenes/Rooms/Maisons-jardin/Maison04_A.tscn"
+return_spawn_point_name = "Maison04_A_Spawn"
+dialogue_timeline = "timeline_maison04_a"
 
 [node name="Maison04" type="Sprite2D" parent="VillageEnvironnement/CharacterBody2D11" unique_id=2052896866]
 position = Vector2(146.53076, 125.92142)
@@ -272,6 +312,9 @@ texture = ExtResource("13_ckfm0")
 [node name="CharacterBody2D12" type="CharacterBody2D" parent="VillageEnvironnement" unique_id=942579102]
 position = Vector2(26.999985, -406)
 scale = Vector2(0.445, 0.44500005)
+interior_room_path = "res://Scenes/Rooms/Maisons-jardin/Maison04_B.tscn"
+return_spawn_point_name = "Maison04_B_Spawn"
+dialogue_timeline = "timeline_maison04_b"
 
 [node name="Maison04" type="Sprite2D" parent="VillageEnvironnement/CharacterBody2D12" unique_id=1757557313]
 position = Vector2(146.53076, 125.92142)

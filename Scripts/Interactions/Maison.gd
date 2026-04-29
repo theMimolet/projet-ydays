@@ -4,6 +4,9 @@ extends "res://Scripts/Interactions/PNJ.gd"
 @export var depth_marker_path: NodePath = NodePath("DepthPoint")
 @export var depth_y_offset: float = -50.0
 
+@export_file("*.tscn") var interior_room_path: String = ""
+@export var return_spawn_point_name: String = ""
+
 func _ready() -> void:
 	super._ready()
 	add_to_group("Maisons")
@@ -14,6 +17,11 @@ func _ready() -> void:
 			sprite.z_as_relative = true
 			sprite.z_index = 0
 			break
+
+func interact(dialogue_override: String = "") -> void:
+	if interior_room_path != "":
+		Global.set_pending_maison(interior_room_path, return_spawn_point_name)
+	super.interact(dialogue_override)
 
 func update_depth() -> void:
 	const BASE_OFFSET := 1000
