@@ -40,7 +40,6 @@ gdscript/warnings/untyped_declaration=1
 [dialogic]
 
 directories/dch_directory={
-"Garde-Bleu/Curiosini": "res://Sprites/Monstres/Garde-Bleu/Curiosini.dch",
 "Garde-Bleu/Tristan": "res://Sprites/Monstres/Garde-Bleu/Tristan.dch",
 "Garde-Rouge/Rabiacci": "res://Sprites/Monstres/Garde-Rouge/Rabiacci.dch",
 "Garde-Vert/Mefianzo": "res://Sprites/Monstres/Garde-Vert/Mefianzo.dch",

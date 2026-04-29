@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://s1w0gr0l2n64"]
 
+[ext_resource type="AudioStream" uid="uid://dqt4tjndatu3g" path="res://Music/ambient_village.mp3" id="1_bwpbj"]
 [ext_resource type="Texture2D" uid="uid://l4y5h6kcx6we" path="res://Sprites/Jardin/Village_Environnement.png" id="1_rlsop"]
 [ext_resource type="Texture2D" uid="uid://dylinn17jxyya" path="res://Sprites/Jardin/Fontaine.png" id="3_fu3vt"]
 [ext_resource type="Texture2D" uid="uid://dd55s5pbq1skr" path="res://Sprites/Jardin/etang.png" id="4_jfngy"]
@@ -27,6 +28,11 @@ size = Vector2(96, 34)
 size = Vector2(83, 68)
 
 [node name="Jardin" type="Node2D" unique_id=1468081673]
+
+[node name="BGMusic" type="AudioStreamPlayer" parent="." unique_id=1477993529]
+stream = ExtResource("1_bwpbj")
+volume_db = -5.0
+autoplay = true
 
 [node name="VillageEnvironnement" type="Sprite2D" parent="." unique_id=314554491]
 position = Vector2(336, 152)
