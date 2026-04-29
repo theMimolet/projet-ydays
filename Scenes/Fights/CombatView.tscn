@@ -4,7 +4,7 @@
 [ext_resource type="Resource" uid="uid://b4ejgf6g0fck1" path="res://Resources/Armes/Epee.tres" id="2_djx4s"]
 [ext_resource type="Script" uid="uid://cnubciq834w8p" path="res://Scripts/Combat/QTESystem.gd" id="2_qte"]
 [ext_resource type="Texture2D" uid="uid://psnu27tn25m4" path="res://Sprites/Joueur/Marche/sprite_perso-sidD0.png" id="3_7ih2b"]
-[ext_resource type="Texture2D" uid="uid://ucla87hyad4n" path="res://Sprites/fond_combat.png" id="3_24hbo"]
+[ext_resource type="Texture2D" uid="uid://bpc5p1dkqe7jb" path="res://Sprites/fond_combat.png" id="3_24hbo"]
 [ext_resource type="Script" uid="uid://dmtljqt6hd8d4" path="res://Scripts/Combat/WeaponSelectMenu.gd" id="4_weapon_menu"]
 [ext_resource type="Texture2D" uid="uid://dof3q0uv14tlr" path="res://Sprites/HP/sprite_noirceur0.png" id="5_hp0"]
 [ext_resource type="Texture2D" uid="uid://cwcx8engxgfnf" path="res://Sprites/HP/sprite_noirceur1.png" id="6_hp1"]

@@ -4,7 +4,7 @@
 [ext_resource type="Theme" uid="uid://bugehytmyoyev" path="res://Style/MainUI.tres" id="3_8saeu"]
 [ext_resource type="Texture2D" uid="uid://n4ar6xlgkstd" path="res://Textures/LogoBig.png" id="3_ghw46"]
 [ext_resource type="Texture2D" uid="uid://d1xjic7utprd7" path="res://Sprites/Torche/light.png" id="4_ghw46"]
-[ext_resource type="AudioStream" uid="uid://c4gduagy8d6fk" path="res://Music/main_menu.mp3" id="5_df05h"]
+[ext_resource type="AudioStream" uid="uid://ba7djkmg5komq" path="res://Music/menu_main.mp3" id="5_df05h"]
 
 [sub_resource type="Gradient" id="Gradient_ghw46"]
 colors = PackedColorArray(0, 0, 0, 1, 0.14586785, 0.14586785, 0.14586785, 1)
@@ -178,9 +178,9 @@ layout_mode = 2
 theme = ExtResource("3_8saeu")
 text = "Retour"
 
-[node name="MainMenu" type="AudioStreamPlayer" parent="." unique_id=513291645]
+[node name="BGMusic" type="AudioStreamPlayer" parent="." unique_id=513291645]
 stream = ExtResource("5_df05h")
-volume_db = -11.354
+volume_db = -5.0
 autoplay = true
 
 [connection signal="pressed" from="MenuContainer/Main/Jouer" to="." method="_on_jouer_pressed"]

@@ -1,15 +1,20 @@
 [gd_scene format=3 uid="uid://cenwwmjs8xrdg"]
 
 [ext_resource type="Texture2D" uid="uid://xd485l1c45oj" path="res://Scenes/Rooms/Map/Environnement_1_YDAYS_2.webp" id="1_5ck8n"]
+[ext_resource type="Script" uid="uid://bt8sfngqeu8gg" path="res://Scripts/Interactions/Coffre.gd" id="2_0lfvm"]
 [ext_resource type="Script" uid="uid://cs3wfgxf0axj4" path="res://Scripts/RoomSwitcher.gd" id="2_roomswitcher"]
 [ext_resource type="Texture2D" uid="uid://wp0i44itgihj" path="res://Sprites/briquet/silex.png" id="3_7kv67"]
 [ext_resource type="Script" uid="uid://dbk8n27v523gi" path="res://Scripts/Items/CollectableItem.gd" id="4_mm348"]
 [ext_resource type="Texture2D" uid="uid://bug0mcjhscsab" path="res://Sprites/briquet/fer.png" id="5_s2efy"]
 [ext_resource type="Texture2D" uid="uid://bo58lyiy2c4x0" path="res://Sprites/Objects 1.png" id="6_mm348"]
 [ext_resource type="Texture2D" uid="uid://bjp6j33bqug5s" path="res://Sprites/Objects 2.png" id="7_s2efy"]
+[ext_resource type="Resource" path="res://Resources/Armes/Epee1.tres" id="8_epee1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7kv67"]
 size = Vector2(72, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3t3y3"]
+size = Vector2(19, 19)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_roomswitcher"]
 size = Vector2(72, 18)
@@ -42,6 +47,17 @@ shape = SubResource("RectangleShape2D_7kv67")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=263806844]
 texture = ExtResource("1_5ck8n")
+
+[node name="Coffre" type="Sprite2D" parent="Sprite2D" unique_id=940900377]
+position = Vector2(0.255, 0)
+script = ExtResource("2_0lfvm")
+item_resource = ExtResource("8_epee1")
+quantity = 1
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Sprite2D/Coffre" unique_id=1245294116]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Coffre/StaticBody2D" unique_id=1850972934]
+shape = SubResource("RectangleShape2D_3t3y3")
 
 [node name="Couloir" type="Node2D" parent="." unique_id=1551550129]
 position = Vector2(0, -53)

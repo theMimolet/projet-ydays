@@ -1,0 +1,8 @@
+[style name="Dialogue"]
+Vous êtes devant la maison. Voulez-vous rentrer dans la maison ?
+- Oui
+	do Global.enter_pending_maison()
+- Non
+
+[end_timeline]
+
