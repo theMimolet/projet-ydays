@@ -442,7 +442,7 @@ autoplay = "idle"
 [node name="Garde Rouge" type="CharacterBody2D" parent="." unique_id=885376094]
 position = Vector2(-59, -72)
 script = ExtResource("4_aqk3b")
-timeline = "timeline_colere"
+dialogue_timeline = "timeline_colere"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Garde Rouge" unique_id=581606196]
 position = Vector2(-1, 13)
@@ -456,7 +456,7 @@ autoplay = "idle"
 [node name="Garde Jaune" type="CharacterBody2D" parent="." unique_id=1825012827]
 position = Vector2(-18, -71)
 script = ExtResource("4_aqk3b")
-timeline = "timeline_curieux"
+dialogue_timeline = "timeline_curieux"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Garde Jaune" unique_id=405151036]
 sprite_frames = SubResource("SpriteFrames_bgtnb")
@@ -470,7 +470,7 @@ shape = SubResource("RectangleShape2D_tpj1h")
 [node name="Garde Vert" type="CharacterBody2D" parent="." unique_id=2114172047]
 position = Vector2(19, -72)
 script = ExtResource("4_aqk3b")
-timeline = "timeline_chevalier"
+dialogue_timeline = "timeline_chevalier"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Garde Vert" unique_id=1782066975]
 sprite_frames = SubResource("SpriteFrames_f32d6")
@@ -484,7 +484,7 @@ shape = SubResource("RectangleShape2D_37hg6")
 [node name="Garde Bleu" type="CharacterBody2D" parent="." unique_id=60308062]
 position = Vector2(58, -72)
 script = ExtResource("4_aqk3b")
-timeline = "timeline_triste"
+dialogue_timeline = "timeline_triste"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Garde Bleu" unique_id=592545284]
 sprite_frames = SubResource("SpriteFrames_wgehe")

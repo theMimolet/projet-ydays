@@ -1,6 +1,5 @@
 extends Node2D
 
-@export var timeline: String = ""
 @export var dialogue_timeline: String = ""
 const DEFAULT_TIMELINE: String = "default"
 @export var lock_player_during_dialogue: bool = true
@@ -9,7 +8,7 @@ var has_interacted: bool = false
 var _player: CharacterBody2D = null
 
 func _ready() -> void:
-	add_to_group("PNJ")
+	pass
 
 func interact(dialogue_override: String = "") -> void:
 	if not has_interacted:
@@ -27,8 +26,6 @@ func _resolve_timeline(dialogue_override: String) -> String:
 		return dialogue_override
 	if dialogue_timeline != "":
 		return dialogue_timeline
-	if timeline != "":
-		return timeline
 	return DEFAULT_TIMELINE
 
 func _find_player() -> CharacterBody2D:

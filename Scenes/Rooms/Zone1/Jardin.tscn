@@ -2,8 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://l4y5h6kcx6we" path="res://Sprites/Jardin/Village_Environnement.png" id="1_rlsop"]
 [ext_resource type="Texture2D" uid="uid://dylinn17jxyya" path="res://Sprites/Jardin/Fontaine.png" id="3_fu3vt"]
-[ext_resource type="Script" uid="uid://camd4f4r2b3vn" path="res://Scripts/Interactions/Fontaine.gd" id="4_fu3vt"]
 [ext_resource type="Texture2D" uid="uid://dd55s5pbq1skr" path="res://Sprites/Jardin/etang.png" id="4_jfngy"]
+[ext_resource type="Script" uid="uid://wlwgjh8d5q5m" path="res://Scripts/Interactions/DialogueInteractable.gd" id="4_pg6xv"]
 [ext_resource type="Texture2D" uid="uid://bgisnbtex0k1t" path="res://Sprites/Jardin/etang2.png" id="7_3cehf"]
 [ext_resource type="Texture2D" uid="uid://bra7gpdwsh762" path="res://Sprites/Jardin/sprite_3.png" id="8_ckfm0"]
 [ext_resource type="PackedScene" uid="uid://dtwpnedsbtj8t" path="res://Scenes/RoomSwitcher.tscn" id="9_1qsc1"]
@@ -14,10 +14,11 @@
 [ext_resource type="PackedScene" uid="uid://8d20kg4hipsm" path="res://Scenes/Entities/Maisons/Maison04.tscn" id="12_maison04_scene"]
 [ext_resource type="Texture2D" uid="uid://73oxq1kl4b3" path="res://Sprites/Jardin/roche_1.png" id="13_ckfm0"]
 [ext_resource type="PackedScene" uid="uid://cnrumklvfaii6" path="res://Scenes/Entities/arbre_2.tscn" id="15_ckfm0"]
-[ext_resource type="Script" path="res://Scripts/pentacle.gd" id="15_gnbau"]
+[ext_resource type="Script" uid="uid://camd4f4r2b3vn" path="res://Scripts/Interactions/Fontaine.gd" id="15_gnbau"]
 [ext_resource type="PackedScene" uid="uid://csc2ek72pp5xe" path="res://Scenes/Entities/Roche_1.tscn" id="16_gnbau"]
 [ext_resource type="PackedScene" uid="uid://cy00pimumgy7m" path="res://Scenes/Entities/roche_3.tscn" id="17_pg6xv"]
 [ext_resource type="PackedScene" uid="uid://duqxtt4saqdoy" path="res://Scenes/Entities/roche_2.tscn" id="18_bwpbj"]
+[ext_resource type="PackedScene" uid="uid://chto1tn0qj6p6" path="res://Scenes/Entities/Overworld/Sparkle.tscn" id="18_gnbau"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fu3vt"]
 size = Vector2(96, 34)
@@ -46,18 +47,19 @@ shape = SubResource("RectangleShape2D_fu3vt")
 [node name="Jardin_Sud" type="Node2D" parent="VillageEnvironnement/ChunkSwitcher" unique_id=946614377]
 position = Vector2(0, -42)
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="VillageEnvironnement" unique_id=1882945000]
+[node name="Fontaine" type="StaticBody2D" parent="VillageEnvironnement" unique_id=2027562091]
 position = Vector2(-12, 14)
 scale = Vector2(1.03, 1.03)
-script = ExtResource("4_fu3vt")
+script = ExtResource("4_pg6xv")
+dialogue_timeline = "timeline_fontaine"
 
-[node name="Fontaine" type="Sprite2D" parent="VillageEnvironnement/CharacterBody2D" unique_id=360104497]
+[node name="Fontaine" type="Sprite2D" parent="VillageEnvironnement/Fontaine" unique_id=360104497]
 z_index = 283
 position = Vector2(11.672698, -15.344547)
 scale = Vector2(0.97087383, 0.97087383)
 texture = ExtResource("3_fu3vt")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="VillageEnvironnement/CharacterBody2D" unique_id=709278575]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="VillageEnvironnement/Fontaine" unique_id=709278575]
 position = Vector2(14.195648, 10.29834)
 scale = Vector2(0.94259626, 0.94259626)
 polygon = PackedVector2Array(7.6233826, 4.725464, 15.863403, 19.145447, -2.6766052, 22.235443, -29.456604, 18.115448, -47.996582, 3.6954498, -50.05658, -11.754532, -38.726593, -23.084534, -23.27658, -31.324524, -5.7666016, -34.414536, 10.713409, -33.38452, 25.133392, -29.264526, 34.40338, -26.17453, 44.70337, -13.814529, 43.67337, 1.6354523, 34.40338, 10.905457, 15.863403, 19.145447)
@@ -93,14 +95,6 @@ texture = ExtResource("4_jfngy")
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="VillageEnvironnement/CharacterBody2D4" unique_id=1350863573]
 position = Vector2(285.1967, 45.309956)
 polygon = PackedVector2Array(0, 0, -1.0299988, 7.2099915, -14.419983, 7.2099915, -21.629974, 16.480011, -22.659973, 32.95999, -17.50998, 37.079987, 12.359985, 38.109985, 25.75, 28.839996, 57.679993, 28.839996, 58.70999, 23.690002, 72.099976, 23.690002, 76.21997, 19.570007, 84.45996, 14.420013, 89.609985, 2.0599976, 78.27997, -13.389984, 66.94998, -16.479996, 58.70999, -14.419983, 58.70999, -21.62999, 24.720001, -21.62999, 16.480011, -17.509995, 8.23999, -13.389984, 4.119995, -2.0599976)
-
-[node name="CharacterBody2D6" type="CharacterBody2D" parent="VillageEnvironnement" unique_id=1270155253]
-position = Vector2(-205.89006, 66.009735)
-scale = Vector2(0.97087413, 0.97087413)
-
-[node name="CharacterBody2D7" type="CharacterBody2D" parent="VillageEnvironnement" unique_id=159159538]
-position = Vector2(-205.89006, 66.009735)
-scale = Vector2(0.97087413, 0.97087413)
 
 [node name="Maison03" parent="VillageEnvironnement" unique_id=1416346443 instance=ExtResource("11_maison03_scene")]
 position = Vector2(-216, -51)
@@ -265,6 +259,7 @@ position = Vector2(21, -121)
 [node name="Node2D2" parent="." unique_id=787139747 instance=ExtResource("16_gnbau")]
 position = Vector2(190, -93)
 script = ExtResource("15_gnbau")
+dialogue_timeline = "easter_master_sword"
 
 [node name="Node2D3" parent="." unique_id=268138278 instance=ExtResource("17_pg6xv")]
 position = Vector2(-30, -70)
@@ -408,3 +403,7 @@ scale = Vector2(1.3626345, 1.3626345)
 [node name="Node2D5" parent="." unique_id=977510401 instance=ExtResource("16_gnbau")]
 position = Vector2(601, -179)
 script = ExtResource("15_gnbau")
+dialogue_timeline = "easter_master_sword"
+
+[node name="Sparkle" parent="." unique_id=1732643078 instance=ExtResource("18_gnbau")]
+position = Vector2(276, 185)

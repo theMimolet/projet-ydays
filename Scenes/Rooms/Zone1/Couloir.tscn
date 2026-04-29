@@ -179,7 +179,7 @@ texture = ExtResource("1_42vvc")
 [node name="Garde Rouge" type="CharacterBody2D" parent="Environnement1Ydays1" unique_id=1068216210]
 position = Vector2(-319, -1)
 script = ExtResource("2_nf8g4")
-timeline = "timeline_colere"
+dialogue_timeline = "timeline_colere"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Environnement1Ydays1/Garde Rouge" unique_id=498633946]
 position = Vector2(-1, 13)
@@ -193,7 +193,7 @@ autoplay = "idle"
 [node name="Garde Jaune" type="CharacterBody2D" parent="Environnement1Ydays1" unique_id=1677950926]
 position = Vector2(-340, -55)
 script = ExtResource("2_nf8g4")
-timeline = "timeline_curieux"
+dialogue_timeline = "timeline_curieux"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Environnement1Ydays1/Garde Jaune" unique_id=1147287368]
 sprite_frames = SubResource("SpriteFrames_3gi2l")
@@ -207,7 +207,7 @@ shape = SubResource("RectangleShape2D_b56q8")
 [node name="Garde Vert" type="CharacterBody2D" parent="Environnement1Ydays1" unique_id=1572217775]
 position = Vector2(-198, -1)
 script = ExtResource("2_nf8g4")
-timeline = "timeline_chevalier"
+dialogue_timeline = "timeline_chevalier"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Environnement1Ydays1/Garde Vert" unique_id=605759744]
 sprite_frames = SubResource("SpriteFrames_jcy81")
@@ -221,7 +221,7 @@ shape = SubResource("RectangleShape2D_gm8vu")
 [node name="Garde Bleu" type="CharacterBody2D" parent="Environnement1Ydays1" unique_id=1308341515]
 position = Vector2(-159, -48)
 script = ExtResource("2_nf8g4")
-timeline = "timeline_triste"
+dialogue_timeline = "timeline_triste"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Environnement1Ydays1/Garde Bleu" unique_id=1875772684]
 sprite_frames = SubResource("SpriteFrames_fjk2s")
@@ -402,7 +402,7 @@ debug_color = Color(0.93673784, 1.8193425e-05, 0.63304937, 0.41960785)
 
 [node name="Sparkle" parent="." unique_id=1732643078 instance=ExtResource("3_43psv")]
 position = Vector2(-350, -32)
-timeline = "timeline_sparkle_save"
+dialogue_timeline = "timeline_sparkle_save"
 
 [node name="Room2" type="Node2D" parent="." unique_id=273959894]
 position = Vector2(-271, 41)

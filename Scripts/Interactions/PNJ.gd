@@ -1,11 +1,9 @@
 extends "res://Scripts/Interactions/DialogueInteractable.gd"
 
 const BASE_OFFSET := 1000
-const DEFAULT_PNJ_TIMELINE := "timeline-test"
 
 func _ready() -> void:
-	if default_timeline == "":
-		default_timeline = DEFAULT_PNJ_TIMELINE
+	add_to_group("PNJ")
 	super._ready()
 
 func _physics_process(_delta: float) -> void:
