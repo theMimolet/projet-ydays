@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Weapon" format=3 uid="uid://b7p0jkgqxlbhq"]
 
-[ext_resource type="Script" path="res://Scripts/Items/WeaponInCombat.gd" id="1_combat"]
+[ext_resource type="Script" uid="uid://bxauyhj4q6588" path="res://Scripts/Items/WeaponInCombat.gd" id="1_combat"]
 [ext_resource type="Script" uid="uid://s8x8nqfldpl8" path="res://Scripts/Items/Weapon.gd" id="2_weapon"]
 [ext_resource type="Texture2D" uid="uid://cemg3uex3u2eh" path="res://Sprites/Armes/sprite_bloodsword.png" id="3_texture"]
 
