@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://cs3wfgxf0axj4" path="res://Scripts/RoomSwitcher.gd" id="2_8xl3b"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_djs2b"]
-size = Vector2(74, 18)
+size = Vector2(74, 36)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8n5no"]
 size = Vector2(16, 390)
@@ -39,7 +39,7 @@ roomToLoad = "uid://s1w0gr0l2n64"
 spawnPointName = "Jardin_Sud"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ChunkSwitcher" unique_id=850706337]
-position = Vector2(-1, 17)
+position = Vector2(0, 23)
 shape = SubResource("RectangleShape2D_djs2b")
 debug_color = Color(0.93673784, 1.8193425e-05, 0.63304937, 0.41960785)
 

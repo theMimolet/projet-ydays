@@ -17,6 +17,7 @@ extends Node2D
 @export var open_colliders_names: Array[String] = ["Opened1", "Opened2"]
 
 var _has_played_open_animation := false
+var _visual_texture_override: Texture2D = null
 
 @export var progress_key: String = "zone1_porte_ouverte"
 
@@ -25,6 +26,20 @@ func _ready() -> void:
 	if Global.progress.get(progress_key, false):
 		is_open = true
 	update_visual_state()
+
+func set_visual_override(texture: Texture2D) -> void:
+	_visual_texture_override = texture
+	var visual_node := _get_door_visual_node()
+	if visual_node != null:
+		_update_texture_if_sprite2d(visual_node)
+
+
+func clear_visual_override() -> void:
+	_visual_texture_override = null
+	var visual_node := _get_door_visual_node()
+	if visual_node != null:
+		_update_texture_if_sprite2d(visual_node)
+
 
 func update_visual_state(play_open_animation := false) -> void:
 	var visual_node := _get_door_visual_node()
@@ -40,6 +55,10 @@ func update_visual_state(play_open_animation := false) -> void:
 func _update_texture_if_sprite2d(visual_node: Node) -> void:
 	var sprite := visual_node as Sprite2D
 	if sprite == null:
+		return
+
+	if _visual_texture_override != null:
+		sprite.texture = _visual_texture_override
 		return
 
 	if is_open:
