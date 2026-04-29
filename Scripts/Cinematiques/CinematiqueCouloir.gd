@@ -1,5 +1,7 @@
 extends Node2D
 
+const DOOR_CLOSED_VISUAL: Texture2D = preload("res://Sprites/Porte/sprite_0.png")
+
 ## Timelines Dialogic (configurables dans l'inspecteur)
 @export_category("Dialogues")
 @export var intro_timeline: String = ""
@@ -39,12 +41,15 @@ func _ready() -> void:
 			_torches_allumees += 1
 
 	if Global.get_flag("rabiacci_vaincu"):
-		_apply_post_victory_state()
+		_apply_post_victory_state(false)
 		return
+
+	_force_precombat_door_visual()
 
 	if Global.pending_post_combat_event == "rabiacci_couloir":
 		Global.pending_post_combat_event = ""
-		_apply_post_victory_state()
+		_lock_player_for_couloir_cinematic(true)
+		_apply_post_victory_state(true)
 		call_deferred("_post_combat_sequence")
 
 
@@ -74,8 +79,7 @@ func _on_torch_lit() -> void:
 
 
 func _start_cinematique() -> void:
-	if _joueur != null and "canMove" in _joueur:
-		_joueur.canMove = false
+	_lock_player_for_couloir_cinematic(true)
 
 	Global.set_flag("couloir_torches_allumees")
 
@@ -86,12 +90,14 @@ func _start_cinematique() -> void:
 	
 	# Pendant l'écran noir : ouvrir la porte, repositionner joueur et Rabiacci
 	if _door != null:
-		_door.is_open = true
+		_door.is_open = false
 		if _door.has_method("update_visual_state"):
-			_door.update_visual_state(true)
+			_door.update_visual_state(false)
 		var static_body: Node = _door.get_node_or_null("StaticBody2D_Door")
 		if static_body is StaticBody2D:
 			static_body.queue_free()
+		if _door.has_method("set_visual_override"):
+			_door.set_visual_override(DOOR_CLOSED_VISUAL)
 
 	var door_pos: Vector2 = _door.global_position if _door != null else Vector2.ZERO
 	if _joueur != null:
@@ -153,8 +159,8 @@ func _post_combat_sequence() -> void:
 	await get_tree().process_frame
 	await get_tree().process_frame
 
-	if _joueur != null and "canMove" in _joueur:
-		_joueur.canMove = false
+	_lock_player_for_couloir_cinematic(true)
+	_move_player_to_named_point("Couloir_vers_jardin")
 
 	if post_combat_timeline != "":
 		Dialogic.start(post_combat_timeline)
@@ -162,20 +168,62 @@ func _post_combat_sequence() -> void:
 
 	Global.set_flag("rabiacci_vaincu")
 
+	if _door != null:
+		_door.is_open = true
+		if _door.has_method("clear_visual_override"):
+			_door.clear_visual_override()
+		if _door.has_method("update_visual_state"):
+			_door.update_visual_state(false)
+
+	_lock_player_for_couloir_cinematic(false)
 	if _joueur != null and "canMove" in _joueur:
 		_joueur.canMove = true
 
 
-func _apply_post_victory_state() -> void:
+func _apply_post_victory_state(hold_closed_door_visual: bool = false) -> void:
 	for torche: Node in get_tree().get_nodes_in_group("Torches"):
 		if "is_lit" in torche and not torche.is_lit and torche.has_method("_allumer"):
 			torche._allumer(false)
 
+	if Global.get_flag("couloir_torches_allumees"):
+		for torche: Node in get_tree().get_nodes_in_group("Torches"):
+			if torche.has_method("ensure_lit_visual"):
+				torche.ensure_lit_visual()
+
 	if _door != null:
-		_door.is_open = true
+		_door.is_open = not hold_closed_door_visual
+		if not hold_closed_door_visual and _door.has_method("clear_visual_override"):
+			_door.clear_visual_override()
 		if _door.has_method("update_visual_state"):
 			_door.update_visual_state(false)
+		if hold_closed_door_visual and _door.has_method("set_visual_override"):
+			_door.set_visual_override(DOOR_CLOSED_VISUAL)
 
 		var static_body: Node = _door.get_node_or_null("StaticBody2D_Door")
 		if static_body is StaticBody2D:
 			static_body.queue_free()
+
+
+func _force_precombat_door_visual() -> void:
+	if _door == null:
+		return
+	_door.is_open = false
+	if _door.has_method("set_visual_override"):
+		_door.set_visual_override(DOOR_CLOSED_VISUAL)
+	if _door.has_method("update_visual_state"):
+		_door.update_visual_state(false)
+
+
+func _move_player_to_named_point(point_name: String) -> void:
+	if _joueur == null:
+		return
+	var spawn_point: Node2D = get_parent().get_node_or_null(point_name)
+	if spawn_point != null:
+		_joueur.global_position = spawn_point.global_position
+
+
+func _lock_player_for_couloir_cinematic(locked: bool) -> void:
+	if _joueur != null and _joueur.has_method("set_cutscene_movement_lock"):
+		_joueur.set_cutscene_movement_lock(locked)
+	elif _joueur != null and "canMove" in _joueur:
+		_joueur.canMove = not locked
