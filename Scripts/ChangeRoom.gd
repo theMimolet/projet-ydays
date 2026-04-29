@@ -12,8 +12,22 @@ var isLoading: bool = false
 
 func _ready() -> void:
 	# Retour de combat : charger la room où le joueur était + sa position exacte
+	if Global.player_return_position != Vector2.ZERO and Global.currentRoom != "":
+		var pos := Global.player_return_position
+		Global.player_return_position = Vector2.ZERO
+		RoomLoadToCoords(Global.currentRoom, pos.x, pos.y)
+		return
 	
-		RoomLoadToCoords("res://Scenes/Rooms/Zone1/Jardin.tscn", 0.0, 0.0)
+	if Global.pending_save_to_load != "":
+		var pending_save: String = Global.pending_save_to_load
+		Global.pending_save_to_load = ""
+		SaveSystem.LoadFromFile(pending_save)
+	elif Global.pending_new_game_save != "":
+		RoomLoadToCoords("res://Scenes/Rooms/Zone1/Room1.tscn", 0.0, 0.0)
+	elif FileAccess.file_exists("user://quicksave.save"):
+		SaveSystem.LoadFromFile("quicksave")
+	else:
+		RoomLoadToCoords("res://Scenes/Rooms/Zone1/Room1.tscn", 0.0, 0.0)
 
 func AreRoomsLoaded() -> bool:
 	return rooms.get_child_count() > 0
