@@ -13,7 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://dtwpnedsbtj8t" path="res://Scenes/RoomSwitcher.tscn" id="11_roomswitcher"]
 [ext_resource type="Texture2D" uid="uid://b0igypedar1ji" path="res://Sprites/Porte/sprite_3.png" id="12_nf8g4"]
 [ext_resource type="Texture2D" uid="uid://qhjshbditm2q" path="res://Sprites/Torche/sprite_torche_eteint.png" id="15_nf8g4"]
-[ext_resource type="Script" path="res://Scripts/Interactions/Torche.gd" id="16_torche"]
+[ext_resource type="Script" uid="uid://byjoq7ur7en6q" path="res://Scripts/Interactions/Torche.gd" id="16_torche"]
 [ext_resource type="Script" uid="uid://cy4rl72bwq2j8" path="res://Scripts/Cinematiques/CinematiqueCouloir.gd" id="17_cinematique"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i2x2y"]
