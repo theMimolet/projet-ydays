@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://csauc7pf28d2w"]
+
+[ext_resource type="Texture2D" path="res://Sprites/Labo/Labo_Environnement 1 YDAYS.png" id="1_8qap1"]
+[ext_resource type="PackedScene" uid="uid://dtwpnedsbtj8t" path="res://Scenes/RoomSwitcher.tscn" id="2_0j6r5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ih7xo"]
+size = Vector2(96, 34)
+
+[node name="Node2D" type="Node2D" unique_id=1967972185]
+position = Vector2(0, -2)
+
+[node name="Fond" type="Sprite2D" parent="." unique_id=1794980428]
+position = Vector2(-1, -99.00001)
+scale = Vector2(0.3448877, 0.3448877)
+texture = ExtResource("1_8qap1")
+
+[node name="ChunkSwitcher" parent="Fond" unique_id=2044107913 instance=ExtResource("2_0j6r5")]
+position = Vector2(-1.5258789e-05, 358.43237)
+scale = Vector2(2.8189497, 2.3212142)
+roomToLoad = "uid://s1w0gr0l2n64"
+spawnPointName = "Jardin_Nord"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Fond/ChunkSwitcher" unique_id=698012849]
+shape = SubResource("RectangleShape2D_ih7xo")
+
+[node name="Labo" type="Node2D" parent="Fond/ChunkSwitcher" unique_id=1147397710]
+position = Vector2(1.4958943, -33.608177)

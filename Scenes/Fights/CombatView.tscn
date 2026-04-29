@@ -4,7 +4,7 @@
 [ext_resource type="Resource" uid="uid://b4ejgf6g0fck1" path="res://Resources/Armes/Epee.tres" id="2_djx4s"]
 [ext_resource type="Script" uid="uid://cnubciq834w8p" path="res://Scripts/Combat/QTESystem.gd" id="2_qte"]
 [ext_resource type="Texture2D" uid="uid://psnu27tn25m4" path="res://Sprites/Joueur/Marche/sprite_perso-sidD0.png" id="3_7ih2b"]
-[ext_resource type="Texture2D" uid="uid://ch00xgtxrg5m6" path="res://Sprites/ASUPPRIMER.webp" id="3_24hbo"]
+[ext_resource type="Texture2D" uid="uid://ucla87hyad4n" path="res://Sprites/fond_combat.png" id="3_24hbo"]
 [ext_resource type="Script" uid="uid://dmtljqt6hd8d4" path="res://Scripts/Combat/WeaponSelectMenu.gd" id="4_weapon_menu"]
 [ext_resource type="Texture2D" uid="uid://dof3q0uv14tlr" path="res://Sprites/HP/sprite_noirceur0.png" id="5_hp0"]
 [ext_resource type="Texture2D" uid="uid://cwcx8engxgfnf" path="res://Sprites/HP/sprite_noirceur1.png" id="6_hp1"]
@@ -69,10 +69,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Asupprimer" type="Sprite2D" parent="Background" unique_id=776825964]
-position = Vector2(320.50003, 179.99998)
-scale = Vector2(1.0683334, 1.3481481)
+[node name="Fond_combat" type="TextureRect" parent="Background" unique_id=776825964]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("3_24hbo")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="AreneContainer" type="Control" parent="." unique_id=1979857817]
 layout_mode = 1

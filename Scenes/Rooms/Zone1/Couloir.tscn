@@ -411,7 +411,7 @@ position = Vector2(-271, 41)
 visible = false
 position = Vector2(-270, 79)
 script = ExtResource("2_dqgav")
-roomToLoad = "uid://b55o33fr41l31"
+roomToLoad = "res://Scenes/Rooms/Zone1/Room2.tscn"
 spawnPointName = "Couloir"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ChunkSwitcherRoom2" unique_id=1481545368]
@@ -430,6 +430,7 @@ texture = ExtResource("15_nf8g4")
 script = ExtResource("16_torche")
 
 [node name="CinematiqueCouloir" type="Node2D" parent="." unique_id=1374845183]
+position = Vector2(72, -33)
 script = ExtResource("17_cinematique")
 intro_timeline = "timeline_intro"
 post_combat_timeline = "timeline_post_intro"
@@ -439,7 +440,7 @@ rabiacci_damage_max = 10
 [node name="ChunkSwitcher2" type="Area2D" parent="." unique_id=581860280]
 position = Vector2(0, 157)
 script = ExtResource("2_dqgav")
-roomToLoad = "uid://b55o33fr41l31"
+roomToLoad = "res://Scenes/Rooms/Zone1/Room2.tscn"
 spawnPointName = "Couloir"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ChunkSwitcher2" unique_id=1122561364]

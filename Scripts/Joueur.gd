@@ -9,6 +9,9 @@ var base_speed: float = 40.0 # Vitesse de base (modifiable)
 @export var canMove: bool = true
 var isMoving: bool
 
+## Bloque mouvement / interact / dash tant qu'une ciné (ex. couloir tuto) ne libère pas explicitement.
+var _cutscene_movement_lock: bool = false
+
 # Système d'arme équipée
 var arme_equipee: Resource = null
 signal arme_changed(arme: Resource)
@@ -90,7 +93,17 @@ func Mouvement() -> void :
 		currentPlayerDirections = playerDirections.HAUT
 	velocity = input_direction * base_speed
 
+func set_cutscene_movement_lock(locked: bool) -> void:
+	_cutscene_movement_lock = locked
+	if locked:
+		canMove = false
+		velocity = Vector2.ZERO
+		isDashing = false
+
+
 func _input(event: InputEvent) -> void:
+	if _cutscene_movement_lock:
+		return
 	# Ne pas réagir aux actions si un dialogue ou la console est ouverte
 	if _is_movement_blocked():
 		return
@@ -101,7 +114,7 @@ func _input(event: InputEvent) -> void:
 			if interaction_found:
 				canMove = false
 
-	if event.is_action_pressed("Dash") and canMove and not isDashing and dashCooldownTimer <= 0.0 and canDash and stamina >= DASH_STAMINA_COST:
+	if event.is_action_pressed("Dash") and canMove and not _cutscene_movement_lock and not isDashing and dashCooldownTimer <= 0.0 and canDash and stamina >= DASH_STAMINA_COST:
 		var input_direction: Vector2 = Input.get_vector("Gauche", "Droite", "Haut", "Bas")
 		if input_direction != Vector2.ZERO:
 			isDashing = true
@@ -137,7 +150,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		staminaRegenTimer = 0.0
 	
-	if canMove and not _is_movement_blocked():
+	if canMove and not _cutscene_movement_lock and not _is_movement_blocked():
 		Mouvement()
 		Animate()
 	else:
@@ -180,13 +193,15 @@ func paralysePlayer(yes: bool) -> void:
 	if yes:
 		canMove = false
 	else:
-		canMove = true
+		if not _cutscene_movement_lock:
+			canMove = true
 
 func _on_timeline_started() -> void:
 	canMove = false
 
 func _on_timeline_ended() -> void:
-	canMove = true
+	if not _cutscene_movement_lock:
+		canMove = true
 
 # ============== SYSTÈME D'ARME ÉQUIPÉE ==============
 
