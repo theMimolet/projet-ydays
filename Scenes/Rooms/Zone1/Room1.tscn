@@ -177,6 +177,7 @@ position = Vector2(0, 82)
 rotation = 1.5715761
 script = ExtResource("5_door")
 room_to_load = "uid://drhfsi6nm5qod"
+spawn_point_name = "Room1"
 
 [node name="StaticBody2D_Door" type="StaticBody2D" parent="Door" unique_id=1666744900]
 
