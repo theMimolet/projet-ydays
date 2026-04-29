@@ -44,9 +44,7 @@ directories/dch_directory={
 "Garde-Bleu/Tristan": "res://Sprites/Monstres/Garde-Bleu/Tristan.dch",
 "Garde-Rouge/Rabiacci": "res://Sprites/Monstres/Garde-Rouge/Rabiacci.dch",
 "Garde-Vert/Mefianzo": "res://Sprites/Monstres/Garde-Vert/Mefianzo.dch",
-"Monstres/Garde-Jaune/Curiosini": "res://Sprites/Monstres/Garde-Jaune/Curiosini.dch",
-"Rabiacci": "res://Spritesheet/Monstres/Garde-Rouge/Rabiacci.dch",
-"Tristan": "res://Spritesheet/Monstres/Garde-Bleu/Tristan.dch"
+"Monstres/Garde-Jaune/Curiosini": "res://Sprites/Monstres/Garde-Jaune/Curiosini.dch"
 }
 directories/dtl_directory={
 "default": "res://Dialog/default.dtl",
